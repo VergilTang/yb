@@ -27,6 +27,7 @@
 
 
 
+zend_class_entry *yb_config_ce;
 zend_class_entry *yb_exception_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
@@ -53,6 +54,7 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
+	ZEPHIR_INIT(Yb_Config);
 	ZEPHIR_INIT(Yb_Exception);
 
 #if PHP_VERSION_ID < 50500

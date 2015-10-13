@@ -4,6 +4,7 @@
 #ifndef ZEPHIR_CLASS_ENTRIES_H
 #define ZEPHIR_CLASS_ENTRIES_H
 
+#include "yb/config.zep.h"
 #include "yb/exception.zep.h"
 
 #endif
