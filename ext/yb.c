@@ -27,8 +27,15 @@
 
 
 
-zend_class_entry *yb_config_ce;
+zend_class_entry *yb_image_imageabstract_ce;
+zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_exception_ce;
+zend_class_entry *yb_config_ce;
+zend_class_entry *yb_image_exception_ce;
+zend_class_entry *yb_image_gd_ce;
+zend_class_entry *yb_image_image_ce;
+zend_class_entry *yb_image_imagick_ce;
+zend_class_entry *yb_image_text_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
 
@@ -54,8 +61,15 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Yb_Config);
+	ZEPHIR_INIT(Yb_Image_ImageAbstract);
+	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Exception);
+	ZEPHIR_INIT(Yb_Config);
+	ZEPHIR_INIT(Yb_Image_Exception);
+	ZEPHIR_INIT(Yb_Image_Gd);
+	ZEPHIR_INIT(Yb_Image_Image);
+	ZEPHIR_INIT(Yb_Image_Imagick);
+	ZEPHIR_INIT(Yb_Image_Text);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
