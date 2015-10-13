@@ -27,26 +27,6 @@ ZEPHIR_INIT_CLASS(Yb_Image_ImageAbstract) {
 
 	zend_declare_property_null(yb_image_imageabstract_ce, SL("backend"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_class_constant_string(yb_image_imageabstract_ce, SL("DEFAULT_FONT"), "simhei.ttf" TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT_TOP"), 7 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("TOP"), 8 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT_TOP"), 9 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT"), 4 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("CENTER"), 5 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT"), 6 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT_BOTTOM"), 1 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("BOTTOM"), 2 TSRMLS_CC);
-
-	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT_BOTTOM"), 3 TSRMLS_CC);
-
 	return SUCCESS;
 
 }

@@ -27,8 +27,8 @@
 
 
 
-zend_class_entry *yb_image_imagebackendinterface_ce;
 zend_class_entry *yb_image_imageabstract_ce;
+zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_image_image_ce;
 zend_class_entry *yb_config_ce;
@@ -62,8 +62,8 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Yb_Image_ImageBackendInterface);
 	ZEPHIR_INIT(Yb_Image_ImageAbstract);
+	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Image_Image);
 	ZEPHIR_INIT(Yb_Config);

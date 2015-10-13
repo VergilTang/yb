@@ -5,7 +5,7 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "yb/image/imageabstract.zep.h"
-#include "yb/image/imagebackendinterface.zep.h"
+#include "yb/image/imagebackendabstract.zep.h"
 #include "yb/exception.zep.h"
 #include "yb/image/image.zep.h"
 #include "yb/config.zep.h"

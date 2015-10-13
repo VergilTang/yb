@@ -13,9 +13,10 @@
 
 #include "kernel/main.h"
 #include "kernel/array.h"
-#include "kernel/memory.h"
-#include "kernel/operators.h"
 #include "kernel/object.h"
+#include "kernel/memory.h"
+#include "kernel/fcall.h"
+#include "kernel/operators.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Image_Captcha) {
@@ -36,10 +37,11 @@ ZEPHIR_INIT_CLASS(Yb_Image_Captcha) {
 
 PHP_METHOD(Yb_Image_Captcha, setOptions) {
 
-	zend_bool _1$$5, _3$$7;
+	zend_bool _3$$5, _5$$7;
 	double d = 0;
-	zval *s = NULL, *_0$$3 = NULL;
-	zval *options_param = NULL, *opt = NULL, *_2$$6, *_4$$8;
+	zval *s = NULL, *_2$$3 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *options_param = NULL, *mergedOptions = NULL, *opt = NULL, *_0, *_1 = NULL, *_4$$6, *_6$$8;
 	zval *options = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -48,38 +50,43 @@ PHP_METHOD(Yb_Image_Captcha, setOptions) {
 	zephir_get_arrval(options, options_param);
 
 
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("backend"), PH_NOISY_CC);
+	ZEPHIR_CALL_METHOD(&_1, _0, "getdefaultoptions", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(mergedOptions);
+	zephir_fast_array_merge(mergedOptions, &(_1), &(options) TSRMLS_CC);
 	ZEPHIR_OBS_VAR(opt);
-	if (zephir_array_isset_string_fetch(&opt, options, SS("font"), 0 TSRMLS_CC)) {
-		zephir_get_strval(_0$$3, opt);
-		ZEPHIR_CPY_WRT(s, _0$$3);
+	if (zephir_array_isset_string_fetch(&opt, mergedOptions, SS("font"), 0 TSRMLS_CC)) {
+		zephir_get_strval(_2$$3, opt);
+		ZEPHIR_CPY_WRT(s, _2$$3);
 		if (!(!s) && Z_STRLEN_P(s)) {
 			zephir_update_property_this(this_ptr, SL("font"), s TSRMLS_CC);
 		}
 	}
 	ZEPHIR_OBS_NVAR(opt);
-	if (zephir_array_isset_string_fetch(&opt, options, SS("rPadding"), 0 TSRMLS_CC)) {
+	if (zephir_array_isset_string_fetch(&opt, mergedOptions, SS("rPadding"), 0 TSRMLS_CC)) {
 		d = zephir_get_doubleval(opt);
-		_1$$5 = d > 0;
-		if (_1$$5) {
-			_1$$5 = d < 1;
+		_3$$5 = d > 0;
+		if (_3$$5) {
+			_3$$5 = d < 1;
 		}
-		if (_1$$5) {
-			ZEPHIR_INIT_ZVAL_NREF(_2$$6);
-			ZVAL_DOUBLE(_2$$6, d);
-			zephir_update_property_this(this_ptr, SL("rPadding"), _2$$6 TSRMLS_CC);
+		if (_3$$5) {
+			ZEPHIR_INIT_ZVAL_NREF(_4$$6);
+			ZVAL_DOUBLE(_4$$6, d);
+			zephir_update_property_this(this_ptr, SL("rPadding"), _4$$6 TSRMLS_CC);
 		}
 	}
 	ZEPHIR_OBS_NVAR(opt);
-	if (zephir_array_isset_string_fetch(&opt, options, SS("rOverlap"), 0 TSRMLS_CC)) {
+	if (zephir_array_isset_string_fetch(&opt, mergedOptions, SS("rOverlap"), 0 TSRMLS_CC)) {
 		d = zephir_get_doubleval(opt);
-		_3$$7 = d > 0;
-		if (_3$$7) {
-			_3$$7 = d < 1;
+		_5$$7 = d > 0;
+		if (_5$$7) {
+			_5$$7 = d < 1;
 		}
-		if (_3$$7) {
-			ZEPHIR_INIT_ZVAL_NREF(_4$$8);
-			ZVAL_DOUBLE(_4$$8, d);
-			zephir_update_property_this(this_ptr, SL("rOverlap"), _4$$8 TSRMLS_CC);
+		if (_5$$7) {
+			ZEPHIR_INIT_ZVAL_NREF(_6$$8);
+			ZVAL_DOUBLE(_6$$8, d);
+			zephir_update_property_this(this_ptr, SL("rOverlap"), _6$$8 TSRMLS_CC);
 		}
 	}
 	ZEPHIR_MM_RESTORE();

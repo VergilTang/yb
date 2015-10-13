@@ -25,9 +25,8 @@
 
 ZEPHIR_INIT_CLASS(Yb_Image_Imagick) {
 
-	ZEPHIR_REGISTER_CLASS(Yb\\Image, Imagick, yb, image_imagick, yb_image_imagick_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Image, Imagick, yb, image_imagick, yb_image_imagebackendabstract_ce, yb_image_imagick_method_entry, 0);
 
-	zend_class_implements(yb_image_imagick_ce TSRMLS_CC, 1, yb_image_imagebackendinterface_ce);
 	return SUCCESS;
 
 }
@@ -241,7 +240,7 @@ PHP_METHOD(Yb_Image_Imagick, fromPath) {
 	object_init_ex(imagick, zephir_get_internal_ce(SS("imagick") TSRMLS_CC));
 	ZEPHIR_CALL_METHOD(NULL, imagick, "__construct", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_0, "realpath", NULL, 37, path);
+	ZEPHIR_CALL_FUNCTION(&_0, "realpath", NULL, 38, path);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, imagick, "readimage", NULL, 0, _0);
 	zephir_check_call_status();
@@ -862,7 +861,7 @@ PHP_METHOD(Yb_Image_Imagick, draw) {
 		zephir_check_call_status();
 		RETURN_CCTOR(resultIm);
 	}
-	if (zephir_is_instance_of(srcIm, SL("Yb\\Image\\Text") TSRMLS_CC)) {
+	if (zephir_is_instance_of(srcIm, SL("Yb\\Image\\Watarmark") TSRMLS_CC)) {
 		ZEPHIR_INIT_VAR(imagickDraw);
 		object_init_ex(imagickDraw, zephir_get_internal_ce(SS("imagickdraw") TSRMLS_CC));
 		ZEPHIR_CALL_METHOD(NULL, imagickDraw, "__construct", NULL, 0);
