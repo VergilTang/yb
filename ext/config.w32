@@ -11,7 +11,7 @@ if (PHP_YB != "no") {
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
   
-  ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c exception.zep.c gd.zep.c image.zep.c imagick.zep.c text.zep.c", "yb");
+  ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendinterface.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c watermark.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c config.zep.c", "yb");
   ADD_FLAG("CFLAGS_YB", "/D ZEPHIR_RELEASE");
 }

@@ -14,8 +14,6 @@
 #include "kernel/main.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "kernel/operators.h"
-#include "kernel/array.h"
 #include "kernel/fcall.h"
 
 
@@ -23,9 +21,31 @@ ZEPHIR_INIT_CLASS(Yb_Image_ImageAbstract) {
 
 	ZEPHIR_REGISTER_CLASS(Yb\\Image, ImageAbstract, yb, image_imageabstract, yb_image_imageabstract_method_entry, ZEND_ACC_EXPLICIT_ABSTRACT_CLASS);
 
+	zend_declare_property_null(yb_image_imageabstract_ce, SL("width"), ZEND_ACC_PUBLIC TSRMLS_CC);
+
+	zend_declare_property_null(yb_image_imageabstract_ce, SL("height"), ZEND_ACC_PUBLIC TSRMLS_CC);
+
 	zend_declare_property_null(yb_image_imageabstract_ce, SL("backend"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_image_imageabstract_ce, SL("properties"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_class_constant_string(yb_image_imageabstract_ce, SL("DEFAULT_FONT"), "simhei.ttf" TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT_TOP"), 7 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("TOP"), 8 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT_TOP"), 9 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT"), 4 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("CENTER"), 5 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT"), 6 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("LEFT_BOTTOM"), 1 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("BOTTOM"), 2 TSRMLS_CC);
+
+	zend_declare_class_constant_long(yb_image_imageabstract_ce, SL("RIGHT_BOTTOM"), 3 TSRMLS_CC);
 
 	return SUCCESS;
 
@@ -33,58 +53,13 @@ ZEPHIR_INIT_CLASS(Yb_Image_ImageAbstract) {
 
 PHP_METHOD(Yb_Image_ImageAbstract, __construct) {
 
-	zval *properties = NULL;
-	zval *backend, *properties_param = NULL;
+	zval *backend;
 
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &backend, &properties_param);
+	zephir_fetch_params(0, 1, 0, &backend);
 
-	if (!properties_param) {
-		ZEPHIR_INIT_VAR(properties);
-		array_init(properties);
-	} else {
-		zephir_get_arrval(properties, properties_param);
-	}
 
 
 	zephir_update_property_this(this_ptr, SL("backend"), backend TSRMLS_CC);
-	zephir_update_property_this(this_ptr, SL("properties"), properties TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Image_ImageAbstract, __set) {
-
-	zval *name_param = NULL, *value;
-	zval *name = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 0, &name_param, &value);
-
-	zephir_get_strval(name, name_param);
-
-
-	zephir_update_property_array(this_ptr, SL("properties"), name, value TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Image_ImageAbstract, __get) {
-
-	zval *name_param = NULL, *value = NULL, *_0;
-	zval *name = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &name_param);
-
-	zephir_get_strval(name, name_param);
-
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("properties"), PH_NOISY_CC);
-	if (zephir_array_isset_fetch(&value, _0, name, 1 TSRMLS_CC)) {
-		RETURN_CTOR(value);
-	}
-	ZEPHIR_MM_RESTORE();
 
 }
 
