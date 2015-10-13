@@ -97,7 +97,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_drawtext, 0, 0, 4)
 	ZEND_ARG_OBJ_INFO(0, dest, Yb\\Image\\Image, 0)
-	ZEND_ARG_OBJ_INFO(0, src, Yb\\Image\\Watarmark, 0)
+	ZEND_ARG_OBJ_INFO(0, src, Yb\\Image\\Watermark, 0)
 	ZEND_ARG_INFO(0, x)
 	ZEND_ARG_INFO(0, y)
 ZEND_END_ARG_INFO()

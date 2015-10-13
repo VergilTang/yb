@@ -873,7 +873,7 @@ PHP_METHOD(Yb_Image_Gd, draw) {
 			zephir_check_call_status();
 			break;
 		}
-		if (zephir_is_instance_of(srcIm, SL("Yb\\Image\\Watarmark") TSRMLS_CC)) {
+		if (zephir_instance_of_ev(srcIm, yb_image_watermark_ce TSRMLS_CC)) {
 			ZEPHIR_INIT_NVAR(_3$$5);
 			ZVAL_LONG(_3$$5, x);
 			ZEPHIR_INIT_NVAR(_4$$5);

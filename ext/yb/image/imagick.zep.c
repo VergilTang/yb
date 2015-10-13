@@ -861,7 +861,7 @@ PHP_METHOD(Yb_Image_Imagick, draw) {
 		zephir_check_call_status();
 		RETURN_CCTOR(resultIm);
 	}
-	if (zephir_is_instance_of(srcIm, SL("Yb\\Image\\Watarmark") TSRMLS_CC)) {
+	if (zephir_instance_of_ev(srcIm, yb_image_watermark_ce TSRMLS_CC)) {
 		ZEPHIR_INIT_VAR(imagickDraw);
 		object_init_ex(imagickDraw, zephir_get_internal_ce(SS("imagickdraw") TSRMLS_CC));
 		ZEPHIR_CALL_METHOD(NULL, imagickDraw, "__construct", NULL, 0);
