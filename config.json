@@ -52,7 +52,7 @@
         "check-invalid-reads": false,
         "internal-call-transformation": false
     },
-    "namespace": "Yb",
+    "namespace": "yb",
     "name": "yb",
     "description": "~",
     "author": "Hylent",
