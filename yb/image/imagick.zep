@@ -312,7 +312,7 @@ class Imagick extends ImageBackendAbstract
             return resultIm;
         }
 
-        if srcIm instanceof Watarmark {
+        if srcIm instanceof Watermark {
             let imagickDraw = new \ImagickDraw();
             imagickDraw->setFont(srcIm->{"font"});
             imagickDraw->setFontSize(srcIm->{"fontSize"});

@@ -328,7 +328,7 @@ class Gd extends ImageBackendAbstract
                 break;
             }
 
-            if srcIm instanceof Watarmark {
+            if srcIm instanceof Watermark {
                 this->drawText(resultIm, srcIm, x, y);
                 break;
             }
@@ -408,7 +408,7 @@ class Gd extends ImageBackendAbstract
         return im;
     }
 
-    protected function drawText(<Image> dest, <Watarmark> src, long x, long y) -> void
+    protected function drawText(<Image> dest, <Watermark> src, long x, long y) -> void
     {
         var handler, color, m = null;
         long alpha, r = 0, g = 0, b = 0;
