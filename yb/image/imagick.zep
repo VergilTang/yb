@@ -1,6 +1,6 @@
 namespace Yb\Image;
 
-class Imagick implements ImageBackendInterface
+class Imagick extends ImageBackendAbstract
 {
     public function __construct() -> void
     {
@@ -312,7 +312,7 @@ class Imagick implements ImageBackendInterface
             return resultIm;
         }
 
-        if srcIm instanceof Text {
+        if srcIm instanceof Watarmark {
             let imagickDraw = new \ImagickDraw();
             imagickDraw->setFont(srcIm->{"font"});
             imagickDraw->setFontSize(srcIm->{"fontSize"});

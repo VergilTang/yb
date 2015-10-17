@@ -4,31 +4,33 @@ class Captcha extends Image
 {
     public text     = "";
 
-    public font     = ImageAbstract::DEFAULT_FONT;
-    public rPadding = 0.2;
-    public rOverlap = 0.2;
+    public font     = ImageBackendAbstract::DEFAULT_FONT;
+    public rPadding = ImageBackendAbstract::DEFAULT_R_PADDING;
+    public rOverlap = ImageBackendAbstract::DEFAULT_R_OVERLAP;
 
     public function setOptions(array options) -> void
     {
-        var opt;
+        var mergedOptions, opt;
         string s;
         double d;
 
-        if fetch opt, options["font"] {
+        let mergedOptions = array_merge(this->backend->getDefaultOptions(), options);
+
+        if fetch opt, mergedOptions["font"] {
             let s = (string) opt;
             if s {
                 let this->font = s;
             }
         }
 
-        if fetch opt, options["rPadding"] {
+        if fetch opt, mergedOptions["rPadding"] {
             let d = (double) opt;
             if d > 0 && d < 1 {
                 let this->rPadding = d;
             }
         }
 
-        if fetch opt, options["rOverlap"] {
+        if fetch opt, mergedOptions["rOverlap"] {
             let d = (double) opt;
             if d > 0 && d < 1 {
                 let this->rOverlap = d;

@@ -35,39 +35,39 @@ class Image extends ImageAbstract
         let srcH = (long) srcItem->height;
 
         switch position {
-            case ImageAbstract::LEFT_BOTTOM:
+            case ImageBackendAbstract::LEFT_BOTTOM:
                 let x = 0;
                 let y = h - srcH;
                 break;
-            case ImageAbstract::BOTTOM:
+            case ImageBackendAbstract::BOTTOM:
                 let x = (w - srcW) / 2;
                 let y = h - srcH;
                 break;
-            case ImageAbstract::RIGHT_BOTTOM:
+            case ImageBackendAbstract::RIGHT_BOTTOM:
                 let x = w - srcW;
                 let y = h - srcH;
                 break;
-            case ImageAbstract::LEFT:
+            case ImageBackendAbstract::LEFT:
                 let x = 0;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageAbstract::CENTER:
+            case ImageBackendAbstract::CENTER:
                 let x = (w - srcW) / 2;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageAbstract::RIGHT:
+            case ImageBackendAbstract::RIGHT:
                 let x = w - srcW;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageAbstract::LEFT_TOP:
+            case ImageBackendAbstract::LEFT_TOP:
                 let x = 0;
                 let y = 0;
                 break;
-            case ImageAbstract::TOP:
+            case ImageBackendAbstract::TOP:
                 let x = (w - srcW) / 2;
                 let y = 0;
                 break;
-            case ImageAbstract::RIGHT_TOP:
+            case ImageBackendAbstract::RIGHT_TOP:
                 let x = w - srcW;
                 let y = 0;
                 break;

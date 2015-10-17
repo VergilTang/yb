@@ -11,6 +11,13 @@ $h = mt_rand(200, 400);
 
 header('Content-type: image/png');
 
-echo (new \Yb\Image\Gd([
-    'font' => 'msyh.ttc',
-]))->captcha($text, $w, $h);
+if (mt_rand() % 2) {
+    $im = new \Yb\Image\Gd();
+} else {
+    $im = new \Yb\Image\Imagick('c:/windows/fonts/msyh.ttc');
+}
+
+echo $im->captcha($text, $w, $h)->drawTo(
+    $im->watermark(get_class(im)),
+    $im::RIGHT_BOTTOM
+);

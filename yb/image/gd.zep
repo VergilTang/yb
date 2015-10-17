@@ -1,6 +1,6 @@
 namespace Yb\Image;
 
-class Gd implements ImageBackendInterface
+class Gd extends ImageBackendAbstract
 {
     public function __construct() -> void
     {
@@ -328,7 +328,7 @@ class Gd implements ImageBackendInterface
                 break;
             }
 
-            if srcIm instanceof Text {
+            if srcIm instanceof Watarmark {
                 this->drawText(resultIm, srcIm, x, y);
                 break;
             }
@@ -408,10 +408,16 @@ class Gd implements ImageBackendInterface
         return im;
     }
 
-    protected function drawText(<Image> dest, <Text> src, long x, long y) -> void
+    protected function drawText(<Image> dest, <Watarmark> src, long x, long y) -> void
     {
-        var handler, color;
-        long alpha;
+        var handler, color, m = null;
+        long alpha, r = 0, g = 0, b = 0;
+
+        if preg_match("/^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/", src->color, m) {
+            let r = (long) hexdec(m[1]);
+            let g = (long) hexdec(m[2]);
+            let b = (long) hexdec(m[3]);
+        }
 
         let x += src->padding;
         let y += src->height - src->padding;
@@ -419,7 +425,7 @@ class Gd implements ImageBackendInterface
         let handler = dest->handler;
         let alpha = (long) ((1.0 - src->opacity) * 127.0);
 
-        let color = imagecolorallocatealpha(handler, src->red, src->green, src->blue, alpha);
+        let color = imagecolorallocatealpha(handler, r, g, b, alpha);
 
         if unlikely ! imagettftext(handler, src->fontSize, 0, x, y, color, src->font, src->text) {
             throw new Exception("imagettftext");
