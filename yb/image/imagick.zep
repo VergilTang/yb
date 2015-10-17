@@ -308,7 +308,7 @@ class Imagick implements ImageBackendInterface
         let resultIm = this->fromImage(destIm);
 
         if srcIm instanceof Image {
-            resultIm->handler->compositeImage(srcIm->handler, \Imagick::COMPOSITE_OVER, x, y);
+            resultIm->handler->compositeImage(srcIm->{"handler"}, \Imagick::COMPOSITE_OVER, x, y);
             return resultIm;
         }
 
