@@ -4,11 +4,11 @@ class Watermark extends ImageAbstract
 {
     public text     = "";
 
-    public font     = ImageBackendAdapter::DEFAULT_FONT;
-    public fontSize = ImageBackendAdapter::DEFAULT_FONTSIZE;
-    public color    = ImageBackendAdapter::DEFAULT_COLOR;
-    public opacity  = ImageBackendAdapter::DEFAULT_OPACITY;
-    public padding  = ImageBackendAdapter::DEFAULT_PADDING;
+    public font     = ImageBackendAbstract::DEFAULT_FONT;
+    public fontSize = ImageBackendAbstract::DEFAULT_FONTSIZE;
+    public color    = ImageBackendAbstract::DEFAULT_COLOR;
+    public opacity  = ImageBackendAbstract::DEFAULT_OPACITY;
+    public padding  = ImageBackendAbstract::DEFAULT_PADDING;
 
     public function setOptions(array options) -> void
     {
