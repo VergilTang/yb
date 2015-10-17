@@ -2,31 +2,31 @@ namespace Yb\Image;
 
 abstract class ImageAbstract
 {
-    protected backend;
-    protected properties;
+    const DEFAULT_FONT = "simhei.ttf";
 
-    public function __construct(<ImageBackendAbstract> backend, array properties = null) -> void
+    const LEFT_TOP = 7;
+    const TOP = 8;
+    const RIGHT_TOP = 9;
+    const LEFT = 4;
+    const CENTER = 5;
+    const RIGHT = 6;
+    const LEFT_BOTTOM = 1;
+    const BOTTOM = 2;
+    const RIGHT_BOTTOM = 3;
+
+    public width;
+    public height;
+
+    protected backend;
+
+    public function __construct(<ImageBackendAbstract> backend) -> void
     {
         let this->backend = backend;
-        let this->properties = properties;
-    }
-
-    public function __set(string name, var value) -> void
-    {
-        let this->properties[name] = value;
-    }
-
-    public function __get(string name)
-    {
-        var value;
-
-        if fetch value, this->properties[name] {
-            return value;
-        }
     }
 
     public function __destruct() -> void
     {
         this->backend->destroy(this);
     }
+
 }

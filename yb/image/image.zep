@@ -2,6 +2,9 @@ namespace Yb\Image;
 
 class Image extends ImageAbstract
 {
+    public handler;
+    public extension = "png";
+
     public function resize(long width, long height = 0) -> <Image>
     {
         return this->backend->resize(this, width, height);
@@ -26,45 +29,45 @@ class Image extends ImageAbstract
     {
         long x, y, w, h, srcW, srcH;
 
-        let w = (long) this->{"width"};
-        let h = (long) this->{"height"};
-        let srcW = (long) srcItem->{"width"};
-        let srcH = (long) srcItem->{"height"};
+        let w = (long) this->width;
+        let h = (long) this->height;
+        let srcW = (long) srcItem->width;
+        let srcH = (long) srcItem->height;
 
         switch position {
-            case ImageBackendAbstract::LEFT_BOTTOM:
+            case ImageAbstract::LEFT_BOTTOM:
                 let x = 0;
                 let y = h - srcH;
                 break;
-            case ImageBackendAbstract::BOTTOM:
+            case ImageAbstract::BOTTOM:
                 let x = (w - srcW) / 2;
                 let y = h - srcH;
                 break;
-            case ImageBackendAbstract::RIGHT_BOTTOM:
+            case ImageAbstract::RIGHT_BOTTOM:
                 let x = w - srcW;
                 let y = h - srcH;
                 break;
-            case ImageBackendAbstract::LEFT:
+            case ImageAbstract::LEFT:
                 let x = 0;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageBackendAbstract::CENTER:
+            case ImageAbstract::CENTER:
                 let x = (w - srcW) / 2;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageBackendAbstract::RIGHT:
+            case ImageAbstract::RIGHT:
                 let x = w - srcW;
                 let y = (h - srcH) / 2;
                 break;
-            case ImageBackendAbstract::LEFT_TOP:
+            case ImageAbstract::LEFT_TOP:
                 let x = 0;
                 let y = 0;
                 break;
-            case ImageBackendAbstract::TOP:
+            case ImageAbstract::TOP:
                 let x = (w - srcW) / 2;
                 let y = 0;
                 break;
-            case ImageBackendAbstract::RIGHT_TOP:
+            case ImageAbstract::RIGHT_TOP:
                 let x = w - srcW;
                 let y = 0;
                 break;
@@ -95,4 +98,5 @@ class Image extends ImageAbstract
 
         return "";
     }
+
 }
