@@ -356,7 +356,7 @@ class Gd implements ImageBackendInterface
 
             case "jpg":
             case "jpeg":
-                if imagejpeg(im->handler, destPatr ? destPath : null, 100) {
+                if imagejpeg(im->handler, destPath ? destPath : null, 100) {
                     return;
                 }
                 break;
