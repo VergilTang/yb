@@ -10,11 +10,11 @@ class Config
     {
         var i;
 
-        if unlikely empty exts {
+        if unlikely count(exts) < 1 {
             throw new Exception("Empty exts");
         }
 
-        for i in exts {
+        for i in dirs {
             let this->dirs[i] = i;
         }
         for i in exts {
@@ -25,6 +25,7 @@ class Config
     public function addDir(string dir) -> void
     {
         let this->dirs[dir] = dir;
+        let this->configs = [];
     }
 
     public function __get(string name)
