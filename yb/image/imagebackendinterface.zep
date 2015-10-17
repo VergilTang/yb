@@ -1,6 +1,6 @@
 namespace Yb\Image;
 
-interface class ImageBackendInterface
+interface ImageBackendInterface
 {
     public function watermark(string text, array options = []) -> <Watermark>;
 
