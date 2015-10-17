@@ -314,13 +314,13 @@ class Imagick implements ImageBackendInterface
 
         if srcIm instanceof Text {
             let imagickDraw = new \ImagickDraw();
-            imagickDraw->setFont(srcIm->font);
-            imagickDraw->setFontSize(srcIm->fontSize);
-            imagickDraw->setFillColor(srcIm->color);
-            imagickDraw->setFillOpacity(srcIm->opacity);
-            let x += srcIm->padding;
-            let y += srcIm->height - srcIm->padding;
-            resultIm->handler->annotateImage(imagickDraw, x, y, 0, srcIm->text);
+            imagickDraw->setFont(srcIm->{"font"});
+            imagickDraw->setFontSize(srcIm->{"fontSize"});
+            imagickDraw->setFillColor(srcIm->{"color"});
+            imagickDraw->setFillOpacity(srcIm->{"opacity"});
+            let x += srcIm->{"padding"};
+            let y += srcIm->height - srcIm->{"padding"};
+            resultIm->handler->annotateImage(imagickDraw, x, y, 0, srcIm->{"text"});
             return resultIm;
         }
 
