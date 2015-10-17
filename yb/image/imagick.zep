@@ -339,7 +339,7 @@ class Imagick implements ImageBackendInterface
     public function destroy(<ImageAbstract> im) -> void
     {
         if im instanceof Image {
-            im->handler->clear();
+            im->{"handler"}->clear();
         }
     }
 }

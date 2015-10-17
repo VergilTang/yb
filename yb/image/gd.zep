@@ -371,7 +371,7 @@ class Gd implements ImageBackendInterface
     public function destroy(<ImageAbstract> im) -> void
     {
         if im instanceof Image {
-            imagedestroy(im->handler);
+            imagedestroy(im->{"handler"});
         }
     }
 
