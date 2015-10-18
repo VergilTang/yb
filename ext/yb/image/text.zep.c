@@ -20,27 +20,27 @@
 #include "kernel/string.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Image_Watermark) {
+ZEPHIR_INIT_CLASS(Yb_Image_Text) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Image, Watermark, yb, image_watermark, yb_image_imageabstract_ce, yb_image_watermark_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Image, Text, yb, image_text, yb_image_imageabstract_ce, yb_image_text_method_entry, 0);
 
-	zend_declare_property_string(yb_image_watermark_ce, SL("text"), "", ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_string(yb_image_text_ce, SL("text"), "", ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_string(yb_image_watermark_ce, SL("font"), "simhei.ttf", ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_string(yb_image_text_ce, SL("font"), "simhei.ttf", ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_long(yb_image_watermark_ce, SL("fontSize"), 24, ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_long(yb_image_text_ce, SL("fontSize"), 24, ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_string(yb_image_watermark_ce, SL("color"), "#000000", ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_string(yb_image_text_ce, SL("color"), "#000000", ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_double(yb_image_watermark_ce, SL("opacity"), 0.5, ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_double(yb_image_text_ce, SL("opacity"), 0.5, ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_long(yb_image_watermark_ce, SL("padding"), 5, ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_long(yb_image_text_ce, SL("padding"), 5, ZEND_ACC_PUBLIC TSRMLS_CC);
 
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Image_Watermark, setOptions) {
+PHP_METHOD(Yb_Image_Text, setOptions) {
 
 	zend_bool _5$$7, _10$$9;
 	double d = 0;

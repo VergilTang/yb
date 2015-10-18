@@ -9,12 +9,12 @@ class Imagick extends ImageBackendAbstract
         }
     }
 
-    public function watermark(string text, array options = []) -> <Watermark>
+    public function text(string text, array options = []) -> <Text>
     {
         var im, imagick, imgickDraw, m;
         long padding2;
 
-        let im = new Watermark(this);
+        let im = new Text(this);
         let im->text = text;
         im->setOptions(options);
 
@@ -312,7 +312,7 @@ class Imagick extends ImageBackendAbstract
             return resultIm;
         }
 
-        if srcIm instanceof Watermark {
+        if srcIm instanceof Text {
             let imagickDraw = new \ImagickDraw();
             imagickDraw->setFont(srcIm->{"font"});
             imagickDraw->setFontSize(srcIm->{"fontSize"});

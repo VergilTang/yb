@@ -100,7 +100,7 @@ PHP_METHOD(Yb_Image_ImageBackendAbstract, getDefaultOptions) {
 
 }
 
-PHP_METHOD(Yb_Image_ImageBackendAbstract, watermark) {
+PHP_METHOD(Yb_Image_ImageBackendAbstract, text) {
 
 }
 

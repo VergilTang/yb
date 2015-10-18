@@ -21,6 +21,6 @@ if (mt_rand() % 2) {
 }
 
 echo $im->captcha($text, $w, $h)->drawTo(
-    $im->watermark(get_class($im)),
+    $im->text(get_class($im)),
     $im::RIGHT_BOTTOM
 );

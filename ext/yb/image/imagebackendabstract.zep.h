@@ -5,7 +5,7 @@ ZEPHIR_INIT_CLASS(Yb_Image_ImageBackendAbstract);
 
 PHP_METHOD(Yb_Image_ImageBackendAbstract, setDefaultOptions);
 PHP_METHOD(Yb_Image_ImageBackendAbstract, getDefaultOptions);
-PHP_METHOD(Yb_Image_ImageBackendAbstract, watermark);
+PHP_METHOD(Yb_Image_ImageBackendAbstract, text);
 PHP_METHOD(Yb_Image_ImageBackendAbstract, fromImage);
 PHP_METHOD(Yb_Image_ImageBackendAbstract, fromSize);
 PHP_METHOD(Yb_Image_ImageBackendAbstract, fromPath);
@@ -22,7 +22,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_imagebackendabstract_setdefaultoptions, 
 	ZEND_ARG_ARRAY_INFO(0, options, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_imagebackendabstract_watermark, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_imagebackendabstract_text, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
 	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
@@ -94,7 +94,7 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(yb_image_imagebackendabstract_method_entry) {
 	PHP_ME(Yb_Image_ImageBackendAbstract, setDefaultOptions, arginfo_yb_image_imagebackendabstract_setdefaultoptions, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_ImageBackendAbstract, getDefaultOptions, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Yb_Image_ImageBackendAbstract, watermark, arginfo_yb_image_imagebackendabstract_watermark, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Image_ImageBackendAbstract, text, arginfo_yb_image_imagebackendabstract_text, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_ImageBackendAbstract, fromImage, arginfo_yb_image_imagebackendabstract_fromimage, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_ImageBackendAbstract, fromSize, arginfo_yb_image_imagebackendabstract_fromsize, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_ImageBackendAbstract, fromPath, arginfo_yb_image_imagebackendabstract_frompath, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)

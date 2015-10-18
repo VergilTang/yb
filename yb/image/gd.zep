@@ -9,12 +9,12 @@ class Gd extends ImageBackendAbstract
         }
     }
 
-    public function watermark(string text, array options = []) -> <Watermark>
+    public function text(string text, array options = []) -> <Text>
     {
         var im, box;
         long padding2;
 
-        let im = new Watermark(this);
+        let im = new Text(this);
         let im->text = text;
         im->setOptions(options);
 
@@ -328,7 +328,7 @@ class Gd extends ImageBackendAbstract
                 break;
             }
 
-            if srcIm instanceof Watermark {
+            if srcIm instanceof Text {
                 this->drawText(resultIm, srcIm, x, y);
                 break;
             }
@@ -408,7 +408,7 @@ class Gd extends ImageBackendAbstract
         return im;
     }
 
-    protected function drawText(<Image> dest, <Watermark> src, long x, long y) -> void
+    protected function drawText(<Image> dest, <Text> src, long x, long y) -> void
     {
         var handler, color, m = null;
         long alpha, r = 0, g = 0, b = 0;

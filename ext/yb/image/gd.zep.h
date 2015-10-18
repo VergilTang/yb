@@ -4,7 +4,7 @@ extern zend_class_entry *yb_image_gd_ce;
 ZEPHIR_INIT_CLASS(Yb_Image_Gd);
 
 PHP_METHOD(Yb_Image_Gd, __construct);
-PHP_METHOD(Yb_Image_Gd, watermark);
+PHP_METHOD(Yb_Image_Gd, text);
 PHP_METHOD(Yb_Image_Gd, fromImage);
 PHP_METHOD(Yb_Image_Gd, fromSize);
 PHP_METHOD(Yb_Image_Gd, fromPath);
@@ -21,7 +21,7 @@ PHP_METHOD(Yb_Image_Gd, drawText);
 PHP_METHOD(Yb_Image_Gd, copy);
 PHP_METHOD(Yb_Image_Gd, copyResampled);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_watermark, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_text, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
 	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
@@ -97,7 +97,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_drawtext, 0, 0, 4)
 	ZEND_ARG_OBJ_INFO(0, dest, Yb\\Image\\Image, 0)
-	ZEND_ARG_OBJ_INFO(0, src, Yb\\Image\\Watermark, 0)
+	ZEND_ARG_OBJ_INFO(0, src, Yb\\Image\\Text, 0)
 	ZEND_ARG_INFO(0, x)
 	ZEND_ARG_INFO(0, y)
 ZEND_END_ARG_INFO()
@@ -124,7 +124,7 @@ ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_image_gd_method_entry) {
 	PHP_ME(Yb_Image_Gd, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-	PHP_ME(Yb_Image_Gd, watermark, arginfo_yb_image_gd_watermark, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Image_Gd, text, arginfo_yb_image_gd_text, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Gd, fromImage, arginfo_yb_image_gd_fromimage, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Gd, fromSize, arginfo_yb_image_gd_fromsize, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Gd, fromPath, arginfo_yb_image_gd_frompath, ZEND_ACC_PUBLIC)

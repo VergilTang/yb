@@ -40,7 +40,7 @@ abstract class ImageBackendAbstract
         return [];
     }
 
-    abstract public function watermark(string text, array options = []) -> <Watermark>;
+    abstract public function text(string text, array options = []) -> <Text>;
     abstract public function fromImage(<Image> im) -> <Image>;
     abstract public function fromSize(long width, long height = 0, string extension = "") -> <Image>;
     abstract public function fromPath(string path, string extension = "") -> <Image>;

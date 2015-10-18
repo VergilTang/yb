@@ -1,6 +1,6 @@
 namespace Yb\Image;
 
-class Watermark extends ImageAbstract
+class Text extends ImageAbstract
 {
     public text     = "";
 
