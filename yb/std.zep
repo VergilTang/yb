@@ -8,7 +8,7 @@ class Std
     const IGNORE_ERROR  = "Yb\\Std::ignoreError";
     const THROW_ERROR   = "Yb\\Std::throwError";
 
-    public static function sizeToByte(string size) -> double
+    public static function sizeToBytes(string size) -> double
     {
         var match = null;
 
@@ -28,15 +28,43 @@ class Std
         return floatval(size);
     }
 
+    public static function bytesToSize(double bytes, long decimal = 3) -> string
+    {
+        if decimal < 0 || decimal > 6 {
+            let decimal = 3;
+        }
+
+        if bytes > 1099511627776.0 {
+            return sprintf(sprintf("%%0.%dfT", decimal), bytes / 1099511627776.0);
+        }
+        if bytes > 1073741824.0 {
+            return sprintf(sprintf("%%0.%dfG", decimal), bytes / 1073741824.0);
+        }
+        if bytes > 1048576.0 {
+            return sprintf(sprintf("%%0.%dfM", decimal), bytes / 1048576.0);
+        }
+        if bytes > 1024.0 {
+            return sprintf(sprintf("%%0.%dfK", decimal), bytes / 1024.0);
+        }
+        if bytes > 1.0 {
+            return sprintf(sprintf("%%0.%dfB", decimal), bytes);
+        }
+
+        return strval(0);
+    }
+
     public static function pascalCase(string from) -> string
     {
         string to = "";
         char c;
+        boolean found = false;
         boolean upper = true;
 
         for c in from {
             if c >= '0' && c <= '9' {
-                let to .= c;
+                if found {
+                    let to .= c;
+                }
                 continue;
             }
             if c >= 'a' && c <= 'z' {
@@ -45,6 +73,7 @@ class Std
                     let c -= 32;
                 }
                 let to .= c;
+                let found = true;
                 continue;
             }
             if c >= 'A' && c <= 'Z' {
@@ -54,9 +83,12 @@ class Std
                     let c += 32;
                 }
                 let to .= c;
+                let found = true;
                 continue;
             }
-            let upper = true;
+            if found {
+                let upper = true;
+            }
         }
 
         return to;
@@ -66,11 +98,14 @@ class Std
     {
         string to = "";
         char c;
+        boolean found = false;
         boolean upper = false;
 
         for c in from {
             if c >= '0' && c <= '9' {
-                let to .= c;
+                if found {
+                    let to .= c;
+                }
                 continue;
             }
             if c >= 'a' && c <= 'z' {
@@ -79,6 +114,7 @@ class Std
                     let c -= 32;
                 }
                 let to .= c;
+                let found = true;
                 continue;
             }
             if c >= 'A' && c <= 'Z' {
@@ -88,9 +124,12 @@ class Std
                     let c += 32;
                 }
                 let to .= c;
+                let found = true;
                 continue;
             }
-            let upper = true;
+            if found {
+                let upper = true;
+            }
         }
 
         return to;
@@ -100,21 +139,21 @@ class Std
     {
         string to = "";
         char c;
-        boolean notFirst = false;
+        boolean found = false;
 
         for c in from {
             if (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') {
                 let to .= c;
-                let notFirst = true;
+                let found = true;
                 continue;
             }
             if c >= 'A' && c <= 'Z' {
-                if notFirst {
+                if found {
                     let to .= sep;
                 }
                 let c += 32;
                 let to .= c;
-                let notFirst = true;
+                let found = true;
                 continue;
             }
         }

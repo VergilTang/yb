@@ -7,6 +7,18 @@ header('Content-type: text/plain; charset=UTF-8');
 try {
     //
 
+    echo \yb\std::bytesToSize(102500), PHP_EOL;
+
+    $s = \Yb\Std::pascalCase($_SERVER['REQUEST_URI']);
+    echo $s, PHP_EOL;
+    echo \Yb\Std::normalCase($s), PHP_EOL;
+
+    $s = \Yb\Std::camelCase($_SERVER['REQUEST_URI']);
+    echo $s, PHP_EOL;
+    echo \Yb\Std::normalCase($s), PHP_EOL;
+
+    echo \Yb\Std::normalCase($_SERVER['REQUEST_URI']), PHP_EOL;
+
 } catch (Exception $ex) {
     echo $ex, PHP_EOL;
 

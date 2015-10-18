@@ -3,7 +3,8 @@ extern zend_class_entry *yb_std_ce;
 
 ZEPHIR_INIT_CLASS(Yb_Std);
 
-PHP_METHOD(Yb_Std, sizeToByte);
+PHP_METHOD(Yb_Std, sizeToBytes);
+PHP_METHOD(Yb_Std, bytesToSize);
 PHP_METHOD(Yb_Std, pascalCase);
 PHP_METHOD(Yb_Std, camelCase);
 PHP_METHOD(Yb_Std, normalCase);
@@ -15,8 +16,13 @@ PHP_METHOD(Yb_Std, throwError);
 PHP_METHOD(Yb_Std, outputScript);
 PHP_METHOD(Yb_Std, renderScript);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_sizetobyte, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_sizetobytes, 0, 0, 1)
 	ZEND_ARG_INFO(0, size)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_bytestosize, 0, 0, 1)
+	ZEND_ARG_INFO(0, bytes)
+	ZEND_ARG_INFO(0, decimal)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_pascalcase, 0, 0, 1)
@@ -73,7 +79,8 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_renderscript, 0, 0, 2)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_std_method_entry) {
-	PHP_ME(Yb_Std, sizeToByte, arginfo_yb_std_sizetobyte, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Yb_Std, sizeToBytes, arginfo_yb_std_sizetobytes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Yb_Std, bytesToSize, arginfo_yb_std_bytestosize, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, pascalCase, arginfo_yb_std_pascalcase, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, camelCase, arginfo_yb_std_camelcase, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, normalCase, arginfo_yb_std_normalcase, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
