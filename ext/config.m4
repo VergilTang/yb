@@ -9,8 +9,9 @@ if test "$PHP_YB" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
-	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/image/imageabstract.zep.c
-	yb/exception.zep.c
+	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/image/imageabstract.zep.c
+	yb/serializer/serializerinterface.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/image/image.zep.c
@@ -22,7 +23,12 @@ if test "$PHP_YB" = "yes"; then
 	yb/image/text.zep.c
 	yb/loader/classpath.zep.c
 	yb/loader/exception.zep.c
-	yb/loader/namespacedirectory.zep.c "
+	yb/loader/namespacedirectory.zep.c
+	yb/serializer/exception.zep.c
+	yb/serializer/igbinary.zep.c
+	yb/serializer/json.zep.c
+	yb/serializer/php.zep.c
+	yb/std.zep.c "
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

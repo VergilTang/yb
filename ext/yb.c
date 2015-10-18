@@ -27,8 +27,9 @@
 
 
 
-zend_class_entry *yb_image_imageabstract_ce;
+zend_class_entry *yb_serializer_serializerinterface_ce;
 zend_class_entry *yb_exception_ce;
+zend_class_entry *yb_image_imageabstract_ce;
 zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_loader_loaderabstract_ce;
 zend_class_entry *yb_image_image_ce;
@@ -41,6 +42,11 @@ zend_class_entry *yb_image_text_ce;
 zend_class_entry *yb_loader_classpath_ce;
 zend_class_entry *yb_loader_exception_ce;
 zend_class_entry *yb_loader_namespacedirectory_ce;
+zend_class_entry *yb_serializer_exception_ce;
+zend_class_entry *yb_serializer_igbinary_ce;
+zend_class_entry *yb_serializer_json_ce;
+zend_class_entry *yb_serializer_php_ce;
+zend_class_entry *yb_std_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
 
@@ -66,8 +72,9 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Yb_Image_ImageAbstract);
+	ZEPHIR_INIT(Yb_Serializer_SerializerInterface);
 	ZEPHIR_INIT(Yb_Exception);
+	ZEPHIR_INIT(Yb_Image_ImageAbstract);
 	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Loader_LoaderAbstract);
 	ZEPHIR_INIT(Yb_Image_Image);
@@ -80,6 +87,11 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Loader_ClassPath);
 	ZEPHIR_INIT(Yb_Loader_Exception);
 	ZEPHIR_INIT(Yb_Loader_NamespaceDirectory);
+	ZEPHIR_INIT(Yb_Serializer_Exception);
+	ZEPHIR_INIT(Yb_Serializer_Igbinary);
+	ZEPHIR_INIT(Yb_Serializer_Json);
+	ZEPHIR_INIT(Yb_Serializer_Php);
+	ZEPHIR_INIT(Yb_Std);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
