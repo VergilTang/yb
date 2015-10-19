@@ -147,7 +147,7 @@ PHP_METHOD(Yb_Config, __get) {
 				}
 				ZEPHIR_CPY_WRT(c, _10$$6);
 				if (Z_TYPE_P(c) == IS_ARRAY) {
-					ZEPHIR_CALL_FUNCTION(&_11$$7, "array_replace_recursive", &_12, 8, config, c);
+					ZEPHIR_CALL_FUNCTION(&_11$$7, "array_replace_recursive", &_12, 10, config, c);
 					zephir_check_call_status();
 					ZEPHIR_CPY_WRT(config, _11$$7);
 				}
@@ -182,7 +182,7 @@ PHP_METHOD(Yb_Config, get) {
 	ZEPHIR_INIT_VAR(parts);
 	zephir_fast_explode(parts, &_0, name, LONG_MAX TSRMLS_CC);
 	ZEPHIR_MAKE_REF(parts);
-	ZEPHIR_CALL_FUNCTION(&_1, "array_shift", NULL, 9, parts);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_shift", NULL, 8, parts);
 	ZEPHIR_UNREF(parts);
 	zephir_check_call_status();
 	zephir_get_strval(_2, _1);

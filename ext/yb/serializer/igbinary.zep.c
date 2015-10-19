@@ -49,7 +49,7 @@ PHP_METHOD(Yb_Serializer_Igbinary, serialize) {
 
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("igbinary_serialize", NULL, 42, data);
+	ZEPHIR_RETURN_CALL_FUNCTION("igbinary_serialize", NULL, 43, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -67,7 +67,7 @@ PHP_METHOD(Yb_Serializer_Igbinary, unserialize) {
 	zephir_get_strval(str, str_param);
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("igbinary_unserialize", NULL, 43, str);
+	ZEPHIR_RETURN_CALL_FUNCTION("igbinary_unserialize", NULL, 44, str);
 	zephir_check_call_status();
 	RETURN_MM();
 

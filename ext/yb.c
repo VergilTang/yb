@@ -33,6 +33,7 @@ zend_class_entry *yb_image_imageabstract_ce;
 zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_loader_loaderabstract_ce;
 zend_class_entry *yb_image_image_ce;
+zend_class_entry *yb_application_ce;
 zend_class_entry *yb_config_ce;
 zend_class_entry *yb_image_captcha_ce;
 zend_class_entry *yb_image_exception_ce;
@@ -47,6 +48,8 @@ zend_class_entry *yb_serializer_igbinary_ce;
 zend_class_entry *yb_serializer_json_ce;
 zend_class_entry *yb_serializer_php_ce;
 zend_class_entry *yb_std_ce;
+zend_class_entry *yb_tools_exception_ce;
+zend_class_entry *yb_tools_smtpmailer_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
 
@@ -78,6 +81,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Loader_LoaderAbstract);
 	ZEPHIR_INIT(Yb_Image_Image);
+	ZEPHIR_INIT(Yb_Application);
 	ZEPHIR_INIT(Yb_Config);
 	ZEPHIR_INIT(Yb_Image_Captcha);
 	ZEPHIR_INIT(Yb_Image_Exception);
@@ -92,6 +96,8 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Serializer_Json);
 	ZEPHIR_INIT(Yb_Serializer_Php);
 	ZEPHIR_INIT(Yb_Std);
+	ZEPHIR_INIT(Yb_Tools_Exception);
+	ZEPHIR_INIT(Yb_Tools_SmtpMailer);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);

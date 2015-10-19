@@ -3,23 +3,22 @@ namespace Yb\Loader;
 class NamespaceDirectory extends LoaderAbstract
 {
     protected namespaceDirectories;
+    protected lowerCase;
 
-    public function __construct(array namespaceDirectories = []) -> void
+    public function __construct(array namespaceDirectories = [], boolean lowerCase = false) -> void
     {
-        var n, a;
+        var n, d;
 
-        for n, a in namespaceDirectories {
-            if typeof a == "array" {
-                let this->namespaceDirectories[strtolower(n)] = a;
-            } else {
-                let this->namespaceDirectories[strtolower(n)] = [a, true];
-            }
+        for n, d in namespaceDirectories {
+            let this->namespaceDirectories[strtolower(n)] = d;
         }
+
+        let this->lowerCase = lowerCase;
     }
 
     public function __invoke(string className) -> boolean
     {
-        var match, pos, arr;
+        var match, pos, dir;
         boolean found = false;
         string path;
 
@@ -30,7 +29,7 @@ class NamespaceDirectory extends LoaderAbstract
                 break;
             }
             let match = substr(match, 0, pos);
-            if fetch arr, this->namespaceDirectories[match] {
+            if fetch dir, this->namespaceDirectories[match] {
                 let found = true;
                 break;
             }
@@ -40,15 +39,11 @@ class NamespaceDirectory extends LoaderAbstract
             return false;
         }
 
-        if unlikely typeof arr != "array" || count(arr) != 2 {
-            throw new Exception("Invalid namespace directory options: " . match);
-        }
-
         let path = (string) substr(className, pos + 1);
-        if arr[1] {
+        if this->lowerCase {
             let path = path->lower();
         }
-        let path = arr[0] . "/" . str_replace("\\", "/", path) . ".php";
+        let path = dir . "/" . str_replace("\\", "/", path) . ".php";
 
         if ! file_exists(path) {
             return false;
@@ -63,9 +58,9 @@ class NamespaceDirectory extends LoaderAbstract
         return true;
     }
 
-    public function set(string ns, string dir, boolean lcase = true) -> void
+    public function set(string ns, string dir) -> void
     {
-        let this->namespaceDirectories[ns->lower()] = [dir, lcase];
+        let this->namespaceDirectories[ns->lower()] = dir;
     }
 
 }

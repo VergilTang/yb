@@ -15,6 +15,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/image/image.zep.c
+	yb/application.zep.c
 	yb/config.zep.c
 	yb/image/captcha.zep.c
 	yb/image/exception.zep.c
@@ -28,7 +29,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/serializer/igbinary.zep.c
 	yb/serializer/json.zep.c
 	yb/serializer/php.zep.c
-	yb/std.zep.c "
+	yb/std.zep.c
+	yb/tools/exception.zep.c
+	yb/tools/smtpmailer.zep.c "
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

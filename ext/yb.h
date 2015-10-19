@@ -10,6 +10,7 @@
 #include "yb/image/imagebackendabstract.zep.h"
 #include "yb/loader/loaderabstract.zep.h"
 #include "yb/image/image.zep.h"
+#include "yb/application.zep.h"
 #include "yb/config.zep.h"
 #include "yb/image/captcha.zep.h"
 #include "yb/image/exception.zep.h"
@@ -24,5 +25,7 @@
 #include "yb/serializer/json.zep.h"
 #include "yb/serializer/php.zep.h"
 #include "yb/std.zep.h"
+#include "yb/tools/exception.zep.h"
+#include "yb/tools/smtpmailer.zep.h"
 
 #endif
