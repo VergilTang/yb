@@ -14,8 +14,12 @@ if test "$PHP_YB" = "yes"; then
 	yb/serializer/serializerinterface.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
+	yb/application/applicationfilterinterface.zep.c
 	yb/image/image.zep.c
-	yb/application.zep.c
+	yb/router/routerabstract.zep.c
+	yb/application/core.zep.c
+	yb/application/exception.zep.c
+	yb/application/modulerouter.zep.c
 	yb/config.zep.c
 	yb/image/captcha.zep.c
 	yb/image/exception.zep.c
@@ -25,6 +29,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/classpath.zep.c
 	yb/loader/exception.zep.c
 	yb/loader/namespacedirectory.zep.c
+	yb/router/uri.zep.c
 	yb/serializer/exception.zep.c
 	yb/serializer/igbinary.zep.c
 	yb/serializer/json.zep.c

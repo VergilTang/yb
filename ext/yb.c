@@ -28,12 +28,16 @@
 
 
 zend_class_entry *yb_serializer_serializerinterface_ce;
+zend_class_entry *yb_application_applicationfilterinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_image_imageabstract_ce;
 zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_loader_loaderabstract_ce;
 zend_class_entry *yb_image_image_ce;
-zend_class_entry *yb_application_ce;
+zend_class_entry *yb_router_routerabstract_ce;
+zend_class_entry *yb_application_core_ce;
+zend_class_entry *yb_application_exception_ce;
+zend_class_entry *yb_application_modulerouter_ce;
 zend_class_entry *yb_config_ce;
 zend_class_entry *yb_image_captcha_ce;
 zend_class_entry *yb_image_exception_ce;
@@ -43,6 +47,7 @@ zend_class_entry *yb_image_text_ce;
 zend_class_entry *yb_loader_classpath_ce;
 zend_class_entry *yb_loader_exception_ce;
 zend_class_entry *yb_loader_namespacedirectory_ce;
+zend_class_entry *yb_router_uri_ce;
 zend_class_entry *yb_serializer_exception_ce;
 zend_class_entry *yb_serializer_igbinary_ce;
 zend_class_entry *yb_serializer_json_ce;
@@ -76,12 +81,16 @@ static PHP_MINIT_FUNCTION(yb)
 #endif
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(Yb_Serializer_SerializerInterface);
+	ZEPHIR_INIT(Yb_Application_ApplicationFilterInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Image_ImageAbstract);
 	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Loader_LoaderAbstract);
 	ZEPHIR_INIT(Yb_Image_Image);
-	ZEPHIR_INIT(Yb_Application);
+	ZEPHIR_INIT(Yb_Router_RouterAbstract);
+	ZEPHIR_INIT(Yb_Application_Core);
+	ZEPHIR_INIT(Yb_Application_Exception);
+	ZEPHIR_INIT(Yb_Application_ModuleRouter);
 	ZEPHIR_INIT(Yb_Config);
 	ZEPHIR_INIT(Yb_Image_Captcha);
 	ZEPHIR_INIT(Yb_Image_Exception);
@@ -91,6 +100,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Loader_ClassPath);
 	ZEPHIR_INIT(Yb_Loader_Exception);
 	ZEPHIR_INIT(Yb_Loader_NamespaceDirectory);
+	ZEPHIR_INIT(Yb_Router_Uri);
 	ZEPHIR_INIT(Yb_Serializer_Exception);
 	ZEPHIR_INIT(Yb_Serializer_Igbinary);
 	ZEPHIR_INIT(Yb_Serializer_Json);

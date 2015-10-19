@@ -442,7 +442,7 @@ PHP_METHOD(Yb_Std, randString) {
 	}
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "UTF-8", 0);
-	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 25, charList, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 24, charList, &_1);
 	zephir_check_call_status();
 	maxIndex = (zephir_get_intval(_2) - 1);
 	while (1) {
@@ -460,7 +460,7 @@ PHP_METHOD(Yb_Std, randString) {
 		ZVAL_LONG(&_6$$5, 1);
 		ZEPHIR_SINIT_NVAR(_7$$5);
 		ZVAL_STRING(&_7$$5, "UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 28, charList, &_5$$5, &_6$$5, &_7$$5);
+		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 27, charList, &_5$$5, &_6$$5, &_7$$5);
 		zephir_check_call_status();
 		zephir_concat_self(&result, _8$$5 TSRMLS_CC);
 	}
