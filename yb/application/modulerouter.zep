@@ -11,26 +11,31 @@ class ModuleRouter implements ApplicationFilterInterface
 
     public function filterApplication(<Core> core) -> void
     {
-        var module, moduleObject, httpHost;
+        var m, mo, httpHost;
 
         if PHP_SAPI == "cli" {
-            if unlikely ! fetch module, this->modules["cli"] {
+            if unlikely ! fetch m, this->modules["cli"] {
                 throw new Exception("Cannot run application in cli mode");
             }
         } else {
-            if unlikely ! fetch httpHost, _SERVER["HTTP_HOST"] && ! fetch module, this->modules[httpHost]
-                && ! fetch module, this->modules["default"] {
-                throw new Exception("Cannot match module to http host and no default module");
+            if unlikely ! fetch httpHost, _SERVER["HTTP_HOST"] {
+                throw new Exception("Cannot find http host");
+            }
+
+            if ! fetch m, this->modules[httpHost] {
+                if ! fetch m, this->modules["default"] {
+                    throw new Exception("Cannot match module to http host and no default module");
+                }
             }
         }
 
-        let moduleObject = core->__get((string) module);
-        if typeof moduleObject != "object" || ! (moduleObject instanceof ApplicationFilterInterface) {
-            throw new Exception("Invalid module: " . module);
+        let mo = core->__get(m);
+        if typeof mo != "object" || ! (mo instanceof ApplicationFilterInterface) {
+            throw new Exception("Invalid module: " . m);
         }
 
-        core->__set("module", moduleObject);
-        moduleObject->filterApplication(core);
+        core->__set("module", mo);
+        mo->filterApplication(core);
     }
 
 }

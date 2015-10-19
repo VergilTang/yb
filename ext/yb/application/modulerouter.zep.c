@@ -50,10 +50,9 @@ PHP_METHOD(Yb_Application_ModuleRouter, __construct) {
 
 PHP_METHOD(Yb_Application_ModuleRouter, filterApplication) {
 
-	zend_bool _7, _2$$5, _4$$5;
-	zval *_6 = NULL;
+	zend_bool _4;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *core, *_SERVER, *module = NULL, *moduleObject = NULL, *httpHost = NULL, *_0, *_10, *_1$$3, *_3$$5, *_5$$5, *_8$$7, *_9$$7;
+	zval *core, *_SERVER, *m = NULL, *mo = NULL, *httpHost = NULL, *_0, *_7, *_1$$3, *_2$$5, *_3$$7, *_5$$9, *_6$$9;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_SERVER, SS("_SERVER") TSRMLS_CC);
@@ -64,55 +63,52 @@ PHP_METHOD(Yb_Application_ModuleRouter, filterApplication) {
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_GET_CONSTANT(_0, "PHP_SAPI");
 	if (ZEPHIR_IS_STRING(_0, "cli")) {
-		ZEPHIR_OBS_VAR(module);
+		ZEPHIR_OBS_VAR(m);
 		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-		if (unlikely(!(zephir_array_isset_string_fetch(&module, _1$$3, SS("cli"), 0 TSRMLS_CC)))) {
+		if (unlikely(!(zephir_array_isset_string_fetch(&m, _1$$3, SS("cli"), 0 TSRMLS_CC)))) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_application_exception_ce, "Cannot run application in cli mode", "yb/application/modulerouter.zep", 18);
 			return;
 		}
 	} else {
 		ZEPHIR_OBS_VAR(httpHost);
-		_2$$5 = !(zephir_array_isset_string_fetch(&httpHost, _SERVER, SS("HTTP_HOST"), 0 TSRMLS_CC));
-		if (_2$$5) {
-			ZEPHIR_OBS_NVAR(module);
-			_3$$5 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-			_2$$5 = !(zephir_array_isset_fetch(&module, _3$$5, httpHost, 0 TSRMLS_CC));
-		}
-		_4$$5 = _2$$5;
-		if (_4$$5) {
-			ZEPHIR_OBS_NVAR(module);
-			_5$$5 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
-			_4$$5 = !(zephir_array_isset_string_fetch(&module, _5$$5, SS("default"), 0 TSRMLS_CC));
-		}
-		if (unlikely(_4$$5)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_application_exception_ce, "Cannot match module to http host and no default module", "yb/application/modulerouter.zep", 23);
+		if (unlikely(!(zephir_array_isset_string_fetch(&httpHost, _SERVER, SS("HTTP_HOST"), 0 TSRMLS_CC)))) {
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_application_exception_ce, "Cannot find http host", "yb/application/modulerouter.zep", 22);
 			return;
 		}
+		ZEPHIR_OBS_NVAR(m);
+		_2$$5 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
+		if (!(zephir_array_isset_fetch(&m, _2$$5, httpHost, 0 TSRMLS_CC))) {
+			ZEPHIR_OBS_NVAR(m);
+			_3$$7 = zephir_fetch_nproperty_this(this_ptr, SL("modules"), PH_NOISY_CC);
+			if (!(zephir_array_isset_string_fetch(&m, _3$$7, SS("default"), 0 TSRMLS_CC))) {
+				ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_application_exception_ce, "Cannot match module to http host and no default module", "yb/application/modulerouter.zep", 27);
+				return;
+			}
+		}
 	}
-	zephir_get_strval(_6, module);
-	ZEPHIR_CALL_METHOD(&moduleObject, core, "__get", NULL, 0, _6);
+	ZEPHIR_CALL_METHOD(&mo, core, "__get", NULL, 0, m);
 	zephir_check_call_status();
-	_7 = Z_TYPE_P(moduleObject) != IS_OBJECT;
-	if (!(_7)) {
-		_7 = !((zephir_instance_of_ev(moduleObject, yb_application_applicationfilterinterface_ce TSRMLS_CC)));
+	_4 = Z_TYPE_P(mo) != IS_OBJECT;
+	if (!(_4)) {
+		_4 = !((zephir_instance_of_ev(mo, yb_application_applicationfilterinterface_ce TSRMLS_CC)));
 	}
-	if (_7) {
-		ZEPHIR_INIT_VAR(_8$$7);
-		object_init_ex(_8$$7, yb_application_exception_ce);
-		ZEPHIR_INIT_VAR(_9$$7);
-		ZEPHIR_CONCAT_SV(_9$$7, "Invalid module: ", module);
-		ZEPHIR_CALL_METHOD(NULL, _8$$7, "__construct", NULL, 3, _9$$7);
+	if (_4) {
+		ZEPHIR_INIT_VAR(_5$$9);
+		object_init_ex(_5$$9, yb_application_exception_ce);
+		ZEPHIR_INIT_VAR(_6$$9);
+		ZEPHIR_CONCAT_SV(_6$$9, "Invalid module: ", m);
+		ZEPHIR_CALL_METHOD(NULL, _5$$9, "__construct", NULL, 3, _6$$9);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_8$$7, "yb/application/modulerouter.zep", 29 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$9, "yb/application/modulerouter.zep", 34 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_INIT_VAR(_10);
-	ZVAL_STRING(_10, "module", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, core, "__set", NULL, 0, _10, moduleObject);
-	zephir_check_temp_parameter(_10);
+	ZEPHIR_INIT_VAR(_7);
+	ZVAL_STRING(_7, "module", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, core, "__set", NULL, 0, _7, mo);
+	zephir_check_temp_parameter(_7);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, moduleObject, "filterapplication", NULL, 0, core);
+	ZEPHIR_CALL_METHOD(NULL, mo, "filterapplication", NULL, 0, core);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

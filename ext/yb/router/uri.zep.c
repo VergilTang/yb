@@ -49,7 +49,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 	zephir_preg_match(_0, &_1, uri, m, 0, 0 , 0  TSRMLS_CC);
 	if (zephir_is_true(_0)) {
 		ZEPHIR_OBS_VAR(_2$$3);
-		zephir_array_fetch_long(&_2$$3, m, 1, PH_NOISY, "yb/router/uri.zep", 11 TSRMLS_CC);
+		zephir_array_fetch_long(&_2$$3, m, 1, PH_NOISY, "yb/router/uri.zep", 10 TSRMLS_CC);
 		zephir_get_strval(_3$$3, _2$$3);
 		ZEPHIR_SINIT_VAR(_4$$3);
 		ZVAL_STRING(&_4$$3, "#/+#", 0);

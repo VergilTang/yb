@@ -4,7 +4,6 @@ class Uri extends RouterAbstract
 {
     public function __construct(string uri) -> void
     {
-        long len;
         var m = null, params;
 
         if preg_match("/^([^\\.\\?]+)/", uri, m) {
