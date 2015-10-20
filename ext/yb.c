@@ -27,10 +27,12 @@
 
 
 
+zend_class_entry *yb_factory_factoryinterface_ce;
 zend_class_entry *yb_serializer_serializerinterface_ce;
 zend_class_entry *yb_application_applicationfilterinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_image_imageabstract_ce;
+zend_class_entry *yb_factory_classname_ce;
 zend_class_entry *yb_image_imagebackendabstract_ce;
 zend_class_entry *yb_loader_loaderabstract_ce;
 zend_class_entry *yb_image_image_ce;
@@ -39,6 +41,8 @@ zend_class_entry *yb_application_core_ce;
 zend_class_entry *yb_application_exception_ce;
 zend_class_entry *yb_application_modulerouter_ce;
 zend_class_entry *yb_config_ce;
+zend_class_entry *yb_factory_generated_ce;
+zend_class_entry *yb_factory_namespaced_ce;
 zend_class_entry *yb_image_captcha_ce;
 zend_class_entry *yb_image_exception_ce;
 zend_class_entry *yb_image_gd_ce;
@@ -80,10 +84,12 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
+	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
 	ZEPHIR_INIT(Yb_Serializer_SerializerInterface);
 	ZEPHIR_INIT(Yb_Application_ApplicationFilterInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Image_ImageAbstract);
+	ZEPHIR_INIT(Yb_Factory_ClassName);
 	ZEPHIR_INIT(Yb_Image_ImageBackendAbstract);
 	ZEPHIR_INIT(Yb_Loader_LoaderAbstract);
 	ZEPHIR_INIT(Yb_Image_Image);
@@ -92,6 +98,8 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Application_Exception);
 	ZEPHIR_INIT(Yb_Application_ModuleRouter);
 	ZEPHIR_INIT(Yb_Config);
+	ZEPHIR_INIT(Yb_Factory_Generated);
+	ZEPHIR_INIT(Yb_Factory_Namespaced);
 	ZEPHIR_INIT(Yb_Image_Captcha);
 	ZEPHIR_INIT(Yb_Image_Exception);
 	ZEPHIR_INIT(Yb_Image_Gd);

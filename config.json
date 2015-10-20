@@ -56,7 +56,7 @@
     "name": "yb",
     "description": "~",
     "author": "Hylent",
-    "version": "0.1.151019",
+    "version": "0.1.151020",
     "verbose": false,
     "requires": {
         "extensions": []

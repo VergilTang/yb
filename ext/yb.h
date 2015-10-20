@@ -5,8 +5,10 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "yb/exception.zep.h"
+#include "yb/factory/factoryinterface.zep.h"
 #include "yb/image/imageabstract.zep.h"
 #include "yb/serializer/serializerinterface.zep.h"
+#include "yb/factory/classname.zep.h"
 #include "yb/image/imagebackendabstract.zep.h"
 #include "yb/loader/loaderabstract.zep.h"
 #include "yb/application/applicationfilterinterface.zep.h"
@@ -16,6 +18,8 @@
 #include "yb/application/exception.zep.h"
 #include "yb/application/modulerouter.zep.h"
 #include "yb/config.zep.h"
+#include "yb/factory/generated.zep.h"
+#include "yb/factory/namespaced.zep.h"
 #include "yb/image/captcha.zep.h"
 #include "yb/image/exception.zep.h"
 #include "yb/image/gd.zep.h"

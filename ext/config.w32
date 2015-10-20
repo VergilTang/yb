@@ -12,6 +12,7 @@ if (PHP_YB != "no") {
   }
   
   ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c config.zep.c std.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/factory", "factoryinterface.zep.c classname.zep.c generated.zep.c namespaced.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c text.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/serializer", "serializerinterface.zep.c exception.zep.c igbinary.zep.c json.zep.c php.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/loader", "loaderabstract.zep.c classpath.zep.c exception.zep.c namespacedirectory.zep.c", "yb");
