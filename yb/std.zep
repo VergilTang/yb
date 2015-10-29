@@ -189,6 +189,23 @@ class Std
         return result;
     }
 
+    public static function valueOf(array arr, string key, var defaultValue = null)
+    {
+        var parts, part, returnValue, tmpValue;
+
+        let parts = explode(".", key);
+        let returnValue = arr;
+
+        for part in parts {
+            if typeof returnValue != "array" || ! fetch tmpValue, returnValue[part] {
+                return defaultValue;
+            }
+            let returnValue = tmpValue;
+        }
+
+        return returnValue;
+    }
+
     public static function newInstanceOf(string className, array args = null)
     {
         long c;

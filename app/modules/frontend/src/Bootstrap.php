@@ -9,7 +9,7 @@ class Bootstrap implements \Yb\Application\ApplicationFilterInterface
     {
         $this->core = $core;
 
-        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI']);
+        $router = new \Yb\Application\RouterUri($_SERVER['REQUEST_URI']);
         $controllerClass = __NAMESPACE__.'\\Controller\\'.\Yb\Std::pascalCase($router->getController());
         if (!class_exists($controllerClass)) {
             throw new \Exception('404.C');

@@ -150,7 +150,7 @@ PHP_METHOD(Yb_Application_Core, __get) {
 		object_init_ex(_2$$4, yb_application_exception_ce);
 		ZEPHIR_INIT_VAR(_3$$4);
 		ZEPHIR_CONCAT_SV(_3$$4, "Invalid service: ", name);
-		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 3, _3$$4);
+		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 1, _3$$4);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_2$$4, "yb/application/core.zep", 47 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
@@ -181,7 +181,7 @@ PHP_METHOD(Yb_Application_Core, __get) {
 		object_init_ex(_7$$5, yb_application_exception_ce);
 		ZEPHIR_INIT_LNVAR(_8$$5);
 		ZEPHIR_CONCAT_SV(_8$$5, "Invalid service config: ", name);
-		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 3, _8$$5);
+		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 1, _8$$5);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_7$$5, "yb/application/core.zep", 61 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

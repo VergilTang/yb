@@ -36,7 +36,7 @@ PHP_METHOD(Yb_Serializer_Php, serialize) {
 
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 46, data);
+	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 54, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -54,7 +54,7 @@ PHP_METHOD(Yb_Serializer_Php, unserialize) {
 	zephir_get_strval(str, str_param);
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("unserialize", NULL, 47, str);
+	ZEPHIR_RETURN_CALL_FUNCTION("unserialize", NULL, 55, str);
 	zephir_check_call_status();
 	RETURN_MM();
 

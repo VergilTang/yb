@@ -30,7 +30,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, register) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 1, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 2, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -42,7 +42,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, unregister) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 2, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 3, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 

@@ -97,7 +97,7 @@ PHP_METHOD(Yb_Application_ModuleRouter, filterApplication) {
 		object_init_ex(_5$$9, yb_application_exception_ce);
 		ZEPHIR_INIT_VAR(_6$$9);
 		ZEPHIR_CONCAT_SV(_6$$9, "Invalid module: ", m);
-		ZEPHIR_CALL_METHOD(NULL, _5$$9, "__construct", NULL, 3, _6$$9);
+		ZEPHIR_CALL_METHOD(NULL, _5$$9, "__construct", NULL, 1, _6$$9);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_5$$9, "yb/application/modulerouter.zep", 34 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

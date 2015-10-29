@@ -1,4 +1,4 @@
-namespace Yb\Router;
+namespace Yb\Application;
 
 abstract class RouterAbstract
 {

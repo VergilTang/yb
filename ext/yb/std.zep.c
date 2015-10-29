@@ -19,6 +19,7 @@
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/math.h"
+#include "kernel/hash.h"
 #include "kernel/object.h"
 #include "kernel/exception.h"
 #include "kernel/file.h"
@@ -87,7 +88,7 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 		} while(0);
 
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 48, size);
+	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 56, size);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -125,11 +126,11 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		ZVAL_STRING(&_1$$4, "%%0.%dfT", 0);
 		ZEPHIR_SINIT_VAR(_2$$4);
 		ZVAL_LONG(&_2$$4, decimal);
-		ZEPHIR_CALL_FUNCTION(&_3$$4, "sprintf", &_4, 49, &_1$$4, &_2$$4);
+		ZEPHIR_CALL_FUNCTION(&_3$$4, "sprintf", &_4, 57, &_1$$4, &_2$$4);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_1$$4);
 		ZVAL_DOUBLE(&_1$$4, zephir_safe_div_double_long(bytes, 1099511627776.0 TSRMLS_CC));
-		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 49, _3$$4, &_1$$4);
+		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 57, _3$$4, &_1$$4);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -138,11 +139,11 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		ZVAL_STRING(&_5$$5, "%%0.%dfG", 0);
 		ZEPHIR_SINIT_VAR(_6$$5);
 		ZVAL_LONG(&_6$$5, decimal);
-		ZEPHIR_CALL_FUNCTION(&_7$$5, "sprintf", &_4, 49, &_5$$5, &_6$$5);
+		ZEPHIR_CALL_FUNCTION(&_7$$5, "sprintf", &_4, 57, &_5$$5, &_6$$5);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_5$$5);
 		ZVAL_DOUBLE(&_5$$5, zephir_safe_div_double_long(bytes, 1073741824.0 TSRMLS_CC));
-		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 49, _7$$5, &_5$$5);
+		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 57, _7$$5, &_5$$5);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -151,11 +152,11 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		ZVAL_STRING(&_8$$6, "%%0.%dfM", 0);
 		ZEPHIR_SINIT_VAR(_9$$6);
 		ZVAL_LONG(&_9$$6, decimal);
-		ZEPHIR_CALL_FUNCTION(&_10$$6, "sprintf", &_4, 49, &_8$$6, &_9$$6);
+		ZEPHIR_CALL_FUNCTION(&_10$$6, "sprintf", &_4, 57, &_8$$6, &_9$$6);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_8$$6);
 		ZVAL_DOUBLE(&_8$$6, zephir_safe_div_double_long(bytes, 1048576.0 TSRMLS_CC));
-		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 49, _10$$6, &_8$$6);
+		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 57, _10$$6, &_8$$6);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -164,11 +165,11 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		ZVAL_STRING(&_11$$7, "%%0.%dfK", 0);
 		ZEPHIR_SINIT_VAR(_12$$7);
 		ZVAL_LONG(&_12$$7, decimal);
-		ZEPHIR_CALL_FUNCTION(&_13$$7, "sprintf", &_4, 49, &_11$$7, &_12$$7);
+		ZEPHIR_CALL_FUNCTION(&_13$$7, "sprintf", &_4, 57, &_11$$7, &_12$$7);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_11$$7);
 		ZVAL_DOUBLE(&_11$$7, zephir_safe_div_double_long(bytes, 1024.0 TSRMLS_CC));
-		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 49, _13$$7, &_11$$7);
+		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 57, _13$$7, &_11$$7);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -177,17 +178,17 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		ZVAL_STRING(&_14$$8, "%%0.%dfB", 0);
 		ZEPHIR_SINIT_VAR(_15$$8);
 		ZVAL_LONG(&_15$$8, decimal);
-		ZEPHIR_CALL_FUNCTION(&_16$$8, "sprintf", &_4, 49, &_14$$8, &_15$$8);
+		ZEPHIR_CALL_FUNCTION(&_16$$8, "sprintf", &_4, 57, &_14$$8, &_15$$8);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_14$$8);
 		ZVAL_DOUBLE(&_14$$8, bytes);
-		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 49, _16$$8, &_14$$8);
+		ZEPHIR_RETURN_CALL_FUNCTION("sprintf", &_4, 57, _16$$8, &_14$$8);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
 	ZEPHIR_SINIT_VAR(_17);
 	ZVAL_LONG(&_17, 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 50, &_17);
+	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 58, &_17);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -400,9 +401,9 @@ PHP_METHOD(Yb_Std, uuid) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 51);
+	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 59);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 52, _0, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 60, _0, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VV(_2, _1, salt);
@@ -442,7 +443,7 @@ PHP_METHOD(Yb_Std, randString) {
 	}
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "UTF-8", 0);
-	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 25, charList, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 34, charList, &_1);
 	zephir_check_call_status();
 	maxIndex = (zephir_get_intval(_2) - 1);
 	while (1) {
@@ -460,11 +461,53 @@ PHP_METHOD(Yb_Std, randString) {
 		ZVAL_LONG(&_6$$5, 1);
 		ZEPHIR_SINIT_NVAR(_7$$5);
 		ZVAL_STRING(&_7$$5, "UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 28, charList, &_5$$5, &_6$$5, &_7$$5);
+		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 37, charList, &_5$$5, &_6$$5, &_7$$5);
 		zephir_check_call_status();
 		zephir_concat_self(&result, _8$$5 TSRMLS_CC);
 	}
 	RETURN_CTOR(result);
+
+}
+
+PHP_METHOD(Yb_Std, valueOf) {
+
+	zend_bool _3$$3;
+	HashTable *_1;
+	HashPosition _0;
+	zval *key = NULL;
+	zval *arr_param = NULL, *key_param = NULL, *defaultValue = NULL, *parts = NULL, *part = NULL, *returnValue = NULL, *tmpValue = NULL, **_2;
+	zval *arr = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 1, &arr_param, &key_param, &defaultValue);
+
+	zephir_get_arrval(arr, arr_param);
+	zephir_get_strval(key, key_param);
+	if (!defaultValue) {
+		defaultValue = ZEPHIR_GLOBAL(global_null);
+	}
+
+
+	ZEPHIR_INIT_VAR(parts);
+	zephir_fast_explode_str(parts, SL("."), key, LONG_MAX TSRMLS_CC);
+	ZEPHIR_CPY_WRT(returnValue, arr);
+	zephir_is_iterable(parts, &_1, &_0, 0, 0, "yb/std.zep", 206);
+	for (
+	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_1, &_0)
+	) {
+		ZEPHIR_GET_HVALUE(part, _2);
+		_3$$3 = Z_TYPE_P(returnValue) != IS_ARRAY;
+		if (!(_3$$3)) {
+			_3$$3 = !(zephir_array_isset_fetch(&tmpValue, returnValue, part, 1 TSRMLS_CC));
+		}
+		if (_3$$3) {
+			RETVAL_ZVAL(defaultValue, 1, 0);
+			RETURN_MM();
+		}
+		ZEPHIR_CPY_WRT(returnValue, tmpValue);
+	}
+	RETURN_CCTOR(returnValue);
 
 }
 
@@ -503,13 +546,13 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 	if (c > 5) {
 		ZEPHIR_INIT_VAR(_2$$4);
 		object_init_ex(_2$$4, zephir_get_internal_ce(SS("reflectionclass") TSRMLS_CC));
-		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 53, className);
+		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 61, className);
 		zephir_check_call_status();
-		ZEPHIR_RETURN_CALL_METHOD(_2$$4, "newinstanceargs", NULL, 54, args);
+		ZEPHIR_RETURN_CALL_METHOD(_2$$4, "newinstanceargs", NULL, 62, args);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 55, args);
+	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 63, args);
 	zephir_check_call_status();
 	do {
 		if (c == 1) {
@@ -517,7 +560,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_4$$5 = zend_fetch_class(Z_STRVAL_P(_3$$5), Z_STRLEN_P(_3$$5), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _4$$5);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_5$$5, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 208 TSRMLS_CC);
+				zephir_array_fetch_long(&_5$$5, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 225 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _5$$5);
 				zephir_check_call_status();
 			}
@@ -528,8 +571,8 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_7$$6 = zend_fetch_class(Z_STRVAL_P(_6$$6), Z_STRLEN_P(_6$$6), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _7$$6);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_8$$6, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 210 TSRMLS_CC);
-				zephir_array_fetch_long(&_9$$6, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 210 TSRMLS_CC);
+				zephir_array_fetch_long(&_8$$6, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 227 TSRMLS_CC);
+				zephir_array_fetch_long(&_9$$6, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 227 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _8$$6, _9$$6);
 				zephir_check_call_status();
 			}
@@ -540,9 +583,9 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_11$$7 = zend_fetch_class(Z_STRVAL_P(_10$$7), Z_STRLEN_P(_10$$7), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _11$$7);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_12$$7, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 212 TSRMLS_CC);
-				zephir_array_fetch_long(&_13$$7, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 212 TSRMLS_CC);
-				zephir_array_fetch_long(&_14$$7, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 212 TSRMLS_CC);
+				zephir_array_fetch_long(&_12$$7, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 229 TSRMLS_CC);
+				zephir_array_fetch_long(&_13$$7, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 229 TSRMLS_CC);
+				zephir_array_fetch_long(&_14$$7, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 229 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _12$$7, _13$$7, _14$$7);
 				zephir_check_call_status();
 			}
@@ -553,10 +596,10 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_16$$8 = zend_fetch_class(Z_STRVAL_P(_15$$8), Z_STRLEN_P(_15$$8), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _16$$8);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_17$$8, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 214 TSRMLS_CC);
-				zephir_array_fetch_long(&_18$$8, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 214 TSRMLS_CC);
-				zephir_array_fetch_long(&_19$$8, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 214 TSRMLS_CC);
-				zephir_array_fetch_long(&_20$$8, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 214 TSRMLS_CC);
+				zephir_array_fetch_long(&_17$$8, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 231 TSRMLS_CC);
+				zephir_array_fetch_long(&_18$$8, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 231 TSRMLS_CC);
+				zephir_array_fetch_long(&_19$$8, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 231 TSRMLS_CC);
+				zephir_array_fetch_long(&_20$$8, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 231 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _17$$8, _18$$8, _19$$8, _20$$8);
 				zephir_check_call_status();
 			}
@@ -567,11 +610,11 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_22$$9 = zend_fetch_class(Z_STRVAL_P(_21$$9), Z_STRLEN_P(_21$$9), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _22$$9);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_23$$9, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 216 TSRMLS_CC);
-				zephir_array_fetch_long(&_24$$9, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 216 TSRMLS_CC);
-				zephir_array_fetch_long(&_25$$9, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 216 TSRMLS_CC);
-				zephir_array_fetch_long(&_26$$9, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 216 TSRMLS_CC);
-				zephir_array_fetch_long(&_27$$9, a, 4, PH_NOISY | PH_READONLY, "yb/std.zep", 216 TSRMLS_CC);
+				zephir_array_fetch_long(&_23$$9, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 233 TSRMLS_CC);
+				zephir_array_fetch_long(&_24$$9, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 233 TSRMLS_CC);
+				zephir_array_fetch_long(&_25$$9, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 233 TSRMLS_CC);
+				zephir_array_fetch_long(&_26$$9, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 233 TSRMLS_CC);
+				zephir_array_fetch_long(&_27$$9, a, 4, PH_NOISY | PH_READONLY, "yb/std.zep", 233 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _23$$9, _24$$9, _25$$9, _26$$9, _27$$9);
 				zephir_check_call_status();
 			}
@@ -583,9 +626,9 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 	object_init_ex(_28, yb_exception_ce);
 	ZEPHIR_INIT_VAR(_29);
 	ZEPHIR_CONCAT_SV(_29, "Fail to fetch a new instance of class: ", className);
-	ZEPHIR_CALL_METHOD(NULL, _28, "__construct", NULL, 3, _29);
+	ZEPHIR_CALL_METHOD(NULL, _28, "__construct", NULL, 1, _29);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_28, "yb/std.zep", 219 TSRMLS_CC);
+	zephir_throw_exception_debug(_28, "yb/std.zep", 236 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -646,9 +689,9 @@ PHP_METHOD(Yb_Std, throwError) {
 	ZEPHIR_CONCAT_VSVSVS(_1, s, " (", f, ":", l, ")");
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, n);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 56, _1, _2);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 64, _1, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "yb/std.zep", 229 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "yb/std.zep", 246 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -673,9 +716,9 @@ PHP_METHOD(Yb_Std, outputScript) {
 		object_init_ex(_0$$3, yb_exception_ce);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZEPHIR_CONCAT_SV(_1$$3, "Cannot find script path: ", path);
-		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 3, _1$$3);
+		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _1$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "yb/std.zep", 235 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "yb/std.zep", 252 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -684,7 +727,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 57, data, _2, _3);
+	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 65, data, _2, _3);
 	zephir_check_temp_parameter(_3);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();
@@ -730,7 +773,7 @@ PHP_METHOD(Yb_Std, renderScript) {
 			zend_clear_exception(TSRMLS_C);
 			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 7);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(ex, "yb/std.zep", 254 TSRMLS_CC);
+			zephir_throw_exception_debug(ex, "yb/std.zep", 271 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}

@@ -10,6 +10,7 @@ if test "$PHP_YB" = "yes"; then
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/collection/collectioninterface.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/serializer/serializerinterface.zep.c
@@ -17,12 +18,18 @@ if test "$PHP_YB" = "yes"; then
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/application/applicationfilterinterface.zep.c
+	yb/application/routerabstract.zep.c
+	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
-	yb/router/routerabstract.zep.c
+	yb/application/config.zep.c
 	yb/application/core.zep.c
 	yb/application/exception.zep.c
 	yb/application/modulerouter.zep.c
-	yb/config.zep.c
+	yb/application/routeruri.zep.c
+	yb/collection/exception.zep.c
+	yb/collection/mongocollection.zep.c
+	yb/collection/redishashserialized.zep.c
+	yb/factory/exception.zep.c
 	yb/factory/generated.zep.c
 	yb/factory/namespaced.zep.c
 	yb/image/captcha.zep.c
@@ -33,7 +40,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/classpath.zep.c
 	yb/loader/exception.zep.c
 	yb/loader/namespacedirectory.zep.c
-	yb/router/uri.zep.c
 	yb/serializer/exception.zep.c
 	yb/serializer/igbinary.zep.c
 	yb/serializer/json.zep.c

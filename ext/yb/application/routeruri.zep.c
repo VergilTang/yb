@@ -20,15 +20,15 @@
 #include "kernel/object.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Router_Uri) {
+ZEPHIR_INIT_CLASS(Yb_Application_RouterUri) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Router, Uri, yb, router_uri, yb_router_routerabstract_ce, yb_router_uri_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Application, RouterUri, yb, application_routeruri, yb_application_routerabstract_ce, yb_application_routeruri_method_entry, 0);
 
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Router_Uri, __construct) {
+PHP_METHOD(Yb_Application_RouterUri, __construct) {
 
 	zephir_fcall_cache_entry *_9 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS, _6;
@@ -49,13 +49,13 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 	zephir_preg_match(_0, &_1, uri, m, 0, 0 , 0  TSRMLS_CC);
 	if (zephir_is_true(_0)) {
 		ZEPHIR_OBS_VAR(_2$$3);
-		zephir_array_fetch_long(&_2$$3, m, 1, PH_NOISY, "yb/router/uri.zep", 10 TSRMLS_CC);
+		zephir_array_fetch_long(&_2$$3, m, 1, PH_NOISY, "yb/application/routeruri.zep", 10 TSRMLS_CC);
 		zephir_get_strval(_3$$3, _2$$3);
 		ZEPHIR_SINIT_VAR(_4$$3);
 		ZVAL_STRING(&_4$$3, "#/+#", 0);
 		ZEPHIR_SINIT_VAR(_5$$3);
 		ZVAL_LONG(&_5$$3, 1);
-		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 43, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
+		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 10, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_NVAR(params);

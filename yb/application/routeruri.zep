@@ -1,6 +1,6 @@
-namespace Yb\Router;
+namespace Yb\Application;
 
-class Uri extends RouterAbstract
+class RouterUri extends RouterAbstract
 {
     public function __construct(string uri) -> void
     {

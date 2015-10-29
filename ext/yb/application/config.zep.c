@@ -1,11 +1,11 @@
 
 #ifdef HAVE_CONFIG_H
-#include "../ext_config.h"
+#include "../../ext_config.h"
 #endif
 
 #include <php.h>
-#include "../php_ext.h"
-#include "../ext.h"
+#include "../../php_ext.h"
+#include "../../ext.h"
 
 #include <Zend/zend_operators.h>
 #include <Zend/zend_exceptions.h>
@@ -25,21 +25,21 @@
 #include "kernel/string.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Config) {
+ZEPHIR_INIT_CLASS(Yb_Application_Config) {
 
-	ZEPHIR_REGISTER_CLASS(Yb, Config, yb, config, yb_config_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS(Yb\\Application, Config, yb, application_config, yb_application_config_method_entry, 0);
 
-	zend_declare_property_null(yb_config_ce, SL("dirs"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_config_ce, SL("dirs"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_config_ce, SL("exts"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_config_ce, SL("exts"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_config_ce, SL("configs"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_config_ce, SL("configs"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Config, __construct) {
+PHP_METHOD(Yb_Application_Config, __construct) {
 
 	HashTable *_1, *_4;
 	HashPosition _0, _3;
@@ -59,10 +59,10 @@ PHP_METHOD(Yb_Config, __construct) {
 
 
 	if (unlikely(zephir_fast_count_int(exts TSRMLS_CC) < 1)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_exception_ce, "Empty exts", "yb/config.zep", 14);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_application_exception_ce, "Empty exts", "yb/application/config.zep", 14);
 		return;
 	}
-	zephir_is_iterable(dirs, &_1, &_0, 0, 0, "yb/config.zep", 20);
+	zephir_is_iterable(dirs, &_1, &_0, 0, 0, "yb/application/config.zep", 20);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -70,7 +70,7 @@ PHP_METHOD(Yb_Config, __construct) {
 		ZEPHIR_GET_HVALUE(i, _2);
 		zephir_update_property_array(this_ptr, SL("dirs"), i, i TSRMLS_CC);
 	}
-	zephir_is_iterable(exts, &_4, &_3, 0, 0, "yb/config.zep", 23);
+	zephir_is_iterable(exts, &_4, &_3, 0, 0, "yb/application/config.zep", 23);
 	for (
 	  ; zephir_hash_get_current_data_ex(_4, (void**) &_5, &_3) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_4, &_3)
@@ -82,7 +82,7 @@ PHP_METHOD(Yb_Config, __construct) {
 
 }
 
-PHP_METHOD(Yb_Config, addDir) {
+PHP_METHOD(Yb_Application_Config, addDir) {
 
 	zval *dir_param = NULL, *_0;
 	zval *dir = NULL;
@@ -101,7 +101,7 @@ PHP_METHOD(Yb_Config, addDir) {
 
 }
 
-PHP_METHOD(Yb_Config, __get) {
+PHP_METHOD(Yb_Application_Config, __get) {
 
 	HashTable *_3, *_7$$4;
 	HashPosition _2, _6$$4;
@@ -124,14 +124,14 @@ PHP_METHOD(Yb_Config, __get) {
 	ZEPHIR_INIT_NVAR(config);
 	array_init(config);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("dirs"), PH_NOISY_CC);
-	zephir_is_iterable(_1, &_3, &_2, 0, 0, "yb/config.zep", 55);
+	zephir_is_iterable(_1, &_3, &_2, 0, 0, "yb/application/config.zep", 55);
 	for (
 	  ; zephir_hash_get_current_data_ex(_3, (void**) &_4, &_2) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_3, &_2)
 	) {
 		ZEPHIR_GET_HVALUE(d, _4);
 		_5$$4 = zephir_fetch_nproperty_this(this_ptr, SL("exts"), PH_NOISY_CC);
-		zephir_is_iterable(_5$$4, &_7$$4, &_6$$4, 0, 0, "yb/config.zep", 53);
+		zephir_is_iterable(_5$$4, &_7$$4, &_6$$4, 0, 0, "yb/application/config.zep", 53);
 		for (
 		  ; zephir_hash_get_current_data_ex(_7$$4, (void**) &_8$$4, &_6$$4) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_7$$4, &_6$$4)
@@ -159,7 +159,7 @@ PHP_METHOD(Yb_Config, __get) {
 
 }
 
-PHP_METHOD(Yb_Config, get) {
+PHP_METHOD(Yb_Application_Config, get) {
 
 	zend_bool _6$$3;
 	HashTable *_4;
@@ -188,7 +188,7 @@ PHP_METHOD(Yb_Config, get) {
 	zephir_get_strval(_2, _1);
 	ZEPHIR_CALL_METHOD(&returnValue, this_ptr, "__get", NULL, 0, _2);
 	zephir_check_call_status();
-	zephir_is_iterable(parts, &_4, &_3, 0, 0, "yb/config.zep", 74);
+	zephir_is_iterable(parts, &_4, &_3, 0, 0, "yb/application/config.zep", 74);
 	for (
 	  ; zephir_hash_get_current_data_ex(_4, (void**) &_5, &_3) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_4, &_3)

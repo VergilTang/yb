@@ -49,11 +49,10 @@ PHP_METHOD(Yb_Factory_ClassName, has) {
 
 PHP_METHOD(Yb_Factory_ClassName, get) {
 
-	zephir_nts_static zend_class_entry *_3$$3 = NULL;
-	zend_class_entry *_6;
+	zend_class_entry *_5;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *_0 = NULL, *_5 = NULL, *_2$$3;
-	zval *name = NULL, *className = NULL, *_1 = NULL, *_4$$3;
+	zval *name_param = NULL, *_0 = NULL, *_4 = NULL, *_2$$3;
+	zval *name = NULL, *className = NULL, *_1 = NULL, *_3$$3;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &name_param);
@@ -67,23 +66,18 @@ PHP_METHOD(Yb_Factory_ClassName, get) {
 	ZEPHIR_CPY_WRT(className, _1);
 	if (unlikely(!(zephir_class_exists(className, 1 TSRMLS_CC)))) {
 		ZEPHIR_INIT_VAR(_2$$3);
-		if (!_3$$3) {
-			_3$$3 = zend_fetch_class(SL("Yb\\Factory\\Exception"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-		}
-		object_init_ex(_2$$3, _3$$3);
-		if (zephir_has_constructor(_2$$3 TSRMLS_CC)) {
-			ZEPHIR_INIT_VAR(_4$$3);
-			ZEPHIR_CONCAT_SV(_4$$3, "Invalid product: ", name);
-			ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 0, _4$$3);
-			zephir_check_call_status();
-		}
+		object_init_ex(_2$$3, yb_factory_exception_ce);
+		ZEPHIR_INIT_VAR(_3$$3);
+		ZEPHIR_CONCAT_SV(_3$$3, "Invalid product: ", name);
+		ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 1, _3$$3);
+		zephir_check_call_status();
 		zephir_throw_exception_debug(_2$$3, "yb/factory/classname.zep", 16 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	zephir_fetch_safe_class(_5, className);
-		_6 = zend_fetch_class(Z_STRVAL_P(_5), Z_STRLEN_P(_5), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-	object_init_ex(return_value, _6);
+	zephir_fetch_safe_class(_4, className);
+		_5 = zend_fetch_class(Z_STRVAL_P(_4), Z_STRLEN_P(_4), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+	object_init_ex(return_value, _5);
 	if (zephir_has_constructor(return_value TSRMLS_CC)) {
 		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0);
 		zephir_check_call_status();

@@ -1,4 +1,4 @@
-namespace Yb;
+namespace Yb\Application;
 
 class Config
 {

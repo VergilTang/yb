@@ -243,7 +243,7 @@ PHP_METHOD(Yb_Image_Image, drawTo) {
 		ZVAL_LONG(&_5$$12, position);
 		ZEPHIR_INIT_VAR(_6$$12);
 		ZEPHIR_CONCAT_SV(_6$$12, "Invalid position: ", &_5$$12);
-		ZEPHIR_CALL_METHOD(NULL, _4$$12, "__construct", NULL, 3, _6$$12);
+		ZEPHIR_CALL_METHOD(NULL, _4$$12, "__construct", NULL, 1, _6$$12);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_4$$12, "yb/image/image.zep", 76 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
