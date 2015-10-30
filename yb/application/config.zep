@@ -60,7 +60,7 @@ class Config
     {
         var parts, part, returnValue, tmpValue;
 
-        let parts = explode('.', name);
+        let parts = explode(".", name);
         let returnValue = this->__get((string) array_shift(parts));
 
         for part in parts {

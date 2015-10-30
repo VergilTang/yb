@@ -161,12 +161,12 @@ PHP_METHOD(Yb_Application_Config, __get) {
 
 PHP_METHOD(Yb_Application_Config, get) {
 
-	zend_bool _6$$3;
-	HashTable *_4;
-	HashPosition _3;
+	zend_bool _5$$3;
+	HashTable *_3;
+	HashPosition _2;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *defaultValue = NULL, *parts = NULL, *part = NULL, *returnValue = NULL, *tmpValue = NULL, _0, *_1 = NULL, **_5;
-	zval *name = NULL, *_2 = NULL;
+	zval *name_param = NULL, *defaultValue = NULL, *parts = NULL, *part = NULL, *returnValue = NULL, *tmpValue = NULL, *_0 = NULL, **_4;
+	zval *name = NULL, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &name_param, &defaultValue);
@@ -177,28 +177,26 @@ PHP_METHOD(Yb_Application_Config, get) {
 	}
 
 
-	ZEPHIR_SINIT_VAR(_0);
-	ZVAL_LONG(&_0, '.');
 	ZEPHIR_INIT_VAR(parts);
-	zephir_fast_explode(parts, &_0, name, LONG_MAX TSRMLS_CC);
+	zephir_fast_explode_str(parts, SL("."), name, LONG_MAX TSRMLS_CC);
 	ZEPHIR_MAKE_REF(parts);
-	ZEPHIR_CALL_FUNCTION(&_1, "array_shift", NULL, 9, parts);
+	ZEPHIR_CALL_FUNCTION(&_0, "array_shift", NULL, 9, parts);
 	ZEPHIR_UNREF(parts);
 	zephir_check_call_status();
-	zephir_get_strval(_2, _1);
-	ZEPHIR_CALL_METHOD(&returnValue, this_ptr, "__get", NULL, 0, _2);
+	zephir_get_strval(_1, _0);
+	ZEPHIR_CALL_METHOD(&returnValue, this_ptr, "__get", NULL, 0, _1);
 	zephir_check_call_status();
-	zephir_is_iterable(parts, &_4, &_3, 0, 0, "yb/application/config.zep", 74);
+	zephir_is_iterable(parts, &_3, &_2, 0, 0, "yb/application/config.zep", 74);
 	for (
-	  ; zephir_hash_get_current_data_ex(_4, (void**) &_5, &_3) == SUCCESS
-	  ; zephir_hash_move_forward_ex(_4, &_3)
+	  ; zephir_hash_get_current_data_ex(_3, (void**) &_4, &_2) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_3, &_2)
 	) {
-		ZEPHIR_GET_HVALUE(part, _5);
-		_6$$3 = Z_TYPE_P(returnValue) != IS_ARRAY;
-		if (!(_6$$3)) {
-			_6$$3 = !(zephir_array_isset_fetch(&tmpValue, returnValue, part, 1 TSRMLS_CC));
+		ZEPHIR_GET_HVALUE(part, _4);
+		_5$$3 = Z_TYPE_P(returnValue) != IS_ARRAY;
+		if (!(_5$$3)) {
+			_5$$3 = !(zephir_array_isset_fetch(&tmpValue, returnValue, part, 1 TSRMLS_CC));
 		}
-		if (_6$$3) {
+		if (_5$$3) {
 			RETVAL_ZVAL(defaultValue, 1, 0);
 			RETURN_MM();
 		}

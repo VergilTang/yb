@@ -3,6 +3,9 @@ if (!isset($_SERVER['REQUEST_TIME_FLOAT'])) {
     $_SERVER['REQUEST_TIME_FLOAT'] = microtime(true);
 }
 header('Content-type: text/plain; charset=UTF-8');
+
+set_error_handler(Yb\Std::THROW_ERROR);
+
 $app = null;
 try {
     $app = new Yb\Application\Core();

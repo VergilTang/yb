@@ -5,8 +5,17 @@ class Test extends \YbApp\Modules\Frontend\ControllerBase
 {
     public function redisAction()
     {
+        $config = new \Yb\Application\Config([
+            __DIR__.'/../config',
+        ], [
+            'php',
+            'local.php',
+        ]);
+
+        $host = $config->get('redis.host');
+
         $redis = new \Redis();
-        $redis->connect('192.168.255.11', 6379);
+        $redis->connect($host, 6379);
 
         // $c = new \Yb\Collection\RedisHash($redis, 'test');
         $c = new \Yb\Collection\RedisHashSerialized($redis, 'test', new \Yb\Serializer\Php());
