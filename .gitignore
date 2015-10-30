@@ -1,3 +1,4 @@
 .svn
 /.temp
 /build/*.dll
+*.local.php
