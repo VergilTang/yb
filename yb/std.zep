@@ -189,6 +189,21 @@ class Std
         return result;
     }
 
+    public static function valueAt(array arr, string key, var defaultValue = null)
+    {
+        var value;
+
+        if fetch value, arr[key] {
+            return value;
+        }
+
+        if unlikely defaultValue === null {
+            throw new Exception("Missing value at: " . key);
+        }
+
+        return defaultValue;
+    }
+
     public static function valueOf(array arr, string key, var defaultValue = null)
     {
         var parts, part, returnValue, tmpValue;
@@ -204,6 +219,147 @@ class Std
         }
 
         return returnValue;
+    }
+
+    public static function indexedData(array data, string indexKey) -> array
+    {
+        var k, v, arr = [], indexValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required: " . k);
+            }
+            if unlikely ! fetch indexValue, v[indexKey] {
+                throw new Exception("Cannot find value of index at: " . k);
+            }
+
+            let arr[indexValue] = v;
+        }
+
+        return arr;
+    }
+
+    public static function indexedValues(array data, string indexKey, string valueKey) -> array
+    {
+        var k, v, arr = [], indexValue, valueValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch indexValue, v[indexKey] {
+                throw new Exception("Cannot find value of index at: " . k);
+            }
+            if unlikely ! fetch valueValue, v[valueKey] {
+                throw new Exception("Cannot find value of value at: " . k);
+            }
+
+            let arr[indexValue] = valueValue;
+        }
+
+        return arr;
+    }
+
+    public static function groupedData(array data, string groupKey) -> array
+    {
+        var k, v, arr = [], groupValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch groupValue, v[groupKey] {
+                throw new Exception("Cannot find value of group at: " . k);
+            }
+
+            let arr[groupValue][] = v;
+        }
+
+        return arr;
+    }
+
+    public static function groupedValues(array data, string groupKey, string valueKey) -> array
+    {
+        var k, v, arr = [], groupValue, valueValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch groupValue, v[groupKey] {
+                throw new Exception("Cannot find value of group at: " . k);
+            }
+            if unlikely ! fetch valueValue, v[valueKey] {
+                throw new Exception("Cannot find value of value at: " . k);
+            }
+
+            let arr[groupValue][] = valueValue;
+        }
+
+        return arr;
+    }
+
+    public static function groupIndexedData(array data, string groupKey, string indexKey) -> array
+    {
+        var k, v, arr = [], groupValue, indexValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch groupValue, v[groupKey] {
+                throw new Exception("Cannot find value of group at: " . k);
+            }
+            if unlikely ! fetch indexValue, v[indexKey] {
+                throw new Exception("Cannot find value of index at: " . k);
+            }
+
+            let arr[groupValue][indexValue] = v;
+        }
+
+        return arr;
+    }
+
+    public static function groupIndexedValues(array data, string groupKey, string indexKey, string valueKey) -> array
+    {
+        var k, v, arr = [], groupValue, indexValue, valueValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch groupValue, v[groupKey] {
+                throw new Exception("Cannot find value of group at: " . k);
+            }
+            if unlikely ! fetch indexValue, v[indexKey] {
+                throw new Exception("Cannot find value of index at: " . k);
+            }
+            if unlikely ! fetch valueValue, v[valueKey] {
+                throw new Exception("Cannot find value of value at: " . k);
+            }
+
+            let arr[groupValue][indexValue] = valueValue;
+        }
+
+        return arr;
+    }
+
+    public static function uniqueValues(array data, string uniqueKey) -> array
+    {
+        var k, v, arr = [], uniqueValue;
+
+        for k, v in data {
+            if unlikely typeof v != "array" {
+                throw new Exception("Invalid item type, array required at: " . k);
+            }
+            if unlikely ! fetch uniqueValue, v[uniqueKey] {
+                throw new Exception("Cannot find value of unique at: " . k);
+            }
+
+            let arr[uniqueValue] = null;
+        }
+
+        return array_keys(arr);
     }
 
     public static function newInstanceOf(string className, array args = null)
@@ -243,7 +399,7 @@ class Std
 
     public static function throwError(long n, string s, string f, string l, array context = null) -> void
     {
-        throw new \ErrorException(s . " (" . f . ":" . l . ")", n);
+        throw new \ErrorException(sprintf("%s (%s:%d)", s, f, l), n);
     }
 
     public static function outputScript(string path, array data) -> void

@@ -69,7 +69,7 @@ PHP_METHOD(Yb_Factory_ClassName, get) {
 		object_init_ex(_2$$3, yb_factory_exception_ce);
 		ZEPHIR_INIT_VAR(_3$$3);
 		ZEPHIR_CONCAT_SV(_3$$3, "Invalid product: ", name);
-		ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 1, _3$$3);
+		ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 2, _3$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_2$$3, "yb/factory/classname.zep", 16 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

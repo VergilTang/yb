@@ -102,7 +102,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	while (1) {
 		ZEPHIR_SINIT_NVAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "\\", 0);
-		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 51, match, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 70, match, &_1$$3);
 		zephir_check_call_status();
 		_3$$3 = ZEPHIR_IS_FALSE_IDENTICAL(pos);
 		if (!(_3$$3)) {
@@ -158,7 +158,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 		object_init_ex(_14$$9, yb_loader_exception_ce);
 		ZEPHIR_INIT_VAR(_15$$9);
 		ZEPHIR_CONCAT_SVSV(_15$$9, "Cannot find class: ", className, ", in path: ", path);
-		ZEPHIR_CALL_METHOD(NULL, _14$$9, "__construct", NULL, 1, _15$$9);
+		ZEPHIR_CALL_METHOD(NULL, _14$$9, "__construct", NULL, 2, _15$$9);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_14$$9, "yb/loader/namespacedirectory.zep", 55 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

@@ -3,7 +3,8 @@ extern zend_class_entry *yb_collection_redishashserialized_ce;
 
 ZEPHIR_INIT_CLASS(Yb_Collection_RedisHashSerialized);
 
-PHP_METHOD(Yb_Collection_RedisHashSerialized, __construct);
+PHP_METHOD(Yb_Collection_RedisHashSerialized, serializeValue);
+PHP_METHOD(Yb_Collection_RedisHashSerialized, unserializeValue);
 PHP_METHOD(Yb_Collection_RedisHashSerialized, set);
 PHP_METHOD(Yb_Collection_RedisHashSerialized, get);
 PHP_METHOD(Yb_Collection_RedisHashSerialized, setMany);
@@ -11,10 +12,12 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, getMany);
 PHP_METHOD(Yb_Collection_RedisHashSerialized, setAll);
 PHP_METHOD(Yb_Collection_RedisHashSerialized, getAll);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_collection_redishashserialized___construct, 0, 0, 3)
-	ZEND_ARG_INFO(0, redis)
-	ZEND_ARG_INFO(0, hashName)
-	ZEND_ARG_OBJ_INFO(0, serializer, Yb\\Serializer\\SerializerInterface, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_collection_redishashserialized_serializevalue, 0, 0, 1)
+	ZEND_ARG_INFO(0, value)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_collection_redishashserialized_unserializevalue, 0, 0, 1)
+	ZEND_ARG_INFO(0, value)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_collection_redishashserialized_set, 0, 0, 2)
@@ -39,7 +42,8 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_collection_redishashserialized_setall, 0, 0, 1
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_collection_redishashserialized_method_entry) {
-	PHP_ME(Yb_Collection_RedisHashSerialized, __construct, arginfo_yb_collection_redishashserialized___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Yb_Collection_RedisHashSerialized, serializeValue, arginfo_yb_collection_redishashserialized_serializevalue, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Collection_RedisHashSerialized, unserializeValue, arginfo_yb_collection_redishashserialized_unserializevalue, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Collection_RedisHashSerialized, set, arginfo_yb_collection_redishashserialized_set, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Collection_RedisHashSerialized, get, arginfo_yb_collection_redishashserialized_get, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Collection_RedisHashSerialized, setMany, arginfo_yb_collection_redishashserialized_setmany, ZEND_ACC_PUBLIC)

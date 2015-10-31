@@ -11,13 +11,15 @@ if (PHP_YB != "no") {
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
   
-  ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c std.zep.c", "yb");
+  ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c core.zep.c std.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/db", "dbabstract.zep.c exception.zep.c pdoabstract.zep.c oci8.zep.c pdomysql.zep.c pdopgsql.zep.c queryexception.zep.c transactionexception.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/collection", "collectioninterface.zep.c redishash.zep.c exception.zep.c mongocollection.zep.c redishashserialized.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/factory", "factoryinterface.zep.c classname.zep.c exception.zep.c generated.zep.c namespaced.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c text.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/serializer", "serializerinterface.zep.c exception.zep.c igbinary.zep.c json.zep.c php.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/loader", "loaderabstract.zep.c classpath.zep.c exception.zep.c namespacedirectory.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/application", "applicationfilterinterface.zep.c routerabstract.zep.c config.zep.c core.zep.c exception.zep.c modulerouter.zep.c routeruri.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/tools", "exception.zep.c smtpmailer.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/logger", "loggerabstract.zep.c exception.zep.c filelogger.zep.c nulllogger.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/upload", "storageabstract.zep.c exception.zep.c filesystem.zep.c ftp.zep.c uploadedfile.zep.c uploader.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/router", "exception.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/tools", "exception.zep.c redisratelimiter.zep.c smtpmailer.zep.c", "yb");
   ADD_FLAG("CFLAGS_YB", "/D ZEPHIR_RELEASE");
 }

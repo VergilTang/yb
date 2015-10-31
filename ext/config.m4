@@ -10,25 +10,28 @@ if test "$PHP_YB" = "yes"; then
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/db/dbabstract.zep.c
 	yb/collection/collectioninterface.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
-	yb/serializer/serializerinterface.zep.c
+	yb/db/exception.zep.c
+	yb/db/pdoabstract.zep.c
 	yb/factory/classname.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
-	yb/application/applicationfilterinterface.zep.c
-	yb/application/routerabstract.zep.c
+	yb/logger/loggerabstract.zep.c
+	yb/upload/storageabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
-	yb/application/config.zep.c
-	yb/application/core.zep.c
-	yb/application/exception.zep.c
-	yb/application/modulerouter.zep.c
-	yb/application/routeruri.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
 	yb/collection/redishashserialized.zep.c
+	yb/core.zep.c
+	yb/db/oci8.zep.c
+	yb/db/pdomysql.zep.c
+	yb/db/pdopgsql.zep.c
+	yb/db/queryexception.zep.c
+	yb/db/transactionexception.zep.c
 	yb/factory/exception.zep.c
 	yb/factory/generated.zep.c
 	yb/factory/namespaced.zep.c
@@ -40,13 +43,19 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/classpath.zep.c
 	yb/loader/exception.zep.c
 	yb/loader/namespacedirectory.zep.c
-	yb/serializer/exception.zep.c
-	yb/serializer/igbinary.zep.c
-	yb/serializer/json.zep.c
-	yb/serializer/php.zep.c
+	yb/logger/exception.zep.c
+	yb/logger/filelogger.zep.c
+	yb/logger/nulllogger.zep.c
+	yb/router/exception.zep.c
 	yb/std.zep.c
 	yb/tools/exception.zep.c
-	yb/tools/smtpmailer.zep.c "
+	yb/tools/redisratelimiter.zep.c
+	yb/tools/smtpmailer.zep.c
+	yb/upload/exception.zep.c
+	yb/upload/filesystem.zep.c
+	yb/upload/ftp.zep.c
+	yb/upload/uploadedfile.zep.c
+	yb/upload/uploader.zep.c "
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

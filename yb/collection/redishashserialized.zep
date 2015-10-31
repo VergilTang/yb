@@ -1,20 +1,20 @@
 namespace Yb\Collection;
 
-use Yb\Serializer\SerializerInterface;
-
 class RedisHashSerialized extends RedisHash
 {
-    protected serializer;
-
-    public function __construct(var redis, string hashName, <SerializerInterface> serializer) -> void
+    public function serializeValue(var value) -> string
     {
-        parent::__construct(redis, hashName);
-        let this->serializer = serializer;
+        return serialize(value);
+    }
+
+    public function unserializeValue(string value)
+    {
+        return unserialize(value);
     }
 
     public function set(string key, var value) -> void
     {
-        parent::set(key, this->serializer->serialize(value));
+        parent::set(key, this->serializeValue(value));
     }
 
     public function get(string key)
@@ -26,7 +26,7 @@ class RedisHashSerialized extends RedisHash
             return;
         }
 
-        return this->serializer->unserialize(value);
+        return this->unserializeValue(value);
     }
 
     public function setMany(array keyValues) -> void
@@ -34,7 +34,7 @@ class RedisHashSerialized extends RedisHash
         var k, v, data = [];
 
         for k, v in keyValues {
-            let data[k] = this->serializer->serialize(v);
+            let data[k] = this->serializeValue(v);
         }
 
         parent::setMany(data);
@@ -46,7 +46,7 @@ class RedisHashSerialized extends RedisHash
 
         let a = parent::getMany(keys);
         for k, v in a {
-            let data[k] = this->serializer->unserialize(v);
+            let data[k] = this->unserializeValue(v);
         }
 
         return data;
@@ -57,7 +57,7 @@ class RedisHashSerialized extends RedisHash
         var k, v, data = [];
 
         for k, v in keyValues {
-            let data[k] = this->serializer->serialize(v);
+            let data[k] = this->serializeValue(v);
         }
 
         parent::setAll(data);
@@ -69,7 +69,7 @@ class RedisHashSerialized extends RedisHash
 
         let a = parent::getAll();
         for k, v in a {
-            let data[k] = this->serializer->unserialize(v);
+            let data[k] = this->unserializeValue(v);
         }
 
         return data;

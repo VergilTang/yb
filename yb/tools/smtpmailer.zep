@@ -1,5 +1,7 @@
 namespace Yb\Tools;
 
+use Yb\Std;
+
 class SmtpMailer
 {
     const EOL = "\r\n";
@@ -9,22 +11,25 @@ class SmtpMailer
 
     public function __construct(array options) -> void
     {
-        var socket, timeout, secure, port, from, name;
+        string host, user, passwd, from, name;
+        long timeout, port;
+        boolean secure;
+        var socket;
 
-        if ! fetch timeout, options["timeout"] {
-            let timeout = 10;
-        }
+        let host = (string) Std::valueAt(options, "host");
+        let user = (string) Std::valueAt(options, "user");
+        let passwd = (string) Std::valueAt(options, "passwd");
+        let from = (string) Std::valueAt(options, "from", user);
+        let name = (string) Std::valueAt(options, "name", "");
+        let timeout = (long) Std::valueAt(options, "timeout", 10);
+        let secure = (boolean) Std::valueAt(options, "secure", false);
 
-        if fetch secure, options["secure"] && secure {
-            if ! fetch port, options["port"] {
-                let port = 465;
-            }
-            let socket = stream_socket_client(sprintf("tcp://%s:%d", options["host"], port), null, null, timeout);
+        if secure {
+            let port = (long) Std::valueAt(options, "port", 465);
+            let socket = stream_socket_client(sprintf("tcp://%s:%d", host, port), null, null, timeout);
         } else {
-            if ! fetch port, options["port"] {
-                let port = 25;
-            }
-            let socket = fsockopen(options["host"], port, null, null, timeout);
+            let port = (long) Std::valueAt(options, "port", 25);
+            let socket = fsockopen(host, port, null, null, timeout);
         }
 
         if unlikely ! socket {
@@ -41,21 +46,13 @@ class SmtpMailer
         }
 
         let this->socket = socket;
+        let this->from = this->pack(name, from);
 
         this->cmd("CONNECT", "", 220);
         this->cmd("EHLO HELO", "EHLO HELO", 250);
         this->cmd("AUTH LOGIN", "AUTH LOGIN", 334);
-        this->cmd("AUTH USER", base64_encode(options["user"]), 334);
-        this->cmd("AUTH PASSWD", base64_encode(options["passwd"]), 235);
-
-        if ! fetch from, options["from"] {
-            let from = options["user"];
-        }
-        if ! fetch name, options["name"] {
-            let name = "";
-        }
-
-        let this->from = this->pack(name, from);
+        this->cmd("AUTH USER", base64_encode(user), 334);
+        this->cmd("AUTH PASSWD", base64_encode(passwd), 235);
     }
 
     public function sendTo(array message, array to, array cc = null, array bcc = null) -> void
@@ -169,13 +166,13 @@ class SmtpMailer
     {
         string output;
 
-        if unlikely cmd->length() > 0 && ! fputs(this->socket, cmd . self::EOL) {
+        if unlikely cmd && ! fputs(this->socket, cmd . self::EOL) {
             throw new Exception("Cannot fputs to socket on step: " . step);
         }
 
         let output = rtrim(fread(this->socket, 1024));
 
-        if expected->length() > 0 && strpos(output, expected) !== 0 {
+        if expected && strpos(output, expected) !== 0 {
             throw new Exception("Unexpected response on step: " . step . ", with output: " . output);
         }
     }
@@ -184,10 +181,10 @@ class SmtpMailer
     {
         string s = "";
 
-        if name->length() > 0 {
+        if name {
             let s .= "=?UTF-8?B?" . base64_encode(name) . "?=";
         }
-        if addr->length() > 0 {
+        if addr {
             let s .= "<" . addr . ">";
         }
 
