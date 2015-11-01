@@ -46,11 +46,11 @@ abstract class PdoAbstract extends DbAbstract
         }
 
         let r = (boolean) s->execute();
-        this->addQuery(sql, (double) microtime(true) - t);
+        this->addQuery(sql, params, (double) microtime(true) - t);
 
         if unlikely ! r {
             let e = s->errorInfo();
-            throw new QueryException(e[2] . PHP_EOL . "[SQL] " . sql);
+            throw new QueryException(e[2] . " [SQL] " . sql);
         }
     }
 

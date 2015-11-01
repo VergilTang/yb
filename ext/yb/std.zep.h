@@ -10,6 +10,7 @@ PHP_METHOD(Yb_Std, camelCase);
 PHP_METHOD(Yb_Std, normalCase);
 PHP_METHOD(Yb_Std, uuid);
 PHP_METHOD(Yb_Std, randString);
+PHP_METHOD(Yb_Std, tr);
 PHP_METHOD(Yb_Std, valueAt);
 PHP_METHOD(Yb_Std, valueOf);
 PHP_METHOD(Yb_Std, indexedData);
@@ -54,6 +55,11 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_randstring, 0, 0, 1)
 	ZEND_ARG_INFO(0, len)
 	ZEND_ARG_INFO(0, charList)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_tr, 0, 0, 1)
+	ZEND_ARG_INFO(0, message)
+	ZEND_ARG_ARRAY_INFO(0, context, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_valueat, 0, 0, 2)
@@ -147,6 +153,7 @@ ZEPHIR_INIT_FUNCS(yb_std_method_entry) {
 	PHP_ME(Yb_Std, normalCase, arginfo_yb_std_normalcase, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, uuid, arginfo_yb_std_uuid, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, randString, arginfo_yb_std_randstring, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Yb_Std, tr, arginfo_yb_std_tr, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, valueAt, arginfo_yb_std_valueat, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, valueOf, arginfo_yb_std_valueof, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Yb_Std, indexedData, arginfo_yb_std_indexeddata, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)

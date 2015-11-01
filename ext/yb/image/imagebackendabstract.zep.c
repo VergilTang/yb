@@ -16,6 +16,7 @@
 #include "kernel/object.h"
 #include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/fcall.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Image_ImageBackendAbstract) {
@@ -57,46 +58,6 @@ ZEPHIR_INIT_CLASS(Yb_Image_ImageBackendAbstract) {
 	zend_declare_class_constant_double(yb_image_imagebackendabstract_ce, SL("DEFAULT_R_OVERLAP"), 0.2 TSRMLS_CC);
 
 	return SUCCESS;
-
-}
-
-PHP_METHOD(Yb_Image_ImageBackendAbstract, setDefaultOptions) {
-
-	HashTable *_1;
-	HashPosition _0;
-	zval *options_param = NULL, *k = NULL, *v = NULL, **_2;
-	zval *options = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &options_param);
-
-	zephir_get_arrval(options, options_param);
-
-
-	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/image/imagebackendabstract.zep", 32);
-	for (
-	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
-	  ; zephir_hash_move_forward_ex(_1, &_0)
-	) {
-		ZEPHIR_GET_HMKEY(k, _1, _0);
-		ZEPHIR_GET_HVALUE(v, _2);
-		zephir_update_property_array(this_ptr, SL("defaultOptions"), k, v TSRMLS_CC);
-	}
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Image_ImageBackendAbstract, getDefaultOptions) {
-
-	zval *_0;
-
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("defaultOptions"), PH_NOISY_CC);
-	if (zephir_is_true(_0)) {
-		RETURN_MEMBER(this_ptr, "defaultOptions");
-	}
-	array_init(return_value);
-	return;
 
 }
 
@@ -145,6 +106,85 @@ PHP_METHOD(Yb_Image_ImageBackendAbstract, save) {
 }
 
 PHP_METHOD(Yb_Image_ImageBackendAbstract, destroy) {
+
+}
+
+PHP_METHOD(Yb_Image_ImageBackendAbstract, setDefaultOptions) {
+
+	HashTable *_1;
+	HashPosition _0;
+	zval *options_param = NULL, *k = NULL, *v = NULL, **_2;
+	zval *options = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &options_param);
+
+	zephir_get_arrval(options, options_param);
+
+
+	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/image/imagebackendabstract.zep", 47);
+	for (
+	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_1, &_0)
+	) {
+		ZEPHIR_GET_HMKEY(k, _1, _0);
+		ZEPHIR_GET_HVALUE(v, _2);
+		zephir_update_property_array(this_ptr, SL("defaultOptions"), k, v TSRMLS_CC);
+	}
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Image_ImageBackendAbstract, getDefaultOptions) {
+
+	zval *_0;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("defaultOptions"), PH_NOISY_CC);
+	if (zephir_is_true(_0)) {
+		RETURN_MEMBER(this_ptr, "defaultOptions");
+	}
+	array_init(return_value);
+	return;
+
+}
+
+PHP_METHOD(Yb_Image_ImageBackendAbstract, newText) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	object_init_ex(return_value, yb_image_text_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Image_ImageBackendAbstract, newImage) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	object_init_ex(return_value, yb_image_image_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Image_ImageBackendAbstract, newCaptcha) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	object_init_ex(return_value, yb_image_captcha_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	zephir_check_call_status();
+	RETURN_MM();
 
 }
 

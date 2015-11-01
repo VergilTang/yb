@@ -15,12 +15,10 @@
 #include "kernel/object.h"
 #include "kernel/operators.h"
 #include "kernel/memory.h"
-#include "kernel/hash.h"
-#include "kernel/concat.h"
-#include "kernel/array.h"
 #include "kernel/fcall.h"
 #include "kernel/string.h"
 #include "kernel/exception.h"
+#include "kernel/concat.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Logger_FileLogger) {
@@ -51,12 +49,11 @@ PHP_METHOD(Yb_Logger_FileLogger, __construct) {
 
 PHP_METHOD(Yb_Logger_FileLogger, log) {
 
-	HashTable *_1;
-	HashPosition _0;
+	zephir_fcall_cache_entry *_3 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *context = NULL;
-	zval *level_param = NULL, *message_param = NULL, *context_param = NULL, *k = NULL, *v = NULL, *replace = NULL, **_2, _5 = zval_used_for_init, *_6 = NULL, *_7 = NULL, *_8 = NULL, *_4$$3 = NULL;
-	zval *level = NULL, *message = NULL, *_3$$3 = NULL;
+	zval *level_param = NULL, *message_param = NULL, *context_param = NULL, _0 = zval_used_for_init, *_1 = NULL, *_2 = NULL, *_4 = NULL;
+	zval *level = NULL, *message = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 1, &level_param, &message_param, &context_param);
@@ -71,31 +68,17 @@ PHP_METHOD(Yb_Logger_FileLogger, log) {
 	}
 
 
-	ZEPHIR_INIT_VAR(replace);
-	array_init(replace);
-	zephir_is_iterable(context, &_1, &_0, 0, 0, "yb/logger/filelogger.zep", 20);
-	for (
-	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
-	  ; zephir_hash_move_forward_ex(_1, &_0)
-	) {
-		ZEPHIR_GET_HMKEY(k, _1, _0);
-		ZEPHIR_GET_HVALUE(v, _2);
-		zephir_get_strval(_3$$3, v);
-		ZEPHIR_INIT_LNVAR(_4$$3);
-		ZEPHIR_CONCAT_SVS(_4$$3, "{", k, "}");
-		zephir_array_update_zval(&replace, _4$$3, &_3$$3, PH_COPY | PH_SEPARATE);
-	}
-	ZEPHIR_SINIT_VAR(_5);
-	ZVAL_STRING(&_5, "c", 0);
-	ZEPHIR_CALL_FUNCTION(&_6, "date", NULL, 71, &_5);
+	ZEPHIR_SINIT_VAR(_0);
+	ZVAL_STRING(&_0, "c", 0);
+	ZEPHIR_CALL_FUNCTION(&_1, "date", NULL, 69, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_7, "strtr", NULL, 72, message, replace);
+	ZEPHIR_CALL_CE_STATIC(&_2, yb_std_ce, "tr", &_3, 70, message, context);
 	zephir_check_call_status();
-	ZEPHIR_SINIT_NVAR(_5);
-	ZVAL_STRING(&_5, "[%s] [%s] %s\n", 0);
-	ZEPHIR_CALL_FUNCTION(&_8, "sprintf", NULL, 1, &_5, _6, level, _7);
+	ZEPHIR_SINIT_NVAR(_0);
+	ZVAL_STRING(&_0, "[%s] [%s] %s\n", 0);
+	ZEPHIR_CALL_FUNCTION(&_4, "sprintf", NULL, 1, &_0, _1, level, _2);
 	zephir_check_call_status();
-	zephir_update_property_array_append(this_ptr, SL("logs"), _8 TSRMLS_CC);
+	zephir_update_property_array_append(this_ptr, SL("logs"), _4 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -117,7 +100,7 @@ PHP_METHOD(Yb_Logger_FileLogger, flush) {
 	zephir_fast_join_str(_2, SL(""), _3 TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, (2 | 8));
-	ZEPHIR_CALL_FUNCTION(&_5, "file_put_contents", NULL, 73, _1, _2, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "file_put_contents", NULL, 71, _1, _2, &_4);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_5))) {
 		ZEPHIR_INIT_VAR(_6$$4);
@@ -127,7 +110,7 @@ PHP_METHOD(Yb_Logger_FileLogger, flush) {
 		ZEPHIR_CONCAT_SV(_8$$4, "Cannot append logs to file: ", _7$$4);
 		ZEPHIR_CALL_METHOD(NULL, _6$$4, "__construct", NULL, 2, _8$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_6$$4, "yb/logger/filelogger.zep", 35 TSRMLS_CC);
+		zephir_throw_exception_debug(_6$$4, "yb/logger/filelogger.zep", 31 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

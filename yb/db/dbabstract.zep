@@ -237,6 +237,32 @@ abstract class DbAbstract
         this->query(s, params);
     }
 
+    public function upsert(string table, array data, var primaryKey) -> void
+    {
+        var k, v, where = [];
+
+        if typeof primaryKey == "array" {
+            for k in primaryKey {
+                if unlikely ! fetch v, data[k] {
+                    throw new Exception("Cannot find primary key value in data: " . k);
+                }
+                let where[k] = k . " = " . this->quote(v);
+            }
+            if unlikely ! where {
+                throw new Exception("Cannot upsert with empty where");
+            }
+        } else {
+            let k = (string) primaryKey;
+            if unlikely ! fetch v, data[k] {
+                throw new Exception("Cannot find primary key value in data: " . k);
+            }
+            let where[k] = k . " = " . this->quote(v);
+        }
+
+        this->delete(table, implode(" AND ", where));
+        this->insert(table, data);
+    }
+
     public function parseSelect(array options) -> string
     {
         string table, field, where;
@@ -530,9 +556,9 @@ abstract class DbAbstract
     abstract protected function paginateQuery(string query, long limit, long offset) -> string;
     abstract protected function randomOrder() -> string;
 
-    protected function addQuery(string q, double t) -> void
+    protected function addQuery(string q, array p, double t) -> void
     {
-        let this->queries[] = sprintf("%s # %0.3fms", q, t * 1000.0);
+        let this->queries[] = sprintf("%s # %0.3fms %s", q, t * 1000.0, json_encode(p));
     }
 
 }

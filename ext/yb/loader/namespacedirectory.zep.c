@@ -102,7 +102,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	while (1) {
 		ZEPHIR_SINIT_NVAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "\\", 0);
-		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 70, match, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 68, match, &_1$$3);
 		zephir_check_call_status();
 		_3$$3 = ZEPHIR_IS_FALSE_IDENTICAL(pos);
 		if (!(_3$$3)) {

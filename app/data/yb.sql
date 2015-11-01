@@ -30,15 +30,6 @@ CREATE TABLE `admin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `admin`
---
-
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `announcement`
 --
 
@@ -56,15 +47,6 @@ CREATE TABLE `announcement` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `announcement`
---
-
-LOCK TABLES `announcement` WRITE;
-/*!40000 ALTER TABLE `announcement` DISABLE KEYS */;
-/*!40000 ALTER TABLE `announcement` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `attitude`
 --
 
@@ -79,15 +61,6 @@ CREATE TABLE `attitude` (
   PRIMARY KEY (`user_id`,`reply_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `attitude`
---
-
-LOCK TABLES `attitude` WRITE;
-/*!40000 ALTER TABLE `attitude` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attitude` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ban`
@@ -112,15 +85,6 @@ CREATE TABLE `ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ban`
---
-
-LOCK TABLES `ban` WRITE;
-/*!40000 ALTER TABLE `ban` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ban` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `blackword`
 --
 
@@ -134,15 +98,6 @@ CREATE TABLE `blackword` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `blackword`
---
-
-LOCK TABLES `blackword` WRITE;
-/*!40000 ALTER TABLE `blackword` DISABLE KEYS */;
-/*!40000 ALTER TABLE `blackword` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `comments`
@@ -165,15 +120,6 @@ CREATE TABLE `comments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `comments`
---
-
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `deleted`
 --
 
@@ -191,15 +137,6 @@ CREATE TABLE `deleted` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `deleted`
---
-
-LOCK TABLES `deleted` WRITE;
-/*!40000 ALTER TABLE `deleted` DISABLE KEYS */;
-/*!40000 ALTER TABLE `deleted` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `favor`
 --
 
@@ -213,15 +150,6 @@ CREATE TABLE `favor` (
   PRIMARY KEY (`user_id`,`reply_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `favor`
---
-
-LOCK TABLES `favor` WRITE;
-/*!40000 ALTER TABLE `favor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `favor` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `feed`
@@ -241,15 +169,6 @@ CREATE TABLE `feed` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feed`
---
-
-LOCK TABLES `feed` WRITE;
-/*!40000 ALTER TABLE `feed` DISABLE KEYS */;
-/*!40000 ALTER TABLE `feed` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `follow_post`
 --
 
@@ -263,15 +182,6 @@ CREATE TABLE `follow_post` (
   PRIMARY KEY (`user_id`,`target_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `follow_post`
---
-
-LOCK TABLES `follow_post` WRITE;
-/*!40000 ALTER TABLE `follow_post` DISABLE KEYS */;
-/*!40000 ALTER TABLE `follow_post` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `follow_topic`
@@ -289,15 +199,6 @@ CREATE TABLE `follow_topic` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `follow_topic`
---
-
-LOCK TABLES `follow_topic` WRITE;
-/*!40000 ALTER TABLE `follow_topic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `follow_topic` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `follow_user`
 --
 
@@ -311,15 +212,6 @@ CREATE TABLE `follow_user` (
   PRIMARY KEY (`user_id`,`target_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `follow_user`
---
-
-LOCK TABLES `follow_user` WRITE;
-/*!40000 ALTER TABLE `follow_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `follow_user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `manager`
@@ -339,15 +231,6 @@ CREATE TABLE `manager` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `manager`
---
-
-LOCK TABLES `manager` WRITE;
-/*!40000 ALTER TABLE `manager` DISABLE KEYS */;
-/*!40000 ALTER TABLE `manager` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `mob_device`
 --
 
@@ -365,15 +248,6 @@ CREATE TABLE `mob_device` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mob_device`
---
-
-LOCK TABLES `mob_device` WRITE;
-/*!40000 ALTER TABLE `mob_device` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mob_device` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `notification`
 --
 
@@ -389,15 +263,6 @@ CREATE TABLE `notification` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `notification`
---
-
-LOCK TABLES `notification` WRITE;
-/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `post`
@@ -423,15 +288,6 @@ CREATE TABLE `post` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `post`
---
-
-LOCK TABLES `post` WRITE;
-/*!40000 ALTER TABLE `post` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `recommend_topic`
 --
 
@@ -447,15 +303,6 @@ CREATE TABLE `recommend_topic` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `recommend_topic`
---
-
-LOCK TABLES `recommend_topic` WRITE;
-/*!40000 ALTER TABLE `recommend_topic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recommend_topic` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `recommend_topic_user`
 --
 
@@ -469,15 +316,6 @@ CREATE TABLE `recommend_topic_user` (
   PRIMARY KEY (`topic_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `recommend_topic_user`
---
-
-LOCK TABLES `recommend_topic_user` WRITE;
-/*!40000 ALTER TABLE `recommend_topic_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recommend_topic_user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `reply`
@@ -505,15 +343,6 @@ CREATE TABLE `reply` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reply`
---
-
-LOCK TABLES `reply` WRITE;
-/*!40000 ALTER TABLE `reply` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reply` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `report`
 --
 
@@ -536,13 +365,19 @@ CREATE TABLE `report` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `report`
+-- Table structure for table `sequence`
 --
 
-LOCK TABLES `report` WRITE;
-/*!40000 ALTER TABLE `report` DISABLE KEYS */;
-/*!40000 ALTER TABLE `report` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence` (
+  `name` varchar(100) NOT NULL,
+  `sequence` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`name`),
+  KEY `name` (`name`,`sequence`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `topic`
@@ -560,15 +395,6 @@ CREATE TABLE `topic` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `topic`
---
-
-LOCK TABLES `topic` WRITE;
-/*!40000 ALTER TABLE `topic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `topic` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `upload`
@@ -590,15 +416,6 @@ CREATE TABLE `upload` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `upload`
---
-
-LOCK TABLES `upload` WRITE;
-/*!40000 ALTER TABLE `upload` DISABLE KEYS */;
-/*!40000 ALTER TABLE `upload` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -613,15 +430,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -632,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-01  5:39:23
+-- Dump completed on 2015-11-02  4:04:07

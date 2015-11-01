@@ -25,6 +25,7 @@ PHP_METHOD(Yb_Db_DbAbstract, getQueries);
 PHP_METHOD(Yb_Db_DbAbstract, insert);
 PHP_METHOD(Yb_Db_DbAbstract, delete);
 PHP_METHOD(Yb_Db_DbAbstract, update);
+PHP_METHOD(Yb_Db_DbAbstract, upsert);
 PHP_METHOD(Yb_Db_DbAbstract, parseSelect);
 PHP_METHOD(Yb_Db_DbAbstract, select);
 PHP_METHOD(Yb_Db_DbAbstract, selectRow);
@@ -110,6 +111,12 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_update, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_ARRAY_INFO(0, data, 0)
 	ZEND_ARG_INFO(0, where)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_upsert, 0, 0, 3)
+	ZEND_ARG_INFO(0, table)
+	ZEND_ARG_ARRAY_INFO(0, data, 0)
+	ZEND_ARG_INFO(0, primaryKey)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parseselect, 0, 0, 1)
@@ -214,8 +221,9 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_paginatequery, 0, 0, 3)
 	ZEND_ARG_INFO(0, offset)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_addquery, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_addquery, 0, 0, 3)
 	ZEND_ARG_INFO(0, q)
+	ZEND_ARG_ARRAY_INFO(0, p, 0)
 	ZEND_ARG_INFO(0, t)
 ZEND_END_ARG_INFO()
 
@@ -242,6 +250,7 @@ ZEPHIR_INIT_FUNCS(yb_db_dbabstract_method_entry) {
 	PHP_ME(Yb_Db_DbAbstract, insert, arginfo_yb_db_dbabstract_insert, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, delete, arginfo_yb_db_dbabstract_delete, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, update, arginfo_yb_db_dbabstract_update, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Db_DbAbstract, upsert, arginfo_yb_db_dbabstract_upsert, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, parseSelect, arginfo_yb_db_dbabstract_parseselect, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, select, arginfo_yb_db_dbabstract_select, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, selectRow, arginfo_yb_db_dbabstract_selectrow, ZEND_ACC_PUBLIC)

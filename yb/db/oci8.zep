@@ -55,14 +55,14 @@ class Oci8 extends DbAbstract
         }
 
         let r = (boolean) oci_execute(s, m);
-        this->addQuery(sql, (double) microtime(true) - t);
+        this->addQuery(sql, params, (double) microtime(true) - t);
 
         if unlikely ! r {
             let e = oci_error(this->oci);
             if typeof e != "array" || ! fetch eMessage, e["message"] {
                 let eMessage = "Unknown Error";
             }
-            throw new QueryException(eMessage . PHP_EOL . "[SQL] " . sql);
+            throw new QueryException(eMessage . " [SQL] " . sql);
         }
     }
 

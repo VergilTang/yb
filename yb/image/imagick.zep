@@ -14,7 +14,7 @@ class Imagick extends ImageBackendAbstract
         var im, imagick, imgickDraw, m;
         long padding2;
 
-        let im = new Text(this);
+        let im = this->newText();
         let im->text = text;
         im->setOptions(options);
 
@@ -38,7 +38,7 @@ class Imagick extends ImageBackendAbstract
         let imagick = new \Imagick();
         imagick->readImageBlob(im->handler->getImageBlob());
 
-        let copyIm = new Image(this);
+        let copyIm = this->newImage();
         let copyIm->handler = imagick;
         let copyIm->width = im->width;
         let copyIm->height = im->height;
@@ -59,7 +59,7 @@ class Imagick extends ImageBackendAbstract
             let height = width;
         }
 
-        let im = new Image(this);
+        let im = this->newImage();
         let im->width = width;
         let im->height = height;
         if extension {
@@ -80,7 +80,7 @@ class Imagick extends ImageBackendAbstract
         let imagick = new \Imagick();
         imagick->readImage(realpath(path));
 
-        let im = new Image(this);
+        let im = this->newImage();
         let im->handler = imagick;
         let im->width = imagick->getImageWidth();
         let im->height = imagick->getImageHeight();
@@ -100,7 +100,7 @@ class Imagick extends ImageBackendAbstract
         let imagick = new \Imagick();
         imagick->readImageBlob(data);
 
-        let im = new Image(this);
+        let im = this->newImage();
         let im->handler = imagick;
         let im->width = imagick->getImageWidth();
         let im->height = imagick->getImageHeight();
@@ -126,7 +126,7 @@ class Imagick extends ImageBackendAbstract
         }
 
         // im
-        let im = new Captcha(this);
+        let im = this->newCaptcha();
         let im->width = width;
         let im->height = height;
         let im->text = text;

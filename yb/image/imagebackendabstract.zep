@@ -22,6 +22,21 @@ abstract class ImageBackendAbstract
 
     protected defaultOptions;
 
+    abstract public function text(string text, array options = []) -> <Text>;
+    abstract public function fromImage(<Image> im) -> <Image>;
+    abstract public function fromSize(long width, long height = 0, string extension = "") -> <Image>;
+    abstract public function fromPath(string path, string extension = "") -> <Image>;
+    abstract public function fromString(string data, string extension = "") -> <Image>;
+    abstract public function captcha(string text, long width, long height, array options = []) -> <Captcha>;
+
+    abstract public function resize(<Image> im, long width, long height) -> <Image>;
+    abstract public function crop(<Image> im, long x, long y, long w, long h) -> <Image>;
+    abstract public function thumbnail(<Image> im, long width, long height, boolean cropped) -> <Image>;
+    abstract public function draw(<Image> destIm, <ImageAbstract> srcIm, long x, long y) -> <Image>;
+
+    abstract public function save(<Image> im, string destPath) -> void;
+    abstract public function destroy(<ImageAbstract> im) -> void;
+
     public function setDefaultOptions(array options) -> void
     {
         var k, v;
@@ -40,19 +55,19 @@ abstract class ImageBackendAbstract
         return [];
     }
 
-    abstract public function text(string text, array options = []) -> <Text>;
-    abstract public function fromImage(<Image> im) -> <Image>;
-    abstract public function fromSize(long width, long height = 0, string extension = "") -> <Image>;
-    abstract public function fromPath(string path, string extension = "") -> <Image>;
-    abstract public function fromString(string data, string extension = "") -> <Image>;
-    abstract public function captcha(string text, long width, long height, array options = []) -> <Captcha>;
+    public function newText() -> <Text>
+    {
+        return new Text(this);
+    }
 
-    abstract public function resize(<Image> im, long width, long height) -> <Image>;
-    abstract public function crop(<Image> im, long x, long y, long w, long h) -> <Image>;
-    abstract public function thumbnail(<Image> im, long width, long height, boolean cropped) -> <Image>;
-    abstract public function draw(<Image> destIm, <ImageAbstract> srcIm, long x, long y) -> <Image>;
+    public function newImage() -> <Image>
+    {
+        return new Image(this);
+    }
 
-    abstract public function save(<Image> im, string destPath) -> void;
-    abstract public function destroy(<ImageAbstract> im) -> void;
+    public function newCaptcha() -> <Captcha>
+    {
+        return new Captcha(this);
+    }
 
 }

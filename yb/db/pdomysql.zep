@@ -2,7 +2,7 @@ namespace Yb\Db;
 
 class PdoMysql extends PdoAbstract
 {
-    public function insert(string table, array data, string returningId = "")
+    public function insert(string table, array data, string returningId = "", boolean upsert = false)
     {
         var k, v, ks = [], vs = [];
         string s;
@@ -12,7 +12,13 @@ class PdoMysql extends PdoAbstract
             let vs[] = ":" . k;
         }
 
-        let s = "INSERT INTO " . table . " (" . join(", ", ks) . ") VALUES (" . join(", ", vs) . ")";
+        if upsert {
+            let s = "REPLACE";
+        } else {
+            let s = "INSERT";
+        }
+
+        let s .= " INTO " . table . " (" . join(", ", ks) . ") VALUES (" . join(", ", vs) . ")";
         this->query(s, data);
 
         if returningId->length() < 1 {
@@ -24,6 +30,29 @@ class PdoMysql extends PdoAbstract
         }
 
         return this->queryCell("SELECT LAST_INSERT_ID()");
+    }
+
+    public function upsert(string table, array data, var primaryKey) -> void
+    {
+        var k;
+
+        if typeof primaryKey == "array" {
+            if unlikely ! primaryKey {
+                throw new Exception("Cannot upsert with empty where");
+            }
+            for k in primaryKey {
+                if unlikely ! isset data[k] {
+                    throw new Exception("Cannot find primary key value in data: " . k);
+                }
+            }
+        } else {
+            let k = (string) primaryKey;
+            if unlikely ! isset data[k] {
+                throw new Exception("Cannot find primary key value in data: " . k);
+            }
+        }
+
+        this->insert(table, data, "", true);
     }
 
     public function countAndSelect(array options) -> array

@@ -189,6 +189,17 @@ class Std
         return result;
     }
 
+    public static function tr(string message, array context = []) -> string
+    {
+        var k, v, r = [];
+
+        for k, v in context {
+            let r["{" . k . "}"] = (string) v;
+        }
+
+        return strtr(message, r);
+    }
+
     public static function valueAt(array arr, string key, var defaultValue = null)
     {
         var value;

@@ -14,6 +14,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/collection/collectioninterface.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
+	yb/sequence/sequenceinterface.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
 	yb/factory/classname.zep.c
@@ -23,6 +24,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/upload/storageabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
+	yb/ratelimiter/ratelimiterinterface.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
 	yb/collection/redishashserialized.zep.c
@@ -46,10 +48,15 @@ if test "$PHP_YB" = "yes"; then
 	yb/logger/exception.zep.c
 	yb/logger/filelogger.zep.c
 	yb/logger/nulllogger.zep.c
+	yb/ratelimiter/exception.zep.c
+	yb/ratelimiter/redis.zep.c
 	yb/router/exception.zep.c
+	yb/sequence/dbpdomysql.zep.c
+	yb/sequence/exception.zep.c
+	yb/sequence/mongocollection.zep.c
+	yb/sequence/redishash.zep.c
 	yb/std.zep.c
 	yb/tools/exception.zep.c
-	yb/tools/redisratelimiter.zep.c
 	yb/tools/smtpmailer.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/filesystem.zep.c

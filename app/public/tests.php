@@ -54,6 +54,27 @@ try {
         return new Yb\Db\PdoMysql('mysql:host=192.168.255.11;port=3306;dbname=yb;charset=utf8', 'yb', 'yb');
     });
 
+    if (1) {
+        $core->db->upsert('kv', [
+            'k' => mt_rand(1, 9),
+            'v' => mt_rand(1, 9),
+        ], 'k');
+    }
+
+    if (0) {
+        $db = $core->db;
+        $db->begin();
+        $db->savepoint('a');
+        $db->savepoint('s');
+        $db->savepoint('z');
+
+        print_R($db);
+        $db->rollbackToSavepoint('s');
+        print_R($db);
+
+        // print_R($db->getQueries());
+    }
+
     if (0) {
         $db = $core->db;
         // print_R($db);

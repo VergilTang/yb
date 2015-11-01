@@ -103,7 +103,7 @@ PHP_METHOD(Yb_Db_PdoAbstract, query) {
 	zephir_fcall_cache_entry *_9 = NULL, *_11 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *params = NULL;
-	zval *sql_param = NULL, *params_param = NULL, *s = NULL, *k = NULL, *v = NULL, *e = NULL, *_0, *_1, *_12 = NULL, *_13, *_14, **_4$$3, *_5$$5 = NULL, *_6$$5 = NULL, *_7$$5 = NULL, *_8$$5 = NULL, *_10$$6 = NULL, *_15$$7, *_16$$7, *_17$$7, *_18$$7;
+	zval *sql_param = NULL, *params_param = NULL, *s = NULL, *k = NULL, *v = NULL, *e = NULL, *_0, *_1, *_12 = NULL, *_13, *_14, **_4$$3, *_5$$5 = NULL, *_6$$5 = NULL, *_7$$5 = NULL, *_8$$5 = NULL, *_10$$6 = NULL, *_15$$7, *_16$$7, *_17$$7;
 	zval *sql = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -159,7 +159,7 @@ PHP_METHOD(Yb_Db_PdoAbstract, query) {
 	zephir_microtime(_13, ZEPHIR_GLOBAL(global_true) TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_14);
 	ZVAL_DOUBLE(_14, (double) (zephir_get_doubleval(_13) - t));
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addquery", NULL, 0, sql, _14);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addquery", NULL, 0, sql, params, _14);
 	zephir_check_call_status();
 	if (unlikely(!r)) {
 		ZEPHIR_CALL_METHOD(&e, s, "errorinfo", NULL, 0);
@@ -168,10 +168,8 @@ PHP_METHOD(Yb_Db_PdoAbstract, query) {
 		object_init_ex(_15$$7, yb_db_queryexception_ce);
 		zephir_array_fetch_long(&_16$$7, e, 2, PH_NOISY | PH_READONLY, "yb/db/pdoabstract.zep", 53 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_17$$7);
-		ZEPHIR_GET_CONSTANT(_17$$7, "PHP_EOL");
-		ZEPHIR_INIT_VAR(_18$$7);
-		ZEPHIR_CONCAT_VVSV(_18$$7, _16$$7, _17$$7, "[SQL] ", sql);
-		ZEPHIR_CALL_METHOD(NULL, _15$$7, "__construct", NULL, 2, _18$$7);
+		ZEPHIR_CONCAT_VSV(_17$$7, _16$$7, " [SQL] ", sql);
+		ZEPHIR_CALL_METHOD(NULL, _15$$7, "__construct", NULL, 2, _17$$7);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_15$$7, "yb/db/pdoabstract.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

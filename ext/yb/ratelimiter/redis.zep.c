@@ -21,21 +21,22 @@
 #include "kernel/array.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Tools_RedisRateLimiter) {
+ZEPHIR_INIT_CLASS(Yb_RateLimiter_Redis) {
 
-	ZEPHIR_REGISTER_CLASS(Yb\\Tools, RedisRateLimiter, yb, tools_redisratelimiter, yb_tools_redisratelimiter_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS(Yb\\RateLimiter, Redis, yb, ratelimiter_redis, yb_ratelimiter_redis_method_entry, 0);
 
-	zend_declare_property_null(yb_tools_redisratelimiter_ce, SL("redis"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_ratelimiter_redis_ce, SL("redis"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_tools_redisratelimiter_ce, SL("keyPrefix"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_ratelimiter_redis_ce, SL("keyPrefix"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_class_constant_string(yb_tools_redisratelimiter_ce, SL("DEFAULT_KEY_PREFIX"), "rate_limiter:" TSRMLS_CC);
+	zend_declare_class_constant_string(yb_ratelimiter_redis_ce, SL("DEFAULT_KEY_PREFIX"), "rate_limiter:" TSRMLS_CC);
 
+	zend_class_implements(yb_ratelimiter_redis_ce TSRMLS_CC, 1, yb_ratelimiter_ratelimiterinterface_ce);
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Tools_RedisRateLimiter, __construct) {
+PHP_METHOD(Yb_RateLimiter_Redis, __construct) {
 
 	zval *keyPrefix = NULL;
 	zval *redis, *keyPrefix_param = NULL;
@@ -57,7 +58,7 @@ PHP_METHOD(Yb_Tools_RedisRateLimiter, __construct) {
 
 }
 
-PHP_METHOD(Yb_Tools_RedisRateLimiter, pass) {
+PHP_METHOD(Yb_RateLimiter_Redis, passRateLimiter) {
 
 	zend_bool _13$$5, _14$$5;
 	int ZEPHIR_LAST_CALL_STATUS;

@@ -1,5 +1,7 @@
 namespace Yb\Logger;
 
+use Yb\Std;
+
 class FileLogger extends LoggerAbstract
 {
     protected path;
@@ -11,17 +13,11 @@ class FileLogger extends LoggerAbstract
 
     public function log(string level, string message, array context = []) -> void
     {
-        var k, v, replace = [];
-
-        for k, v in context {
-            let replace["{" . k . "}"] = (string) v;
-        }
-
         let this->logs[] = sprintf(
             "[%s] [%s] %s\n",
             date("c"),
             level,
-            strtr(message, replace)
+            Std::tr(message, context)
         );
     }
 

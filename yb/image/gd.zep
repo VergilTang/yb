@@ -14,7 +14,7 @@ class Gd extends ImageBackendAbstract
         var im, box;
         long padding2;
 
-        let im = new Text(this);
+        let im = this->newText();
         let im->text = text;
         im->setOptions(options);
 
@@ -44,7 +44,7 @@ class Gd extends ImageBackendAbstract
     {
         var im, gdIm;
 
-        let im = new Image(this);
+        let im = this->newImage();
 
         let gdIm = this->createGdImageFromSize(width, height);
         let im->handler = gdIm->handler;
@@ -90,7 +90,7 @@ class Gd extends ImageBackendAbstract
         imagealphablending(handler, true);
         imagesavealpha(handler, true);
 
-        let im = new Image(this);
+        let im = this->newImage();
 
         let im->handler = handler;
         let im->width = imagesx(handler);
@@ -112,7 +112,7 @@ class Gd extends ImageBackendAbstract
         imagealphablending(handler, true);
         imagesavealpha(handler, true);
 
-        let im = new Image(this);
+        let im = this->newImage();
 
         let im->handler = handler;
         let im->width = imagesx(handler);
@@ -132,7 +132,7 @@ class Gd extends ImageBackendAbstract
         long textLen, fontSize, padding, r, g, b, dr, dg, db, i, j, x, y, x2, y2, angle;
 
         // im
-        let im = new Captcha(this);
+        let im = this->newCaptcha();
         let gdIm = this->createGdImageFromSize(width, height);
         let im->handler = gdIm->handler;
         let im->width = gdIm->width;

@@ -1,6 +1,6 @@
-namespace Yb\Tools;
+namespace Yb\RateLimiter;
 
-class RedisRateLimiter
+class Redis implements RateLimiterInterface
 {
     const DEFAULT_KEY_PREFIX = "rate_limiter:";
 
@@ -13,7 +13,7 @@ class RedisRateLimiter
         let this->keyPrefix = keyPrefix;
     }
 
-    public function pass(string item, long seconds, long times) -> boolean
+    public function passRateLimiter(string item, long seconds, long times) -> boolean
     {
         string key;
         var value, result;
