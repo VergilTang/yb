@@ -17,6 +17,7 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/hash.h"
+#include "kernel/array.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Collection_RedisHash) {
@@ -134,8 +135,11 @@ PHP_METHOD(Yb_Collection_RedisHash, setMany) {
 
 PHP_METHOD(Yb_Collection_RedisHash, getMany) {
 
+	zend_bool _5$$5;
+	HashTable *_3;
+	HashPosition _2;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *keys_param = NULL, *a = NULL, *_0, *_1;
+	zval *keys_param = NULL, *a = NULL, *k = NULL, *v = NULL, *r = NULL, *_0, *_1, **_4;
 	zval *keys = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -144,19 +148,33 @@ PHP_METHOD(Yb_Collection_RedisHash, getMany) {
 	zephir_get_arrval(keys, keys_param);
 
 
+	ZEPHIR_INIT_VAR(r);
+	array_init(r);
 	if (unlikely(zephir_fast_count_int(keys TSRMLS_CC) < 1)) {
-		array_init(return_value);
-		RETURN_MM();
+		RETURN_CCTOR(r);
 	}
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("redis"), PH_NOISY_CC);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("hashName"), PH_NOISY_CC);
 	ZEPHIR_CALL_METHOD(&a, _0, "hmget", NULL, 0, _1, keys);
 	zephir_check_call_status();
 	if (unlikely(Z_TYPE_P(a) != IS_ARRAY)) {
-		array_init(return_value);
-		RETURN_MM();
+		RETURN_CCTOR(r);
 	}
-	RETURN_CCTOR(a);
+	zephir_is_iterable(keys, &_3, &_2, 0, 0, "yb/collection/redishash.zep", 60);
+	for (
+	  ; zephir_hash_get_current_data_ex(_3, (void**) &_4, &_2) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_3, &_2)
+	) {
+		ZEPHIR_GET_HVALUE(k, _4);
+		_5$$5 = zephir_array_isset_fetch(&v, a, k, 1 TSRMLS_CC);
+		if (_5$$5) {
+			_5$$5 = !ZEPHIR_IS_FALSE_IDENTICAL(v);
+		}
+		if (_5$$5) {
+			zephir_array_update_zval(&r, k, &v, PH_COPY | PH_SEPARATE);
+		}
+	}
+	RETURN_CCTOR(r);
 
 }
 
@@ -174,7 +192,7 @@ PHP_METHOD(Yb_Collection_RedisHash, deleteMany) {
 	zephir_get_arrval(keys, keys_param);
 
 
-	zephir_is_iterable(keys, &_1, &_0, 0, 0, "yb/collection/redishash.zep", 64);
+	zephir_is_iterable(keys, &_1, &_0, 0, 0, "yb/collection/redishash.zep", 70);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)

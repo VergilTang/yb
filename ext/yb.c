@@ -27,8 +27,8 @@
 
 
 
-zend_class_entry *yb_sequence_sequenceinterface_ce;
 zend_class_entry *yb_collection_collectioninterface_ce;
+zend_class_entry *yb_sequence_sequenceinterface_ce;
 zend_class_entry *yb_factory_factoryinterface_ce;
 zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
 zend_class_entry *yb_mailer_mailerinterface_ce;
@@ -46,6 +46,7 @@ zend_class_entry *yb_collection_redishash_ce;
 zend_class_entry *yb_image_image_ce;
 zend_class_entry *yb_collection_exception_ce;
 zend_class_entry *yb_collection_mongocollection_ce;
+zend_class_entry *yb_collection_proxy_ce;
 zend_class_entry *yb_collection_redishashserialized_ce;
 zend_class_entry *yb_core_ce;
 zend_class_entry *yb_db_oci8_ce;
@@ -108,8 +109,8 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
 	ZEPHIR_INIT(Yb_Collection_CollectionInterface);
+	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
 	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
 	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
 	ZEPHIR_INIT(Yb_Mailer_MailerInterface);
@@ -127,6 +128,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Image_Image);
 	ZEPHIR_INIT(Yb_Collection_Exception);
 	ZEPHIR_INIT(Yb_Collection_MongoCollection);
+	ZEPHIR_INIT(Yb_Collection_Proxy);
 	ZEPHIR_INIT(Yb_Collection_RedisHashSerialized);
 	ZEPHIR_INIT(Yb_Core);
 	ZEPHIR_INIT(Yb_Db_Oci8);

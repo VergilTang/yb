@@ -1590,9 +1590,10 @@ PHP_METHOD(Yb_Db_DbAbstract, randomOrder) {
 PHP_METHOD(Yb_Db_DbAbstract, addQuery) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_fcall_cache_entry *_4 = NULL;
 	double t;
 	zval *p = NULL;
-	zval *q_param = NULL, *p_param = NULL, *t_param = NULL, *_0, _1, _2, *_3 = NULL;
+	zval *q_param = NULL, *p_param = NULL, *t_param = NULL, *_0$$3, _1$$3, _2$$3, *_3$$3 = NULL, _5$$4, _6$$4, *_7$$4 = NULL;
 	zval *q = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -1603,15 +1604,25 @@ PHP_METHOD(Yb_Db_DbAbstract, addQuery) {
 	t = zephir_get_doubleval(t_param);
 
 
-	ZEPHIR_INIT_VAR(_0);
-	zephir_json_encode(_0, &(_0), p, 0  TSRMLS_CC);
-	ZEPHIR_SINIT_VAR(_1);
-	ZVAL_STRING(&_1, "%s # %0.3fms %s", 0);
-	ZEPHIR_SINIT_VAR(_2);
-	ZVAL_DOUBLE(&_2, (t * 1000.0));
-	ZEPHIR_CALL_FUNCTION(&_3, "sprintf", NULL, 1, &_1, q, &_2, _0);
-	zephir_check_call_status();
-	zephir_update_property_array_append(this_ptr, SL("queries"), _3 TSRMLS_CC);
+	if (zephir_fast_count_int(p TSRMLS_CC) > 0) {
+		ZEPHIR_INIT_VAR(_0$$3);
+		zephir_json_encode(_0$$3, &(_0$$3), p, 0  TSRMLS_CC);
+		ZEPHIR_SINIT_VAR(_1$$3);
+		ZVAL_STRING(&_1$$3, "%s # %0.3fms %s", 0);
+		ZEPHIR_SINIT_VAR(_2$$3);
+		ZVAL_DOUBLE(&_2$$3, (t * 1000.0));
+		ZEPHIR_CALL_FUNCTION(&_3$$3, "sprintf", &_4, 1, &_1$$3, q, &_2$$3, _0$$3);
+		zephir_check_call_status();
+		zephir_update_property_array_append(this_ptr, SL("queries"), _3$$3 TSRMLS_CC);
+	} else {
+		ZEPHIR_SINIT_VAR(_5$$4);
+		ZVAL_STRING(&_5$$4, "%s # %0.3fms", 0);
+		ZEPHIR_SINIT_VAR(_6$$4);
+		ZVAL_DOUBLE(&_6$$4, (t * 1000.0));
+		ZEPHIR_CALL_FUNCTION(&_7$$4, "sprintf", &_4, 1, &_5$$4, q, &_6$$4);
+		zephir_check_call_status();
+		zephir_update_property_array_append(this_ptr, SL("queries"), _7$$4 TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }

@@ -40,18 +40,24 @@ class RedisHash implements CollectionInterface
 
     public function getMany(array keys) -> array
     {
-        var a;
+        var a, k, v, r = [];
 
         if unlikely count(keys) < 1 {
-            return [];
+            return r;
         }
 
         let a = this->redis->hmget(this->hashName, keys);
         if unlikely typeof a != "array" {
-            return [];
+            return r;
         }
 
-        return a;
+        for k in keys {
+            if fetch v, a[k] && v !== false {
+                let r[k] = v;
+            }
+        }
+
+        return r;
     }
 
     public function deleteMany(array keys) -> void

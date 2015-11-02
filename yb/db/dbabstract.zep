@@ -549,7 +549,11 @@ abstract class DbAbstract
 
     protected function addQuery(string q, array p, double t) -> void
     {
-        let this->queries[] = sprintf("%s # %0.3fms %s", q, t * 1000.0, json_encode(p));
+        if count(p) > 0 {
+            let this->queries[] = sprintf("%s # %0.3fms %s", q, t * 1000.0, json_encode(p));
+        } else {
+            let this->queries[] = sprintf("%s # %0.3fms", q, t * 1000.0);
+        }
     }
 
 }

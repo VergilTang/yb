@@ -10,9 +10,9 @@ if test "$PHP_YB" = "yes"; then
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/collection/collectioninterface.zep.c
 	yb/db/dbabstract.zep.c
 	yb/sequence/sequenceinterface.zep.c
-	yb/collection/collectioninterface.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/db/exception.zep.c
@@ -27,6 +27,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/ratelimiter/ratelimiterinterface.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
+	yb/collection/proxy.zep.c
 	yb/collection/redishashserialized.zep.c
 	yb/core.zep.c
 	yb/db/oci8.zep.c

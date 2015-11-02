@@ -5,9 +5,9 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "yb/exception.zep.h"
+#include "yb/collection/collectioninterface.zep.h"
 #include "yb/db/dbabstract.zep.h"
 #include "yb/sequence/sequenceinterface.zep.h"
-#include "yb/collection/collectioninterface.zep.h"
 #include "yb/factory/factoryinterface.zep.h"
 #include "yb/image/imageabstract.zep.h"
 #include "yb/db/exception.zep.h"
@@ -22,6 +22,7 @@
 #include "yb/ratelimiter/ratelimiterinterface.zep.h"
 #include "yb/collection/exception.zep.h"
 #include "yb/collection/mongocollection.zep.h"
+#include "yb/collection/proxy.zep.h"
 #include "yb/collection/redishashserialized.zep.h"
 #include "yb/core.zep.h"
 #include "yb/db/oci8.zep.h"
