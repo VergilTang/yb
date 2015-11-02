@@ -23,7 +23,8 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_pdomysql_upsert, 0, 0, 3)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_pdomysql_countandselect, 0, 0, 1)
-	ZEND_ARG_ARRAY_INFO(0, options, 0)
+	ZEND_ARG_INFO(0, table)
+	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_pdomysql_paginatequery, 0, 0, 3)

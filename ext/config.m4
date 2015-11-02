@@ -48,6 +48,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/logger/exception.zep.c
 	yb/logger/filelogger.zep.c
 	yb/logger/nulllogger.zep.c
+	yb/mailer/exception.zep.c
+	yb/mailer/mailerinterface.zep.c
+	yb/mailer/smtp.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
 	yb/router/exception.zep.c
@@ -57,8 +60,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/sequence/redis.zep.c
 	yb/sequence/redishash.zep.c
 	yb/std.zep.c
-	yb/tools/exception.zep.c
-	yb/tools/smtpmailer.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/filesystem.zep.c
 	yb/upload/ftp.zep.c

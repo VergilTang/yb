@@ -55,12 +55,12 @@ class PdoMysql extends PdoAbstract
         this->insert(table, data, "", true);
     }
 
-    public function countAndSelect(array options) -> array
+    public function countAndSelect(string table, array options = []) -> array
     {
         string s;
         var d;
 
-        let s = (string) this->parseSelect(options);
+        let s = (string) this->parseSelect(table, options);
         let s = (string) preg_replace("/^SELECT /i", "SELECT SQL_CALC_FOUND_ROWS ", s);
 
         let d = this->queryAll(s);

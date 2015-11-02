@@ -21,7 +21,7 @@ if (PHP_YB != "no") {
 	ADD_SOURCES(configure_module_dirname + "/yb/logger", "loggerabstract.zep.c exception.zep.c filelogger.zep.c nulllogger.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/upload", "storageabstract.zep.c exception.zep.c filesystem.zep.c ftp.zep.c uploadedfile.zep.c uploader.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/ratelimiter", "ratelimiterinterface.zep.c exception.zep.c redis.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/mailer", "exception.zep.c mailerinterface.zep.c smtp.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/router", "exception.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/tools", "exception.zep.c smtpmailer.zep.c", "yb");
   ADD_FLAG("CFLAGS_YB", "/D ZEPHIR_RELEASE");
 }

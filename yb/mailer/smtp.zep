@@ -1,8 +1,8 @@
-namespace Yb\Tools;
+namespace Yb\Mailer;
 
 use Yb\Std;
 
-class SmtpMailer
+class Smtp
 {
     const EOL = "\r\n";
 
@@ -52,7 +52,7 @@ class SmtpMailer
         this->cmd("AUTH PASSWD", base64_encode(passwd), 235);
     }
 
-    public function sendTo(array message, array to, array cc = null, array bcc = null) -> void
+    public function sendMessageTo(array message, array to, array cc = [], array bcc = []) -> void
     {
         var data = [], temp, addr, name, attachments, path, mine, type, subject, plain;
         string boundary;

@@ -175,18 +175,24 @@ PHP_METHOD(Yb_Db_PdoMysql, upsert) {
 
 PHP_METHOD(Yb_Db_PdoMysql, countAndSelect) {
 
-	zval *s = NULL, *_1 = NULL, *_5 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *options_param = NULL, *d = NULL, *_0 = NULL, *_2 = NULL, *_3, *_4 = NULL, *_6 = NULL;
 	zval *options = NULL;
+	zval *table_param = NULL, *options_param = NULL, *d = NULL, *_0 = NULL, *_2 = NULL, *_3, *_4 = NULL, *_6 = NULL;
+	zval *table = NULL, *s = NULL, *_1 = NULL, *_5 = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &options_param);
+	zephir_fetch_params(1, 1, 1, &table_param, &options_param);
 
-	zephir_get_arrval(options, options_param);
+	zephir_get_strval(table, table_param);
+	if (!options_param) {
+		ZEPHIR_INIT_VAR(options);
+		array_init(options);
+	} else {
+		zephir_get_arrval(options, options_param);
+	}
 
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "parseselect", NULL, 0, options);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "parseselect", NULL, 0, table, options);
 	zephir_check_call_status();
 	zephir_get_strval(_1, _0);
 	ZEPHIR_CPY_WRT(s, _1);

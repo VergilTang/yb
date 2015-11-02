@@ -1,4 +1,4 @@
-namespace Yb\Tools;
+namespace Yb\Mailer;
 
 use Yb\Exception as Ex;
 

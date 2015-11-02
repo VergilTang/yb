@@ -14,9 +14,9 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Tools_Exception) {
+ZEPHIR_INIT_CLASS(Yb_Mailer_Exception) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Tools, Exception, yb, tools_exception, yb_exception_ce, NULL, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Mailer, Exception, yb, mailer_exception, yb_exception_ce, NULL, 0);
 
 	return SUCCESS;
 
