@@ -84,6 +84,26 @@ class Oci8 extends DbAbstract
         return d;
     }
 
+    public function queryAllCallback(string sql, array params = null, var callback) -> void
+    {
+        var r;
+
+        if unlikely ! is_callable(callback) {
+            throw new Exception("Invalid callback");
+        }
+
+        this->query(sql, params);
+
+        loop {
+            let r = oci_fetch_array(this->lastStatement, OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_ASSOC);
+            if r === false {
+                return;
+            }
+
+            {callback}(array_change_key_case(r));
+        }
+    }
+
     public function queryRow(string sql, array params = null)
     {
         var r;

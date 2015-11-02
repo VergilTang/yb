@@ -29,6 +29,7 @@ abstract class DbAbstract
     abstract public function queryRow(string sql, array params = null);
     abstract public function queryCell(string sql, array params = null) -> string;
     abstract public function queryColumns(string sql, array params = null) -> array;
+    abstract public function queryAllCallback(string sql, array params = null, var callback) -> void;
 
     public function inTransaction() -> boolean
     {
@@ -312,7 +313,7 @@ abstract class DbAbstract
         return s;
     }
 
-    public function select(array options) -> array
+    public function selectAll(array options) -> array
     {
         string s;
 
@@ -365,7 +366,7 @@ abstract class DbAbstract
 
         return [
             c,
-            this->select(options)
+            this->selectAll(options)
         ];
     }
 

@@ -60,6 +60,26 @@ abstract class PdoAbstract extends DbAbstract
         return this->lastStatement->fetchAll(\Pdo::FETCH_ASSOC);
     }
 
+    public function queryAllCallback(string sql, array params = null, var callback) -> void
+    {
+        var r;
+
+        if unlikely ! is_callable(callback) {
+            throw new Exception("Invalid callback");
+        }
+
+        this->query(sql, params);
+
+        loop {
+            let r = this->lastStatement->$fetch(\Pdo::FETCH_ASSOC);
+            if r === false {
+                return;
+            }
+
+            {callback}(r);
+        }
+    }
+
     public function queryRow(string sql, array params = null)
     {
         var r;

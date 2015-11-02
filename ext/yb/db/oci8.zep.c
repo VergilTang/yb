@@ -239,6 +239,50 @@ PHP_METHOD(Yb_Db_Oci8, queryAll) {
 
 }
 
+PHP_METHOD(Yb_Db_Oci8, queryAllCallback) {
+
+	zephir_fcall_cache_entry *_2 = NULL, *_4 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *params = NULL;
+	zval *sql_param = NULL, *params_param = NULL, *callback, *r = NULL, *_0$$4, _1$$4 = zval_used_for_init, *_3$$4 = NULL;
+	zval *sql = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 1, &sql_param, &params_param, &callback);
+
+	zephir_get_strval(sql, sql_param);
+	if (!params_param) {
+		ZEPHIR_INIT_VAR(params);
+		array_init(params);
+	} else {
+		zephir_get_arrval(params, params_param);
+	}
+
+
+	if (unlikely(!(zephir_is_callable(callback TSRMLS_CC)))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid callback", "yb/db/oci8.zep", 92);
+		return;
+	}
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "query", NULL, 0, sql, params);
+	zephir_check_call_status();
+	while (1) {
+		_0$$4 = zephir_fetch_nproperty_this(this_ptr, SL("lastStatement"), PH_NOISY_CC);
+		ZEPHIR_SINIT_NVAR(_1$$4);
+		ZVAL_LONG(&_1$$4, ((4 + 8) + 1));
+		ZEPHIR_CALL_FUNCTION(&r, "oci_fetch_array", &_2, 36, _0$$4, &_1$$4);
+		zephir_check_call_status();
+		if (ZEPHIR_IS_FALSE_IDENTICAL(r)) {
+			RETURN_MM_NULL();
+		}
+		ZEPHIR_CALL_FUNCTION(&_3$$4, "array_change_key_case", &_4, 37, r);
+		zephir_check_call_status();
+		ZEPHIR_CALL_ZVAL_FUNCTION(NULL, callback, NULL, 0, _3$$4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_MM_RESTORE();
+
+}
+
 PHP_METHOD(Yb_Db_Oci8, queryRow) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -358,7 +402,7 @@ PHP_METHOD(Yb_Db_Oci8, queryColumns) {
 		if (_3$$3) {
 			break;
 		}
-		zephir_array_append(&d, i, PH_SEPARATE, "yb/db/oci8.zep", 125);
+		zephir_array_append(&d, i, PH_SEPARATE, "yb/db/oci8.zep", 145);
 	}
 	RETURN_CCTOR(d);
 
