@@ -12,8 +12,10 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/fcall.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
+#include "kernel/object.h"
+#include "kernel/fcall.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Loader_LoaderAbstract) {
@@ -24,13 +26,52 @@ ZEPHIR_INIT_CLASS(Yb_Loader_LoaderAbstract) {
 
 }
 
+PHP_METHOD(Yb_Loader_LoaderAbstract, isLoaded) {
+
+	zend_bool x, _2;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *name_param = NULL, _0, _1, _3, *_4 = NULL;
+	zval *name = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &name_param);
+
+	zephir_get_strval(name, name_param);
+
+
+	x = 0;
+	ZEPHIR_SINIT_VAR(_0);
+	ZVAL_BOOL(&_0, (x ? 1 : 0));
+	if (zephir_class_exists(name, zephir_is_true(&_0)  TSRMLS_CC)) {
+		RETURN_MM_BOOL(1);
+	}
+	ZEPHIR_SINIT_VAR(_1);
+	ZVAL_BOOL(&_1, (x ? 1 : 0));
+	if (zephir_interface_exists(name, zephir_is_true(&_1)  TSRMLS_CC)) {
+		RETURN_MM_BOOL(1);
+	}
+	_2 = (zephir_function_exists_ex(SS("trait_exists") TSRMLS_CC) == SUCCESS);
+	if (_2) {
+		ZEPHIR_SINIT_VAR(_3);
+		ZVAL_BOOL(&_3, (x ? 1 : 0));
+		ZEPHIR_CALL_FUNCTION(&_4, "trait_exists", NULL, 14, name, &_3);
+		zephir_check_call_status();
+		_2 = zephir_is_true(_4);
+	}
+	if (_2) {
+		RETURN_MM_BOOL(1);
+	}
+	RETURN_MM_BOOL(x);
+
+}
+
 PHP_METHOD(Yb_Loader_LoaderAbstract, register) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 14, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 15, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -42,7 +83,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, unregister) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 15, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 16, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 

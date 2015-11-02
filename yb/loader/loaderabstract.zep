@@ -2,6 +2,25 @@ namespace Yb\Loader;
 
 abstract class LoaderAbstract
 {
+    public static function isLoaded(string name) -> boolean
+    {
+        boolean x = false;
+
+        if class_exists(name, x) {
+            return true;
+        }
+
+        if interface_exists(name, x) {
+            return true;
+        }
+
+        if function_exists("trait_exists") && trait_exists(name, x) {
+            return true;
+        }
+
+        return x;
+    }
+
     public function register() -> boolean
     {
         return spl_autoload_register(this);

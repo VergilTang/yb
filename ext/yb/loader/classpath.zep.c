@@ -58,7 +58,7 @@ PHP_METHOD(Yb_Loader_ClassPath, __construct) {
 PHP_METHOD(Yb_Loader_ClassPath, __invoke) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *className_param = NULL, *path = NULL, *_0, *_1 = NULL, *_2, *_3$$4, *_5$$6, *_6$$6;
+	zval *className_param = NULL, *path = NULL, *_0, *_1 = NULL, *_2, *_5 = NULL, *_3$$4, *_6$$6, *_7$$6;
 	zval *className = NULL, *_4$$4;
 
 	ZEPHIR_MM_GROW();
@@ -91,14 +91,16 @@ PHP_METHOD(Yb_Loader_ClassPath, __invoke) {
 	if (zephir_require_zval(path TSRMLS_CC) == FAILURE) {
 		RETURN_MM_NULL();
 	}
-	if (unlikely(!(zephir_class_exists(className, zephir_is_true(ZEPHIR_GLOBAL(global_false))  TSRMLS_CC)))) {
-		ZEPHIR_INIT_VAR(_5$$6);
-		object_init_ex(_5$$6, yb_loader_exception_ce);
+	ZEPHIR_CALL_SELF(&_5, "isloaded", NULL, 0, className);
+	zephir_check_call_status();
+	if (unlikely(!zephir_is_true(_5))) {
 		ZEPHIR_INIT_VAR(_6$$6);
-		ZEPHIR_CONCAT_SVSV(_6$$6, "Cannot find class: ", className, ", in path: ", path);
-		ZEPHIR_CALL_METHOD(NULL, _5$$6, "__construct", NULL, 2, _6$$6);
+		object_init_ex(_6$$6, yb_loader_exception_ce);
+		ZEPHIR_INIT_VAR(_7$$6);
+		ZEPHIR_CONCAT_SVSV(_7$$6, "Cannot find class: ", className, ", in path: ", path);
+		ZEPHIR_CALL_METHOD(NULL, _6$$6, "__construct", NULL, 2, _7$$6);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$6, "yb/loader/classpath.zep", 31 TSRMLS_CC);
+		zephir_throw_exception_debug(_6$$6, "yb/loader/classpath.zep", 31 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

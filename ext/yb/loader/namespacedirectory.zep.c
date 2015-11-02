@@ -86,8 +86,8 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	zend_bool found, _3$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_2 = NULL;
-	zval *className_param = NULL, *match = NULL, *pos = NULL, *dir = NULL, *_0 = NULL, _6, *_8, *_10, _11, _12, *_13, _1$$3 = zval_used_for_init, *_4$$3 = NULL, *_5$$3, *_9$$7, *_14$$9;
-	zval *className = NULL, *path = NULL, *_7 = NULL, *_15$$9;
+	zval *className_param = NULL, *match = NULL, *pos = NULL, *dir = NULL, *_0 = NULL, _6, *_8, *_10, _11, _12, *_13, *_14 = NULL, _1$$3 = zval_used_for_init, *_4$$3 = NULL, *_5$$3, *_9$$7, *_15$$9;
+	zval *className = NULL, *path = NULL, *_7 = NULL, *_16$$9;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &className_param);
@@ -102,7 +102,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	while (1) {
 		ZEPHIR_SINIT_NVAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "\\", 0);
-		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 68, match, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 69, match, &_1$$3);
 		zephir_check_call_status();
 		_3$$3 = ZEPHIR_IS_FALSE_IDENTICAL(pos);
 		if (!(_3$$3)) {
@@ -153,14 +153,16 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	if (zephir_require_zval(path TSRMLS_CC) == FAILURE) {
 		RETURN_MM_NULL();
 	}
-	if (unlikely(!(zephir_class_exists(className, zephir_is_true(ZEPHIR_GLOBAL(global_false))  TSRMLS_CC)))) {
-		ZEPHIR_INIT_VAR(_14$$9);
-		object_init_ex(_14$$9, yb_loader_exception_ce);
+	ZEPHIR_CALL_SELF(&_14, "isloaded", NULL, 0, className);
+	zephir_check_call_status();
+	if (unlikely(!zephir_is_true(_14))) {
 		ZEPHIR_INIT_VAR(_15$$9);
-		ZEPHIR_CONCAT_SVSV(_15$$9, "Cannot find class: ", className, ", in path: ", path);
-		ZEPHIR_CALL_METHOD(NULL, _14$$9, "__construct", NULL, 2, _15$$9);
+		object_init_ex(_15$$9, yb_loader_exception_ce);
+		ZEPHIR_INIT_VAR(_16$$9);
+		ZEPHIR_CONCAT_SVSV(_16$$9, "Cannot find class: ", className, ", in path: ", path);
+		ZEPHIR_CALL_METHOD(NULL, _15$$9, "__construct", NULL, 2, _16$$9);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_14$$9, "yb/loader/namespacedirectory.zep", 55 TSRMLS_CC);
+		zephir_throw_exception_debug(_15$$9, "yb/loader/namespacedirectory.zep", 55 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

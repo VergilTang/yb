@@ -73,7 +73,7 @@ PHP_METHOD(Yb_Upload_StorageAbstract, generateUri) {
 		ZEPHIR_CONCAT_VS(_4$$3, group, "/");
 		zephir_concat_self(&uri, _4$$3 TSRMLS_CC);
 	}
-	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "uuid", &_6, 16);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "uuid", &_6, 17);
 	zephir_check_call_status();
 	zephir_concat_self(&uri, _5 TSRMLS_CC);
 	if (!(!extension) && Z_STRLEN_P(extension)) {

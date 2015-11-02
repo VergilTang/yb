@@ -27,7 +27,7 @@ class ClassPath extends LoaderAbstract
 
         require path;
 
-        if unlikely ! class_exists(className, false) {
+        if unlikely ! self::isLoaded(className) {
             throw new Exception("Cannot find class: " . className . ", in path: " . path);
         }
 
