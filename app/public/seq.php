@@ -24,6 +24,10 @@ try {
     });
 
     $core('redisSeq', function($core) {
+        return new Yb\Sequence\Redis($core->redis);
+    });
+
+    $core('redisSeq2', function($core) {
         return new Yb\Sequence\RedisHash($core->redis);
     });
 
@@ -38,6 +42,7 @@ try {
     if (1) {
         $name = array_rand(array_flip([
             'redisSeq',
+            'redisSeq2',
             'mongoSeq',
             'mysqlSeq',
         ]));

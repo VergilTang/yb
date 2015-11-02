@@ -9,16 +9,13 @@ class SmtpMailer
     protected socket;
     protected from;
 
-    public function __construct(array options) -> void
+    public function __construct(string host, string user, string passwd, array options = []) -> void
     {
-        string host, user, passwd, from, name;
+        string from, name;
         long timeout, port;
         boolean secure;
         var socket;
 
-        let host = (string) Std::valueAt(options, "host");
-        let user = (string) Std::valueAt(options, "user");
-        let passwd = (string) Std::valueAt(options, "passwd");
         let from = (string) Std::valueAt(options, "from", user);
         let name = (string) Std::valueAt(options, "name", "");
         let timeout = (long) Std::valueAt(options, "timeout", 10);

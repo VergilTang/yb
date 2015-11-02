@@ -27,9 +27,9 @@
 
 
 
+zend_class_entry *yb_sequence_sequenceinterface_ce;
 zend_class_entry *yb_collection_collectioninterface_ce;
 zend_class_entry *yb_factory_factoryinterface_ce;
-zend_class_entry *yb_sequence_sequenceinterface_ce;
 zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_db_dbabstract_ce;
@@ -72,6 +72,7 @@ zend_class_entry *yb_router_exception_ce;
 zend_class_entry *yb_sequence_dbpdomysql_ce;
 zend_class_entry *yb_sequence_exception_ce;
 zend_class_entry *yb_sequence_mongocollection_ce;
+zend_class_entry *yb_sequence_redis_ce;
 zend_class_entry *yb_sequence_redishash_ce;
 zend_class_entry *yb_std_ce;
 zend_class_entry *yb_tools_exception_ce;
@@ -106,9 +107,9 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
+	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
 	ZEPHIR_INIT(Yb_Collection_CollectionInterface);
 	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
-	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
 	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Db_DbAbstract);
@@ -151,6 +152,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Sequence_DbPdoMysql);
 	ZEPHIR_INIT(Yb_Sequence_Exception);
 	ZEPHIR_INIT(Yb_Sequence_MongoCollection);
+	ZEPHIR_INIT(Yb_Sequence_Redis);
 	ZEPHIR_INIT(Yb_Sequence_RedisHash);
 	ZEPHIR_INIT(Yb_Std);
 	ZEPHIR_INIT(Yb_Tools_Exception);

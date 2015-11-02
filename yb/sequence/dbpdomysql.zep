@@ -9,16 +9,6 @@ class DbPdoMysql implements SequenceInterface
     protected mysql;
     protected table;
 
-    public static function tableCreationQuery(string table) -> string
-    {
-        return "create table " . table . " (
-                name varchar(100) not null,
-                sequence int not null auto_increment,
-                primary key (name),
-                key (name, sequence)
-            ) engine=myisam;";
-    }
-
     public function __construct(<PdoMysql> mysql, string table = self::DEFAULT_TABLE) -> void
     {
         let this->mysql = mysql;
@@ -37,7 +27,7 @@ class DbPdoMysql implements SequenceInterface
         var name, sequence;
 
         for name, sequence in sequences {
-            this->mysql->replace([
+            this->mysql->upsert(this->table, [
                 "name": name,
                 "sequence": sequence
             ], "name");

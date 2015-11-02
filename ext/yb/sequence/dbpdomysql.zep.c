@@ -12,10 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/concat.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
+#include "kernel/memory.h"
+#include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
 #include "kernel/hash.h"
@@ -33,22 +32,6 @@ ZEPHIR_INIT_CLASS(Yb_Sequence_DbPdoMysql) {
 
 	zend_class_implements(yb_sequence_dbpdomysql_ce TSRMLS_CC, 1, yb_sequence_sequenceinterface_ce);
 	return SUCCESS;
-
-}
-
-PHP_METHOD(Yb_Sequence_DbPdoMysql, tableCreationQuery) {
-
-	zval *table_param = NULL;
-	zval *table = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &table_param);
-
-	zephir_get_strval(table, table_param);
-
-
-	ZEPHIR_CONCAT_SVS(return_value, "create table ", table, " (\n                name varchar(100) not null,\n                sequence int not null auto_increment,\n                primary key (name),\n                key (name, sequence)\n            ) engine=myisam;");
-	RETURN_MM();
 
 }
 
@@ -108,8 +91,8 @@ PHP_METHOD(Yb_Sequence_DbPdoMysql, restoreSequences) {
 	HashTable *_1;
 	HashPosition _0;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *sequences_param = NULL, *name = NULL, *sequence = NULL, **_2, *_3$$3, *_5$$3 = NULL;
-	zval *sequences = NULL, *_4$$3 = NULL;
+	zval *sequences_param = NULL, *name = NULL, *sequence = NULL, **_2, *_3$$3, *_4$$3, *_6$$3 = NULL;
+	zval *sequences = NULL, *_5$$3 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &sequences_param);
@@ -117,7 +100,7 @@ PHP_METHOD(Yb_Sequence_DbPdoMysql, restoreSequences) {
 	zephir_get_arrval(sequences, sequences_param);
 
 
-	zephir_is_iterable(sequences, &_1, &_0, 0, 0, "yb/sequence/dbpdomysql.zep", 40);
+	zephir_is_iterable(sequences, &_1, &_0, 0, 0, "yb/sequence/dbpdomysql.zep", 35);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -125,14 +108,15 @@ PHP_METHOD(Yb_Sequence_DbPdoMysql, restoreSequences) {
 		ZEPHIR_GET_HMKEY(name, _1, _0);
 		ZEPHIR_GET_HVALUE(sequence, _2);
 		_3$$3 = zephir_fetch_nproperty_this(this_ptr, SL("mysql"), PH_NOISY_CC);
-		ZEPHIR_INIT_NVAR(_4$$3);
-		zephir_create_array(_4$$3, 2, 0 TSRMLS_CC);
-		zephir_array_update_string(&_4$$3, SL("name"), &name, PH_COPY | PH_SEPARATE);
-		zephir_array_update_string(&_4$$3, SL("sequence"), &sequence, PH_COPY | PH_SEPARATE);
+		_4$$3 = zephir_fetch_nproperty_this(this_ptr, SL("table"), PH_NOISY_CC);
 		ZEPHIR_INIT_NVAR(_5$$3);
-		ZVAL_STRING(_5$$3, "name", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(NULL, _3$$3, "replace", NULL, 0, _4$$3, _5$$3);
-		zephir_check_temp_parameter(_5$$3);
+		zephir_create_array(_5$$3, 2, 0 TSRMLS_CC);
+		zephir_array_update_string(&_5$$3, SL("name"), &name, PH_COPY | PH_SEPARATE);
+		zephir_array_update_string(&_5$$3, SL("sequence"), &sequence, PH_COPY | PH_SEPARATE);
+		ZEPHIR_INIT_NVAR(_6$$3);
+		ZVAL_STRING(_6$$3, "name", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, _3$$3, "upsert", NULL, 0, _4$$3, _5$$3, _6$$3);
+		zephir_check_temp_parameter(_6$$3);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();

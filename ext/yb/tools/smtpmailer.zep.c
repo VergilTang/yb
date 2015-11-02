@@ -40,193 +40,180 @@ ZEPHIR_INIT_CLASS(Yb_Tools_SmtpMailer) {
 
 PHP_METHOD(Yb_Tools_SmtpMailer, __construct) {
 
-	zend_bool secure = 0, _27;
+	zend_bool secure = 0, _21;
 	long timeout = 0, port = 0;
-	zval *host = NULL, *user = NULL, *passwd = NULL, *from = NULL, *name = NULL, *_3 = NULL, *_5 = NULL, *_7 = NULL, *_9 = NULL, *_12 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_fcall_cache_entry *_1 = NULL, *_33 = NULL, *_35 = NULL;
-	zval *options_param = NULL, *socket = NULL, *_0 = NULL, *_2 = NULL, *_4 = NULL, *_6 = NULL, *_8 = NULL, *_10 = NULL, *_11 = NULL, *_13 = NULL, *_14 = NULL, _28 = zval_used_for_init, *_29 = NULL, *_30 = NULL, *_31 = NULL, *_32 = NULL, *_34 = NULL, *_36 = NULL, *_15$$3 = NULL, *_16$$3 = NULL, *_17$$3 = NULL, _18$$3, _19$$3, *_20$$3 = NULL, *_21$$3, *_22$$4 = NULL, *_23$$4 = NULL, *_24$$4 = NULL, *_25$$4, *_26$$4;
+	zephir_fcall_cache_entry *_1 = NULL, *_27 = NULL, *_29 = NULL;
 	zval *options = NULL;
+	zval *host_param = NULL, *user_param = NULL, *passwd_param = NULL, *options_param = NULL, *socket = NULL, *_0 = NULL, *_2 = NULL, *_4 = NULL, *_5 = NULL, *_7 = NULL, *_8 = NULL, _22 = zval_used_for_init, *_23 = NULL, *_24 = NULL, *_25 = NULL, *_26 = NULL, *_28 = NULL, *_30 = NULL, *_9$$3 = NULL, *_10$$3 = NULL, *_11$$3 = NULL, _12$$3, _13$$3, *_14$$3 = NULL, *_15$$3, *_16$$4 = NULL, *_17$$4 = NULL, *_18$$4 = NULL, *_19$$4, *_20$$4;
+	zval *host = NULL, *user = NULL, *passwd = NULL, *from = NULL, *name = NULL, *_3 = NULL, *_6 = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &options_param);
+	zephir_fetch_params(1, 3, 1, &host_param, &user_param, &passwd_param, &options_param);
 
-	zephir_get_arrval(options, options_param);
+	zephir_get_strval(host, host_param);
+	zephir_get_strval(user, user_param);
+	zephir_get_strval(passwd, passwd_param);
+	if (!options_param) {
+		ZEPHIR_INIT_VAR(options);
+		array_init(options);
+	} else {
+		zephir_get_arrval(options, options_param);
+	}
 
 
 	ZEPHIR_INIT_VAR(_2);
-	ZVAL_STRING(_2, "host", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 9, options, _2);
+	ZVAL_STRING(_2, "from", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 9, options, _2, user);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	zephir_get_strval(_3, _0);
-	ZEPHIR_CPY_WRT(host, _3);
-	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "user", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_4, yb_std_ce, "valueat", &_1, 9, options, _2);
-	zephir_check_temp_parameter(_2);
-	zephir_check_call_status();
-	zephir_get_strval(_5, _4);
-	ZEPHIR_CPY_WRT(user, _5);
-	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "passwd", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_6, yb_std_ce, "valueat", &_1, 9, options, _2);
-	zephir_check_temp_parameter(_2);
-	zephir_check_call_status();
-	zephir_get_strval(_7, _6);
-	ZEPHIR_CPY_WRT(passwd, _7);
-	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "from", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "valueat", &_1, 9, options, _2, user);
-	zephir_check_temp_parameter(_2);
-	zephir_check_call_status();
-	zephir_get_strval(_9, _8);
-	ZEPHIR_CPY_WRT(from, _9);
+	ZEPHIR_CPY_WRT(from, _3);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "name", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_11);
-	ZVAL_STRING(_11, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_10, yb_std_ce, "valueat", &_1, 9, options, _2, _11);
+	ZEPHIR_INIT_VAR(_5);
+	ZVAL_STRING(_5, "", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_CE_STATIC(&_4, yb_std_ce, "valueat", &_1, 9, options, _2, _5);
 	zephir_check_temp_parameter(_2);
-	zephir_check_temp_parameter(_11);
+	zephir_check_temp_parameter(_5);
 	zephir_check_call_status();
-	zephir_get_strval(_12, _10);
-	ZEPHIR_CPY_WRT(name, _12);
+	zephir_get_strval(_6, _4);
+	ZEPHIR_CPY_WRT(name, _6);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "timeout", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_LONG(_11, 10);
-	ZEPHIR_CALL_CE_STATIC(&_13, yb_std_ce, "valueat", &_1, 9, options, _2, _11);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_LONG(_5, 10);
+	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 9, options, _2, _5);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	timeout = zephir_get_intval(_13);
+	timeout = zephir_get_intval(_7);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "secure", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_BOOL(_11, 0);
-	ZEPHIR_CALL_CE_STATIC(&_14, yb_std_ce, "valueat", &_1, 9, options, _2, _11);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_BOOL(_5, 0);
+	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "valueat", &_1, 9, options, _2, _5);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	secure = zephir_get_boolval(_14);
+	secure = zephir_get_boolval(_8);
 	if (secure) {
-		ZEPHIR_INIT_VAR(_16$$3);
-		ZVAL_STRING(_16$$3, "port", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_INIT_VAR(_17$$3);
-		ZVAL_LONG(_17$$3, 465);
-		ZEPHIR_CALL_CE_STATIC(&_15$$3, yb_std_ce, "valueat", &_1, 9, options, _16$$3, _17$$3);
-		zephir_check_temp_parameter(_16$$3);
+		ZEPHIR_INIT_VAR(_10$$3);
+		ZVAL_STRING(_10$$3, "port", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_VAR(_11$$3);
+		ZVAL_LONG(_11$$3, 465);
+		ZEPHIR_CALL_CE_STATIC(&_9$$3, yb_std_ce, "valueat", &_1, 9, options, _10$$3, _11$$3);
+		zephir_check_temp_parameter(_10$$3);
 		zephir_check_call_status();
-		port = zephir_get_intval(_15$$3);
-		ZEPHIR_SINIT_VAR(_18$$3);
-		ZVAL_STRING(&_18$$3, "tcp://%s:%d", 0);
-		ZEPHIR_SINIT_VAR(_19$$3);
-		ZVAL_LONG(&_19$$3, port);
-		ZEPHIR_CALL_FUNCTION(&_20$$3, "sprintf", NULL, 1, &_18$$3, host, &_19$$3);
+		port = zephir_get_intval(_9$$3);
+		ZEPHIR_SINIT_VAR(_12$$3);
+		ZVAL_STRING(&_12$$3, "tcp://%s:%d", 0);
+		ZEPHIR_SINIT_VAR(_13$$3);
+		ZVAL_LONG(&_13$$3, port);
+		ZEPHIR_CALL_FUNCTION(&_14$$3, "sprintf", NULL, 1, &_12$$3, host, &_13$$3);
 		zephir_check_call_status();
-		ZEPHIR_INIT_NVAR(_16$$3);
-		ZVAL_NULL(_16$$3);
-		ZEPHIR_INIT_NVAR(_17$$3);
-		ZVAL_NULL(_17$$3);
-		ZEPHIR_INIT_VAR(_21$$3);
-		ZVAL_LONG(_21$$3, timeout);
-		ZEPHIR_CALL_FUNCTION(&socket, "stream_socket_client", NULL, 81, _20$$3, _16$$3, _17$$3, _21$$3);
+		ZEPHIR_INIT_NVAR(_10$$3);
+		ZVAL_NULL(_10$$3);
+		ZEPHIR_INIT_NVAR(_11$$3);
+		ZVAL_NULL(_11$$3);
+		ZEPHIR_INIT_VAR(_15$$3);
+		ZVAL_LONG(_15$$3, timeout);
+		ZEPHIR_CALL_FUNCTION(&socket, "stream_socket_client", NULL, 81, _14$$3, _10$$3, _11$$3, _15$$3);
 		zephir_check_call_status();
 	} else {
-		ZEPHIR_INIT_VAR(_23$$4);
-		ZVAL_STRING(_23$$4, "port", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_INIT_VAR(_24$$4);
-		ZVAL_LONG(_24$$4, 25);
-		ZEPHIR_CALL_CE_STATIC(&_22$$4, yb_std_ce, "valueat", &_1, 9, options, _23$$4, _24$$4);
-		zephir_check_temp_parameter(_23$$4);
+		ZEPHIR_INIT_VAR(_17$$4);
+		ZVAL_STRING(_17$$4, "port", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_VAR(_18$$4);
+		ZVAL_LONG(_18$$4, 25);
+		ZEPHIR_CALL_CE_STATIC(&_16$$4, yb_std_ce, "valueat", &_1, 9, options, _17$$4, _18$$4);
+		zephir_check_temp_parameter(_17$$4);
 		zephir_check_call_status();
-		port = zephir_get_intval(_22$$4);
-		ZEPHIR_INIT_NVAR(_23$$4);
-		ZVAL_LONG(_23$$4, port);
-		ZEPHIR_INIT_NVAR(_24$$4);
-		ZVAL_NULL(_24$$4);
-		ZEPHIR_INIT_VAR(_25$$4);
-		ZVAL_NULL(_25$$4);
-		ZEPHIR_INIT_VAR(_26$$4);
-		ZVAL_LONG(_26$$4, timeout);
-		ZEPHIR_CALL_FUNCTION(&socket, "fsockopen", NULL, 82, host, _23$$4, _24$$4, _25$$4, _26$$4);
+		port = zephir_get_intval(_16$$4);
+		ZEPHIR_INIT_NVAR(_17$$4);
+		ZVAL_LONG(_17$$4, port);
+		ZEPHIR_INIT_NVAR(_18$$4);
+		ZVAL_NULL(_18$$4);
+		ZEPHIR_INIT_VAR(_19$$4);
+		ZVAL_NULL(_19$$4);
+		ZEPHIR_INIT_VAR(_20$$4);
+		ZVAL_LONG(_20$$4, timeout);
+		ZEPHIR_CALL_FUNCTION(&socket, "fsockopen", NULL, 82, host, _17$$4, _18$$4, _19$$4, _20$$4);
 		zephir_check_call_status();
 	}
 	if (unlikely(!zephir_is_true(socket))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot connect to mail server", "yb/tools/smtpmailer.zep", 36);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot connect to mail server", "yb/tools/smtpmailer.zep", 33);
 		return;
 	}
-	_27 = secure;
-	if (_27) {
-		ZEPHIR_SINIT_VAR(_28);
-		ZVAL_STRING(&_28, "STREAM_CRYPTO_METHOD_SSLv23_CLIENT", 0);
-		ZEPHIR_CALL_FUNCTION(&_14, "constant", NULL, 83, &_28);
+	_21 = secure;
+	if (_21) {
+		ZEPHIR_SINIT_VAR(_22);
+		ZVAL_STRING(&_22, "STREAM_CRYPTO_METHOD_SSLv23_CLIENT", 0);
+		ZEPHIR_CALL_FUNCTION(&_8, "constant", NULL, 83, &_22);
 		zephir_check_call_status();
-		ZEPHIR_CALL_FUNCTION(&_29, "stream_socket_enable_crypto", NULL, 84, socket, ZEPHIR_GLOBAL(global_true), _14);
+		ZEPHIR_CALL_FUNCTION(&_23, "stream_socket_enable_crypto", NULL, 84, socket, ZEPHIR_GLOBAL(global_true), _8);
 		zephir_check_call_status();
-		_27 = !zephir_is_true(_29);
+		_21 = !zephir_is_true(_23);
 	}
-	if (unlikely(_27)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot enable crypto socket", "yb/tools/smtpmailer.zep", 41);
+	if (unlikely(_21)) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot enable crypto socket", "yb/tools/smtpmailer.zep", 38);
 		return;
 	}
-	ZEPHIR_SINIT_NVAR(_28);
-	ZVAL_LONG(&_28, 1);
-	ZEPHIR_CALL_FUNCTION(&_30, "stream_set_blocking", NULL, 85, socket, &_28);
+	ZEPHIR_SINIT_NVAR(_22);
+	ZVAL_LONG(&_22, 1);
+	ZEPHIR_CALL_FUNCTION(&_24, "stream_set_blocking", NULL, 85, socket, &_22);
 	zephir_check_call_status();
-	if (unlikely(!zephir_is_true(_30))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot set blocking socket", "yb/tools/smtpmailer.zep", 45);
+	if (unlikely(!zephir_is_true(_24))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "Cannot set blocking socket", "yb/tools/smtpmailer.zep", 42);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
-	ZEPHIR_CALL_METHOD(&_31, this_ptr, "pack", NULL, 0, name, from);
+	ZEPHIR_CALL_METHOD(&_25, this_ptr, "pack", NULL, 0, name, from);
 	zephir_check_call_status();
-	zephir_update_property_this(this_ptr, SL("from"), _31 TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("from"), _25 TSRMLS_CC);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "CONNECT", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_STRING(_11, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_32);
-	ZVAL_LONG(_32, 220);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_33, 0, _2, _11, _32);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_STRING(_5, "", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_VAR(_26);
+	ZVAL_LONG(_26, 220);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_27, 0, _2, _5, _26);
 	zephir_check_temp_parameter(_2);
-	zephir_check_temp_parameter(_11);
+	zephir_check_temp_parameter(_5);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "EHLO HELO", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_STRING(_11, "EHLO HELO", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_32);
-	ZVAL_LONG(_32, 250);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_33, 0, _2, _11, _32);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_STRING(_5, "EHLO HELO", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_NVAR(_26);
+	ZVAL_LONG(_26, 250);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_27, 0, _2, _5, _26);
 	zephir_check_temp_parameter(_2);
-	zephir_check_temp_parameter(_11);
+	zephir_check_temp_parameter(_5);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "AUTH LOGIN", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_STRING(_11, "AUTH LOGIN", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_32);
-	ZVAL_LONG(_32, 334);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_33, 0, _2, _11, _32);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_STRING(_5, "AUTH LOGIN", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_NVAR(_26);
+	ZVAL_LONG(_26, 334);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_27, 0, _2, _5, _26);
 	zephir_check_temp_parameter(_2);
-	zephir_check_temp_parameter(_11);
+	zephir_check_temp_parameter(_5);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_34, "base64_encode", &_35, 86, user);
+	ZEPHIR_CALL_FUNCTION(&_28, "base64_encode", &_29, 86, user);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "AUTH USER", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_LONG(_11, 334);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_33, 0, _2, _34, _11);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_LONG(_5, 334);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_27, 0, _2, _28, _5);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_36, "base64_encode", &_35, 86, passwd);
+	ZEPHIR_CALL_FUNCTION(&_30, "base64_encode", &_29, 86, passwd);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "AUTH PASSWD", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_11);
-	ZVAL_LONG(_11, 235);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_33, 0, _2, _36, _11);
+	ZEPHIR_INIT_NVAR(_5);
+	ZVAL_LONG(_5, 235);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_27, 0, _2, _30, _5);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
@@ -278,14 +265,14 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("from"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_6);
 	ZEPHIR_CONCAT_SV(_6, "FROM: ", _5);
-	zephir_array_append(&data, _6, PH_SEPARATE, "yb/tools/smtpmailer.zep", 64);
+	zephir_array_append(&data, _6, PH_SEPARATE, "yb/tools/smtpmailer.zep", 61);
 	if (zephir_fast_count_int(to TSRMLS_CC) < 1) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "No one to send", "yb/tools/smtpmailer.zep", 67);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_tools_exception_ce, "No one to send", "yb/tools/smtpmailer.zep", 64);
 		return;
 	}
 	ZEPHIR_INIT_VAR(temp);
 	array_init(temp);
-	zephir_is_iterable(to, &_8, &_7, 0, 0, "yb/tools/smtpmailer.zep", 76);
+	zephir_is_iterable(to, &_8, &_7, 0, 0, "yb/tools/smtpmailer.zep", 73);
 	for (
 	  ; zephir_hash_get_current_data_ex(_8, (void**) &_9, &_7) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_8, &_7)
@@ -295,7 +282,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 		ZEPHIR_CALL_METHOD(&_10$$4, this_ptr, "pack", &_11, 0, name, addr);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(name, _10$$4);
-		zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 73);
+		zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 70);
 		ZEPHIR_INIT_LNVAR(_12$$4);
 		ZEPHIR_CONCAT_SV(_12$$4, "RCPT TO: ", name);
 		ZEPHIR_INIT_NVAR(_13$$4);
@@ -310,11 +297,11 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	zephir_fast_join_str(_2, SL(","), temp TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_15);
 	ZEPHIR_CONCAT_SV(_15, "TO: ", _2);
-	zephir_array_append(&data, _15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 76);
+	zephir_array_append(&data, _15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 73);
 	if (zephir_fast_count_int(cc TSRMLS_CC) > 0) {
 		ZEPHIR_INIT_NVAR(temp);
 		array_init(temp);
-		zephir_is_iterable(cc, &_17$$5, &_16$$5, 0, 0, "yb/tools/smtpmailer.zep", 85);
+		zephir_is_iterable(cc, &_17$$5, &_16$$5, 0, 0, "yb/tools/smtpmailer.zep", 82);
 		for (
 		  ; zephir_hash_get_current_data_ex(_17$$5, (void**) &_18$$5, &_16$$5) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_17$$5, &_16$$5)
@@ -324,7 +311,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 			ZEPHIR_CALL_METHOD(&_19$$6, this_ptr, "pack", &_11, 0, name, addr);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(name, _19$$6);
-			zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 82);
+			zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 79);
 			ZEPHIR_INIT_LNVAR(_20$$6);
 			ZEPHIR_CONCAT_SV(_20$$6, "RCPT TO: ", name);
 			ZEPHIR_INIT_NVAR(_21$$6);
@@ -339,12 +326,12 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 		zephir_fast_join_str(_23$$5, SL(","), temp TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_24$$5);
 		ZEPHIR_CONCAT_SV(_24$$5, "CC: ", _23$$5);
-		zephir_array_append(&data, _24$$5, PH_SEPARATE, "yb/tools/smtpmailer.zep", 85);
+		zephir_array_append(&data, _24$$5, PH_SEPARATE, "yb/tools/smtpmailer.zep", 82);
 	}
 	if (zephir_fast_count_int(bcc TSRMLS_CC) > 0) {
 		ZEPHIR_INIT_NVAR(temp);
 		array_init(temp);
-		zephir_is_iterable(bcc, &_26$$7, &_25$$7, 0, 0, "yb/tools/smtpmailer.zep", 94);
+		zephir_is_iterable(bcc, &_26$$7, &_25$$7, 0, 0, "yb/tools/smtpmailer.zep", 91);
 		for (
 		  ; zephir_hash_get_current_data_ex(_26$$7, (void**) &_27$$7, &_25$$7) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_26$$7, &_25$$7)
@@ -354,7 +341,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 			ZEPHIR_CALL_METHOD(&_28$$8, this_ptr, "pack", &_11, 0, name, addr);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(name, _28$$8);
-			zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 91);
+			zephir_array_append(&temp, name, PH_SEPARATE, "yb/tools/smtpmailer.zep", 88);
 			ZEPHIR_INIT_LNVAR(_29$$8);
 			ZEPHIR_CONCAT_SV(_29$$8, "RCPT TO: ", name);
 			ZEPHIR_INIT_NVAR(_30$$8);
@@ -369,7 +356,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 		zephir_fast_join_str(_32$$7, SL(","), temp TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_33$$7);
 		ZEPHIR_CONCAT_SV(_33$$7, "BCC: ", _32$$7);
-		zephir_array_append(&data, _33$$7, PH_SEPARATE, "yb/tools/smtpmailer.zep", 94);
+		zephir_array_append(&data, _33$$7, PH_SEPARATE, "yb/tools/smtpmailer.zep", 91);
 	}
 	ZEPHIR_OBS_VAR(subject);
 	if (zephir_array_isset_string_fetch(&subject, message, SS("subject"), 0 TSRMLS_CC)) {
@@ -377,7 +364,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_35$$9);
 		ZEPHIR_CONCAT_SV(_35$$9, "Subject: ", _34$$9);
-		zephir_array_append(&data, _35$$9, PH_SEPARATE, "yb/tools/smtpmailer.zep", 98);
+		zephir_array_append(&data, _35$$9, PH_SEPARATE, "yb/tools/smtpmailer.zep", 95);
 	}
 	ZEPHIR_SINIT_VAR(_36);
 	ZVAL_STRING(&_36, "r", 0);
@@ -385,7 +372,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_38);
 	ZEPHIR_CONCAT_SV(_38, "Date: ", _37);
-	zephir_array_append(&data, _38, PH_SEPARATE, "yb/tools/smtpmailer.zep", 101);
+	zephir_array_append(&data, _38, PH_SEPARATE, "yb/tools/smtpmailer.zep", 98);
 	ZEPHIR_OBS_VAR(attachments);
 	_39 = zephir_array_isset_string_fetch(&attachments, message, SS("attachments"), 0 TSRMLS_CC);
 	if (_39) {
@@ -398,13 +385,13 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	if (_40) {
 		ZEPHIR_INIT_VAR(_41$$10);
 		ZVAL_STRING(_41$$10, "Content-Type: multipart/mixed;", 1);
-		zephir_array_append(&data, _41$$10, PH_SEPARATE, "yb/tools/smtpmailer.zep", 104);
+		zephir_array_append(&data, _41$$10, PH_SEPARATE, "yb/tools/smtpmailer.zep", 101);
 	} else {
 		ZEPHIR_INIT_NVAR(attachments);
 		array_init(attachments);
 		ZEPHIR_INIT_VAR(_42$$11);
 		ZVAL_STRING(_42$$11, "Content-Type: multipart/alternative;", 1);
-		zephir_array_append(&data, _42$$11, PH_SEPARATE, "yb/tools/smtpmailer.zep", 107);
+		zephir_array_append(&data, _42$$11, PH_SEPARATE, "yb/tools/smtpmailer.zep", 104);
 	}
 	ZEPHIR_INIT_NVAR(_3);
 	ZEPHIR_CALL_FUNCTION(&_43, "mt_rand", NULL, 75);
@@ -417,17 +404,17 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	ZEPHIR_CONCAT_SV(boundary, "Boundary-", _45);
 	ZEPHIR_INIT_VAR(_46);
 	ZEPHIR_CONCAT_SVS(_46, "\tboundary=\"", boundary, "\"");
-	zephir_array_append(&data, _46, PH_SEPARATE, "yb/tools/smtpmailer.zep", 111);
+	zephir_array_append(&data, _46, PH_SEPARATE, "yb/tools/smtpmailer.zep", 108);
 	ZEPHIR_INIT_VAR(_47);
 	ZEPHIR_CONCAT_SV(_47, "--", boundary);
 	ZEPHIR_CPY_WRT(boundary, _47);
 	ZEPHIR_INIT_VAR(_48);
 	ZVAL_STRING(_48, "MIME-Version: 1.0", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 114);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 111);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 115);
-	zephir_array_append(&data, boundary, PH_SEPARATE, "yb/tools/smtpmailer.zep", 117);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 112);
+	zephir_array_append(&data, boundary, PH_SEPARATE, "yb/tools/smtpmailer.zep", 114);
 	ZEPHIR_OBS_VAR(plain);
 	_49 = zephir_array_isset_string_fetch(&plain, message, SS("plain"), 0 TSRMLS_CC);
 	if (_49) {
@@ -436,32 +423,32 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 	if (_49) {
 		ZEPHIR_INIT_VAR(_50$$12);
 		ZVAL_STRING(_50$$12, "Content-Type: text/plain; charset=UTF-8", 1);
-		zephir_array_append(&data, _50$$12, PH_SEPARATE, "yb/tools/smtpmailer.zep", 119);
+		zephir_array_append(&data, _50$$12, PH_SEPARATE, "yb/tools/smtpmailer.zep", 116);
 	} else {
 		ZEPHIR_INIT_VAR(_51$$13);
 		ZVAL_STRING(_51$$13, "Content-Type: text/html; charset=UTF-8", 1);
-		zephir_array_append(&data, _51$$13, PH_SEPARATE, "yb/tools/smtpmailer.zep", 121);
+		zephir_array_append(&data, _51$$13, PH_SEPARATE, "yb/tools/smtpmailer.zep", 118);
 	}
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "Content-Transfer-Encoding: base64", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 123);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 120);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 124);
-	zephir_array_fetch_string(&_52, message, SL("body"), PH_NOISY | PH_READONLY, "yb/tools/smtpmailer.zep", 125 TSRMLS_CC);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 121);
+	zephir_array_fetch_string(&_52, message, SL("body"), PH_NOISY | PH_READONLY, "yb/tools/smtpmailer.zep", 122 TSRMLS_CC);
 	ZEPHIR_CALL_FUNCTION(&_53, "base64_encode", &_54, 86, _52);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_55, "chunk_split", &_56, 88, _53);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_57);
 	ZEPHIR_CONCAT_VV(_57, _55, boundary);
-	zephir_array_append(&data, _57, PH_SEPARATE, "yb/tools/smtpmailer.zep", 125);
+	zephir_array_append(&data, _57, PH_SEPARATE, "yb/tools/smtpmailer.zep", 122);
 	if (zephir_is_true(attachments)) {
 		ZEPHIR_SINIT_VAR(_58$$14);
 		ZVAL_LONG(&_58$$14, 16);
 		ZEPHIR_CALL_FUNCTION(&mine, "finfo_open", NULL, 89, &_58$$14);
 		zephir_check_call_status();
-		zephir_is_iterable(attachments, &_60$$14, &_59$$14, 0, 0, "yb/tools/smtpmailer.zep", 147);
+		zephir_is_iterable(attachments, &_60$$14, &_59$$14, 0, 0, "yb/tools/smtpmailer.zep", 144);
 		for (
 		  ; zephir_hash_get_current_data_ex(_60$$14, (void**) &_61$$14, &_59$$14) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_60$$14, &_59$$14)
@@ -474,7 +461,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 				ZEPHIR_CONCAT_SV(_63$$16, "Cannot find attachment: ", path);
 				ZEPHIR_CALL_METHOD(NULL, _62$$16, "__construct", &_64, 2, _63$$16);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(_62$$16, "yb/tools/smtpmailer.zep", 131 TSRMLS_CC);
+				zephir_throw_exception_debug(_62$$16, "yb/tools/smtpmailer.zep", 128 TSRMLS_CC);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
@@ -483,25 +470,25 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 			if (zephir_is_true(type)) {
 				ZEPHIR_INIT_LNVAR(_66$$17);
 				ZEPHIR_CONCAT_SV(_66$$17, "Content-Type: ", type);
-				zephir_array_append(&data, _66$$17, PH_SEPARATE, "yb/tools/smtpmailer.zep", 136);
+				zephir_array_append(&data, _66$$17, PH_SEPARATE, "yb/tools/smtpmailer.zep", 133);
 			} else {
 				ZEPHIR_INIT_NVAR(_67$$18);
 				ZVAL_STRING(_67$$18, "Content-Type: application/octet-stream", 1);
-				zephir_array_append(&data, _67$$18, PH_SEPARATE, "yb/tools/smtpmailer.zep", 138);
+				zephir_array_append(&data, _67$$18, PH_SEPARATE, "yb/tools/smtpmailer.zep", 135);
 			}
 			ZEPHIR_INIT_NVAR(_68$$15);
 			ZVAL_STRING(_68$$15, "Content-Transfer-Encoding: base64", 1);
-			zephir_array_append(&data, _68$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 141);
+			zephir_array_append(&data, _68$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 138);
 			ZEPHIR_INIT_NVAR(_68$$15);
 			zephir_basename(_68$$15, path TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_69$$15, this_ptr, "pack", &_11, 0, _68$$15);
 			zephir_check_call_status();
 			ZEPHIR_INIT_LNVAR(_70$$15);
 			ZEPHIR_CONCAT_SVS(_70$$15, "Content-Disposition: attachment; filename=\"", _69$$15, "\"");
-			zephir_array_append(&data, _70$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 142);
+			zephir_array_append(&data, _70$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 139);
 			ZEPHIR_INIT_NVAR(_71$$15);
 			ZVAL_STRING(_71$$15, "", 1);
-			zephir_array_append(&data, _71$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 143);
+			zephir_array_append(&data, _71$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 140);
 			ZEPHIR_INIT_NVAR(_71$$15);
 			zephir_file_get_contents(_71$$15, path TSRMLS_CC);
 			ZEPHIR_CALL_FUNCTION(&_72$$15, "base64_encode", &_54, 86, _71$$15);
@@ -510,14 +497,14 @@ PHP_METHOD(Yb_Tools_SmtpMailer, sendTo) {
 			zephir_check_call_status();
 			ZEPHIR_INIT_LNVAR(_74$$15);
 			ZEPHIR_CONCAT_VV(_74$$15, _73$$15, boundary);
-			zephir_array_append(&data, _74$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 144);
+			zephir_array_append(&data, _74$$15, PH_SEPARATE, "yb/tools/smtpmailer.zep", 141);
 		}
 		ZEPHIR_CALL_FUNCTION(NULL, "finfo_close", NULL, 91, mine);
 		zephir_check_call_status();
 	}
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, ".", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 150);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/tools/smtpmailer.zep", 147);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "DATA", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_75);
@@ -604,7 +591,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, cmd) {
 		ZEPHIR_CONCAT_SV(_5$$3, "Cannot fputs to socket on step: ", step);
 		ZEPHIR_CALL_METHOD(NULL, _4$$3, "__construct", NULL, 2, _5$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_4$$3, "yb/tools/smtpmailer.zep", 170 TSRMLS_CC);
+		zephir_throw_exception_debug(_4$$3, "yb/tools/smtpmailer.zep", 167 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -628,7 +615,7 @@ PHP_METHOD(Yb_Tools_SmtpMailer, cmd) {
 		ZEPHIR_CONCAT_SVSV(_12$$4, "Unexpected response on step: ", step, ", with output: ", output);
 		ZEPHIR_CALL_METHOD(NULL, _11$$4, "__construct", NULL, 2, _12$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_11$$4, "yb/tools/smtpmailer.zep", 176 TSRMLS_CC);
+		zephir_throw_exception_debug(_11$$4, "yb/tools/smtpmailer.zep", 173 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

@@ -13,10 +13,10 @@ if (PHP_YB != "no") {
   
   ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c core.zep.c std.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/db", "dbabstract.zep.c exception.zep.c pdoabstract.zep.c oci8.zep.c pdomysql.zep.c pdopgsql.zep.c queryexception.zep.c transactionexception.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/sequence", "sequenceinterface.zep.c dbpdomysql.zep.c exception.zep.c mongocollection.zep.c redis.zep.c redishash.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/collection", "collectioninterface.zep.c redishash.zep.c exception.zep.c mongocollection.zep.c redishashserialized.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/factory", "factoryinterface.zep.c classname.zep.c exception.zep.c generated.zep.c namespaced.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c text.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/sequence", "sequenceinterface.zep.c dbpdomysql.zep.c exception.zep.c mongocollection.zep.c redishash.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/loader", "loaderabstract.zep.c classpath.zep.c exception.zep.c namespacedirectory.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/logger", "loggerabstract.zep.c exception.zep.c filelogger.zep.c nulllogger.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/upload", "storageabstract.zep.c exception.zep.c filesystem.zep.c ftp.zep.c uploadedfile.zep.c uploader.zep.c", "yb");

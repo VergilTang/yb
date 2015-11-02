@@ -209,47 +209,6 @@ PHP_METHOD(Yb_Db_PdoAbstract, queryAll) {
 
 }
 
-PHP_METHOD(Yb_Db_PdoAbstract, queryAllCallback) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *params = NULL;
-	zval *sql_param = NULL, *params_param = NULL, *callback, *r = NULL, *_0$$4, *_1$$4 = NULL;
-	zval *sql = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 1, &sql_param, &params_param, &callback);
-
-	zephir_get_strval(sql, sql_param);
-	if (!params_param) {
-		ZEPHIR_INIT_VAR(params);
-		array_init(params);
-	} else {
-		zephir_get_arrval(params, params_param);
-	}
-
-
-	if (unlikely(!(zephir_is_callable(callback TSRMLS_CC)))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid callback", "yb/db/pdoabstract.zep", 68);
-		return;
-	}
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "query", NULL, 0, sql, params);
-	zephir_check_call_status();
-	while (1) {
-		_0$$4 = zephir_fetch_nproperty_this(this_ptr, SL("lastStatement"), PH_NOISY_CC);
-		ZEPHIR_INIT_NVAR(_1$$4);
-		ZVAL_LONG(_1$$4, 2);
-		ZEPHIR_CALL_METHOD(&r, _0$$4, "fetch", NULL, 0, _1$$4);
-		zephir_check_call_status();
-		if (ZEPHIR_IS_FALSE_IDENTICAL(r)) {
-			RETURN_MM_NULL();
-		}
-		ZEPHIR_CALL_ZVAL_FUNCTION(NULL, callback, NULL, 0, r);
-		zephir_check_call_status();
-	}
-	ZEPHIR_MM_RESTORE();
-
-}
-
 PHP_METHOD(Yb_Db_PdoAbstract, queryRow) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -346,7 +305,7 @@ PHP_METHOD(Yb_Db_PdoAbstract, queryColumns) {
 		if (_1$$3) {
 			break;
 		}
-		zephir_array_append(&d, i, PH_SEPARATE, "yb/db/pdoabstract.zep", 112);
+		zephir_array_append(&d, i, PH_SEPARATE, "yb/db/pdoabstract.zep", 92);
 	}
 	RETURN_CCTOR(d);
 

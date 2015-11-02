@@ -29,7 +29,6 @@ abstract class DbAbstract
     abstract public function queryRow(string sql, array params = null);
     abstract public function queryCell(string sql, array params = null) -> string;
     abstract public function queryColumns(string sql, array params = null) -> array;
-    abstract public function queryAllCallback(string sql, array params = null, var callback) -> void;
 
     public function inTransaction() -> boolean
     {
@@ -264,16 +263,15 @@ abstract class DbAbstract
         this->insert(table, data);
     }
 
-    public function parseSelect(array options) -> string
+    public function parseSelect(string table, array options = []) -> string
     {
-        string table, field, where;
+        string field, where;
         var orderBy;
         long limit, offset;
         boolean forUpdate;
 
         string s = "SELECT ";
 
-        let table = (string) Std::valueAt(options, "table");
         let field = (string) Std::valueAt(options, "field", "*");
         let where = (string) Std::valueAt(options, "where", "");
         let orderBy = Std::valueAt(options, "orderBy", "");
@@ -313,45 +311,44 @@ abstract class DbAbstract
         return s;
     }
 
-    public function selectAll(array options) -> array
+    public function selectAll(string table, array options = []) -> array
     {
         string s;
 
-        let s = (string) this->parseSelect(options);
+        let s = (string) this->parseSelect(table, options);
         return this->queryAll(s);
     }
 
-    public function selectRow(array options) -> array
+    public function selectRow(string table, array options = []) -> array
     {
         string s;
 
-        let s = (string) this->parseSelect(options);
+        let s = (string) this->parseSelect(table, options);
         return this->queryRow(s);
     }
 
-    public function selectCell(array options) -> array
+    public function selectCell(string table, array options = []) -> array
     {
         string s;
 
-        let s = (string) this->parseSelect(options);
+        let s = (string) this->parseSelect(table, options);
         return this->queryCell(s);
     }
 
-    public function selectColumns(array options) -> array
+    public function selectColumns(string table, array options = []) -> array
     {
         string s;
 
-        let s = (string) this->parseSelect(options);
+        let s = (string) this->parseSelect(table, options);
         return this->queryColumns(s);
     }
 
-    public function countAndSelect(array options) -> array
+    public function countAndSelect(string table, array options = []) -> array
     {
-        string table, where;
+        string where;
         long c;
         string s;
 
-        let table = (string) Std::valueAt(options, "table");
         let where = (string) Std::valueAt(options, "where", "");
 
         let s = "SELECT COUNT(*) FROM " . table;
@@ -366,7 +363,7 @@ abstract class DbAbstract
 
         return [
             c,
-            this->selectAll(options)
+            this->selectAll(table, options)
         ];
     }
 
@@ -495,27 +492,20 @@ abstract class DbAbstract
         return this->aggregate(table, column, "SUM", where);
     }
 
-    public function parseGroupedAggregation(array options) -> string
+    public function parseGroupedAggregation(string table, string groupBy, array aggrs, array options = []) -> string
     {
-        string table, groupBy, where, having;
+        string where, having;
         var aggregations, orderBy;
         var k, v, a = [];
         string s;
 
-        let table = (string) Std::valueAt(options, "table");
-        let groupBy = (string) Std::valueAt(options, "groupBy");
-        let aggregations = Std::valueAt(options, "aggregations");
         let where = (string) Std::valueAt(options, "where", "");
         let having = (string) Std::valueAt(options, "having", "");
         let orderBy = Std::valueAt(options, "orderBy", "");
 
         let a[] = groupBy;
 
-        if unlikely typeof aggregations != "array" {
-            throw new Exception("Invalid argument: aggregations, array required");
-        }
-
-        for k, v in aggregations {
+        for k, v in aggrs {
             let a[] = v . "(" . groupBy . ") AS " . k;
         }
 
@@ -542,11 +532,11 @@ abstract class DbAbstract
         return s;
     }
 
-    public function queryGroupedAggregation(array options) -> array
+    public function queryGroupedAggregation(string table, string groupBy, array aggrs, array options = []) -> array
     {
         string s;
 
-        let s = (string) this->parseGroupedAggregation(options);
+        let s = (string) this->parseGroupedAggregation(table, groupBy, aggrs, options);
         return this->queryAll(s);
     }
 

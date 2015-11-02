@@ -7,16 +7,13 @@ class Ftp extends StorageAbstract
     protected ftp;
     protected baseDirectory;
 
-    public function __construct(array options) -> void
+    public function __construct(string host, string user, string passwd, array options = []) -> void
     {
-        string host, user, passwd, baseDirectory;
+        string baseDirectory;
         long port, timeout;
         boolean ssl;
         var ftp;
 
-        let host = (string) Std::valueAt(options, "host");
-        let user = (string) Std::valueAt(options, "user", "");
-        let passwd = (string) Std::valueAt(options, "passwd", "");
         let baseDirectory = (string) Std::valueAt(options, "baseDirectory", "");
         let port = (long) Std::valueAt(options, "port", 21);
         let timeout = (long) Std::valueAt(options, "timeout", 10);

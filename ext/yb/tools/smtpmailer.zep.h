@@ -9,8 +9,11 @@ PHP_METHOD(Yb_Tools_SmtpMailer, __destruct);
 PHP_METHOD(Yb_Tools_SmtpMailer, cmd);
 PHP_METHOD(Yb_Tools_SmtpMailer, pack);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_tools_smtpmailer___construct, 0, 0, 1)
-	ZEND_ARG_ARRAY_INFO(0, options, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_tools_smtpmailer___construct, 0, 0, 3)
+	ZEND_ARG_INFO(0, host)
+	ZEND_ARG_INFO(0, user)
+	ZEND_ARG_INFO(0, passwd)
+	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_tools_smtpmailer_sendto, 0, 0, 2)

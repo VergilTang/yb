@@ -9,8 +9,11 @@ PHP_METHOD(Yb_Upload_Ftp, remove);
 PHP_METHOD(Yb_Upload_Ftp, __destruct);
 PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_ftp___construct, 0, 0, 1)
-	ZEND_ARG_ARRAY_INFO(0, options, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_ftp___construct, 0, 0, 3)
+	ZEND_ARG_INFO(0, host)
+	ZEND_ARG_INFO(0, user)
+	ZEND_ARG_INFO(0, passwd)
+	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_ftp_store, 0, 0, 1)
