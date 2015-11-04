@@ -58,7 +58,7 @@ PHP_METHOD(Yb_Factory_Generated, getClassName) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("classNameGenerator"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "call_user_func", NULL, 41, _0, name);
+	ZEPHIR_CALL_FUNCTION(&_1, "call_user_func", NULL, 43, _0, name);
 	zephir_check_call_status();
 	zephir_get_strval(_2, _1);
 	RETURN_CTOR(_2);

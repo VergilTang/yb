@@ -25,11 +25,12 @@ if test "$PHP_YB" = "yes"; then
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
+	yb/router/routerabstract.zep.c
+	yb/application.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
 	yb/collection/proxy.zep.c
 	yb/collection/redishashserialized.zep.c
-	yb/core.zep.c
 	yb/db/oci8.zep.c
 	yb/db/pdomysql.zep.c
 	yb/db/pdopgsql.zep.c
@@ -43,8 +44,8 @@ if test "$PHP_YB" = "yes"; then
 	yb/image/gd.zep.c
 	yb/image/imagick.zep.c
 	yb/image/text.zep.c
-	yb/loader/classpath.zep.c
 	yb/loader/exception.zep.c
+	yb/loader/namepath.zep.c
 	yb/loader/namespacedirectory.zep.c
 	yb/logger/exception.zep.c
 	yb/logger/filelogger.zep.c
@@ -55,6 +56,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
 	yb/router/exception.zep.c
+	yb/router/uri.zep.c
 	yb/sequence/dbpdomysql.zep.c
 	yb/sequence/exception.zep.c
 	yb/sequence/mongocollection.zep.c

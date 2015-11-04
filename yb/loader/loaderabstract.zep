@@ -21,6 +21,13 @@ abstract class LoaderAbstract
         return x;
     }
 
+    public function __construct(boolean registerSelf = false) -> void
+    {
+        if unlikely registerSelf && ! this->register() {
+            throw new Exception("Cannot register loader");
+        }
+    }
+
     public function register() -> boolean
     {
         return spl_autoload_register(this);
@@ -31,6 +38,6 @@ abstract class LoaderAbstract
         return spl_autoload_unregister(this);
     }
 
-    abstract public function __invoke(string className) -> boolean;
+    abstract public function __invoke(string name) -> boolean;
 
 }

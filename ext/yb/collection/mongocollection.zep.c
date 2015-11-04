@@ -186,7 +186,7 @@ PHP_METHOD(Yb_Collection_MongoCollection, getMany) {
 	zephir_array_update_string(&_1, SL("_id"), &_2, PH_COPY | PH_SEPARATE);
 	ZEPHIR_CALL_METHOD(&rows, _0, "find", NULL, 0, _1);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_3, "iterator_to_array", NULL, 22, rows);
+	ZEPHIR_CALL_FUNCTION(&_3, "iterator_to_array", NULL, 24, rows);
 	zephir_check_call_status();
 	zephir_is_iterable(_3, &_5, &_4, 0, 0, "yb/collection/mongocollection.zep", 76);
 	for (
@@ -263,7 +263,7 @@ PHP_METHOD(Yb_Collection_MongoCollection, getAll) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("mongoCollection"), PH_NOISY_CC);
 	ZEPHIR_CALL_METHOD(&rows, _0, "find", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "iterator_to_array", NULL, 22, rows);
+	ZEPHIR_CALL_FUNCTION(&_1, "iterator_to_array", NULL, 24, rows);
 	zephir_check_call_status();
 	zephir_is_iterable(_1, &_3, &_2, 0, 0, "yb/collection/mongocollection.zep", 108);
 	for (

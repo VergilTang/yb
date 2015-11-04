@@ -16,6 +16,7 @@
 #include "kernel/operators.h"
 #include "kernel/object.h"
 #include "kernel/fcall.h"
+#include "kernel/exception.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Loader_LoaderAbstract) {
@@ -62,6 +63,36 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, isLoaded) {
 		RETURN_MM_BOOL(1);
 	}
 	RETURN_MM_BOOL(x);
+
+}
+
+PHP_METHOD(Yb_Loader_LoaderAbstract, __construct) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *registerSelf_param = NULL, *_1 = NULL;
+	zend_bool registerSelf, _0;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &registerSelf_param);
+
+	if (!registerSelf_param) {
+		registerSelf = 0;
+	} else {
+		registerSelf = zephir_get_boolval(registerSelf_param);
+	}
+
+
+	_0 = registerSelf;
+	if (_0) {
+		ZEPHIR_CALL_METHOD(&_1, this_ptr, "register", NULL, 0);
+		zephir_check_call_status();
+		_0 = !zephir_is_true(_1);
+	}
+	if (unlikely(_0)) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_loader_exception_ce, "Cannot register loader", "yb/loader/loaderabstract.zep", 27);
+		return;
+	}
+	ZEPHIR_MM_RESTORE();
 
 }
 

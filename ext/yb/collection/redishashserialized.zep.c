@@ -37,7 +37,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, serializeValue) {
 
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 23, value);
+	ZEPHIR_RETURN_CALL_FUNCTION("serialize", NULL, 25, value);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -55,7 +55,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, unserializeValue) {
 	zephir_get_strval(value, value_param);
 
 
-	ZEPHIR_RETURN_CALL_FUNCTION("unserialize", NULL, 24, value);
+	ZEPHIR_RETURN_CALL_FUNCTION("unserialize", NULL, 26, value);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -76,7 +76,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, set) {
 
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "serializevalue", NULL, 0, value);
 	zephir_check_call_status();
-	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "set", &_0, 25, key, _1);
+	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "set", &_0, 27, key, _1);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -95,7 +95,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, get) {
 	zephir_get_strval(key, key_param);
 
 
-	ZEPHIR_CALL_PARENT(&value, yb_collection_redishashserialized_ce, this_ptr, "get", &_0, 26, key);
+	ZEPHIR_CALL_PARENT(&value, yb_collection_redishashserialized_ce, this_ptr, "get", &_0, 28, key);
 	zephir_check_call_status();
 	if (Z_TYPE_P(value) == IS_NULL) {
 		RETURN_MM_NULL();
@@ -134,7 +134,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, setMany) {
 		zephir_check_call_status();
 		zephir_array_update_zval(&data, k, &_3$$3, PH_COPY | PH_SEPARATE);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "setmany", &_5, 27, data);
+	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "setmany", &_5, 29, data);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -157,7 +157,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, getMany) {
 
 	ZEPHIR_INIT_VAR(data);
 	array_init(data);
-	ZEPHIR_CALL_PARENT(&a, yb_collection_redishashserialized_ce, this_ptr, "getmany", &_0, 28, keys);
+	ZEPHIR_CALL_PARENT(&a, yb_collection_redishashserialized_ce, this_ptr, "getmany", &_0, 30, keys);
 	zephir_check_call_status();
 	zephir_is_iterable(a, &_2, &_1, 0, 0, "yb/collection/redishashserialized.zep", 52);
 	for (
@@ -202,7 +202,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, setAll) {
 		zephir_check_call_status();
 		zephir_array_update_zval(&data, k, &_3$$3, PH_COPY | PH_SEPARATE);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "setall", &_5, 29, data);
+	ZEPHIR_CALL_PARENT(NULL, yb_collection_redishashserialized_ce, this_ptr, "setall", &_5, 31, data);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -220,7 +220,7 @@ PHP_METHOD(Yb_Collection_RedisHashSerialized, getAll) {
 
 	ZEPHIR_INIT_VAR(data);
 	array_init(data);
-	ZEPHIR_CALL_PARENT(&a, yb_collection_redishashserialized_ce, this_ptr, "getall", &_0, 30);
+	ZEPHIR_CALL_PARENT(&a, yb_collection_redishashserialized_ce, this_ptr, "getall", &_0, 32);
 	zephir_check_call_status();
 	zephir_is_iterable(a, &_2, &_1, 0, 0, "yb/collection/redishashserialized.zep", 75);
 	for (

@@ -495,7 +495,7 @@ abstract class DbAbstract
     public function parseGroupedAggregation(string table, string groupBy, array aggrs, array options = []) -> string
     {
         string where, having;
-        var aggregations, orderBy;
+        var orderBy;
         var k, v, a = [];
         string s;
 

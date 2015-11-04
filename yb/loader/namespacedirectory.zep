@@ -3,26 +3,25 @@ namespace Yb\Loader;
 class NamespaceDirectory extends LoaderAbstract
 {
     protected namespaceDirectories;
-    protected lowerCase;
 
-    public function __construct(array namespaceDirectories = [], boolean lowerCase = false) -> void
+    public function __construct(boolean registerSelf = false, array namespaceDirectories = []) -> void
     {
         var n, d;
+
+        parent::__construct(registerSelf);
 
         for n, d in namespaceDirectories {
             let this->namespaceDirectories[strtolower(n)] = d;
         }
-
-        let this->lowerCase = lowerCase;
     }
 
-    public function __invoke(string className) -> boolean
+    public function __invoke(string name) -> boolean
     {
         var match, pos, dir;
         boolean found = false;
         string path;
 
-        let match = className->lower();
+        let match = name->lower();
         loop {
             let pos = strrpos(match, "\\");
             if pos === false || pos < 1 {
@@ -39,10 +38,7 @@ class NamespaceDirectory extends LoaderAbstract
             return false;
         }
 
-        let path = (string) substr(className, pos + 1);
-        if this->lowerCase {
-            let path = path->lower();
-        }
+        let path = (string) substr(name, pos + 1);
         let path = dir . "/" . str_replace("\\", "/", path) . ".php";
 
         if ! file_exists(path) {
@@ -51,8 +47,8 @@ class NamespaceDirectory extends LoaderAbstract
 
         require path;
 
-        if unlikely ! self::isLoaded(className) {
-            throw new Exception("Cannot find class: " . className . ", in path: " . path);
+        if unlikely ! self::isLoaded(name) {
+            throw new Exception("Cannot load: " . name . ", in path: " . path);
         }
 
         return true;

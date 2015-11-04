@@ -12,32 +12,129 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/array.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
-#include "kernel/exception.h"
+#include "kernel/operators.h"
 #include "kernel/fcall.h"
+#include "kernel/file.h"
+#include "kernel/require.h"
+#include "kernel/array.h"
+#include "kernel/exception.h"
 #include "kernel/concat.h"
 #include "Zend/zend_closures.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Core) {
+ZEPHIR_INIT_CLASS(Yb_Application) {
 
-	ZEPHIR_REGISTER_CLASS(Yb, Core, yb, core, yb_core_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS(Yb, Application, yb, application, yb_application_method_entry, 0);
 
-	zend_declare_property_null(yb_core_ce, SL("data"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_ce, SL("configs"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_core_ce, SL("services"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_ce, SL("data"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_core_ce, SL("serviceInitializers"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_application_ce, SL("services"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_class_implements(yb_core_ce TSRMLS_CC, 1, zend_ce_arrayaccess);
+	zend_declare_property_null(yb_application_ce, SL("serviceInitializers"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
+	zend_class_implements(yb_application_ce TSRMLS_CC, 1, zend_ce_arrayaccess);
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Core, offsetGet) {
+PHP_METHOD(Yb_Application, __construct) {
+
+	zval *configs_param = NULL;
+	zval *configs = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &configs_param);
+
+	if (!configs_param) {
+		ZEPHIR_INIT_VAR(configs);
+		array_init(configs);
+	} else {
+		zephir_get_arrval(configs, configs_param);
+	}
+
+
+	zephir_update_property_this(this_ptr, SL("configs"), configs TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Application, config) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_fcall_cache_entry *_0 = NULL;
+	zval *name_param = NULL, *defaultValue = NULL, *_1;
+	zval *name = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 1, &name_param, &defaultValue);
+
+	zephir_get_strval(name, name_param);
+	if (!defaultValue) {
+		defaultValue = ZEPHIR_GLOBAL(global_null);
+	}
+
+
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("configs"), PH_NOISY_CC);
+	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "valueof", &_0, 22, _1, name, defaultValue);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Application, mergeConfigs) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *configs_param = NULL, *_0, *_1 = NULL;
+	zval *configs = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &configs_param);
+
+	zephir_get_arrval(configs, configs_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("configs"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_replace_recursive", NULL, 23, _0, configs);
+	zephir_check_call_status();
+	zephir_update_property_this(this_ptr, SL("configs"), _1 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Application, mergeConfigsInPathIfValid) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *path_param = NULL, *configs = NULL, *_0 = NULL;
+	zval *path = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &path_param);
+
+	zephir_get_strval(path, path_param);
+
+
+	if (!((zephir_file_exists(path TSRMLS_CC) == SUCCESS))) {
+		RETURN_MM_NULL();
+	}
+	ZEPHIR_OBSERVE_OR_NULLIFY_PPZV(&_0);
+	if (zephir_require_zval_ret(&_0, path TSRMLS_CC) == FAILURE) {
+		RETURN_MM_NULL();
+	}
+	ZEPHIR_CPY_WRT(configs, _0);
+	if (Z_TYPE_P(configs) != IS_ARRAY) {
+		RETURN_MM_NULL();
+	}
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "mergeconfigs", NULL, 0, configs);
+	zephir_check_call_status();
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Application, offsetGet) {
 
 	zval *key_param = NULL, *value = NULL, *_0;
 	zval *key = NULL;
@@ -56,7 +153,7 @@ PHP_METHOD(Yb_Core, offsetGet) {
 
 }
 
-PHP_METHOD(Yb_Core, offsetSet) {
+PHP_METHOD(Yb_Application, offsetSet) {
 
 	zval *key_param = NULL, *value;
 	zval *key = NULL;
@@ -72,7 +169,7 @@ PHP_METHOD(Yb_Core, offsetSet) {
 
 }
 
-PHP_METHOD(Yb_Core, offsetExists) {
+PHP_METHOD(Yb_Application, offsetExists) {
 
 	zval *key_param = NULL, *_0;
 	zval *key = NULL;
@@ -88,7 +185,7 @@ PHP_METHOD(Yb_Core, offsetExists) {
 
 }
 
-PHP_METHOD(Yb_Core, offsetUnset) {
+PHP_METHOD(Yb_Application, offsetUnset) {
 
 	zval *key_param = NULL, *_0;
 	zval *key = NULL;
@@ -105,7 +202,7 @@ PHP_METHOD(Yb_Core, offsetUnset) {
 
 }
 
-PHP_METHOD(Yb_Core, __invoke) {
+PHP_METHOD(Yb_Application, __invoke) {
 
 	zval *name_param = NULL, *initializer = NULL;
 	zval *name = NULL;
@@ -124,7 +221,7 @@ PHP_METHOD(Yb_Core, __invoke) {
 
 }
 
-PHP_METHOD(Yb_Core, __get) {
+PHP_METHOD(Yb_Application, __get) {
 
 	zend_bool _6$$5;
 	zend_class_entry *_5$$6;
@@ -152,7 +249,7 @@ PHP_METHOD(Yb_Core, __get) {
 		ZEPHIR_CONCAT_SV(_3$$4, "Invalid service: ", name);
 		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 2, _3$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_2$$4, "yb/core.zep", 47 TSRMLS_CC);
+		zephir_throw_exception_debug(_2$$4, "yb/application.zep", 80 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -180,10 +277,10 @@ PHP_METHOD(Yb_Core, __get) {
 		ZEPHIR_INIT_NVAR(_7$$5);
 		object_init_ex(_7$$5, yb_exception_ce);
 		ZEPHIR_INIT_LNVAR(_8$$5);
-		ZEPHIR_CONCAT_SV(_8$$5, "Invalid service config: ", name);
+		ZEPHIR_CONCAT_SV(_8$$5, "Invalid service initializer: ", name);
 		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 2, _8$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$5, "yb/core.zep", 61 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$5, "yb/application.zep", 94 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -192,7 +289,7 @@ PHP_METHOD(Yb_Core, __get) {
 
 }
 
-PHP_METHOD(Yb_Core, __set) {
+PHP_METHOD(Yb_Application, __set) {
 
 	zval *name_param = NULL, *obj;
 	zval *name = NULL;
@@ -208,7 +305,7 @@ PHP_METHOD(Yb_Core, __set) {
 
 }
 
-PHP_METHOD(Yb_Core, __isset) {
+PHP_METHOD(Yb_Application, __isset) {
 
 	zend_bool _1;
 	zval *name_param = NULL, *_0, *_2;
@@ -230,7 +327,7 @@ PHP_METHOD(Yb_Core, __isset) {
 
 }
 
-PHP_METHOD(Yb_Core, __unset) {
+PHP_METHOD(Yb_Application, __unset) {
 
 	zval *name_param = NULL, *_0, *_1;
 	zval *name = NULL;
