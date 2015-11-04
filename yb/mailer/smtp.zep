@@ -2,7 +2,7 @@ namespace Yb\Mailer;
 
 use Yb\Std;
 
-class Smtp
+class Smtp implements MailerInterface
 {
     const EOL = "\r\n";
 

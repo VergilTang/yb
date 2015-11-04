@@ -34,6 +34,7 @@ ZEPHIR_INIT_CLASS(Yb_Mailer_Smtp) {
 
 	zend_declare_class_constant_string(yb_mailer_smtp_ce, SL("EOL"), "\r\n" TSRMLS_CC);
 
+	zend_class_implements(yb_mailer_smtp_ce TSRMLS_CC, 1, yb_mailer_mailerinterface_ce);
 	return SUCCESS;
 
 }

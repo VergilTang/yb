@@ -30,8 +30,8 @@
 zend_class_entry *yb_collection_collectioninterface_ce;
 zend_class_entry *yb_sequence_sequenceinterface_ce;
 zend_class_entry *yb_factory_factoryinterface_ce;
-zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
 zend_class_entry *yb_mailer_mailerinterface_ce;
+zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_db_dbabstract_ce;
 zend_class_entry *yb_image_imageabstract_ce;
@@ -114,8 +114,8 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Collection_CollectionInterface);
 	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
 	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
-	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
 	ZEPHIR_INIT(Yb_Mailer_MailerInterface);
+	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Db_DbAbstract);
 	ZEPHIR_INIT(Yb_Image_ImageAbstract);
