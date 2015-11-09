@@ -1,43 +1,52 @@
 <?php
 namespace YbApp\Frontend;
 
+use Yb\Std;
 use Yb\Application;
+use Yb\Factory\Namespaced;
 
-class Bootstrap
+class Bootstrap extends Namespaced
 {
+    protected $app;
+
     public function __construct(Application $app)
     {
+        $this->app = $app;
+
+        parent::__construct(__NAMESPACE__.'\Controller');
+
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.php');
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.local.php');
 
-        $this->route();
-
         // route
+        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI'], (array) $app->config('routingPatterns'));
+
+        $requestId = $router->getController().'/'.$router->getAction();
+
         // session
+        // session_start();
+
         // permission
+        if (0) {
+            throw new \Exception('Access denied');
+        }
+
         // action
+        $result = $router->dispatch($this);
+
         // view
+        if ($result === null) {
+            $path = __DIR__.'/../view/'.$requestId.'.php';
+            echo Std::renderScript($path, (array) $app['viewData']);
+        }
     }
 
-    protected function route()
+    public function get($name)
     {
-        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI']);
+        $o = parent::get($name);
+        $o->setApplication($this->app);
 
-        $c = __NAMESPACE__.'\\Controller\\'.\Yb\Std::pascalCase($router->getController());
-        if (!class_exists($c)) {
-            throw new \Exception('404.C.'.$c);
-        }
-
-        $a = [
-            new $c(),
-            \Yb\Std::camelCase($router->getAction()).'Action',
-        ];
-
-        if (!is_callable($a)) {
-            throw new \Exception('404.A');
-        }
-
-        return call_user_func_array($a, $router->getParams());
+        return $o;
     }
 
 }

@@ -10,4 +10,13 @@ class Index extends ControllerBase
         throw new \Exception();
     }
 
+    public function testAction()
+    {
+        $this->app['viewData'] = [
+            'hello' => json_encode(func_get_args()),
+        ];
+
+        // $this->app['viewData']['hello'] = 1;
+    }
+
 }

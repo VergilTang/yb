@@ -7,6 +7,7 @@ PHP_METHOD(Yb_Router_Uri, __construct);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_router_uri___construct, 0, 0, 1)
 	ZEND_ARG_INFO(0, uri)
+	ZEND_ARG_ARRAY_INFO(0, patterns, 1)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_router_uri_method_entry) {
