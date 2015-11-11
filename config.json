@@ -60,5 +60,11 @@
     "verbose": false,
     "requires": {
         "extensions": []
-    }
+    },
+    "optimizer-dirs": [
+        "optimizers"
+    ],
+    "extra-sources": [
+        "utils.c"
+    ]
 }

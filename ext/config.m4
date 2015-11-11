@@ -56,9 +56,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/mailer/smtp.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
-	yb/redis/pipeline.zep.c
 	yb/redis/client.zep.c
 	yb/redis/connection.zep.c
+	yb/redis/pipeline.zep.c
 	yb/redis/redisexception.zep.c
 	yb/redis/socketexception.zep.c
 	yb/router/exception.zep.c
@@ -73,7 +73,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/upload/filesystem.zep.c
 	yb/upload/ftp.zep.c
 	yb/upload/uploadedfile.zep.c
-	yb/upload/uploader.zep.c "
+	yb/upload/uploader.zep.c utils.c"
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

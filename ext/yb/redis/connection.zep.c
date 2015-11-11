@@ -17,9 +17,9 @@
 #include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/object.h"
-#include "kernel/file.h"
 #include "kernel/hash.h"
 #include "kernel/array.h"
+#include "kernel/file.h"
 #include "kernel/string.h"
 #include "kernel/concat.h"
 
@@ -91,16 +91,11 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 
 }
 
-PHP_METHOD(Yb_Redis_Connection, __destruct) {
+PHP_METHOD(Yb_Redis_Connection, getInternalHandler) {
 
-	zval *_0, *_1$$3;
+	
 
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	if (zephir_is_true(_0)) {
-		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-		zephir_fclose(_1$$3 TSRMLS_CC);
-	}
+	RETURN_MEMBER(this_ptr, "handler");
 
 }
 
@@ -131,7 +126,27 @@ PHP_METHOD(Yb_Redis_Connection, __call) {
 
 }
 
-PHP_METHOD(Yb_Redis_Connection, __invoke) {
+PHP_METHOD(Yb_Redis_Connection, runCommand) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *cmd_param = NULL;
+	zval *cmd = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &cmd_param);
+
+	zephir_get_arrval(cmd, cmd_param);
+
+
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", NULL, 0, cmd);
+	zephir_check_call_status();
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "read", NULL, 0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Redis_Connection, runCommands) {
 
 	HashTable *_1;
 	HashPosition _0;
@@ -150,7 +165,7 @@ PHP_METHOD(Yb_Redis_Connection, __invoke) {
 	ZEPHIR_INIT_VAR(results);
 	array_init(results);
 	c = 0;
-	zephir_is_iterable(cmds, &_1, &_0, 0, 0, "yb/redis/connection.zep", 51);
+	zephir_is_iterable(cmds, &_1, &_0, 0, 0, "yb/redis/connection.zep", 55);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -167,9 +182,22 @@ PHP_METHOD(Yb_Redis_Connection, __invoke) {
 		c--;
 		ZEPHIR_CALL_METHOD(&_4$$4, this_ptr, "read", &_5, 0);
 		zephir_check_call_status();
-		zephir_array_append(&results, _4$$4, PH_SEPARATE, "yb/redis/connection.zep", 56);
+		zephir_array_append(&results, _4$$4, PH_SEPARATE, "yb/redis/connection.zep", 60);
 	}
 	RETURN_CCTOR(results);
+
+}
+
+PHP_METHOD(Yb_Redis_Connection, __destruct) {
+
+	zval *_0, *_1$$3;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	if (zephir_is_true(_0)) {
+		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+		zephir_fclose(_1$$3 TSRMLS_CC);
+	}
 
 }
 
@@ -198,10 +226,10 @@ PHP_METHOD(Yb_Redis_Connection, write) {
 		_4$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 		zephir_fwrite(_3$$3, _4$$3, s TSRMLS_CC);
 		if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_3$$3))) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot write to socket", "yb/redis/connection.zep", 70);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot write to socket", "yb/redis/connection.zep", 81);
 			return;
 		}
-		zephir_is_iterable(data, &_6$$3, &_5$$3, 0, 0, "yb/redis/connection.zep", 77);
+		zephir_is_iterable(data, &_6$$3, &_5$$3, 0, 0, "yb/redis/connection.zep", 88);
 		for (
 		  ; zephir_hash_get_current_data_ex(_6$$3, (void**) &_7$$3, &_5$$3) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_6$$3, &_5$$3)
@@ -224,7 +252,7 @@ PHP_METHOD(Yb_Redis_Connection, write) {
 	_13 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	zephir_fwrite(_12, _13, s TSRMLS_CC);
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_12))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot write to socket", "yb/redis/connection.zep", 84);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot write to socket", "yb/redis/connection.zep", 95);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -233,10 +261,10 @@ PHP_METHOD(Yb_Redis_Connection, write) {
 
 PHP_METHOD(Yb_Redis_Connection, read) {
 
-	zval *a = NULL, *_0 = NULL, _3, _4, *_5, *_7$$4, *_8$$5, *_9$$7 = NULL, *_11$$7 = NULL, _12$$7, _13$$7, *_14$$12 = NULL, *_16$$14, _17$$14, *_18$$14 = NULL, *_19$$14;
+	zval *a = NULL, *_0 = NULL, _3, _4, *_5, *_7$$4, *_8$$5, *_9$$7 = NULL, *_10$$7, _12$$7, _13$$7, *_14$$11 = NULL, *_16$$13, *_17$$13, *_18$$13;
 	long l = 0;
 	char c = 0;
-	zval *line = NULL, *_2 = NULL, *_6 = NULL, *_10$$7 = NULL;
+	zval *line = NULL, *_2 = NULL, *_6 = NULL, *_11$$7 = NULL;
 	zephir_fcall_cache_entry *_1 = NULL, *_15 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 
@@ -265,7 +293,7 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 			object_init_ex(_7$$4, yb_redis_redisexception_ce);
 			ZEPHIR_CALL_METHOD(NULL, _7$$4, "__construct", NULL, 2, line);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_7$$4, "yb/redis/connection.zep", 105 TSRMLS_CC);
+			zephir_throw_exception_debug(_7$$4, "yb/redis/connection.zep", 116 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -282,14 +310,12 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 			if (l < 0) {
 				RETURN_MM_NULL();
 			}
-			ZEPHIR_CALL_METHOD(&_9$$7, this_ptr, "readline", &_1, 0);
+			ZEPHIR_INIT_VAR(_10$$7);
+			ZVAL_LONG(_10$$7, (l + 2));
+			ZEPHIR_CALL_METHOD(&_9$$7, this_ptr, "readline", &_1, 0, _10$$7);
 			zephir_check_call_status();
-			zephir_get_strval(_10$$7, _9$$7);
-			ZEPHIR_CPY_WRT(line, _10$$7);
-			if (zephir_fast_strlen_ev(line) != (l + 2)) {
-				ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Invalid bulk string", "yb/redis/connection.zep", 120);
-				return;
-			}
+			zephir_get_strval(_11$$7, _9$$7);
+			ZEPHIR_CPY_WRT(line, _11$$7);
 			ZEPHIR_SINIT_VAR(_12$$7);
 			ZVAL_LONG(&_12$$7, 0);
 			ZEPHIR_SINIT_VAR(_13$$7);
@@ -309,23 +335,21 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 					break;
 				}
 				l--;
-				ZEPHIR_CALL_METHOD(&_14$$12, this_ptr, "read", &_15, 94);
+				ZEPHIR_CALL_METHOD(&_14$$11, this_ptr, "read", &_15, 94);
 				zephir_check_call_status();
-				zephir_array_append(&a, _14$$12, PH_SEPARATE, "yb/redis/connection.zep", 135);
+				zephir_array_append(&a, _14$$11, PH_SEPARATE, "yb/redis/connection.zep", 143);
 			}
 			RETURN_CCTOR(a);
 		}
-		ZEPHIR_INIT_VAR(_16$$14);
-		object_init_ex(_16$$14, yb_redis_exception_ce);
-		ZEPHIR_SINIT_VAR(_17$$14);
-		ZVAL_LONG(&_17$$14, c);
-		ZEPHIR_CALL_FUNCTION(&_18$$14, "chr", NULL, 95, &_17$$14);
+		ZEPHIR_INIT_VAR(_16$$13);
+		object_init_ex(_16$$13, yb_redis_exception_ce);
+		ZEPHIR_INIT_VAR(_17$$13);
+		zephir_json_encode(_17$$13, &(_17$$13), line, 0  TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_18$$13);
+		ZEPHIR_CONCAT_SV(_18$$13, "Invalid line type: ", _17$$13);
+		ZEPHIR_CALL_METHOD(NULL, _16$$13, "__construct", NULL, 2, _18$$13);
 		zephir_check_call_status();
-		ZEPHIR_INIT_VAR(_19$$14);
-		ZEPHIR_CONCAT_SV(_19$$14, "Invalid line type: ", _18$$14);
-		ZEPHIR_CALL_METHOD(NULL, _16$$14, "__construct", NULL, 2, _19$$14);
-		zephir_check_call_status();
-		zephir_throw_exception_debug(_16$$14, "yb/redis/connection.zep", 140 TSRMLS_CC);
+		zephir_throw_exception_debug(_16$$13, "yb/redis/connection.zep", 148 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	} while(0);
@@ -336,33 +360,58 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 
 PHP_METHOD(Yb_Redis_Connection, readLine) {
 
-	zend_bool _3;
-	unsigned char _2, _4;
-	long len = 0;
-	zval *s = NULL, *_1 = NULL;
-	zval *line = NULL, *_0;
+	zend_bool _5;
+	unsigned char _4, _6;
+	zval *s = NULL, *_3 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
+	zval *len_param = NULL, *line = NULL, *_0$$3, _1$$3, *_2$$4, *_7$$6, *_8$$6, *_9$$6;
+	long len;
 
 	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &len_param);
 
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 96, _0);
-	zephir_check_call_status();
+	if (!len_param) {
+		len = 0;
+	} else {
+		len = zephir_get_intval(len_param);
+	}
+
+
+	if (len > 0) {
+		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+		ZEPHIR_SINIT_VAR(_1$$3);
+		ZVAL_LONG(&_1$$3, len);
+		ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 95, _0$$3, &_1$$3);
+		zephir_check_call_status();
+	} else {
+		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+		ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 96, _2$$4);
+		zephir_check_call_status();
+	}
 	if (ZEPHIR_IS_FALSE_IDENTICAL(line)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot read from socket", "yb/redis/connection.zep", 152);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_socketexception_ce, "Cannot read from socket", "yb/redis/connection.zep", 164);
 		return;
 	}
-	zephir_get_strval(_1, line);
-	ZEPHIR_CPY_WRT(s, _1);
+	zephir_get_strval(_3, line);
+	ZEPHIR_CPY_WRT(s, _3);
 	len = zephir_fast_strlen_ev(s);
-	_2 = ZEPHIR_STRING_OFFSET(s, (len - 2));
-	_3 = _2 != '\r';
-	if (!(_3)) {
-		_4 = ZEPHIR_STRING_OFFSET(s, (len - 1));
-		_3 = _4 != '\n';
+	_4 = ZEPHIR_STRING_OFFSET(s, (len - 2));
+	_5 = _4 != '\r';
+	if (!(_5)) {
+		_6 = ZEPHIR_STRING_OFFSET(s, (len - 1));
+		_5 = _6 != '\n';
 	}
-	if (unlikely(_3)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Invalid line end", "yb/redis/connection.zep", 159);
+	if (unlikely(_5)) {
+		ZEPHIR_INIT_VAR(_7$$6);
+		object_init_ex(_7$$6, yb_redis_exception_ce);
+		ZEPHIR_INIT_VAR(_8$$6);
+		zephir_json_encode(_8$$6, &(_8$$6), line, 0  TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_9$$6);
+		ZEPHIR_CONCAT_SV(_9$$6, "Invalid line end: ", _8$$6);
+		ZEPHIR_CALL_METHOD(NULL, _7$$6, "__construct", NULL, 2, _9$$6);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_7$$6, "yb/redis/connection.zep", 171 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
 		return;
 	}
 	RETURN_CTOR(s);

@@ -20,11 +20,9 @@ class Connection
         let this->handler = handler;
     }
 
-    public function __destruct() -> void
+    public function getInternalHandler()
     {
-        if this->handler {
-            fclose(this->handler);
-        }
+        return this->handler;
     }
 
     public function __call(string method, array args)
@@ -38,7 +36,13 @@ class Connection
         return this->read();
     }
 
-    public function __invoke(array cmds) -> array
+    public function runCommand(array cmd)
+    {
+        this->write(cmd);
+        return this->read();
+    }
+
+    public function runCommands(array cmds) -> array
     {
         var cmd, results = [];
         long c = 0;
@@ -57,6 +61,13 @@ class Connection
         }
 
         return results;
+    }
+
+    public function __destruct() -> void
+    {
+        if this->handler {
+            fclose(this->handler);
+        }
     }
 
     protected function write(var data) -> void
@@ -115,10 +126,7 @@ class Connection
                 if l < 0 {
                     return;
                 }
-                let line = (string) this->readLine();
-                if line->length() != l + 2 {
-                    throw new Exception("Invalid bulk string");
-                }
+                let line = (string) this->readLine(l + 2);
                 return substr(line, 0, -2);
 
             case '*':
@@ -137,17 +145,21 @@ class Connection
                 return a;
 
             default:
-                throw new Exception("Invalid line type: " . chr(c));
+                throw new Exception("Invalid line type: " . json_encode(line));
         }
     }
 
-    protected function readLine() -> string
+    protected function readLine(long len = 0) -> string
     {
         var line;
         string s;
-        long len;
 
-        let line = fgets(this->handler);
+        if len > 0 {
+            let line = stream_get_contents(this->handler, len);
+        } else {
+            let line = fgets(this->handler);
+        }
+
         if line === false {
             throw new SocketException("Cannot read from socket");
         }
@@ -156,7 +168,7 @@ class Connection
         let len = s->length();
 
         if unlikely s[len - 2] != '\r' || s[len - 1] != '\n' {
-            throw new Exception("Invalid line end");
+            throw new Exception("Invalid line end: " . json_encode(line));
         }
 
         return s;

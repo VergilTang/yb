@@ -52,24 +52,18 @@ class Redis
     protected function write($data)
     {
         if (is_array($data)) {
-            $this->writeLine(sprintf("*%d\r\n", count($data)));
+            $line = sprintf("*%d\r\n", count($data));
+            if (fwrite($this->handler, $line) === false) {
+                throw new Exception("Cannot write");
+            }
             foreach ($data as $d) {
                 $this->write($d);
             }
             return;
         }
 
-        if (is_int($data)) {
-            $this->writeLine(sprintf(":%d\r\n", $data));
-            return;
-        }
-
         $data = (string) $data;
-        $this->writeLine(sprintf("$%d\r\n%s\r\n", strlen($data), $data));
-    }
-
-    protected function writeLine($line)
-    {
+        $line = sprintf("$%d\r\n%s\r\n", strlen($data), $data);
         if (fwrite($this->handler, $line) === false) {
             throw new Exception("Cannot write");
         }
@@ -81,6 +75,8 @@ class Redis
 
         $c = $line[0];
         $line = (string) substr($line, 1, -2);
+
+        // echo $c, PHP_EOL;
 
         switch ($c) {
             case '+':
@@ -100,7 +96,7 @@ class Redis
                 if ($l < 0) {
                     return;
                 }
-                $line = (string) $this->readLine();
+                $line = (string) $this->readLine($l + 2);
                 if (strlen($line) != $l + 2) {
                     throw new Exception("Invalid bulk string");
                 }
@@ -123,9 +119,14 @@ class Redis
         }
     }
 
-    protected function readLine()
+    protected function readLine($len = 0)
     {
-        $line = fgets($this->handler);
+        if ($len > 0) {
+            $line = stream_get_contents($this->handler, $len);
+        } else {
+            $line = fgets($this->handler);
+        }
+
         if ($line === false) {
             throw new Exception("Cannot fgets");
         }
@@ -136,6 +137,8 @@ class Redis
 
         $len = strlen($line);
         if ($line[$len - 2] != "\r" || $line[$len - 1] != "\n") {
+            // echo json_encode($line), PHP_EOL;
+            // print_R(debug_print_backtrace());
             throw new Exception("Invalid line end");
         }
 
