@@ -56,9 +56,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/mailer/smtp.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
+	yb/redis/pipeline.zep.c
 	yb/redis/client.zep.c
 	yb/redis/connection.zep.c
-	yb/redis/pipeline.zep.c
 	yb/redis/redisexception.zep.c
 	yb/redis/socketexception.zep.c
 	yb/router/exception.zep.c

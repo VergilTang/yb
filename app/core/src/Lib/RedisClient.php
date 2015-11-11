@@ -1,29 +1,53 @@
 <?php
-namespace YbApp\Frontend\Lib;
+namespace YbApp\Core\Lib;
 
 use Exception;
-use Yb\Redis\Connection;
+use YbApp\Core\Lib\RedisConnection as Connection;
 use Yb\Redis\RedisException;
 
-class Client
+class RedisClient
 {
     protected $defaultConnection;
     protected $connections;
-    protected $clusterSlots;
+
     protected $slotConnections;
+    protected $clusterSlotsCacher;
+    protected $clusterSlots;
+
+    public static $tsLogs;
+    protected static $ts = 0;
+
+    public static function ts($name)
+    {
+        $ts = microtime(true);
+
+        $diff = 0;
+        if (self::$ts > 0) {
+            $diff = $ts - self::$ts;
+        }
+
+        self::$tsLogs[] = sprintf("%0.6f#%s", $diff, $name);
+        self::$ts = $ts;
+    }
 
     public function __construct($host = '127.0.0.1', $port = 6379, $timeout = 5)
     {
+        self::ts('DefaultConnectionConstructing');
+
         $connection = new Connection($host, $port, $timeout);
+
+        self::ts('DefaultConnectionCreated');
 
         $this->defaultConnection = $connection;
         $this->connections[sprintf("%s:%d", $host, $port)] = $connection;
 
+        $this->clusterSlotsCacher = new RedisClusterSlotsCacherApc();
         $this->initClusterSlots();
     }
 
     protected function initClusterSlots()
     {
+        $this->clusterSlots = $this->clusterSlotsCacher->retrieve();
     }
 
     protected function refleshClusterSlots()
@@ -31,8 +55,13 @@ class Client
         static $i = 0;
         echo __FUNCTION__, '#', $i++, PHP_EOL;
 
-        $this->clusterSlots = $this->defaultConnection->cluster('slots');
+        self::ts('RefleshClusterSlotsStarted');
+
         $this->slotConnections = null;
+        $this->clusterSlots = $this->defaultConnection->cluster('slots');
+        $this->clusterSlotsCacher->store($this->clusterSlots);
+
+        self::ts('RefleshClusterSlotsFinished');
     }
 
     protected function getConnectionByAddress($addr)
@@ -86,16 +115,36 @@ class Client
 
     public function get($key)
     {
+        self::ts('GetStarted');
+
         try {
-            return $this->getConnectionByKey($key)->get($key);
+            $r = $this->getConnectionByKey($key)->get($key);
+
+            self::ts('GetFinishedWithoutMOVED');
+
+            return $r;
         } catch (RedisException $ex) {
 
             // moved
             $match = null;
             if (preg_match('/^MOVED (\d+) ([\d\.\:]+)$/', $ex->getMessage(), $match)) {
+
+                self::ts('GetFinishedAndMOVED');
+
                 $this->refleshClusterSlots();
                 $this->slotConnections[$match[1]] = $match[2];
-                return $this->getConnectionByKey($key)->get($key);
+
+                self::ts('GetFinishedAndMOVEDNewConnectionStarted');
+
+                $conn = $this->getConnectionByKey($key);
+
+                self::ts('GetFinishedAndMOVEDNewConnectionFinished');
+
+                $r = $conn->get($key);
+
+                self::ts('GetFinishedAndMOVEDThenFinished');
+
+                return $r;
             }
 
             // ask

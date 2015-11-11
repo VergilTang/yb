@@ -1,13 +1,14 @@
 <?php
-namespace YbApp\Frontend\Lib;
+namespace YbApp\Core\Lib;
 
 use Exception;
+use Yb\Redis\RedisException;
 
-class Redis
+class RedisConnection
 {
     protected $handler;
 
-    public function pipeline()
+    public function pipelineTest()
     {
         $r = [];
 
@@ -34,10 +35,13 @@ class Redis
         if (!stream_set_blocking($handler, 1)) {
             throw new Exception("Cannot set blocking socket");
         }
-        /*
-        */
 
         $this->handler = $handler;
+    }
+
+    public function getInternalHandler()
+    {
+        return $this->handler;
     }
 
     public function __call($method, array $a)
@@ -45,8 +49,41 @@ class Redis
         array_unshift($a, $method);
 
         $this->write($a);
-
         return $this->read();
+    }
+
+    public function runCommand(array $cmd)
+    {
+        $this->write($cmd);
+        return $this->read();
+    }
+
+    public function runCommands(array $cmds)
+    {
+        $results = [];
+        $c = 0;
+
+        foreach ($cmds as $cmd) {
+            $this->write($cmd);
+            $c++;
+        }
+
+        while (true) {
+            if ($c <= 0) {
+                break;
+            }
+            $c--;
+            $results[] = $this->read();
+        }
+
+        return $results;
+    }
+
+    public function __destruct()
+    {
+        if ($this->handler) {
+            fclose($this->handler);
+        }
     }
 
     protected function write($data)
@@ -83,7 +120,11 @@ class Redis
                 return $line;
 
             case '-':
-                throw new Exception($line);
+                // ?
+                return new RedisError($line);
+                return $line;
+                return new RedisException($line);
+                throw new RedisException($line);
 
             case ':':
                 if ($line > PHP_INT_MAX) {
@@ -97,9 +138,6 @@ class Redis
                     return;
                 }
                 $line = (string) $this->readLine($l + 2);
-                if (strlen($line) != $l + 2) {
-                    throw new Exception("Invalid bulk string");
-                }
                 return substr($line, 0, -2);
 
             case '*':
@@ -115,7 +153,7 @@ class Redis
                 return $a;
 
             default:
-                throw new Exception("Invalid line type: " . $line);
+                throw new Exception("Invalid line type: ".json_encode($line));
         }
     }
 
@@ -128,18 +166,12 @@ class Redis
         }
 
         if ($line === false) {
-            throw new Exception("Cannot fgets");
-        }
-
-        if (!is_string($line)) {
-            throw new Exception("Invalid line data type");
+            throw new Exception("Cannot read from socket");
         }
 
         $len = strlen($line);
         if ($line[$len - 2] != "\r" || $line[$len - 1] != "\n") {
-            // echo json_encode($line), PHP_EOL;
-            // print_R(debug_print_backtrace());
-            throw new Exception("Invalid line end");
+            throw new Exception("Invalid line end: ".json_encode($line));
         }
 
         return $line;
