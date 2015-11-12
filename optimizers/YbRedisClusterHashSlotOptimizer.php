@@ -7,6 +7,7 @@ use Zephir\CompilerException;
 use Zephir\CompiledExpression;
 use Zephir\CompilationContext;
 use Zephir\Optimizers\OptimizerAbstract;
+use Zephir\HeadersManager;
 
 class YbRedisClusterHashSlotOptimizer extends OptimizerAbstract
 {
@@ -22,6 +23,8 @@ class YbRedisClusterHashSlotOptimizer extends OptimizerAbstract
         if (!$symbolVariable->isInt()) {
             throw new CompilerException("'yb_redis_cluster_hash_slot' return value can only be stored in int variables", $expression);
         }
+
+        $context->headersManager->add('utils', HeadersManager::POSITION_LAST);
 
         $resolvedParams = $call->getReadOnlyResolvedParams($expression['parameters'], $context, $expression);
 

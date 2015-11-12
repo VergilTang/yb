@@ -14,6 +14,7 @@
 #include "kernel/main.h"
 #include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "utils.h"
 
 
 ZEPHIR_INIT_CLASS(Yb_Redis_Client) {
