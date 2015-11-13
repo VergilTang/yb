@@ -4,6 +4,7 @@ extern zend_class_entry *yb_upload_ftp_ce;
 ZEPHIR_INIT_CLASS(Yb_Upload_Ftp);
 
 PHP_METHOD(Yb_Upload_Ftp, __construct);
+PHP_METHOD(Yb_Upload_Ftp, getInternalHandler);
 PHP_METHOD(Yb_Upload_Ftp, store);
 PHP_METHOD(Yb_Upload_Ftp, remove);
 PHP_METHOD(Yb_Upload_Ftp, __destruct);
@@ -33,6 +34,7 @@ ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_upload_ftp_method_entry) {
 	PHP_ME(Yb_Upload_Ftp, __construct, arginfo_yb_upload_ftp___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Yb_Upload_Ftp, getInternalHandler, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_Ftp, store, arginfo_yb_upload_ftp_store, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_Ftp, remove, arginfo_yb_upload_ftp_remove, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_Ftp, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)

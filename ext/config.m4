@@ -15,6 +15,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/sequence/sequenceinterface.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
+	yb/upload/storageabstract.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
 	yb/factory/classname.zep.c
@@ -22,7 +23,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
 	yb/redis/exception.zep.c
-	yb/upload/storageabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
 	yb/mailer/mailerinterface.zep.c
@@ -70,6 +70,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/sequence/redishash.zep.c
 	yb/std.zep.c
 	yb/upload/exception.zep.c
+	yb/upload/fastdfs.zep.c
 	yb/upload/filesystem.zep.c
 	yb/upload/ftp.zep.c
 	yb/upload/uploadedfile.zep.c

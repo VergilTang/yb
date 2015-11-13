@@ -70,10 +70,10 @@ PHP_METHOD(Yb_Upload_Uploader, __construct) {
 	ZVAL_LONG(&_4, 1);
 	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 98, &_2, _1, &_3, &_4);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 122, _5);
+	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 124, _5);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("validExtensions"), _6 TSRMLS_CC);
-	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "sizetobytes", &_8, 123, maxSize);
+	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "sizetobytes", &_8, 125, maxSize);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("maxSize"), _7 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -107,7 +107,7 @@ PHP_METHOD(Yb_Upload_Uploader, newUploadedFile) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, yb_upload_uploadedfile_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 124, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 126, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 

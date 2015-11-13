@@ -1075,9 +1075,9 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 	if (c > 5) {
 		ZEPHIR_INIT_VAR(_2$$4);
 		object_init_ex(_2$$4, zephir_get_internal_ce(SS("reflectionclass") TSRMLS_CC));
-		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 11, className);
+		ZEPHIR_CALL_METHOD(NULL, _2$$4, "__construct", NULL, 12, className);
 		zephir_check_call_status();
-		ZEPHIR_RETURN_CALL_METHOD(_2$$4, "newinstanceargs", NULL, 12, args);
+		ZEPHIR_RETURN_CALL_METHOD(_2$$4, "newinstanceargs", NULL, 13, args);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

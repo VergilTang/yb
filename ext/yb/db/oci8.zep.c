@@ -52,7 +52,7 @@ PHP_METHOD(Yb_Db_Oci8, __construct) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "oci8", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 10, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 11, &_0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Missing extension: oci8", "yb/db/oci8.zep", 13);

@@ -156,7 +156,7 @@ PHP_METHOD(Yb_Image_ImageBackendAbstract, newText) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, yb_image_text_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 14, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -169,7 +169,7 @@ PHP_METHOD(Yb_Image_ImageBackendAbstract, newImage) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, yb_image_image_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 14, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -182,7 +182,7 @@ PHP_METHOD(Yb_Image_ImageBackendAbstract, newCaptcha) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, yb_image_captcha_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 14, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 

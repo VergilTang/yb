@@ -49,6 +49,11 @@ class Ftp extends StorageAbstract
         let this->baseDirectory = baseDirectory;
     }
 
+    public function getInternalHandler()
+    {
+        return this->ftp;
+    }
+
     public function store(string source, string group = "", string extension = "", long flag = 0) -> string
     {
         string destUri, destPath;

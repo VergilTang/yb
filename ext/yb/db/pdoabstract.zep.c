@@ -45,7 +45,7 @@ PHP_METHOD(Yb_Db_PdoAbstract, __construct) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "pdo", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 10, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 11, &_0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Missing extension: pdo", "yb/db/pdoabstract.zep", 11);
@@ -55,12 +55,12 @@ PHP_METHOD(Yb_Db_PdoAbstract, __construct) {
 	object_init_ex(_2, zephir_get_internal_ce(SS("reflectionclass") TSRMLS_CC));
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "PDO", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL, 11, _3);
+	ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL, 12, _3);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_5, "func_get_args", NULL, 5);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_4, _2, "newinstanceargs", NULL, 12, _5);
+	ZEPHIR_CALL_METHOD(&_4, _2, "newinstanceargs", NULL, 13, _5);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("pdo"), _4 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

@@ -40,7 +40,7 @@ PHP_METHOD(Yb_Image_Gd, __construct) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "gd", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 10, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 11, &_0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_image_exception_ce, "Missing extension: gd", "yb/image/gd.zep", 8);
