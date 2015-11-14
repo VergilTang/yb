@@ -159,9 +159,9 @@ class Connection
 
     protected function newError(string error) -> <ErrorBase>
     {
-        var m, e;
+        var m = null, e;
 
-        if preg_match("#^(MOVED|ASK) (\d+) ([\\d\\.]+):(\\d+)$#", error, m) {
+        if preg_match("#^(MOVED|ASK) (\\d+) ([\\d\\.]+):(\\d+)$#", error, m) {
             switch error[0] {
                 case 'M':
                     let e = new ErrorMoved();
