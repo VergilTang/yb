@@ -25,17 +25,6 @@ class Connection
         return this->handler;
     }
 
-    public function __call(string method, array args)
-    {
-        var cmd;
-
-        let cmd = args;
-        array_unshift(cmd, method);
-        this->write(cmd);
-
-        return this->read();
-    }
-
     public function runCommand(array cmd)
     {
         this->write(cmd);
@@ -44,20 +33,14 @@ class Connection
 
     public function runCommands(array cmds) -> array
     {
-        var cmd, results = [];
-        long c = 0;
+        var index, cmd, results = [];
 
         for cmd in cmds {
             this->write(cmd);
-            let c++;
         }
 
-        loop {
-            if c <= 0 {
-                break;
-            }
-            let c--;
-            let results[] = this->read();
+        for index, _ in cmds {
+            let results[index] = this->read();
         }
 
         return results;
@@ -113,7 +96,7 @@ class Connection
                 return line;
 
             case '-':
-                throw new RedisException(line);
+                return this->newError(line);
 
             case ':':
                 if line > PHP_INT_MAX {
@@ -172,6 +155,35 @@ class Connection
         }
 
         return s;
+    }
+
+    protected function newError(string error) -> <ErrorBase>
+    {
+        var m, e;
+
+        if preg_match("#^(MOVED|ASK) (\d+) ([\\d\\.]+):(\\d+)$#", error, m) {
+            switch error[0] {
+                case 'M':
+                    let e = new ErrorMoved();
+                    let e->error = error;
+                    let e->slot = slot;
+                    let e->host = host;
+                    let e->port = port;
+                    return e;
+
+                case 'A':
+                    let e = new ErrorAsk();
+                    let e->error = error;
+                    let e->slot = slot;
+                    let e->host = host;
+                    let e->port = port;
+                    return e;
+            }
+        }
+
+        let e = new Error();
+        let e->error = error;
+        return e;
     }
 
 }
