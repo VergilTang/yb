@@ -400,6 +400,8 @@ PHP_METHOD(Yb_Redis_Connection, newError) {
 	zephir_get_strval(error, error_param);
 
 
+	ZEPHIR_INIT_VAR(m);
+	ZVAL_NULL(m);
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "#^(MOVED|ASK) (\\d+) ([\\d\\.]+):(\\d+)$#", 0);
