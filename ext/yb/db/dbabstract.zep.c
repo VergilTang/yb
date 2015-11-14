@@ -352,7 +352,9 @@ PHP_METHOD(Yb_Db_DbAbstract, rollbackToSavepoint) {
 	zephir_check_call_status();
 	while (1) {
 		_5$$5 = zephir_fetch_nproperty_this(this_ptr, SL("savepoints"), PH_NOISY_CC);
+		ZEPHIR_MAKE_REF(_5$$5);
 		ZEPHIR_CALL_FUNCTION(&_6$$5, "array_pop", &_7, 4, _5$$5);
+		ZEPHIR_UNREF(_5$$5);
 		zephir_check_call_status();
 		zephir_get_strval(_8$$5, _6$$5);
 		if (ZEPHIR_IS_IDENTICAL(_8$$5, savepoint)) {

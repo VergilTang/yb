@@ -14,9 +14,11 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Redis_RedisException) {
+ZEPHIR_INIT_CLASS(Yb_Redis_Error) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Redis, RedisException, yb, redis_redisexception, yb_redis_exception_ce, NULL, 0);
+	ZEPHIR_REGISTER_CLASS(Yb\\Redis, Error, yb, redis_error, NULL, 0);
+
+	zend_declare_property_null(yb_redis_error_ce, SL("error"), ZEND_ACC_PUBLIC TSRMLS_CC);
 
 	return SUCCESS;
 

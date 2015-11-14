@@ -22,11 +22,13 @@ if test "$PHP_YB" = "yes"; then
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
-	yb/redis/exception.zep.c
+	yb/redis/error.zep.c
+	yb/redis/redisslotscacherinterface.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
 	yb/mailer/mailerinterface.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
+	yb/redis/exception.zep.c
 	yb/router/routerabstract.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
@@ -56,10 +58,12 @@ if test "$PHP_YB" = "yes"; then
 	yb/mailer/smtp.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
+	yb/redis/apcslotscacher.zep.c
 	yb/redis/client.zep.c
 	yb/redis/connection.zep.c
-	yb/redis/pipeline.zep.c
-	yb/redis/redisexception.zep.c
+	yb/redis/errorask.zep.c
+	yb/redis/errormoved.zep.c
+	yb/redis/fileslotscacher.zep.c
 	yb/redis/socketexception.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c

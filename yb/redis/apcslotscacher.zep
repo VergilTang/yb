@@ -15,14 +15,14 @@ class ApcSlotsCacher implements RedisSlotsCacherInterface
         let this->cacheKey = cacheKey;
     }
 
-    public function storeSlots(array slots) -> void
+    public function storeSlots(var slots) -> void
     {
         if unlikely ! apc_store(this->cacheKey, slots) {
             throw new Exception("Cannot store slots: apc_store");
         }
     }
 
-    public function fetchSlots() -> array
+    public function fetchSlots()
     {
         var slots, success = null;
 

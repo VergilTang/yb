@@ -181,7 +181,7 @@ class Client
 
         // @todo validate asking result
 
-        if unlikely fetch ! result, results[1] {
+        if unlikely ! fetch result, results[1] {
             throw new Exception("Invalid result when asking");
         }
 

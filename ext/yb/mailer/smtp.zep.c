@@ -117,7 +117,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 		ZVAL_NULL(_11$$3);
 		ZEPHIR_INIT_VAR(_15$$3);
 		ZVAL_LONG(_15$$3, timeout);
+		ZEPHIR_MAKE_REF(_10$$3);
 		ZEPHIR_CALL_FUNCTION(&socket, "stream_socket_client", NULL, 77, _14$$3, _10$$3, _11$$3, _15$$3);
+		ZEPHIR_UNREF(_10$$3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_VAR(_17$$4);
@@ -136,7 +138,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 		ZVAL_NULL(_19$$4);
 		ZEPHIR_INIT_VAR(_20$$4);
 		ZVAL_LONG(_20$$4, timeout);
+		ZEPHIR_MAKE_REF(_18$$4);
 		ZEPHIR_CALL_FUNCTION(&socket, "fsockopen", NULL, 78, host, _17$$4, _18$$4, _19$$4, _20$$4);
+		ZEPHIR_UNREF(_18$$4);
 		zephir_check_call_status();
 	}
 	if (unlikely(!zephir_is_true(socket))) {

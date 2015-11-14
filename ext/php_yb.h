@@ -14,7 +14,7 @@
 #define PHP_YB_VERSION     "0.1.151111"
 #define PHP_YB_EXTNAME     "yb"
 #define PHP_YB_AUTHOR      "Hylent"
-#define PHP_YB_ZEPVERSION  "0.9a-dev"
+#define PHP_YB_ZEPVERSION  "0.9.1a-dev"
 #define PHP_YB_DESCRIPTION "~"
 
 

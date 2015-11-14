@@ -166,17 +166,17 @@ class Connection
                 case 'M':
                     let e = new ErrorMoved();
                     let e->error = error;
-                    let e->slot = slot;
-                    let e->host = host;
-                    let e->port = port;
+                    let e->slot = m[2];
+                    let e->host = m[3];
+                    let e->port = m[4];
                     return e;
 
                 case 'A':
                     let e = new ErrorAsk();
                     let e->error = error;
-                    let e->slot = slot;
-                    let e->host = host;
-                    let e->port = port;
+                    let e->slot = m[2];
+                    let e->host = m[3];
+                    let e->port = m[4];
                     return e;
             }
         }
