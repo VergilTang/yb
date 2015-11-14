@@ -29,6 +29,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/mailer/mailerinterface.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
 	yb/redis/exception.zep.c
+	yb/redis/redisclientinterface.zep.c
 	yb/router/routerabstract.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
@@ -64,7 +65,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/redis/errorask.zep.c
 	yb/redis/errormoved.zep.c
 	yb/redis/fileslotscacher.zep.c
-	yb/redis/redisclientinterface.zep.c
 	yb/redis/socketexception.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c

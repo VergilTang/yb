@@ -20,7 +20,7 @@ if (PHP_YB != "no") {
 	ADD_SOURCES(configure_module_dirname + "/yb/upload", "storageabstract.zep.c exception.zep.c fastdfs.zep.c filesystem.zep.c ftp.zep.c uploadedfile.zep.c uploader.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/loader", "loaderabstract.zep.c exception.zep.c namepath.zep.c namespacedirectory.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/logger", "loggerabstract.zep.c exception.zep.c filelogger.zep.c nulllogger.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/redis", "error.zep.c redisslotscacherinterface.zep.c exception.zep.c apcslotscacher.zep.c client.zep.c connection.zep.c errorask.zep.c errormoved.zep.c fileslotscacher.zep.c redisclientinterface.zep.c socketexception.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/redis", "error.zep.c redisslotscacherinterface.zep.c exception.zep.c redisclientinterface.zep.c apcslotscacher.zep.c client.zep.c connection.zep.c errorask.zep.c errormoved.zep.c fileslotscacher.zep.c socketexception.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/mailer", "mailerinterface.zep.c exception.zep.c smtp.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/ratelimiter", "ratelimiterinterface.zep.c exception.zep.c redis.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/router", "routerabstract.zep.c exception.zep.c uri.zep.c", "yb");

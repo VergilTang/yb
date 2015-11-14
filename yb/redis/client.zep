@@ -2,7 +2,7 @@ namespace Yb\Redis;
 
 use Yb\Std;
 
-class Client
+class Client implements RedisClientInterface
 {
     const DEFAULT_HOST = "127.0.0.1";
     const DEFAULT_PORT = 6379;
@@ -97,6 +97,7 @@ class Client
                 }
                 this->refleshSlots(result->host, result->port);
                 this->runCommandsByKeyInternally(key, cmds, resultProcessor, true);
+                return;
             }
 
             if result instanceof ErrorAsk {
@@ -104,6 +105,7 @@ class Client
                 if hasResultProcessor {
                     call_user_func(resultProcessor, result, index);
                 }
+                let found = true;
                 continue;
             }
 
