@@ -4,14 +4,9 @@ class Fastdfs extends StorageAbstract
 {
     protected groupStorages;
 
-    public static function isSupported() -> boolean
-    {
-        return function_exists("fastdfs_client_version");
-    }
-
     public function __construct(array groupStorages = []) -> void
     {
-        if unlikely ! self::isSupported() {
+        if unlikely ! extension_loaded("fastdfs_client") {
             throw new Exception("Missing extension: fastdfs_client");
         }
 

@@ -64,6 +64,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/redis/errorask.zep.c
 	yb/redis/errormoved.zep.c
 	yb/redis/fileslotscacher.zep.c
+	yb/redis/redisclientinterface.zep.c
 	yb/redis/socketexception.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c

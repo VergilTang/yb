@@ -3,7 +3,7 @@
 $app = new Yb\Application();
 
 $app('uploadStorage', function($app) {
-    if (Yb\Upload\Fastdfs::isSupported()) {
+    if (extension_loaded('fastdfs_client')) {
         $app['baseUrl'] = 'http://static.pre.ybserver.com';
         return new Yb\Upload\Fastdfs();
     }

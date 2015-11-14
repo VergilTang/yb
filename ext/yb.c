@@ -33,6 +33,7 @@ zend_class_entry *yb_factory_factoryinterface_ce;
 zend_class_entry *yb_redis_redisslotscacherinterface_ce;
 zend_class_entry *yb_mailer_mailerinterface_ce;
 zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
+zend_class_entry *yb_redis_redisclientinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_db_dbabstract_ce;
 zend_class_entry *yb_image_imageabstract_ce;
@@ -128,6 +129,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Redis_RedisSlotsCacherInterface);
 	ZEPHIR_INIT(Yb_Mailer_MailerInterface);
 	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
+	ZEPHIR_INIT(Yb_Redis_RedisClientInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Db_DbAbstract);
 	ZEPHIR_INIT(Yb_Image_ImageAbstract);

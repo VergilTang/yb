@@ -12,11 +12,11 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "kernel/object.h"
 #include "kernel/array.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
@@ -32,18 +32,10 @@ ZEPHIR_INIT_CLASS(Yb_Upload_Fastdfs) {
 
 }
 
-PHP_METHOD(Yb_Upload_Fastdfs, isSupported) {
-
-	
-
-	RETURN_BOOL((zephir_function_exists_ex(SS("fastdfs_client_version") TSRMLS_CC) == SUCCESS));
-
-}
-
 PHP_METHOD(Yb_Upload_Fastdfs, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *groupStorages_param = NULL, *_0 = NULL;
+	zval *groupStorages_param = NULL, _0, *_1 = NULL;
 	zval *groupStorages = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -57,10 +49,12 @@ PHP_METHOD(Yb_Upload_Fastdfs, __construct) {
 	}
 
 
-	ZEPHIR_CALL_SELF(&_0, "issupported", NULL, 0);
+	ZEPHIR_SINIT_VAR(_0);
+	ZVAL_STRING(&_0, "fastdfs_client", 0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 11, &_0);
 	zephir_check_call_status();
-	if (unlikely(!zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Missing extension: fastdfs_client", "yb/upload/fastdfs.zep", 15);
+	if (unlikely(!zephir_is_true(_1))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Missing extension: fastdfs_client", "yb/upload/fastdfs.zep", 10);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("groupStorages"), groupStorages TSRMLS_CC);

@@ -59,6 +59,7 @@
 #include "yb/redis/errorask.zep.h"
 #include "yb/redis/errormoved.zep.h"
 #include "yb/redis/fileslotscacher.zep.h"
+#include "yb/redis/redisclientinterface.zep.h"
 #include "yb/redis/socketexception.zep.h"
 #include "yb/router/exception.zep.h"
 #include "yb/router/uri.zep.h"
