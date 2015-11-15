@@ -43,10 +43,8 @@ class Bootstrap extends Namespaced
 
     public function get($name)
     {
-        $o = parent::get($name);
-        $o->setApplication($this->app);
-
-        return $o;
+        $class = $this->getClassName($name);
+        return new $class($this->app);
     }
 
 }

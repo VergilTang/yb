@@ -112,7 +112,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 	}
 	do {
 		if (flag == 2 || flag == 1) {
-			ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 107, source);
+			ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 38, source);
 			zephir_check_call_status();
 			break;
 		}

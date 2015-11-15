@@ -5,7 +5,7 @@ abstract class ControllerBase
 {
     protected $app;
 
-    public function setApplication($app)
+    public function __construct($app)
     {
         $this->app = $app;
     }

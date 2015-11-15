@@ -16,26 +16,28 @@ if test "$PHP_YB" = "yes"; then
 	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/upload/storageabstract.zep.c
+	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
 	yb/factory/classname.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
-	yb/redis/error.zep.c
-	yb/redis/redisslotscacherinterface.zep.c
+	yb/rediscluster/error.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
 	yb/mailer/mailerinterface.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
-	yb/redis/exception.zep.c
-	yb/redis/redisclientinterface.zep.c
+	yb/rediscluster/exception.zep.c
 	yb/router/routerabstract.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
 	yb/collection/proxy.zep.c
 	yb/collection/redishashserialized.zep.c
+	yb/datacacher/apc.zep.c
+	yb/datacacher/exception.zep.c
+	yb/datacacher/file.zep.c
 	yb/db/oci8.zep.c
 	yb/db/pdomysql.zep.c
 	yb/db/pdopgsql.zep.c
@@ -59,13 +61,11 @@ if test "$PHP_YB" = "yes"; then
 	yb/mailer/smtp.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
-	yb/redis/apcslotscacher.zep.c
-	yb/redis/client.zep.c
-	yb/redis/connection.zep.c
-	yb/redis/errorask.zep.c
-	yb/redis/errormoved.zep.c
-	yb/redis/fileslotscacher.zep.c
-	yb/redis/socketexception.zep.c
+	yb/rediscluster/client.zep.c
+	yb/rediscluster/connection.zep.c
+	yb/rediscluster/errorask.zep.c
+	yb/rediscluster/errormoved.zep.c
+	yb/rediscluster/socketexception.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c
 	yb/sequence/dbpdomysql.zep.c

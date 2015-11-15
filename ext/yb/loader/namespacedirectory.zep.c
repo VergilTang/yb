@@ -67,7 +67,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __construct) {
 	} else {
 		ZVAL_BOOL(_1, 0);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_loader_namespacedirectory_ce, this_ptr, "__construct", &_0, 72, _1);
+	ZEPHIR_CALL_PARENT(NULL, yb_loader_namespacedirectory_ce, this_ptr, "__construct", &_0, 77, _1);
 	zephir_check_call_status();
 	zephir_is_iterable(namespaceDirectories, &_3, &_2, 0, 0, "yb/loader/namespacedirectory.zep", 16);
 	for (
@@ -105,7 +105,7 @@ PHP_METHOD(Yb_Loader_NamespaceDirectory, __invoke) {
 	while (1) {
 		ZEPHIR_SINIT_NVAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "\\", 0);
-		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 73, match, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&pos, "strrpos", &_2, 78, match, &_1$$3);
 		zephir_check_call_status();
 		_3$$3 = ZEPHIR_IS_FALSE_IDENTICAL(pos);
 		if (!(_3$$3)) {
