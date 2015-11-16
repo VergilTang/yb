@@ -6,16 +6,18 @@ use Yb\DataCacher\DataCacherInterface;
 class Client
 {
     protected slotsCacher;
-    protected timeout;
+    protected options;
     protected slots;
     protected connections;
 
-    public function __construct(<DataCacherInterface> slotsCacher, string host, long port, long timeout = 5) -> void
+    public function __construct(<DataCacherInterface> slotsCacher, array options = []) -> void
     {
         var slots;
+        string host;
+        long port;
 
         let this->slotsCacher = slotsCacher;
-        let this->timeout = timeout;
+        let this->options = options;
 
         let slots = slotsCacher->fetchData();
         if slots {
@@ -24,6 +26,8 @@ class Client
             }
             let this->slots = slots;
         } else {
+            let host = (string) Std::valueAt(options, "host", Connection::DEFAULT_HOST);
+            let port = (long) Std::valueAt(options, "port", Connection::DEFAULT_PORT);
             this->refleshSlots(host, port);
         }
     }
@@ -139,7 +143,13 @@ class Client
 
     protected function newConnection(string host, long port) -> <Connection>
     {
-        return new Connection(host, port, this->timeout);
+        var options;
+
+        let options = this->options;
+        let options["host"] = host;
+        let options["port"] = port;
+
+        return new Connection(options);
     }
 
     protected function refleshSlots(string host, long port) -> void

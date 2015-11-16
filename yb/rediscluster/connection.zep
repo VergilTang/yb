@@ -1,16 +1,36 @@
 namespace Yb\RedisCluster;
 
+use Yb\Std;
+
 class Connection
 {
+    const DEFAULT_HOST          = "127.0.0.1";
+    const DEFAULT_PORT          = 6379;
+    const DEFAULT_TIMEOUT       = 5;
+    const DEFAULT_PERSISTENT    = false;
+
     protected handler;
 
-    public function __construct(string host = "127.0.0.1", long port = 6379, long timeout = 5) -> void
+    public function __construct(array options = []) -> void
     {
-        var handler;
+        string host;
+        long port, timeout;
+        boolean persistent;
+        var handler, errStr = null;
 
-        let handler = fsockopen(host, port, null, null, timeout);
+        let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
+        let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
+        let timeout = (long) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
+        let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
+
+        if persistent {
+            let handler = pfsockopen(host, port, null, errStr, timeout);
+        } else {
+            let handler = fsockopen(host, port, null, errStr, timeout);
+        }
+
         if unlikely ! handler {
-            throw new SocketException("Cannot open socket");
+            throw new SocketException("Cannot open socket: " . errStr);
         }
 
         if unlikely ! stream_set_blocking(handler, 1) {

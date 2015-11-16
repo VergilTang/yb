@@ -15,9 +15,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, readLine);
 PHP_METHOD(Yb_RedisCluster_Connection, newError);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection___construct, 0, 0, 0)
-	ZEND_ARG_INFO(0, host)
-	ZEND_ARG_INFO(0, port)
-	ZEND_ARG_INFO(0, timeout)
+	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection___call, 0, 0, 2)

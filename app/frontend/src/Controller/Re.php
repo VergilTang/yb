@@ -9,18 +9,22 @@ class Re extends ControllerBase
     {
         parent::__construct($app);
 
-        $app('redisCluster', function() {
-            $slotsCacher = new \Yb\Datacacher\Apc('redis-cluster');
-            return new \Yb\RedisCluster\Client($slotsCacher, '192.168.1.12', 6380);
+        $app('redisCluster', function($app) {
+            try {
+                $slotsCacher = new \Yb\Datacacher\Apc('redis-cluster');
+            } catch (\Exception $ex) {
+                $slotsCacher = new \Yb\Datacacher\File(__DIR__.'/../../data/redis-cluster.php');
+            }
+            return new \Yb\RedisCluster\Client($slotsCacher, (array) $app->config('redis'));
         });
 
-        $app('redisConnection', function() {
-            return new \Yb\RedisCluster\Connection('192.168.1.12', 6380);
+        $app('redisConnection', function($app) {
+            return new \Yb\RedisCluster\Connection((array) $app->config('redis'));
         });
 
-        $app('redis', function() {
+        $app('redis', function($app) {
             $redis = new \Redis();
-            $redis->connect('192.168.1.12', 6380);
+            $redis->connect($app->config('redis.host'), $app->config('redis.port'));
             return $redis;
         });
     }
@@ -72,6 +76,13 @@ class Re extends ControllerBase
         var_dump($d);
 
         return false;
+
+        foreach (range(1, 9) as $i) {
+            $d = $client->get('{test}'.$i);
+            var_dump($d);
+        }
+
+        return false;
     }
 
     public function bAction()
@@ -83,6 +94,13 @@ class Re extends ControllerBase
 
         $d = $client->get('test');
         var_dump($d);
+
+        return false;
+
+        foreach (range(1, 9) as $i) {
+            $d = $client->get('{test}'.$i);
+            var_dump($d);
+        }
 
         return false;
     }

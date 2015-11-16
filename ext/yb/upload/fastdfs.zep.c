@@ -105,7 +105,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 	}
 	ZEPHIR_INIT_VAR(_1);
 	array_init(_1);
-	ZEPHIR_CALL_FUNCTION(&destUri, "fastdfs_storage_upload_by_filename1", NULL, 0, source, extensionArg, _1, groupArg);
+	ZEPHIR_CALL_FUNCTION(&destUri, "fastdfs_storage_upload_by_filename1", NULL, 111, source, extensionArg, _1, groupArg);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(destUri)) {
 		RETURN_MM_STRING("", 1);
@@ -139,7 +139,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, remove) {
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "/", 0);
 	zephir_fast_trim(_0, uri, &_1, ZEPHIR_TRIM_LEFT TSRMLS_CC);
-	ZEPHIR_RETURN_CALL_FUNCTION("fastdfs_storage_delete_file1", NULL, 0, _0);
+	ZEPHIR_RETURN_CALL_FUNCTION("fastdfs_storage_delete_file1", NULL, 112, _0);
 	zephir_check_call_status();
 	RETURN_MM();
 

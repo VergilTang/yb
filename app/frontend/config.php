@@ -6,4 +6,9 @@ return [
         '#^/p/(\d+)/(\d+)($|[/\?])#' => '/index/test/${1}/${2}${3}',
         // '/p/:qid/:aid' => '/index/test/:qid/:aid',
     ],
+    'redis' => [
+        'host' => '172.16.1.140',
+        'port' => 6379,
+        'persistent' => true,
+    ],
 ];

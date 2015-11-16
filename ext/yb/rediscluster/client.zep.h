@@ -14,11 +14,9 @@ PHP_METHOD(Yb_RedisCluster_Client, refleshSlots);
 PHP_METHOD(Yb_RedisCluster_Client, onMoved);
 PHP_METHOD(Yb_RedisCluster_Client, onAsk);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_client___construct, 0, 0, 3)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_client___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, slotsCacher, Yb\\DataCacher\\DataCacherInterface, 0)
-	ZEND_ARG_INFO(0, host)
-	ZEND_ARG_INFO(0, port)
-	ZEND_ARG_INFO(0, timeout)
+	ZEND_ARG_ARRAY_INFO(0, options, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_client_runcommandbykey, 0, 0, 2)
