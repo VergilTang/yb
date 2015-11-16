@@ -287,9 +287,9 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 18);
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 19);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 19, ZEPHIR_GLOBAL(global_false));
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 20, ZEPHIR_GLOBAL(global_false));
 	zephir_check_call_status();
 
 	/* try_start_1: */
@@ -300,7 +300,7 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "save", NULL, 0, this_ptr, _1$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 20);
+		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 21);
 		zephir_check_call_status_or_jump(try_end_1);
 		RETURN_MM();
 
@@ -311,7 +311,7 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 		ZEPHIR_CPY_WRT(_2, EG(exception));
 		if (zephir_instance_of_ev(_2, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
 			zend_clear_exception(TSRMLS_C);
-			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 21);
+			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 22);
 			zephir_check_call_status();
 		}
 	}

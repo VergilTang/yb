@@ -48,7 +48,7 @@ PHP_METHOD(Yb_Factory_Generated, __construct) {
 PHP_METHOD(Yb_Factory_Generated, getClassName) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *_0, *_1 = NULL;
+	zval *name_param = NULL, *classNameGenerator = NULL, *_0, *_1 = NULL;
 	zval *name = NULL, *_2 = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -58,7 +58,8 @@ PHP_METHOD(Yb_Factory_Generated, getClassName) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("classNameGenerator"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "call_user_func", NULL, 49, _0, name);
+	ZEPHIR_CPY_WRT(classNameGenerator, _0);
+	ZEPHIR_CALL_ZVAL_FUNCTION(&_1, classNameGenerator, NULL, 0, name);
 	zephir_check_call_status();
 	zephir_get_strval(_2, _1);
 	RETURN_CTOR(_2);

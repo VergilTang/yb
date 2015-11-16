@@ -3,9 +3,8 @@ namespace YbApp\Frontend;
 
 use Yb\Std;
 use Yb\Application;
-use Yb\Factory\Namespaced;
 
-class Bootstrap extends Namespaced
+class Bootstrap
 {
     protected $app;
 
@@ -13,15 +12,20 @@ class Bootstrap extends Namespaced
     {
         $this->app = $app;
 
-        parent::__construct(__NAMESPACE__.'\Controller');
-
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.php');
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.local.php');
 
         // route
-        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI'], (array) $app->config('routingPatterns'));
+        $routerPatterns = new \Yb\Router\Patterns([
+            'int' => '\d+',
+        ]);
+        $routerPatterns->alias('/{id:int}', '/index/{id}', '/re');
+        $routerPatterns->alias('/p/{qid:int}/{aid:int}', '/index/test/{qid}/{aid}');
 
-        $requestId = $router->getController().'/'.$router->getAction();
+        // print_R($routerPatterns);
+        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI'], $routerPatterns->getPatterns());
+
+        $requestId = $router->getId();
 
         // session
         // session_start();
@@ -32,7 +36,9 @@ class Bootstrap extends Namespaced
         }
 
         // action
-        $result = $router->dispatch($this);
+        $controllerFactory = new \Yb\Factory\Namespaced(__NAMESPACE__.'\Controller');
+        $controllerFactory->args($this->app);
+        $result = $router->dispatch($controllerFactory);
 
         // view
         if ($result === null) {

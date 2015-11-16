@@ -62,6 +62,7 @@
 #include "yb/rediscluster/errormoved.zep.h"
 #include "yb/rediscluster/socketexception.zep.h"
 #include "yb/router/exception.zep.h"
+#include "yb/router/patterns.zep.h"
 #include "yb/router/uri.zep.h"
 #include "yb/sequence/dbpdomysql.zep.h"
 #include "yb/sequence/exception.zep.h"

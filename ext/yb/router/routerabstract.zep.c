@@ -13,11 +13,11 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
-#include "kernel/memory.h"
-#include "kernel/fcall.h"
-#include "kernel/operators.h"
-#include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "kernel/memory.h"
+#include "kernel/operators.h"
+#include "kernel/fcall.h"
+#include "kernel/exception.h"
 #include "kernel/array.h"
 
 
@@ -63,6 +63,29 @@ PHP_METHOD(Yb_Router_RouterAbstract, getParams) {
 
 }
 
+PHP_METHOD(Yb_Router_RouterAbstract, getId) {
+
+	zval *separator_param = NULL, *_0, *_1;
+	zval *separator = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &separator_param);
+
+	if (!separator_param) {
+		ZEPHIR_INIT_VAR(separator);
+		ZVAL_STRING(separator, "/", 1);
+	} else {
+		zephir_get_strval(separator, separator_param);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("controller"), PH_NOISY_CC);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("action"), PH_NOISY_CC);
+	ZEPHIR_CONCAT_VVV(return_value, _0, separator, _1);
+	RETURN_MM();
+
+}
+
 PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 
 	zval *c = NULL, *_3 = NULL;
@@ -76,7 +99,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 
 
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("controller"), PH_NOISY_CC);
-	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "camelcase", &_1, 22, _2);
+	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "camelcase", &_1, 23, _2);
 	zephir_check_call_status();
 	zephir_get_strval(_3, _0);
 	ZEPHIR_CPY_WRT(c, _3);
@@ -90,7 +113,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 		ZEPHIR_CONCAT_SV(_7$$3, "Invalid controller: ", _6$$3);
 		ZEPHIR_CALL_METHOD(NULL, _5$$3, "__construct", NULL, 2, _7$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$3, "yb/router/routerabstract.zep", 37 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$3, "yb/router/routerabstract.zep", 42 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -98,13 +121,13 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 	array_init(i);
 	ZEPHIR_CALL_METHOD(&_8, factory, "get", NULL, 0, c);
 	zephir_check_call_status();
-	zephir_array_append(&i, _8, PH_SEPARATE, "yb/router/routerabstract.zep", 41);
+	zephir_array_append(&i, _8, PH_SEPARATE, "yb/router/routerabstract.zep", 46);
 	_10 = zephir_fetch_nproperty_this(this_ptr, SL("action"), PH_NOISY_CC);
-	ZEPHIR_CALL_CE_STATIC(&_9, yb_std_ce, "camelcase", &_1, 22, _10);
+	ZEPHIR_CALL_CE_STATIC(&_9, yb_std_ce, "camelcase", &_1, 23, _10);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_11);
 	ZEPHIR_CONCAT_VS(_11, _9, "Action");
-	zephir_array_append(&i, _11, PH_SEPARATE, "yb/router/routerabstract.zep", 42);
+	zephir_array_append(&i, _11, PH_SEPARATE, "yb/router/routerabstract.zep", 47);
 	if (unlikely(!(zephir_is_callable(i TSRMLS_CC)))) {
 		ZEPHIR_INIT_VAR(_12$$4);
 		object_init_ex(_12$$4, yb_router_exception_ce);
@@ -113,7 +136,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 		ZEPHIR_CONCAT_SV(_14$$4, "Invalid action: ", _13$$4);
 		ZEPHIR_CALL_METHOD(NULL, _12$$4, "__construct", NULL, 2, _14$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_12$$4, "yb/router/routerabstract.zep", 45 TSRMLS_CC);
+		zephir_throw_exception_debug(_12$$4, "yb/router/routerabstract.zep", 50 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

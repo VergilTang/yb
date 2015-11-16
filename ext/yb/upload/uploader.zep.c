@@ -68,7 +68,7 @@ PHP_METHOD(Yb_Upload_Uploader, __construct) {
 	ZVAL_LONG(&_3, -1);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, 1);
-	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 105, &_2, _1, &_3, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 108, &_2, _1, &_3, &_4);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 130, _5);
 	zephir_check_call_status();

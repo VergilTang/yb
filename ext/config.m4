@@ -67,6 +67,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/rediscluster/errormoved.zep.c
 	yb/rediscluster/socketexception.zep.c
 	yb/router/exception.zep.c
+	yb/router/patterns.zep.c
 	yb/router/uri.zep.c
 	yb/sequence/dbpdomysql.zep.c
 	yb/sequence/exception.zep.c

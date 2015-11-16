@@ -79,7 +79,7 @@ class Client
         for index, result in results {
             if typeof result != "object" || ! (result instanceof Error) {
                 if hasResultProcessor {
-                    call_user_func(resultProcessor, result, index);
+                    {resultProcessor}(result, index);
                 }
                 let found = true;
                 continue;
@@ -100,7 +100,7 @@ class Client
             if result instanceof ErrorAsk {
                 let result = this->onAsk(result, cmds[index]);
                 if hasResultProcessor {
-                    call_user_func(resultProcessor, result, index);
+                    {resultProcessor}(result, index);
                 }
                 let found = true;
                 continue;

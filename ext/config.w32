@@ -24,6 +24,6 @@ if (PHP_YB != "no") {
 	ADD_SOURCES(configure_module_dirname + "/yb/rediscluster", "error.zep.c exception.zep.c client.zep.c connection.zep.c errorask.zep.c errormoved.zep.c socketexception.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/mailer", "mailerinterface.zep.c exception.zep.c smtp.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/ratelimiter", "ratelimiterinterface.zep.c exception.zep.c redis.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/router", "routerabstract.zep.c exception.zep.c uri.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/router", "routerabstract.zep.c exception.zep.c patterns.zep.c uri.zep.c", "yb");
   ADD_FLAG("CFLAGS_YB", "/D ZEPHIR_RELEASE");
 }

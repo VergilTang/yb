@@ -148,7 +148,7 @@ PHP_METHOD(Yb_Upload_FileSystem, remove) {
 	ZEPHIR_INIT_VAR(path);
 	ZEPHIR_CONCAT_VV(path, _0, uri);
 	if ((zephir_file_exists(path TSRMLS_CC) == SUCCESS)) {
-		ZEPHIR_RETURN_CALL_FUNCTION("unlink", NULL, 38, path);
+		ZEPHIR_RETURN_CALL_FUNCTION("unlink", NULL, 39, path);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

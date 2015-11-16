@@ -85,6 +85,7 @@ zend_class_entry *yb_rediscluster_errorask_ce;
 zend_class_entry *yb_rediscluster_errormoved_ce;
 zend_class_entry *yb_rediscluster_socketexception_ce;
 zend_class_entry *yb_router_exception_ce;
+zend_class_entry *yb_router_patterns_ce;
 zend_class_entry *yb_router_uri_ce;
 zend_class_entry *yb_sequence_dbpdomysql_ce;
 zend_class_entry *yb_sequence_exception_ce;
@@ -181,6 +182,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_RedisCluster_ErrorMoved);
 	ZEPHIR_INIT(Yb_RedisCluster_SocketException);
 	ZEPHIR_INIT(Yb_Router_Exception);
+	ZEPHIR_INIT(Yb_Router_Patterns);
 	ZEPHIR_INIT(Yb_Router_Uri);
 	ZEPHIR_INIT(Yb_Sequence_DbPdoMysql);
 	ZEPHIR_INIT(Yb_Sequence_Exception);

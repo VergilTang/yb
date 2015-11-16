@@ -100,7 +100,7 @@ PHP_METHOD(Yb_Logger_FileLogger, flush) {
 	zephir_fast_join_str(_2, SL(""), _3 TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, (2 | 8));
-	ZEPHIR_CALL_FUNCTION(&_5, "file_put_contents", NULL, 37, _1, _2, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "file_put_contents", NULL, 38, _1, _2, &_4);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_5))) {
 		ZEPHIR_INIT_VAR(_6$$4);

@@ -5,8 +5,8 @@ use Yb\Factory\FactoryInterface;
 
 abstract class RouterAbstract
 {
-    const DEFAULT_CONTROLLER = "index";
-    const DEFAULT_ACTION = "index";
+    const DEFAULT_CONTROLLER    = "index";
+    const DEFAULT_ACTION        = "index";
 
     protected controller;
     protected action;
@@ -25,6 +25,11 @@ abstract class RouterAbstract
     public function getParams() -> array
     {
         return this->params;
+    }
+
+    public function getId(string separator = "/") -> string
+    {
+        return this->controller . separator . this->action;
     }
 
     public function dispatch(<FactoryInterface> factory)

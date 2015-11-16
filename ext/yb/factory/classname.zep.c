@@ -24,6 +24,8 @@ ZEPHIR_INIT_CLASS(Yb_Factory_ClassName) {
 
 	ZEPHIR_REGISTER_CLASS(Yb\\Factory, ClassName, yb, factory_classname, yb_factory_classname_method_entry, ZEND_ACC_EXPLICIT_ABSTRACT_CLASS);
 
+	zend_declare_property_null(yb_factory_classname_ce, SL("args"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
 	zend_class_implements(yb_factory_classname_ce TSRMLS_CC, 1, yb_factory_factoryinterface_ce);
 	return SUCCESS;
 
@@ -49,9 +51,10 @@ PHP_METHOD(Yb_Factory_ClassName, has) {
 
 PHP_METHOD(Yb_Factory_ClassName, get) {
 
-	zend_class_entry *_5;
+	zend_class_entry *_6$$4;
+	zephir_fcall_cache_entry *_7 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *_0 = NULL, *_4 = NULL, *_2$$3;
+	zval *name_param = NULL, *_0 = NULL, *_4, *_8, *_2$$3, *_5$$4 = NULL;
 	zval *name = NULL, *className = NULL, *_1 = NULL, *_3$$3;
 
 	ZEPHIR_MM_GROW();
@@ -71,18 +74,82 @@ PHP_METHOD(Yb_Factory_ClassName, get) {
 		ZEPHIR_CONCAT_SV(_3$$3, "Invalid product: ", name);
 		ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 2, _3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_2$$3, "yb/factory/classname.zep", 16 TSRMLS_CC);
+		zephir_throw_exception_debug(_2$$3, "yb/factory/classname.zep", 20 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	zephir_fetch_safe_class(_4, className);
-		_5 = zend_fetch_class(Z_STRVAL_P(_4), Z_STRLEN_P(_4), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-	object_init_ex(return_value, _5);
-	if (zephir_has_constructor(return_value TSRMLS_CC)) {
-		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0);
-		zephir_check_call_status();
+	_4 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
+	if (zephir_fast_count_int(_4 TSRMLS_CC) < 1) {
+		zephir_fetch_safe_class(_5$$4, className);
+			_6$$4 = zend_fetch_class(Z_STRVAL_P(_5$$4), Z_STRLEN_P(_5$$4), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+		object_init_ex(return_value, _6$$4);
+		if (zephir_has_constructor(return_value TSRMLS_CC)) {
+			ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0);
+			zephir_check_call_status();
+		}
+		RETURN_MM();
 	}
+	_8 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
+	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "newinstanceof", &_7, 14, className, _8);
+	zephir_check_call_status();
 	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Factory_ClassName, args) {
+
+	zval *_0 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_CALL_FUNCTION(&_0, "func_get_args", NULL, 5);
+	zephir_check_call_status();
+	zephir_update_property_this(this_ptr, SL("args"), _0 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Factory_ClassName, arg) {
+
+	long index, c = 0;
+	zval *arg, *index_param = NULL, *_0$$3;
+
+	zephir_fetch_params(0, 1, 1, &arg, &index_param);
+
+	if (!index_param) {
+		index = -1;
+	} else {
+		index = zephir_get_intval(index_param);
+	}
+
+
+	if (index > -1) {
+		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
+		c = zephir_fast_count_int(_0$$3 TSRMLS_CC);
+		while (1) {
+			if (c >= index) {
+				break;
+			}
+			c++;
+			zephir_update_property_array_append(this_ptr, SL("args"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
+		}
+	}
+	zephir_update_property_array_append(this_ptr, SL("args"), arg TSRMLS_CC);
+
+}
+
+PHP_METHOD(Yb_Factory_ClassName, getArgArray) {
+
+	zval *_0;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
+	if (zephir_fast_count_int(_0 TSRMLS_CC) > 0) {
+		RETURN_MEMBER(this_ptr, "args");
+	}
+	array_init(return_value);
+	return;
 
 }
 

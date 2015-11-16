@@ -15,7 +15,10 @@ class Generated extends ClassName
 
     protected function getClassName(string name) -> string
     {
-        return (string) call_user_func(this->classNameGenerator, name);
+        var classNameGenerator;
+
+        let classNameGenerator = this->classNameGenerator;
+        return (string) {classNameGenerator}(name);
     }
 
 }
