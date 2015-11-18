@@ -7,34 +7,54 @@ class Connection
     const DEFAULT_HOST          = "127.0.0.1";
     const DEFAULT_PORT          = 6379;
     const DEFAULT_TIMEOUT       = 5;
+    const DEFAULT_IO_TIMEOUT    = 2.0;
     const DEFAULT_PERSISTENT    = false;
 
     protected handler;
 
     public function __construct(array options = []) -> void
     {
-        string host;
-        long port, timeout;
+        string host, address;
+        long port, timeout, flags, seconds, microSeconds;
+        double ioTimeout;
         boolean persistent;
         var handler, errStr = null;
 
         let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
         let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
         let timeout = (long) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
+        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", self::DEFAULT_IO_TIMEOUT);
         let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
 
+        let address = (string) sprintf("tcp://%s:%d", host, port);
+        let flags = (long) STREAM_CLIENT_CONNECT;
         if persistent {
-            let handler = pfsockopen(host, port, null, errStr, timeout);
-        } else {
-            let handler = fsockopen(host, port, null, errStr, timeout);
+            let flags += (long) STREAM_CLIENT_PERSISTENT;
         }
 
+        let handler = stream_socket_client(address, null, errStr, timeout, flags);
         if unlikely ! handler {
-            throw new SocketException("Cannot open socket: " . errStr);
+            throw new SocketException("Cannot create socket: " . errStr);
+        }
+
+        if function_exists("socket_import_stream")
+            && ! socket_set_option(socket_import_stream(handler), SOL_TCP, TCP_NODELAY, 1) {
+            throw new SocketException("Cannot set tcp_nodelay");
         }
 
         if unlikely ! stream_set_blocking(handler, 1) {
-            throw new SocketException("Cannot set blocking socket");
+            throw new SocketException("Cannot set blocking");
+        }
+
+        if ioTimeout > 0 {
+            let seconds = (long) ioTimeout;
+            let microSeconds = (long) ((ioTimeout - seconds) * 1000000.0);
+        } else {
+            let seconds = (long) self::DEFAULT_IO_TIMEOUT;
+            let microSeconds = 0;
+        }
+        if unlikely ! stream_set_timeout(handler, seconds, microSeconds) {
+            throw new SocketException("Cannot set stream timeout");
         }
 
         let this->handler = handler;
@@ -116,7 +136,7 @@ class Connection
         long l;
         var a;
 
-        let line = (string) this->readLine();
+        let line = (string) this->readBlock();
 
         let c = line[0];
         let line = (string) substr(line, 1, -2);
@@ -139,7 +159,7 @@ class Connection
                 if l < 0 {
                     return;
                 }
-                let line = (string) this->readLine(l + 2);
+                let line = (string) this->readBlock(l + 2);
                 return substr(line, 0, -2);
 
             case '*':
@@ -162,7 +182,7 @@ class Connection
         }
     }
 
-    protected function readLine(long len = 0) -> string
+    protected function readBlock(long len = 0) -> string
     {
         var line;
         string s;

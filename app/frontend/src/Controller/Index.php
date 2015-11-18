@@ -10,6 +10,59 @@ class Index extends ControllerBase
         throw new \Exception();
     }
 
+    public function socketAction()
+    {
+        $host = '172.16.1.140';
+        $port = 6379;
+        $timeout = 1;
+
+        $errNo = null;
+        $errStr = null;
+
+        $socket = fsockopen($host, $port, $errNo, $errStr, $timeout);
+        if (!$socket) {
+            throw new \Exception('fsockopen');
+        }
+        if (!stream_set_blocking($socket, 1)) {
+            throw new \Exception('stream_set_blocking');
+        }
+        if (!socket_set_option($socket, SOL_TCP, TCP_NODELAY, 1)) {
+            throw new \Exception('socket_set_option');
+        }
+
+        return false;
+    }
+
+    public function streamAction()
+    {
+        $host = '172.16.1.140';
+        $port = 6379;
+        $timeout = 1;
+
+        $errNo = null;
+        $errStr = null;
+
+        $stream = stream_socket_client(sprintf("tcp://%s:%d", $host, $port), $errNo, $errStr, $timeout);
+        if (!$stream) {
+            throw new \Exception('stream_socket_client');
+        }
+        if (!stream_set_blocking($stream, 1)) {
+            throw new \Exception('stream_set_blocking');
+        }
+
+        if (1) {
+            if (!socket_set_option($stream, SOL_TCP, TCP_NODELAY, 1)) {
+                throw new \Exception("socket_set_option");
+            }
+        } else {
+            if (!socket_set_option(socket_import_stream($stream), SOL_TCP, TCP_NODELAY, 1)) {
+                throw new \Exception("Cannot set tcp_nodelay");
+            }
+        }
+
+        return false;
+    }
+
     public function testAction()
     {
         $this->app['viewData'] = [

@@ -138,7 +138,7 @@ PHP_METHOD(Yb_Router_Patterns, alias) {
 	zephir_array_fast_append(_1, _2);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "#/\\{(\\w+)(\\:\\w+)?\\}#", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace_callback", NULL, 104, _2, _1, from);
+	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace_callback", NULL, 105, _2, _1, from);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	zephir_get_strval(_4, _3);
@@ -146,7 +146,7 @@ PHP_METHOD(Yb_Router_Patterns, alias) {
 	if (zephir_fast_strlen_ev(prefix) > 0) {
 		ZEPHIR_SINIT_VAR(_6$$3);
 		ZVAL_STRING(&_6$$3, "#", 0);
-		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 105, prefix, &_6$$3);
+		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 106, prefix, &_6$$3);
 		zephir_check_call_status();
 		zephir_get_strval(_8$$3, _7$$3);
 		ZEPHIR_CPY_WRT(prefix, _8$$3);
@@ -155,7 +155,7 @@ PHP_METHOD(Yb_Router_Patterns, alias) {
 	ZEPHIR_CONCAT_SVVS(_9, "#^", prefix, from, "($|[/\\?])#");
 	ZEPHIR_CPY_WRT(from, _9);
 	_10 = zephir_fetch_nproperty_this(this_ptr, SL("matches"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_11, "strtr", NULL, 106, to, _10);
+	ZEPHIR_CALL_FUNCTION(&_11, "strtr", NULL, 107, to, _10);
 	zephir_check_call_status();
 	_12 = zephir_fetch_nproperty_this(this_ptr, SL("matches"), PH_NOISY_CC);
 	ZEPHIR_SINIT_VAR(_13);

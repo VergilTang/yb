@@ -11,7 +11,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, runCommands);
 PHP_METHOD(Yb_RedisCluster_Connection, __destruct);
 PHP_METHOD(Yb_RedisCluster_Connection, write);
 PHP_METHOD(Yb_RedisCluster_Connection, read);
-PHP_METHOD(Yb_RedisCluster_Connection, readLine);
+PHP_METHOD(Yb_RedisCluster_Connection, readBlock);
 PHP_METHOD(Yb_RedisCluster_Connection, newError);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection___construct, 0, 0, 0)
@@ -35,7 +35,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection_write, 0, 0, 1)
 	ZEND_ARG_INFO(0, data)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection_readline, 0, 0, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_rediscluster_connection_readblock, 0, 0, 0)
 	ZEND_ARG_INFO(0, len)
 ZEND_END_ARG_INFO()
 
@@ -52,7 +52,7 @@ ZEPHIR_INIT_FUNCS(yb_rediscluster_connection_method_entry) {
 	PHP_ME(Yb_RedisCluster_Connection, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)
 	PHP_ME(Yb_RedisCluster_Connection, write, arginfo_yb_rediscluster_connection_write, ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_RedisCluster_Connection, read, NULL, ZEND_ACC_PROTECTED)
-	PHP_ME(Yb_RedisCluster_Connection, readLine, arginfo_yb_rediscluster_connection_readline, ZEND_ACC_PROTECTED)
+	PHP_ME(Yb_RedisCluster_Connection, readBlock, arginfo_yb_rediscluster_connection_readblock, ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_RedisCluster_Connection, newError, arginfo_yb_rediscluster_connection_newerror, ZEND_ACC_PROTECTED)
 	PHP_FE_END
 };

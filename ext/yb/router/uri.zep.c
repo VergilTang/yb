@@ -53,7 +53,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 	if (zephir_fast_count_int(patterns TSRMLS_CC) > 0) {
 		ZEPHIR_INIT_VAR(_0$$3);
 		zephir_array_keys(_0$$3, patterns TSRMLS_CC);
-		ZEPHIR_CALL_FUNCTION(&_1$$3, "array_values", NULL, 107, patterns);
+		ZEPHIR_CALL_FUNCTION(&_1$$3, "array_values", NULL, 108, patterns);
 		zephir_check_call_status();
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "preg_replace", NULL, 49, _0$$3, _1$$3, uri);
 		zephir_check_call_status();
@@ -72,7 +72,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 		ZVAL_STRING(&_8$$4, "#/+#", 0);
 		ZEPHIR_SINIT_VAR(_9$$4);
 		ZVAL_LONG(&_9$$4, 1);
-		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 108, &_8$$4, _7$$4, ZEPHIR_GLOBAL(global_null), &_9$$4);
+		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 109, &_8$$4, _7$$4, ZEPHIR_GLOBAL(global_null), &_9$$4);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_NVAR(params);

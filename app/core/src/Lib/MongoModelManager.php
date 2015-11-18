@@ -2,30 +2,28 @@
 
 namespace YbApp\Core\Lib;
 
-use MongoDb\Driver\Manager;
-
 class MongoModelManager
 {
-    protected $mongodbManager;
+    protected $dbManager;
     protected $models;
 
     public function __construct($uri)
     {
-        $this->mongodbManager = new Manager($uri);
+        $this->dbManager = new \MongoDb\Driver\Manager($uri);
     }
 
-    public function get($name)
+    public function get($db, $collection)
     {
-        if (isset($this->models[$name])) {
-            return $this->models[$name];
+        if (isset($this->models[$db][$collection])) {
+            return $this->models[$db][$collection];
         }
 
-        return $this->models[$name] = $this->newModel($name);
+        return $this->models[$db][$collection] = $this->newModel($db, $collection);
     }
 
-    public function newModel($name)
+    public function newModel($db, $collection)
     {
-        return new MongoModel($this->mongodbManager, $name);
+        return new MongoModel($this->dbManager, $db, $collection);
     }
 
 }

@@ -9,37 +9,58 @@ class Smtp implements MailerInterface
     protected socket;
     protected from;
 
-    public function __construct(string host, string user, string passwd, array options = []) -> void
+    public function __construct(array options) -> void
     {
-        string from, name;
-        long timeout, port;
+        string host, user, passwd, from, name;
+        long timeout, port, seconds, microSeconds;
+        double ioTimeout;
         boolean secure;
-        var socket;
+        var socket, errStr = null;
+
+        let host = (string) Std::valueAt(options, "host");
+        let user = (string) Std::valueAt(options, "user");
+        let passwd = (string) Std::valueAt(options, "passwd");
 
         let from = (string) Std::valueAt(options, "from", user);
         let name = (string) Std::valueAt(options, "name", "");
         let timeout = (long) Std::valueAt(options, "timeout", 10);
+        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", timeout);
         let secure = (boolean) Std::valueAt(options, "secure", false);
 
         if secure {
             let port = (long) Std::valueAt(options, "port", 465);
-            let socket = stream_socket_client(sprintf("tcp://%s:%d", host, port), null, null, timeout);
         } else {
             let port = (long) Std::valueAt(options, "port", 25);
-            let socket = fsockopen(host, port, null, null, timeout);
         }
 
+        let socket = stream_socket_client(sprintf("tcp://%s:%d", host, port), null, errStr, timeout);
         if unlikely ! socket {
-            throw new Exception("Cannot connect to mail server");
+            throw new Exception("Cannot connect to mail server: " . errStr);
+        }
+
+        if unlikely function_exists("socket_import_stream")
+            && ! socket_set_option(socket_import_stream(socket), SOL_TCP, TCP_NODELAY, 1) {
+            throw new Exception("Cannot set tcp_nodelay");
+        }
+
+        if unlikely ! stream_set_blocking(socket, 1) {
+            throw new Exception("Cannot set blocking socket");
+        }
+
+        if ioTimeout > 0 {
+            let seconds = (long) ioTimeout;
+            let microSeconds = (long) ((ioTimeout - seconds) * 1000000.0);
+        } else {
+            let seconds = timeout;
+            let microSeconds = 0;
+        }
+        if unlikely ! stream_set_timeout(socket, seconds, microSeconds) {
+            throw new Exception("Cannot set stream timeout");
         }
 
         if unlikely secure
             && ! stream_socket_enable_crypto(socket, true, constant("STREAM_CRYPTO_METHOD_SSLv23_CLIENT")) {
             throw new Exception("Cannot enable crypto socket");
-        }
-
-        if unlikely ! stream_set_blocking(socket, 1) {
-            throw new Exception("Cannot set blocking socket");
         }
 
         let this->socket = socket;

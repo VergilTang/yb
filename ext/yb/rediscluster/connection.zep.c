@@ -36,6 +36,8 @@ ZEPHIR_INIT_CLASS(Yb_RedisCluster_Connection) {
 
 	zend_declare_class_constant_long(yb_rediscluster_connection_ce, SL("DEFAULT_TIMEOUT"), 5 TSRMLS_CC);
 
+	zend_declare_class_constant_double(yb_rediscluster_connection_ce, SL("DEFAULT_IO_TIMEOUT"), 2.0 TSRMLS_CC);
+
 	zend_declare_class_constant_bool(yb_rediscluster_connection_ce, SL("DEFAULT_PERSISTENT"), 0 TSRMLS_CC);
 
 	return SUCCESS;
@@ -44,12 +46,13 @@ ZEPHIR_INIT_CLASS(Yb_RedisCluster_Connection) {
 
 PHP_METHOD(Yb_RedisCluster_Connection, __construct) {
 
-	zend_bool persistent = 0;
-	long port = 0, timeout = 0;
-	zval *host = NULL, *_4 = NULL;
+	zend_bool persistent = 0, _15;
+	double ioTimeout = 0;
+	long port = 0, timeout = 0, flags = 0, seconds = 0, microSeconds = 0;
+	zval *host = NULL, *address = NULL, *_4 = NULL, *_11 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL;
-	zval *options_param = NULL, *handler = NULL, *errStr = NULL, *_0 = NULL, *_2 = NULL, *_3 = NULL, *_5 = NULL, *_6 = NULL, *_7 = NULL, _16, *_8$$3, *_9$$3, *_10$$3, *_11$$4, *_12$$4, *_13$$4, *_14$$5, *_15$$5;
+	zval *options_param = NULL, *handler = NULL, *errStr = NULL, *_0 = NULL, *_2 = NULL, *_3 = NULL, *_5 = NULL, *_6 = NULL, *_7 = NULL, *_8 = NULL, _9 = zval_used_for_init, _10 = zval_used_for_init, *_12, *_16 = NULL, _17, *_18 = NULL, *_19 = NULL, *_20 = NULL, *_13$$4, *_14$$4;
 	zval *options = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -92,53 +95,95 @@ PHP_METHOD(Yb_RedisCluster_Connection, __construct) {
 	zephir_check_call_status();
 	timeout = zephir_get_intval(_6);
 	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "persistent", ZEPHIR_TEMP_PARAM_COPY);
+	ZVAL_STRING(_2, "ioTimeout", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
-	ZVAL_BOOL(_3, 0);
+	ZVAL_DOUBLE(_3, 2.0);
 	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	persistent = zephir_get_boolval(_7);
+	ioTimeout = zephir_get_doubleval(_7);
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "persistent", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_INIT_NVAR(_3);
+	ZVAL_BOOL(_3, 0);
+	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	persistent = zephir_get_boolval(_8);
+	ZEPHIR_SINIT_VAR(_9);
+	ZVAL_STRING(&_9, "tcp://%s:%d", 0);
+	ZEPHIR_SINIT_VAR(_10);
+	ZVAL_LONG(&_10, port);
+	ZEPHIR_CALL_FUNCTION(&_8, "sprintf", NULL, 1, &_9, host, &_10);
+	zephir_check_call_status();
+	zephir_get_strval(_11, _8);
+	ZEPHIR_CPY_WRT(address, _11);
+	flags = 4;
 	if (persistent) {
-		ZEPHIR_INIT_VAR(_8$$3);
-		ZVAL_LONG(_8$$3, port);
-		ZEPHIR_INIT_VAR(_9$$3);
-		ZVAL_NULL(_9$$3);
-		ZEPHIR_INIT_VAR(_10$$3);
-		ZVAL_LONG(_10$$3, timeout);
-		ZEPHIR_MAKE_REF(_9$$3);
-		ZEPHIR_CALL_FUNCTION(&handler, "pfsockopen", NULL, 98, host, _8$$3, _9$$3, errStr, _10$$3);
-		ZEPHIR_UNREF(_9$$3);
-		zephir_check_call_status();
-	} else {
-		ZEPHIR_INIT_VAR(_11$$4);
-		ZVAL_LONG(_11$$4, port);
-		ZEPHIR_INIT_VAR(_12$$4);
-		ZVAL_NULL(_12$$4);
-		ZEPHIR_INIT_VAR(_13$$4);
-		ZVAL_LONG(_13$$4, timeout);
-		ZEPHIR_MAKE_REF(_12$$4);
-		ZEPHIR_CALL_FUNCTION(&handler, "fsockopen", NULL, 82, host, _11$$4, _12$$4, errStr, _13$$4);
-		ZEPHIR_UNREF(_12$$4);
-		zephir_check_call_status();
+		flags += 1;
 	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_NULL(_2);
+	ZEPHIR_INIT_NVAR(_3);
+	ZVAL_LONG(_3, timeout);
+	ZEPHIR_INIT_VAR(_12);
+	ZVAL_LONG(_12, flags);
+	ZEPHIR_MAKE_REF(_2);
+	ZEPHIR_CALL_FUNCTION(&handler, "stream_socket_client", NULL, 81, address, _2, errStr, _3, _12);
+	ZEPHIR_UNREF(_2);
+	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(handler))) {
-		ZEPHIR_INIT_VAR(_14$$5);
-		object_init_ex(_14$$5, yb_rediscluster_socketexception_ce);
-		ZEPHIR_INIT_VAR(_15$$5);
-		ZEPHIR_CONCAT_SV(_15$$5, "Cannot open socket: ", errStr);
-		ZEPHIR_CALL_METHOD(NULL, _14$$5, "__construct", NULL, 2, _15$$5);
+		ZEPHIR_INIT_VAR(_13$$4);
+		object_init_ex(_13$$4, yb_rediscluster_socketexception_ce);
+		ZEPHIR_INIT_VAR(_14$$4);
+		ZEPHIR_CONCAT_SV(_14$$4, "Cannot create socket: ", errStr);
+		ZEPHIR_CALL_METHOD(NULL, _13$$4, "__construct", NULL, 2, _14$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_14$$5, "yb/rediscluster/connection.zep", 33 TSRMLS_CC);
+		zephir_throw_exception_debug(_13$$4, "yb/rediscluster/connection.zep", 37 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_SINIT_VAR(_16);
-	ZVAL_LONG(&_16, 1);
-	ZEPHIR_CALL_FUNCTION(&_7, "stream_set_blocking", NULL, 85, handler, &_16);
+	_15 = (zephir_function_exists_ex(SS("socket_import_stream") TSRMLS_CC) == SUCCESS);
+	if (_15) {
+		ZEPHIR_CALL_FUNCTION(&_16, "socket_import_stream", NULL, 82, handler);
+		zephir_check_call_status();
+		ZEPHIR_SINIT_NVAR(_9);
+		ZVAL_LONG(&_9, 6);
+		ZEPHIR_SINIT_NVAR(_10);
+		ZVAL_LONG(&_10, 1);
+		ZEPHIR_SINIT_VAR(_17);
+		ZVAL_LONG(&_17, 1);
+		ZEPHIR_CALL_FUNCTION(&_18, "socket_set_option", NULL, 83, _16, &_9, &_10, &_17);
+		zephir_check_call_status();
+		_15 = !zephir_is_true(_18);
+	}
+	if (_15) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot set tcp_nodelay", "yb/rediscluster/connection.zep", 42);
+		return;
+	}
+	ZEPHIR_SINIT_NVAR(_9);
+	ZVAL_LONG(&_9, 1);
+	ZEPHIR_CALL_FUNCTION(&_19, "stream_set_blocking", NULL, 84, handler, &_9);
 	zephir_check_call_status();
-	if (unlikely(!zephir_is_true(_7))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot set blocking socket", "yb/rediscluster/connection.zep", 37);
+	if (unlikely(!zephir_is_true(_19))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot set blocking", "yb/rediscluster/connection.zep", 46);
+		return;
+	}
+	if (ioTimeout > 0) {
+		seconds = (long) (ioTimeout);
+		microSeconds = (long) ((((ioTimeout -  (double) seconds)) * 1000000.0));
+	} else {
+		seconds = (long) 2.0;
+		microSeconds = 0;
+	}
+	ZEPHIR_SINIT_NVAR(_9);
+	ZVAL_LONG(&_9, seconds);
+	ZEPHIR_SINIT_NVAR(_10);
+	ZVAL_LONG(&_10, microSeconds);
+	ZEPHIR_CALL_FUNCTION(&_20, "stream_set_timeout", NULL, 85, handler, &_9, &_10);
+	zephir_check_call_status();
+	if (unlikely(!zephir_is_true(_20))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot set stream timeout", "yb/rediscluster/connection.zep", 57);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("handler"), handler TSRMLS_CC);
@@ -170,7 +215,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, __call) {
 
 	ZEPHIR_CPY_WRT(cmd, args);
 	ZEPHIR_MAKE_REF(cmd);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 99, cmd, method);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 100, cmd, method);
 	ZEPHIR_UNREF(cmd);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "runcommand", NULL, 0, cmd);
@@ -216,7 +261,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, runCommands) {
 
 	ZEPHIR_INIT_VAR(results);
 	array_init(results);
-	zephir_is_iterable(cmds, &_1, &_0, 0, 0, "yb/rediscluster/connection.zep", 72);
+	zephir_is_iterable(cmds, &_1, &_0, 0, 0, "yb/rediscluster/connection.zep", 92);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -226,7 +271,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, runCommands) {
 		zephir_check_call_status();
 	}
 	ZEPHIR_INIT_VAR(_4);
-	zephir_is_iterable(cmds, &_6, &_5, 0, 0, "yb/rediscluster/connection.zep", 76);
+	zephir_is_iterable(cmds, &_6, &_5, 0, 0, "yb/rediscluster/connection.zep", 96);
 	for (
 	  ; zephir_hash_get_current_data_ex(_6, (void**) &_7, &_5) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_6, &_5)
@@ -279,16 +324,16 @@ PHP_METHOD(Yb_RedisCluster_Connection, write) {
 		_4$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 		zephir_fwrite(_3$$3, _4$$3, s TSRMLS_CC);
 		if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_3$$3))) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot write to socket", "yb/rediscluster/connection.zep", 94);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot write to socket", "yb/rediscluster/connection.zep", 114);
 			return;
 		}
-		zephir_is_iterable(data, &_6$$3, &_5$$3, 0, 0, "yb/rediscluster/connection.zep", 101);
+		zephir_is_iterable(data, &_6$$3, &_5$$3, 0, 0, "yb/rediscluster/connection.zep", 121);
 		for (
 		  ; zephir_hash_get_current_data_ex(_6$$3, (void**) &_7$$3, &_5$$3) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_6$$3, &_5$$3)
 		) {
 			ZEPHIR_GET_HVALUE(d, _7$$3);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_8, 100, d);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_8, 101, d);
 			zephir_check_call_status();
 		}
 		RETURN_MM_NULL();
@@ -305,7 +350,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, write) {
 	_13 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	zephir_fwrite(_12, _13, s TSRMLS_CC);
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_12))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot write to socket", "yb/rediscluster/connection.zep", 108);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot write to socket", "yb/rediscluster/connection.zep", 128);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -323,7 +368,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, read) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "readline", &_1, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "readblock", &_1, 0);
 	zephir_check_call_status();
 	zephir_get_strval(_2, _0);
 	ZEPHIR_CPY_WRT(line, _2);
@@ -361,7 +406,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, read) {
 			}
 			ZEPHIR_INIT_VAR(_9$$7);
 			ZVAL_LONG(_9$$7, (l + 2));
-			ZEPHIR_CALL_METHOD(&_8$$7, this_ptr, "readline", &_1, 0, _9$$7);
+			ZEPHIR_CALL_METHOD(&_8$$7, this_ptr, "readblock", &_1, 0, _9$$7);
 			zephir_check_call_status();
 			zephir_get_strval(_10$$7, _8$$7);
 			ZEPHIR_CPY_WRT(line, _10$$7);
@@ -384,9 +429,9 @@ PHP_METHOD(Yb_RedisCluster_Connection, read) {
 					break;
 				}
 				l--;
-				ZEPHIR_CALL_METHOD(&_13$$11, this_ptr, "read", &_14, 101);
+				ZEPHIR_CALL_METHOD(&_13$$11, this_ptr, "read", &_14, 102);
 				zephir_check_call_status();
-				zephir_array_append(&a, _13$$11, PH_SEPARATE, "yb/rediscluster/connection.zep", 156);
+				zephir_array_append(&a, _13$$11, PH_SEPARATE, "yb/rediscluster/connection.zep", 176);
 			}
 			RETURN_CCTOR(a);
 		}
@@ -398,7 +443,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, read) {
 		ZEPHIR_CONCAT_SV(_17$$13, "Invalid line type: ", _16$$13);
 		ZEPHIR_CALL_METHOD(NULL, _15$$13, "__construct", NULL, 2, _17$$13);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_15$$13, "yb/rediscluster/connection.zep", 161 TSRMLS_CC);
+		zephir_throw_exception_debug(_15$$13, "yb/rediscluster/connection.zep", 181 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	} while(0);
@@ -407,7 +452,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, read) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Connection, readLine) {
+PHP_METHOD(Yb_RedisCluster_Connection, readBlock) {
 
 	zend_bool _5;
 	unsigned char _4, _6;
@@ -430,15 +475,15 @@ PHP_METHOD(Yb_RedisCluster_Connection, readLine) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_LONG(&_1$$3, len);
-		ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 102, _0$$3, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 103, _0$$3, &_1$$3);
 		zephir_check_call_status();
 	} else {
 		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 103, _2$$4);
+		ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 104, _2$$4);
 		zephir_check_call_status();
 	}
 	if (ZEPHIR_IS_FALSE_IDENTICAL(line)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot read from socket", "yb/rediscluster/connection.zep", 177);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_socketexception_ce, "Cannot read from socket", "yb/rediscluster/connection.zep", 197);
 		return;
 	}
 	zephir_get_strval(_3, line);
@@ -459,7 +504,7 @@ PHP_METHOD(Yb_RedisCluster_Connection, readLine) {
 		ZEPHIR_CONCAT_SV(_9$$6, "Invalid line end: ", _8$$6);
 		ZEPHIR_CALL_METHOD(NULL, _7$$6, "__construct", NULL, 2, _9$$6);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$6, "yb/rediscluster/connection.zep", 184 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$6, "yb/rediscluster/connection.zep", 204 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -497,11 +542,11 @@ PHP_METHOD(Yb_RedisCluster_Connection, newError) {
 					zephir_check_call_status();
 				}
 				zephir_update_property_zval(e, SL("error"), error TSRMLS_CC);
-				zephir_array_fetch_long(&_3$$4, m, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 199 TSRMLS_CC);
+				zephir_array_fetch_long(&_3$$4, m, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 219 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("slot"), _3$$4 TSRMLS_CC);
-				zephir_array_fetch_long(&_4$$4, m, 3, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 200 TSRMLS_CC);
+				zephir_array_fetch_long(&_4$$4, m, 3, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 220 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("host"), _4$$4 TSRMLS_CC);
-				zephir_array_fetch_long(&_5$$4, m, 4, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 201 TSRMLS_CC);
+				zephir_array_fetch_long(&_5$$4, m, 4, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 221 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("port"), _5$$4 TSRMLS_CC);
 				RETURN_CCTOR(e);
 			}
@@ -513,11 +558,11 @@ PHP_METHOD(Yb_RedisCluster_Connection, newError) {
 					zephir_check_call_status();
 				}
 				zephir_update_property_zval(e, SL("error"), error TSRMLS_CC);
-				zephir_array_fetch_long(&_6$$5, m, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 207 TSRMLS_CC);
+				zephir_array_fetch_long(&_6$$5, m, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 227 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("slot"), _6$$5 TSRMLS_CC);
-				zephir_array_fetch_long(&_7$$5, m, 3, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 208 TSRMLS_CC);
+				zephir_array_fetch_long(&_7$$5, m, 3, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 228 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("host"), _7$$5 TSRMLS_CC);
-				zephir_array_fetch_long(&_8$$5, m, 4, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 209 TSRMLS_CC);
+				zephir_array_fetch_long(&_8$$5, m, 4, PH_NOISY | PH_READONLY, "yb/rediscluster/connection.zep", 229 TSRMLS_CC);
 				zephir_update_property_zval(e, SL("port"), _8$$5 TSRMLS_CC);
 				RETURN_CCTOR(e);
 			}

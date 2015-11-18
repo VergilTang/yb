@@ -6,13 +6,13 @@ interface MongoModelInterface
 {
     public function insert(array $data);
     public function delete(array $criteria);
-    public function update(array $criteria, array $set = null, array $extra = null);
-    public function upsert(array $criteria, array $set = null, array $extra = null);
+    public function update(array $criteria, array $set = [], array $extra = []);
+    public function upsert(array $criteria, array $set = [], array $extra = []);
 
-    public function find(array $criteria);
+    public function find(array $criteria, array $sort = []);
 
-    public function count(array $criteria = null);
-    public function select(array $criteria, $sort = null, $limit = 0, $skip = 0);
-    public function countAndSelect(array $criteria, $sort = null, $limit = 0, $skip = 0);
+    public function count(array $criteria = []);
+    public function select(array $criteria, array $sort = [], $limit = 10, $skip = 0);
+    public function countAndSelect(array $criteria, array $sort = [], $limit = 10, $skip = 0);
 
 }

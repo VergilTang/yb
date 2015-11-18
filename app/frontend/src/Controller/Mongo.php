@@ -16,7 +16,7 @@ class Mongo extends ControllerBase
 
     public function kkvAction()
     {
-        $kkv = $this->app->mongoModelManager->get('test.kkv');
+        $kkv = $this->app->mongoModelManager->get('test', 'kkv');
 
         $k1 = mt_rand(1, 9);
         $k2 = mt_rand(1, 9);
@@ -42,12 +42,45 @@ class Mongo extends ControllerBase
         return false;
     }
 
+    public function dAction()
+    {
+        $m = $this->app->mongoModelManager;
+        $test = $m->get('test', 'test');
+
+        $d = $test->delete([]);
+        var_dump($d);
+
+        return false;
+    }
+
+    public function csAction()
+    {
+        $m = $this->app->mongoModelManager;
+        $test = $m->get('test', 'test');
+
+        $c = $test->countAndSelect([], [], 5, 5);
+        print_R($c);
+
+        return false;
+    }
+
+    public function cAction()
+    {
+        $m = $this->app->mongoModelManager;
+        $test = $m->get('test', 'test');
+
+        $c = $test->count();
+        var_dump($c);
+
+        return false;
+    }
+
     public function indexAction()
     {
         $m = $this->app->mongoModelManager;
-        $test = $m->get('test.test');
+        $test = $m->get('test', 'test');
 
-        if (0) {
+        if (10) {
             $id = '1';
 
             $d = $test->update([
@@ -63,9 +96,9 @@ class Mongo extends ControllerBase
             var_dump($d);
         }
 
-        if (1) {
+        if (0) {
             $id = $test::objectId('563cd3c7f462c7c11f8b45ae');
-            $id = '1';
+            $id = mt_rand(1, 9);
 
             $d = $test->upsert([
                 '_id' => $id,
