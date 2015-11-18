@@ -16,18 +16,26 @@ class Index extends ControllerBase
         $port = 6379;
         $timeout = 1;
 
+        $host = '192.168.255.11';
+        $port = 6380;
+
         $errNo = null;
         $errStr = null;
 
-        $socket = fsockopen($host, $port, $errNo, $errStr, $timeout);
+        $socket = fsockopen('tcp://'.$host, $port, $errNo, $errStr, $timeout);
         if (!$socket) {
             throw new \Exception('fsockopen');
         }
-        if (!stream_set_blocking($socket, 1)) {
-            throw new \Exception('stream_set_blocking');
-        }
+
+        var_dump($socket);
+        $socket = socket_import_stream($socket);
+        var_dump($socket);
+
         if (!socket_set_option($socket, SOL_TCP, TCP_NODELAY, 1)) {
             throw new \Exception('socket_set_option');
+        }
+        if (!stream_set_blocking($socket, 1)) {
+            throw new \Exception('stream_set_blocking');
         }
 
         return false;
@@ -38,6 +46,9 @@ class Index extends ControllerBase
         $host = '172.16.1.140';
         $port = 6379;
         $timeout = 1;
+
+        $host = '192.168.255.11';
+        $port = 6380;
 
         $errNo = null;
         $errStr = null;
@@ -50,12 +61,16 @@ class Index extends ControllerBase
             throw new \Exception('stream_set_blocking');
         }
 
-        if (1) {
+        var_dump($stream);
+
+        if (0) {
             if (!socket_set_option($stream, SOL_TCP, TCP_NODELAY, 1)) {
                 throw new \Exception("socket_set_option");
             }
         } else {
-            if (!socket_set_option(socket_import_stream($stream), SOL_TCP, TCP_NODELAY, 1)) {
+            $socket = socket_import_stream($stream);
+            var_dump($socket);
+            if (!socket_set_option($socket, SOL_TCP, TCP_NODELAY, 1)) {
                 throw new \Exception("Cannot set tcp_nodelay");
             }
         }

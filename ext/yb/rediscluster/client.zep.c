@@ -250,7 +250,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 			zephir_check_call_status();
 			ZEPHIR_INIT_NVAR(_12$$8);
 			ZVAL_BOOL(_12$$8, 1);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runcommandsbykeyinternally", &_13, 98, key, cmds, resultProcessor, _12$$8);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runcommandsbykeyinternally", &_13, 99, key, cmds, resultProcessor, _12$$8);
 			zephir_check_call_status();
 			RETURN_MM_NULL();
 		}
@@ -396,7 +396,7 @@ PHP_METHOD(Yb_RedisCluster_Client, newConnection) {
 	ZVAL_LONG(_1, port);
 	zephir_array_update_string(&options, SL("port"), &_1, PH_COPY | PH_SEPARATE);
 	object_init_ex(return_value, yb_rediscluster_connection_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 99, options);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 100, options);
 	zephir_check_call_status();
 	RETURN_MM();
 

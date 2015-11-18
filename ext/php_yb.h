@@ -10,8 +10,8 @@
 
 #include "kernel/globals.h"
 
-#define PHP_YB_NAME        "yb"
-#define PHP_YB_VERSION     "0.1.151111"
+#define PHP_YB_NAME        "Yb Framework"
+#define PHP_YB_VERSION     "0.1.151118"
 #define PHP_YB_EXTNAME     "yb"
 #define PHP_YB_AUTHOR      "Hylent"
 #define PHP_YB_ZEPVERSION  "0.9.1a-dev"

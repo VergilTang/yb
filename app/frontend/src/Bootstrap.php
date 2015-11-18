@@ -15,15 +15,17 @@ class Bootstrap
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.php');
         $app->mergeConfigsInPathIfValid(__DIR__.'/../config.local.php');
 
-        // route
-        $routerPatterns = new \Yb\Router\Patterns([
-            'int' => '\d+',
+        // router
+        $router = new \Yb\Router\UriPatterns($_SERVER['REQUEST_URI'], [
+            '' => [
+                '/{tid:numbers}/{id:numbers}' => '/index/test/{tid}/{id}',
+            ],
+            '/re' => [
+                '/{flag:numbers}' => '/index/{flag}',
+            ],
+        ], [
+            'numbers' => '\d+',
         ]);
-        $routerPatterns->alias('/{id:int}', '/index/{id}', '/re');
-        $routerPatterns->alias('/p/{qid:int}/{aid:int}', '/index/test/{qid}/{aid}');
-
-        // print_R($routerPatterns);
-        $router = new \Yb\Router\Uri($_SERVER['REQUEST_URI'], $routerPatterns->getPatterns());
 
         $requestId = $router->getId();
 
@@ -45,12 +47,6 @@ class Bootstrap
             $path = __DIR__.'/../view/'.$requestId.'.php';
             echo Std::renderScript($path, (array) $app['viewData']);
         }
-    }
-
-    public function get($name)
-    {
-        $class = $this->getClassName($name);
-        return new $class($this->app);
     }
 
 }

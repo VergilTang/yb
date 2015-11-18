@@ -70,7 +70,7 @@ PHP_METHOD(Yb_DataCacher_File, storeData) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_2);
 	ZVAL_LONG(&_2, 2);
-	ZEPHIR_CALL_FUNCTION(&_4, "file_put_contents", NULL, 38, _0, _3, &_2);
+	ZEPHIR_CALL_FUNCTION(&_4, "file_put_contents", NULL, 39, _0, _3, &_2);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_4))) {
 		ZEPHIR_INIT_VAR(_5$$3);
@@ -119,7 +119,7 @@ PHP_METHOD(Yb_DataCacher_File, forgetData) {
 	_1 = (zephir_file_exists(_0 TSRMLS_CC) == SUCCESS);
 	if (_1) {
 		_2 = zephir_fetch_nproperty_this(this_ptr, SL("path"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(&_3, "unlink", NULL, 39, _2);
+		ZEPHIR_CALL_FUNCTION(&_3, "unlink", NULL, 40, _2);
 		zephir_check_call_status();
 		_1 = !zephir_is_true(_3);
 	}

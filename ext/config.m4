@@ -24,12 +24,14 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
 	yb/rediscluster/error.zep.c
+	yb/router/routerabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/image/image.zep.c
 	yb/mailer/mailerinterface.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
 	yb/rediscluster/exception.zep.c
-	yb/router/routerabstract.zep.c
+	yb/router/exception.zep.c
+	yb/router/uri.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
@@ -66,9 +68,8 @@ if test "$PHP_YB" = "yes"; then
 	yb/rediscluster/errorask.zep.c
 	yb/rediscluster/errormoved.zep.c
 	yb/rediscluster/socketexception.zep.c
-	yb/router/exception.zep.c
-	yb/router/patterns.zep.c
-	yb/router/uri.zep.c
+	yb/router/notfoundexception.zep.c
+	yb/router/uripatterns.zep.c
 	yb/sequence/dbpdomysql.zep.c
 	yb/sequence/exception.zep.c
 	yb/sequence/mongocollection.zep.c

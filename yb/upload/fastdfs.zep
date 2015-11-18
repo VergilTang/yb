@@ -16,6 +16,7 @@ class Fastdfs extends StorageAbstract
     public function store(string source, string group = "", string extension = "", long flag = 0) -> string
     {
         var extensionArg = null, groupArg, destUri;
+        string fun = "fastdfs_storage_upload_by_filename1";
 
         if extension {
             let extensionArg = extension;
@@ -24,7 +25,7 @@ class Fastdfs extends StorageAbstract
             let groupArg = null;
         }
 
-        let destUri = fastdfs_storage_upload_by_filename1(source, extensionArg, [], groupArg);
+        let destUri = {fun}(source, extensionArg, [], groupArg);
         if destUri === false {
             return "";
         }
@@ -41,7 +42,8 @@ class Fastdfs extends StorageAbstract
 
     public function remove(string uri) -> boolean
     {
-        return fastdfs_storage_delete_file1(ltrim(uri, "/"));
+        string fun = "fastdfs_storage_delete_file1";
+        return {fun}(ltrim(uri, "/"));
     }
 
 }

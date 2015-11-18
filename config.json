@@ -30,7 +30,7 @@
         "invalid-array-index": true,
         "non-array-append": true,
         "invalid-return-type": true,
-        "unreachable-code": true,
+        "unreachable-code": false,
         "nonexistent-constant": true,
         "not-supported-magic-constant": true,
         "non-valid-decrement": true,
@@ -53,10 +53,10 @@
         "internal-call-transformation": false
     },
     "namespace": "yb",
-    "name": "yb",
+    "name": "Yb Framework",
     "description": "~",
     "author": "Hylent",
-    "version": "0.1.151111",
+    "version": "0.1.151118",
     "verbose": false,
     "requires": {
         "extensions": []

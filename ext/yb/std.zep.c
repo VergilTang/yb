@@ -88,7 +88,7 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 		} while(0);
 
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 110, size);
+	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 111, size);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -188,7 +188,7 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 	}
 	ZEPHIR_SINIT_VAR(_17);
 	ZVAL_LONG(&_17, 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 111, &_17);
+	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 112, &_17);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -401,9 +401,9 @@ PHP_METHOD(Yb_Std, uuid) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 90);
+	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 91);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 91, _0, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 92, _0, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VV(_2, _1, salt);
@@ -443,7 +443,7 @@ PHP_METHOD(Yb_Std, randString) {
 	}
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "UTF-8", 0);
-	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 60, charList, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 61, charList, &_1);
 	zephir_check_call_status();
 	maxIndex = (zephir_get_intval(_2) - 1);
 	while (1) {
@@ -461,7 +461,7 @@ PHP_METHOD(Yb_Std, randString) {
 		ZVAL_LONG(&_6$$5, 1);
 		ZEPHIR_SINIT_NVAR(_7$$5);
 		ZVAL_STRING(&_7$$5, "UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 63, charList, &_5$$5, &_6$$5, &_7$$5);
+		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 64, charList, &_5$$5, &_6$$5, &_7$$5);
 		zephir_check_call_status();
 		zephir_concat_self(&result, _8$$5 TSRMLS_CC);
 	}
@@ -504,7 +504,7 @@ PHP_METHOD(Yb_Std, tr) {
 		ZEPHIR_CONCAT_SVS(_4$$3, "{", k, "}");
 		zephir_array_update_zval(&r, _4$$3, &_3$$3, PH_COPY | PH_SEPARATE);
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 107, message, r);
+	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 108, message, r);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -1081,7 +1081,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 108, args);
+	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 109, args);
 	zephir_check_call_status();
 	do {
 		if (c == 1) {
@@ -1220,7 +1220,7 @@ PHP_METHOD(Yb_Std, throwError) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, n);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 112, _2, _3);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 113, _2, _3);
 	zephir_check_call_status();
 	zephir_throw_exception_debug(_0, "yb/std.zep", 413 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -1258,7 +1258,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 113, data, _2, _3);
+	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 114, data, _2, _3);
 	zephir_check_temp_parameter(_3);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();
@@ -1283,16 +1283,16 @@ PHP_METHOD(Yb_Std, renderScript) {
 	zephir_get_arrval(data, data_param);
 
 
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 19);
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 20);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 20, ZEPHIR_GLOBAL(global_false));
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 21, ZEPHIR_GLOBAL(global_false));
 	zephir_check_call_status();
 
 	/* try_start_1: */
 
 		ZEPHIR_CALL_SELF(NULL, "outputscript", NULL, 0, path, data);
 		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 21);
+		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 22);
 		zephir_check_call_status_or_jump(try_end_1);
 		RETURN_MM();
 
@@ -1302,7 +1302,7 @@ PHP_METHOD(Yb_Std, renderScript) {
 		ZEPHIR_CPY_WRT(ex, EG(exception));
 		if (zephir_instance_of_ev(ex, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
 			zend_clear_exception(TSRMLS_C);
-			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 22);
+			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 23);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(ex, "yb/std.zep", 438 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();

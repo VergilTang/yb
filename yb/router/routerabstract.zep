@@ -7,6 +7,7 @@ abstract class RouterAbstract
 {
     const DEFAULT_CONTROLLER    = "index";
     const DEFAULT_ACTION        = "index";
+    const DEFAULT_ACTION_SUFFIX = "Action";
 
     protected controller;
     protected action;
@@ -32,25 +33,25 @@ abstract class RouterAbstract
         return this->controller . separator . this->action;
     }
 
-    public function dispatch(<FactoryInterface> factory)
+    public function dispatch(<FactoryInterface> factory, string actionSuffix = self::DEFAULT_ACTION_SUFFIX)
     {
-        string c;
-        var i;
+        string controllerClass;
+        var actionMethod;
 
-        let c = (string) Std::camelCase(this->controller);
-        if unlikely ! factory->has(c) {
-            throw new Exception("Invalid controller: " . this->controller);
+        let controllerClass = (string) Std::camelCase(this->controller);
+        if unlikely ! factory->has(controllerClass) {
+            throw new NotFoundException("Invalid controller: " . this->controller);
         }
 
-        let i = [];
-        let i[] = factory->get(c);
-        let i[] = Std::camelCase(this->action) . "Action";
+        let actionMethod = [];
+        let actionMethod[] = factory->get(controllerClass);
+        let actionMethod[] = Std::camelCase(this->action) . actionSuffix;
 
-        if unlikely ! is_callable(i) {
-            throw new Exception("Invalid action: " . this->action);
+        if unlikely ! is_callable(actionMethod) {
+            throw new NotFoundException("Invalid action: " . this->action);
         }
 
-        return call_user_func_array(i, this->params);
+        return call_user_func_array(actionMethod, this->params);
     }
 
 }

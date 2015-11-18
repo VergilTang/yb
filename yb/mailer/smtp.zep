@@ -4,7 +4,7 @@ use Yb\Std;
 
 class Smtp implements MailerInterface
 {
-    const EOL = "\r\n";
+    const CRLF = "\r\n";
 
     protected socket;
     protected from;
@@ -12,7 +12,7 @@ class Smtp implements MailerInterface
     public function __construct(array options) -> void
     {
         string host, user, passwd, from, name;
-        long timeout, port, seconds, microSeconds;
+        long timeout, port, ioTimeoutSeconds, ioTimeoutMicroSeconds;
         double ioTimeout;
         boolean secure;
         var socket, errStr = null;
@@ -48,14 +48,12 @@ class Smtp implements MailerInterface
         }
 
         if ioTimeout > 0 {
-            let seconds = (long) ioTimeout;
-            let microSeconds = (long) ((ioTimeout - seconds) * 1000000.0);
-        } else {
-            let seconds = timeout;
-            let microSeconds = 0;
-        }
-        if unlikely ! stream_set_timeout(socket, seconds, microSeconds) {
-            throw new Exception("Cannot set stream timeout");
+            let ioTimeoutSeconds = (long) ioTimeout;
+            let ioTimeoutMicroSeconds = (long) ((ioTimeout - ioTimeoutSeconds) * 1000000.0);
+
+            if unlikely ! stream_set_timeout(socket, ioTimeoutSeconds, ioTimeoutMicroSeconds) {
+                throw new Exception("Cannot set io timeout");
+            }
         }
 
         if unlikely secure
@@ -168,7 +166,7 @@ class Smtp implements MailerInterface
         let data[] = ".";
 
         this->cmd("DATA", "DATA", 354);
-        this->cmd("END DATA", join(self::EOL, data), 250);
+        this->cmd("END DATA", join(self::CRLF, data), 250);
     }
 
     public function __destruct() -> void
@@ -184,7 +182,7 @@ class Smtp implements MailerInterface
     {
         string output;
 
-        if unlikely cmd && ! fputs(this->socket, cmd . self::EOL) {
+        if unlikely cmd && ! fputs(this->socket, cmd . self::CRLF) {
             throw new Exception("Cannot fputs to socket on step: " . step);
         }
 

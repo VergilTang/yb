@@ -2,17 +2,9 @@ namespace Yb\Router;
 
 class Uri extends RouterAbstract
 {
-    public function __construct(string uri, array patterns = []) -> void
+    public function __construct(string uri) -> void
     {
         var m = null, params;
-
-        if count(patterns) > 0 {
-            let uri = (string) preg_replace(
-                array_keys(patterns),
-                array_values(patterns),
-                uri
-            );
-        }
 
         if preg_match("/^([^\\.\\?]+)/", uri, m) {
             let params = preg_split("#/+#", (string) m[1], null, PREG_SPLIT_NO_EMPTY);

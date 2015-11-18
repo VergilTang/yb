@@ -14,11 +14,11 @@ class Connection
 
     public function __construct(array options = []) -> void
     {
-        string host, address;
-        long port, timeout, flags, seconds, microSeconds;
+        string host;
+        long port, timeout, flags, ioTimeoutSeconds, ioTimeoutMicroSeconds;
         double ioTimeout;
         boolean persistent;
-        var handler, errStr = null;
+        var handler, errNo = null, errStr = null;
 
         let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
         let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
@@ -26,20 +26,19 @@ class Connection
         let ioTimeout = (double) Std::valueAt(options, "ioTimeout", self::DEFAULT_IO_TIMEOUT);
         let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
 
-        let address = (string) sprintf("tcp://%s:%d", host, port);
         let flags = (long) STREAM_CLIENT_CONNECT;
         if persistent {
-            let flags += (long) STREAM_CLIENT_PERSISTENT;
+            let flags = flags | (long) STREAM_CLIENT_PERSISTENT;
         }
 
-        let handler = stream_socket_client(address, null, errStr, timeout, flags);
+        let handler = stream_socket_client(sprintf("tcp://%s:%d", host, port), errNo, errStr, timeout, flags);
         if unlikely ! handler {
-            throw new SocketException("Cannot create socket: " . errStr);
+            throw new SocketException("Cannot connect: [" . errNo . "]" . errStr);
         }
 
-        if function_exists("socket_import_stream")
+        if unlikely function_exists("socket_import_stream")
             && ! socket_set_option(socket_import_stream(handler), SOL_TCP, TCP_NODELAY, 1) {
-            throw new SocketException("Cannot set tcp_nodelay");
+            throw new SocketException("Cannot set SOL_TCP TCP_NODELAY");
         }
 
         if unlikely ! stream_set_blocking(handler, 1) {
@@ -47,14 +46,12 @@ class Connection
         }
 
         if ioTimeout > 0 {
-            let seconds = (long) ioTimeout;
-            let microSeconds = (long) ((ioTimeout - seconds) * 1000000.0);
-        } else {
-            let seconds = (long) self::DEFAULT_IO_TIMEOUT;
-            let microSeconds = 0;
-        }
-        if unlikely ! stream_set_timeout(handler, seconds, microSeconds) {
-            throw new SocketException("Cannot set stream timeout");
+            let ioTimeoutSeconds = (long) ioTimeout;
+            let ioTimeoutMicroSeconds = (long) ((ioTimeout - ioTimeoutSeconds) * 1000000.0);
+
+            if unlikely ! stream_set_timeout(handler, ioTimeoutSeconds, ioTimeoutMicroSeconds) {
+                throw new SocketException("Cannot set io timeout");
+            }
         }
 
         let this->handler = handler;

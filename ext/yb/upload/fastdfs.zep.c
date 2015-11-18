@@ -67,7 +67,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 	int ZEPHIR_LAST_CALL_STATUS;
 	long flag;
 	zval *source_param = NULL, *group_param = NULL, *extension_param = NULL, *flag_param = NULL, *extensionArg = NULL, *groupArg = NULL, *destUri = NULL, *_0, *_1;
-	zval *source = NULL, *group = NULL, *extension = NULL;
+	zval *source = NULL, *group = NULL, *extension = NULL, *fun;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 3, &source_param, &group_param, &extension_param, &flag_param);
@@ -94,6 +94,8 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 
 	ZEPHIR_INIT_VAR(extensionArg);
 	ZVAL_NULL(extensionArg);
+	ZEPHIR_INIT_VAR(fun);
+	ZVAL_STRING(fun, "fastdfs_storage_upload_by_filename1", 1);
 	if (!(!extension) && Z_STRLEN_P(extension)) {
 		ZEPHIR_CPY_WRT(extensionArg, extension);
 	}
@@ -105,14 +107,14 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 	}
 	ZEPHIR_INIT_VAR(_1);
 	array_init(_1);
-	ZEPHIR_CALL_FUNCTION(&destUri, "fastdfs_storage_upload_by_filename1", NULL, 114, source, extensionArg, _1, groupArg);
+	ZEPHIR_CALL_ZVAL_FUNCTION(&destUri, fun, NULL, 0, source, extensionArg, _1, groupArg);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_FALSE_IDENTICAL(destUri)) {
 		RETURN_MM_STRING("", 1);
 	}
 	do {
 		if (flag == 2 || flag == 1) {
-			ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 39, source);
+			ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 40, source);
 			zephir_check_call_status();
 			break;
 		}
@@ -127,7 +129,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, remove) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *uri_param = NULL, *_0, _1;
-	zval *uri = NULL;
+	zval *uri = NULL, *fun;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &uri_param);
@@ -135,11 +137,13 @@ PHP_METHOD(Yb_Upload_Fastdfs, remove) {
 	zephir_get_strval(uri, uri_param);
 
 
+	ZEPHIR_INIT_VAR(fun);
+	ZVAL_STRING(fun, "fastdfs_storage_delete_file1", 1);
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "/", 0);
 	zephir_fast_trim(_0, uri, &_1, ZEPHIR_TRIM_LEFT TSRMLS_CC);
-	ZEPHIR_RETURN_CALL_FUNCTION("fastdfs_storage_delete_file1", NULL, 115, _0);
+	ZEPHIR_RETURN_CALL_ZVAL_FUNCTION(fun, NULL, 0, _0);
 	zephir_check_call_status();
 	RETURN_MM();
 

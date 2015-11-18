@@ -64,7 +64,7 @@ PHP_METHOD(Yb_Loader_NamePath, __construct) {
 	} else {
 		ZVAL_BOOL(_1, 0);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 77, _1);
+	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 78, _1);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("namePaths"), namePaths TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

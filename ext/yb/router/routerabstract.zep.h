@@ -15,6 +15,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_router_routerabstract_dispatch, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, factory, Yb\\Factory\\FactoryInterface, 0)
+	ZEND_ARG_INFO(0, actionSuffix)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_router_routerabstract_method_entry) {
