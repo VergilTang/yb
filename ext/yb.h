@@ -70,6 +70,8 @@
 #include "yb/sequence/mongocollection.zep.h"
 #include "yb/sequence/redis.zep.h"
 #include "yb/sequence/redishash.zep.h"
+#include "yb/socket/exception.zep.h"
+#include "yb/socket/tcpclient.zep.h"
 #include "yb/std.zep.h"
 #include "yb/upload/exception.zep.h"
 #include "yb/upload/fastdfs.zep.h"

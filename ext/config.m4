@@ -75,6 +75,8 @@ if test "$PHP_YB" = "yes"; then
 	yb/sequence/mongocollection.zep.c
 	yb/sequence/redis.zep.c
 	yb/sequence/redishash.zep.c
+	yb/socket/exception.zep.c
+	yb/socket/tcpclient.zep.c
 	yb/std.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/fastdfs.zep.c

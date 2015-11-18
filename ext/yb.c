@@ -93,6 +93,8 @@ zend_class_entry *yb_sequence_exception_ce;
 zend_class_entry *yb_sequence_mongocollection_ce;
 zend_class_entry *yb_sequence_redis_ce;
 zend_class_entry *yb_sequence_redishash_ce;
+zend_class_entry *yb_socket_exception_ce;
+zend_class_entry *yb_socket_tcpclient_ce;
 zend_class_entry *yb_std_ce;
 zend_class_entry *yb_upload_exception_ce;
 zend_class_entry *yb_upload_fastdfs_ce;
@@ -191,6 +193,8 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Sequence_MongoCollection);
 	ZEPHIR_INIT(Yb_Sequence_Redis);
 	ZEPHIR_INIT(Yb_Sequence_RedisHash);
+	ZEPHIR_INIT(Yb_Socket_Exception);
+	ZEPHIR_INIT(Yb_Socket_TcpClient);
 	ZEPHIR_INIT(Yb_Std);
 	ZEPHIR_INIT(Yb_Upload_Exception);
 	ZEPHIR_INIT(Yb_Upload_Fastdfs);
