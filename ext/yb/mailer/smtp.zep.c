@@ -47,7 +47,7 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	zval *host = NULL, *user = NULL, *passwd = NULL, *from = NULL, *name = NULL, *_3 = NULL, *_5 = NULL, *_7 = NULL, *_9 = NULL, *_12 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL, *_26 = NULL, *_28 = NULL;
-	zval *options_param = NULL, *socket = NULL, *_0 = NULL, *_2 = NULL, *_4 = NULL, *_6 = NULL, *_8 = NULL, *_10 = NULL, *_11 = NULL, *_13 = NULL, *_14 = NULL, *_15 = NULL, *_25 = NULL, *_27 = NULL, *_29 = NULL, *_16$$3 = NULL, *_17$$3, *_18$$3, *_19$$4 = NULL, *_20$$4, *_21$$4, *_22$$5, _23$$6, *_24$$6 = NULL;
+	zval *options_param = NULL, *socket = NULL, *_0 = NULL, *_2 = NULL, *_4 = NULL, *_6 = NULL, *_8 = NULL, *_10 = NULL, *_11 = NULL, *_13 = NULL, *_14 = NULL, *_15 = NULL, *_22 = NULL, *_27 = NULL, *_29 = NULL, *_16$$3 = NULL, *_17$$3, *_18$$3, *_19$$4 = NULL, *_20$$4, *_21$$4, *_23$$5, _24$$6, *_25$$6 = NULL;
 	zval *options = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -143,7 +143,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	ZVAL_LONG(_2, port);
 	ZEPHIR_INIT_NVAR(_11);
 	ZVAL_LONG(_11, timeout);
-	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 82, host, _2, _11);
+	ZEPHIR_INIT_VAR(_22);
+	ZVAL_BOOL(_22, 0);
+	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 82, host, _2, _11, _22);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 1);
@@ -154,17 +156,17 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	ZEPHIR_CALL_METHOD(NULL, socket, "setblocking", NULL, 84, _2);
 	zephir_check_call_status();
 	if (ioTimeout > 0) {
-		ZEPHIR_INIT_VAR(_22$$5);
-		ZVAL_DOUBLE(_22$$5, ioTimeout);
-		ZEPHIR_CALL_METHOD(NULL, socket, "setiotimeout", NULL, 85, _22$$5);
+		ZEPHIR_INIT_VAR(_23$$5);
+		ZVAL_DOUBLE(_23$$5, ioTimeout);
+		ZEPHIR_CALL_METHOD(NULL, socket, "setiotimeout", NULL, 85, _23$$5);
 		zephir_check_call_status();
 	}
 	if (secure) {
-		ZEPHIR_SINIT_VAR(_23$$6);
-		ZVAL_STRING(&_23$$6, "STREAM_CRYPTO_METHOD_SSLv23_CLIENT", 0);
-		ZEPHIR_CALL_FUNCTION(&_24$$6, "constant", NULL, 86, &_23$$6);
+		ZEPHIR_SINIT_VAR(_24$$6);
+		ZVAL_STRING(&_24$$6, "STREAM_CRYPTO_METHOD_SSLv23_CLIENT", 0);
+		ZEPHIR_CALL_FUNCTION(&_25$$6, "constant", NULL, 86, &_24$$6);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, socket, "enablecrypto", NULL, 87, _24$$6);
+		ZEPHIR_CALL_METHOD(NULL, socket, "enablecrypto", NULL, 87, _25$$6);
 		zephir_check_call_status();
 	}
 	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
@@ -175,9 +177,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	ZVAL_STRING(_2, "CONNECT", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_11);
 	ZVAL_STRING(_11, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_25);
-	ZVAL_LONG(_25, 220);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _25);
+	ZEPHIR_INIT_NVAR(_22);
+	ZVAL_LONG(_22, 220);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _22);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_11);
 	zephir_check_call_status();
@@ -185,9 +187,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	ZVAL_STRING(_2, "EHLO HELO", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_11);
 	ZVAL_STRING(_11, "EHLO HELO", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_25);
-	ZVAL_LONG(_25, 250);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _25);
+	ZEPHIR_INIT_NVAR(_22);
+	ZVAL_LONG(_22, 250);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _22);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_11);
 	zephir_check_call_status();
@@ -195,9 +197,9 @@ PHP_METHOD(Yb_Mailer_Smtp, __construct) {
 	ZVAL_STRING(_2, "AUTH LOGIN", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_11);
 	ZVAL_STRING(_11, "AUTH LOGIN", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_NVAR(_25);
-	ZVAL_LONG(_25, 334);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _25);
+	ZEPHIR_INIT_NVAR(_22);
+	ZVAL_LONG(_22, 334);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "cmd", &_26, 0, _2, _11, _22);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_11);
 	zephir_check_call_status();
@@ -268,14 +270,14 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("from"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_6);
 	ZEPHIR_CONCAT_SV(_6, "FROM: ", _5);
-	zephir_array_append(&data, _6, PH_SEPARATE, "yb/mailer/smtp.zep", 64);
+	zephir_array_append(&data, _6, PH_SEPARATE, "yb/mailer/smtp.zep", 65);
 	if (zephir_fast_count_int(to TSRMLS_CC) < 1) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_mailer_exception_ce, "No one to send", "yb/mailer/smtp.zep", 67);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_mailer_exception_ce, "No one to send", "yb/mailer/smtp.zep", 68);
 		return;
 	}
 	ZEPHIR_INIT_VAR(temp);
 	array_init(temp);
-	zephir_is_iterable(to, &_8, &_7, 0, 0, "yb/mailer/smtp.zep", 76);
+	zephir_is_iterable(to, &_8, &_7, 0, 0, "yb/mailer/smtp.zep", 77);
 	for (
 	  ; zephir_hash_get_current_data_ex(_8, (void**) &_9, &_7) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_8, &_7)
@@ -285,7 +287,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 		ZEPHIR_CALL_METHOD(&_10$$4, this_ptr, "pack", &_11, 0, name, addr);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(name, _10$$4);
-		zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 73);
+		zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 74);
 		ZEPHIR_INIT_LNVAR(_12$$4);
 		ZEPHIR_CONCAT_SV(_12$$4, "RCPT TO: ", name);
 		ZEPHIR_INIT_NVAR(_13$$4);
@@ -300,11 +302,11 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	zephir_fast_join_str(_2, SL(","), temp TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_15);
 	ZEPHIR_CONCAT_SV(_15, "TO: ", _2);
-	zephir_array_append(&data, _15, PH_SEPARATE, "yb/mailer/smtp.zep", 76);
+	zephir_array_append(&data, _15, PH_SEPARATE, "yb/mailer/smtp.zep", 77);
 	if (zephir_fast_count_int(cc TSRMLS_CC) > 0) {
 		ZEPHIR_INIT_NVAR(temp);
 		array_init(temp);
-		zephir_is_iterable(cc, &_17$$5, &_16$$5, 0, 0, "yb/mailer/smtp.zep", 85);
+		zephir_is_iterable(cc, &_17$$5, &_16$$5, 0, 0, "yb/mailer/smtp.zep", 86);
 		for (
 		  ; zephir_hash_get_current_data_ex(_17$$5, (void**) &_18$$5, &_16$$5) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_17$$5, &_16$$5)
@@ -314,7 +316,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 			ZEPHIR_CALL_METHOD(&_19$$6, this_ptr, "pack", &_11, 0, name, addr);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(name, _19$$6);
-			zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 82);
+			zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 83);
 			ZEPHIR_INIT_LNVAR(_20$$6);
 			ZEPHIR_CONCAT_SV(_20$$6, "RCPT TO: ", name);
 			ZEPHIR_INIT_NVAR(_21$$6);
@@ -329,12 +331,12 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 		zephir_fast_join_str(_23$$5, SL(","), temp TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_24$$5);
 		ZEPHIR_CONCAT_SV(_24$$5, "CC: ", _23$$5);
-		zephir_array_append(&data, _24$$5, PH_SEPARATE, "yb/mailer/smtp.zep", 85);
+		zephir_array_append(&data, _24$$5, PH_SEPARATE, "yb/mailer/smtp.zep", 86);
 	}
 	if (zephir_fast_count_int(bcc TSRMLS_CC) > 0) {
 		ZEPHIR_INIT_NVAR(temp);
 		array_init(temp);
-		zephir_is_iterable(bcc, &_26$$7, &_25$$7, 0, 0, "yb/mailer/smtp.zep", 94);
+		zephir_is_iterable(bcc, &_26$$7, &_25$$7, 0, 0, "yb/mailer/smtp.zep", 95);
 		for (
 		  ; zephir_hash_get_current_data_ex(_26$$7, (void**) &_27$$7, &_25$$7) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_26$$7, &_25$$7)
@@ -344,7 +346,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 			ZEPHIR_CALL_METHOD(&_28$$8, this_ptr, "pack", &_11, 0, name, addr);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(name, _28$$8);
-			zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 91);
+			zephir_array_append(&temp, name, PH_SEPARATE, "yb/mailer/smtp.zep", 92);
 			ZEPHIR_INIT_LNVAR(_29$$8);
 			ZEPHIR_CONCAT_SV(_29$$8, "RCPT TO: ", name);
 			ZEPHIR_INIT_NVAR(_30$$8);
@@ -359,7 +361,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 		zephir_fast_join_str(_32$$7, SL(","), temp TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_33$$7);
 		ZEPHIR_CONCAT_SV(_33$$7, "BCC: ", _32$$7);
-		zephir_array_append(&data, _33$$7, PH_SEPARATE, "yb/mailer/smtp.zep", 94);
+		zephir_array_append(&data, _33$$7, PH_SEPARATE, "yb/mailer/smtp.zep", 95);
 	}
 	ZEPHIR_OBS_VAR(subject);
 	if (zephir_array_isset_string_fetch(&subject, message, SS("subject"), 0 TSRMLS_CC)) {
@@ -367,7 +369,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_35$$9);
 		ZEPHIR_CONCAT_SV(_35$$9, "Subject: ", _34$$9);
-		zephir_array_append(&data, _35$$9, PH_SEPARATE, "yb/mailer/smtp.zep", 98);
+		zephir_array_append(&data, _35$$9, PH_SEPARATE, "yb/mailer/smtp.zep", 99);
 	}
 	ZEPHIR_SINIT_VAR(_36);
 	ZVAL_STRING(&_36, "r", 0);
@@ -375,7 +377,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_38);
 	ZEPHIR_CONCAT_SV(_38, "Date: ", _37);
-	zephir_array_append(&data, _38, PH_SEPARATE, "yb/mailer/smtp.zep", 101);
+	zephir_array_append(&data, _38, PH_SEPARATE, "yb/mailer/smtp.zep", 102);
 	ZEPHIR_OBS_VAR(attachments);
 	_39 = zephir_array_isset_string_fetch(&attachments, message, SS("attachments"), 0 TSRMLS_CC);
 	if (_39) {
@@ -388,13 +390,13 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	if (_40) {
 		ZEPHIR_INIT_VAR(_41$$10);
 		ZVAL_STRING(_41$$10, "Content-Type: multipart/mixed;", 1);
-		zephir_array_append(&data, _41$$10, PH_SEPARATE, "yb/mailer/smtp.zep", 104);
+		zephir_array_append(&data, _41$$10, PH_SEPARATE, "yb/mailer/smtp.zep", 105);
 	} else {
 		ZEPHIR_INIT_NVAR(attachments);
 		array_init(attachments);
 		ZEPHIR_INIT_VAR(_42$$11);
 		ZVAL_STRING(_42$$11, "Content-Type: multipart/alternative;", 1);
-		zephir_array_append(&data, _42$$11, PH_SEPARATE, "yb/mailer/smtp.zep", 107);
+		zephir_array_append(&data, _42$$11, PH_SEPARATE, "yb/mailer/smtp.zep", 108);
 	}
 	ZEPHIR_INIT_NVAR(_3);
 	ZEPHIR_CALL_FUNCTION(&_43, "mt_rand", NULL, 90);
@@ -407,17 +409,17 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	ZEPHIR_CONCAT_SV(boundary, "Boundary-", _45);
 	ZEPHIR_INIT_VAR(_46);
 	ZEPHIR_CONCAT_SVS(_46, "\tboundary=\"", boundary, "\"");
-	zephir_array_append(&data, _46, PH_SEPARATE, "yb/mailer/smtp.zep", 111);
+	zephir_array_append(&data, _46, PH_SEPARATE, "yb/mailer/smtp.zep", 112);
 	ZEPHIR_INIT_VAR(_47);
 	ZEPHIR_CONCAT_SV(_47, "--", boundary);
 	ZEPHIR_CPY_WRT(boundary, _47);
 	ZEPHIR_INIT_VAR(_48);
 	ZVAL_STRING(_48, "MIME-Version: 1.0", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 114);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 115);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 115);
-	zephir_array_append(&data, boundary, PH_SEPARATE, "yb/mailer/smtp.zep", 117);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 116);
+	zephir_array_append(&data, boundary, PH_SEPARATE, "yb/mailer/smtp.zep", 118);
 	ZEPHIR_OBS_VAR(plain);
 	_49 = zephir_array_isset_string_fetch(&plain, message, SS("plain"), 0 TSRMLS_CC);
 	if (_49) {
@@ -426,32 +428,32 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 	if (_49) {
 		ZEPHIR_INIT_VAR(_50$$12);
 		ZVAL_STRING(_50$$12, "Content-Type: text/plain; charset=UTF-8", 1);
-		zephir_array_append(&data, _50$$12, PH_SEPARATE, "yb/mailer/smtp.zep", 119);
+		zephir_array_append(&data, _50$$12, PH_SEPARATE, "yb/mailer/smtp.zep", 120);
 	} else {
 		ZEPHIR_INIT_VAR(_51$$13);
 		ZVAL_STRING(_51$$13, "Content-Type: text/html; charset=UTF-8", 1);
-		zephir_array_append(&data, _51$$13, PH_SEPARATE, "yb/mailer/smtp.zep", 121);
+		zephir_array_append(&data, _51$$13, PH_SEPARATE, "yb/mailer/smtp.zep", 122);
 	}
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "Content-Transfer-Encoding: base64", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 123);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 124);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 124);
-	zephir_array_fetch_string(&_52, message, SL("body"), PH_NOISY | PH_READONLY, "yb/mailer/smtp.zep", 125 TSRMLS_CC);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 125);
+	zephir_array_fetch_string(&_52, message, SL("body"), PH_NOISY | PH_READONLY, "yb/mailer/smtp.zep", 126 TSRMLS_CC);
 	ZEPHIR_CALL_FUNCTION(&_53, "base64_encode", &_54, 88, _52);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_55, "chunk_split", &_56, 92, _53);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_57);
 	ZEPHIR_CONCAT_VV(_57, _55, boundary);
-	zephir_array_append(&data, _57, PH_SEPARATE, "yb/mailer/smtp.zep", 125);
+	zephir_array_append(&data, _57, PH_SEPARATE, "yb/mailer/smtp.zep", 126);
 	if (zephir_is_true(attachments)) {
 		ZEPHIR_SINIT_VAR(_58$$14);
 		ZVAL_LONG(&_58$$14, 16);
 		ZEPHIR_CALL_FUNCTION(&mine, "finfo_open", NULL, 93, &_58$$14);
 		zephir_check_call_status();
-		zephir_is_iterable(attachments, &_60$$14, &_59$$14, 0, 0, "yb/mailer/smtp.zep", 147);
+		zephir_is_iterable(attachments, &_60$$14, &_59$$14, 0, 0, "yb/mailer/smtp.zep", 148);
 		for (
 		  ; zephir_hash_get_current_data_ex(_60$$14, (void**) &_61$$14, &_59$$14) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_60$$14, &_59$$14)
@@ -464,7 +466,7 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 				ZEPHIR_CONCAT_SV(_63$$16, "Cannot find attachment: ", path);
 				ZEPHIR_CALL_METHOD(NULL, _62$$16, "__construct", &_64, 2, _63$$16);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(_62$$16, "yb/mailer/smtp.zep", 131 TSRMLS_CC);
+				zephir_throw_exception_debug(_62$$16, "yb/mailer/smtp.zep", 132 TSRMLS_CC);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
@@ -473,25 +475,25 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 			if (zephir_is_true(type)) {
 				ZEPHIR_INIT_LNVAR(_66$$17);
 				ZEPHIR_CONCAT_SV(_66$$17, "Content-Type: ", type);
-				zephir_array_append(&data, _66$$17, PH_SEPARATE, "yb/mailer/smtp.zep", 136);
+				zephir_array_append(&data, _66$$17, PH_SEPARATE, "yb/mailer/smtp.zep", 137);
 			} else {
 				ZEPHIR_INIT_NVAR(_67$$18);
 				ZVAL_STRING(_67$$18, "Content-Type: application/octet-stream", 1);
-				zephir_array_append(&data, _67$$18, PH_SEPARATE, "yb/mailer/smtp.zep", 138);
+				zephir_array_append(&data, _67$$18, PH_SEPARATE, "yb/mailer/smtp.zep", 139);
 			}
 			ZEPHIR_INIT_NVAR(_68$$15);
 			ZVAL_STRING(_68$$15, "Content-Transfer-Encoding: base64", 1);
-			zephir_array_append(&data, _68$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 141);
+			zephir_array_append(&data, _68$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 142);
 			ZEPHIR_INIT_NVAR(_68$$15);
 			zephir_basename(_68$$15, path TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_69$$15, this_ptr, "pack", &_11, 0, _68$$15);
 			zephir_check_call_status();
 			ZEPHIR_INIT_LNVAR(_70$$15);
 			ZEPHIR_CONCAT_SVS(_70$$15, "Content-Disposition: attachment; filename=\"", _69$$15, "\"");
-			zephir_array_append(&data, _70$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 142);
+			zephir_array_append(&data, _70$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 143);
 			ZEPHIR_INIT_NVAR(_71$$15);
 			ZVAL_STRING(_71$$15, "", 1);
-			zephir_array_append(&data, _71$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 143);
+			zephir_array_append(&data, _71$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 144);
 			ZEPHIR_INIT_NVAR(_71$$15);
 			zephir_file_get_contents(_71$$15, path TSRMLS_CC);
 			ZEPHIR_CALL_FUNCTION(&_72$$15, "base64_encode", &_54, 88, _71$$15);
@@ -500,14 +502,14 @@ PHP_METHOD(Yb_Mailer_Smtp, sendMessageTo) {
 			zephir_check_call_status();
 			ZEPHIR_INIT_LNVAR(_74$$15);
 			ZEPHIR_CONCAT_VV(_74$$15, _73$$15, boundary);
-			zephir_array_append(&data, _74$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 144);
+			zephir_array_append(&data, _74$$15, PH_SEPARATE, "yb/mailer/smtp.zep", 145);
 		}
 		ZEPHIR_CALL_FUNCTION(NULL, "finfo_close", NULL, 95, mine);
 		zephir_check_call_status();
 	}
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, ".", 1);
-	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 150);
+	zephir_array_append(&data, _48, PH_SEPARATE, "yb/mailer/smtp.zep", 151);
 	ZEPHIR_INIT_NVAR(_48);
 	ZVAL_STRING(_48, "DATA", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_75);
@@ -563,10 +565,10 @@ PHP_METHOD(Yb_Mailer_Smtp, __destruct) {
 
 PHP_METHOD(Yb_Mailer_Smtp, cmd) {
 
-	zend_bool _6;
+	zend_bool _7;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *step_param = NULL, *cmd_param = NULL, *expected_param = NULL, *_2, *_3, *_4 = NULL, *_7, *_0$$3, *_8$$4;
-	zval *step = NULL, *cmd = NULL, *expected = NULL, *output = NULL, *_5 = NULL, *_1$$3, *_9$$4;
+	zval *step_param = NULL, *cmd_param = NULL, *expected_param = NULL, *_2, *_3, *_4 = NULL, *_5 = NULL, *_0$$3, *_8$$4;
+	zval *step = NULL, *cmd = NULL, *expected = NULL, *output = NULL, *_6 = NULL, *_1$$3, *_9$$4;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 3, 0, &step_param, &cmd_param, &expected_param);
@@ -585,25 +587,27 @@ PHP_METHOD(Yb_Mailer_Smtp, cmd) {
 	}
 	ZEPHIR_INIT_VAR(_2);
 	_3 = zephir_fetch_nproperty_this(this_ptr, SL("socket"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(&_4, _3, "read", NULL, 0);
+	ZEPHIR_INIT_VAR(_5);
+	ZVAL_LONG(_5, 1024);
+	ZEPHIR_CALL_METHOD(&_4, _3, "readmaxlength", NULL, 0, _5);
 	zephir_check_call_status();
 	zephir_fast_trim(_2, _4, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
-	zephir_get_strval(_5, _2);
-	ZEPHIR_CPY_WRT(output, _5);
-	_6 = zephir_is_true(expected);
-	if (_6) {
-		ZEPHIR_INIT_VAR(_7);
-		zephir_fast_strpos(_7, output, expected, 0 );
-		_6 = !ZEPHIR_IS_LONG_IDENTICAL(_7, 0);
+	zephir_get_strval(_6, _2);
+	ZEPHIR_CPY_WRT(output, _6);
+	_7 = zephir_is_true(expected);
+	if (_7) {
+		ZEPHIR_INIT_NVAR(_5);
+		zephir_fast_strpos(_5, output, expected, 0 );
+		_7 = !ZEPHIR_IS_LONG_IDENTICAL(_5, 0);
 	}
-	if (_6) {
+	if (_7) {
 		ZEPHIR_INIT_VAR(_8$$4);
 		object_init_ex(_8$$4, yb_mailer_exception_ce);
 		ZEPHIR_INIT_VAR(_9$$4);
 		ZEPHIR_CONCAT_SVSV(_9$$4, "Unexpected response on step: ", step, ", with output: ", output);
 		ZEPHIR_CALL_METHOD(NULL, _8$$4, "__construct", NULL, 2, _9$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_8$$4, "yb/mailer/smtp.zep", 174 TSRMLS_CC);
+		zephir_throw_exception_debug(_8$$4, "yb/mailer/smtp.zep", 175 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

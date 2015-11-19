@@ -34,10 +34,11 @@ class Smtp implements MailerInterface
             let port = (long) Std::valueAt(options, "port", 25);
         }
 
-        let socket = new TcpClient(host, port, timeout);
+        let socket = new TcpClient(host, port, timeout, false);
 
         socket->setTcpNodelay(true);
         socket->setBlocking(true);
+
         if ioTimeout > 0 {
             socket->setIoTimeout(ioTimeout);
         }
@@ -168,7 +169,7 @@ class Smtp implements MailerInterface
             this->socket->write(cmd . self::CRLF);
         }
 
-        let output = (string) rtrim(this->socket->read());
+        let output = (string) rtrim(this->socket->readMaxLength(1024));
 
         if expected && strpos(output, expected) !== 0 {
             throw new Exception("Unexpected response on step: " . step . ", with output: " . output);

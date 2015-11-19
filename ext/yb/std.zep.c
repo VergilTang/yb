@@ -88,7 +88,7 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 		} while(0);
 
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 115, size);
+	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 116, size);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -1220,7 +1220,7 @@ PHP_METHOD(Yb_Std, throwError) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, n);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 116, _2, _3);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 117, _2, _3);
 	zephir_check_call_status();
 	zephir_throw_exception_debug(_0, "yb/std.zep", 413 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -1258,7 +1258,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 117, data, _2, _3);
+	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 118, data, _2, _3);
 	zephir_check_temp_parameter(_3);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();

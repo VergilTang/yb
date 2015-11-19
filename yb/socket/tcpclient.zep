@@ -84,6 +84,13 @@ class TcpClient
         }
     }
 
+    public function write(string data) -> void
+    {
+        if unlikely fwrite(this->handler, data) === false {
+            throw new Exception("Cannot write");
+        }
+    }
+
     public function readLine() -> string
     {
         var line;
@@ -124,11 +131,20 @@ class TcpClient
         return line;
     }
 
-    public function write(string data) -> void
+    public function readMaxLength(long len) -> string
     {
-        if unlikely fwrite(this->handler, data) === false {
-            throw new Exception("Cannot write");
+        var line;
+
+        if unlikely len < 1 {
+            throw new Exception("Invalid read max length: " . strval(len));
         }
+
+        let line = fread(this->handler, len);
+        if unlikely line === false {
+            throw new Exception("Cannot read max length");
+        }
+
+        return line;
     }
 
 }

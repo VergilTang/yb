@@ -248,6 +248,28 @@ PHP_METHOD(Yb_Socket_TcpClient, enableCrypto) {
 
 }
 
+PHP_METHOD(Yb_Socket_TcpClient, write) {
+
+	zval *data_param = NULL, *_0, *_1;
+	zval *data = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &data_param);
+
+	zephir_get_strval(data, data_param);
+
+
+	ZEPHIR_INIT_VAR(_0);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	zephir_fwrite(_0, _1, data TSRMLS_CC);
+	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_0))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot write", "yb/socket/tcpclient.zep", 90);
+		return;
+	}
+	ZEPHIR_MM_RESTORE();
+
+}
+
 PHP_METHOD(Yb_Socket_TcpClient, readLine) {
 
 	zval *line = NULL, *_0;
@@ -259,7 +281,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readLine) {
 	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 112, _0);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read line", "yb/socket/tcpclient.zep", 93);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read line", "yb/socket/tcpclient.zep", 100);
 		return;
 	}
 	RETURN_CCTOR(line);
@@ -277,7 +299,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readAll) {
 	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _0);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read all", "yb/socket/tcpclient.zep", 105);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read all", "yb/socket/tcpclient.zep", 112);
 		return;
 	}
 	RETURN_CCTOR(line);
@@ -307,7 +329,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readLength) {
 		ZEPHIR_CONCAT_SV(_3$$3, "Invalid read length: ", _2$$3);
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 2, _3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "yb/socket/tcpclient.zep", 116 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "yb/socket/tcpclient.zep", 123 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -317,32 +339,50 @@ PHP_METHOD(Yb_Socket_TcpClient, readLength) {
 	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _4, &_5);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read length", "yb/socket/tcpclient.zep", 121);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read length", "yb/socket/tcpclient.zep", 128);
 		return;
 	}
 	RETURN_CCTOR(line);
 
 }
 
-PHP_METHOD(Yb_Socket_TcpClient, write) {
+PHP_METHOD(Yb_Socket_TcpClient, readMaxLength) {
 
-	zval *data_param = NULL, *_0, *_1;
-	zval *data = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *len_param = NULL, *line = NULL, *_4, _5, *_0$$3, _1$$3, *_2$$3 = NULL, *_3$$3;
+	long len;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &data_param);
+	zephir_fetch_params(1, 1, 0, &len_param);
 
-	zephir_get_strval(data, data_param);
+	len = zephir_get_intval(len_param);
 
 
-	ZEPHIR_INIT_VAR(_0);
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	zephir_fwrite(_0, _1, data TSRMLS_CC);
-	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot write", "yb/socket/tcpclient.zep", 130);
+	if (unlikely(len < 1)) {
+		ZEPHIR_INIT_VAR(_0$$3);
+		object_init_ex(_0$$3, yb_socket_exception_ce);
+		ZEPHIR_SINIT_VAR(_1$$3);
+		ZVAL_LONG(&_1$$3, len);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 114, &_1$$3);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(_3$$3);
+		ZEPHIR_CONCAT_SV(_3$$3, "Invalid read max length: ", _2$$3);
+		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 2, _3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_0$$3, "yb/socket/tcpclient.zep", 139 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_MM_RESTORE();
+	_4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	ZEPHIR_SINIT_VAR(_5);
+	ZVAL_LONG(&_5, len);
+	ZEPHIR_CALL_FUNCTION(&line, "fread", NULL, 115, _4, &_5);
+	zephir_check_call_status();
+	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read max length", "yb/socket/tcpclient.zep", 144);
+		return;
+	}
+	RETURN_CCTOR(line);
 
 }
 
