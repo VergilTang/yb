@@ -1,4 +1,4 @@
-namespace Yb\RedisCluster;
+namespace Yb\Redis;
 
 use Yb\Exception as Ex;
 

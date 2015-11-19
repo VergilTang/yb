@@ -1,6 +1,7 @@
-namespace Yb\RedisCluster;
+namespace Yb\Redis;
 
 use Yb\Std;
+use Yb\Socket\TcpClient;
 
 class Connection
 {
@@ -10,56 +11,35 @@ class Connection
     const DEFAULT_IO_TIMEOUT    = 2.0;
     const DEFAULT_PERSISTENT    = false;
 
-    protected handler;
+    protected socket;
 
     public function __construct(array options = []) -> void
     {
         string host;
-        long port, timeout, flags, ioTimeoutSeconds, ioTimeoutMicroSeconds;
-        double ioTimeout;
+        long port, timeout;
         boolean persistent;
-        var handler, errNo = null, errStr = null;
+        double ioTimeout;
+        var socket;
 
         let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
         let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
         let timeout = (long) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
-        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", self::DEFAULT_IO_TIMEOUT);
         let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
+        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", self::DEFAULT_IO_TIMEOUT);
 
-        let flags = (long) STREAM_CLIENT_CONNECT;
-        if persistent {
-            let flags = flags | (long) STREAM_CLIENT_PERSISTENT;
-        }
-
-        let handler = stream_socket_client(sprintf("tcp://%s:%d", host, port), errNo, errStr, timeout, flags);
-        if unlikely ! handler {
-            throw new SocketException("Cannot connect: [" . errNo . "]" . errStr);
-        }
-
-        if unlikely function_exists("socket_import_stream")
-            && ! socket_set_option(socket_import_stream(handler), SOL_TCP, TCP_NODELAY, 1) {
-            throw new SocketException("Cannot set SOL_TCP TCP_NODELAY");
-        }
-
-        if unlikely ! stream_set_blocking(handler, 1) {
-            throw new SocketException("Cannot set blocking");
-        }
-
+        let socket = new TcpClient(host, port, timeout, persistent);
+        socket->setTcpNodelay(true);
+        socket->setBlocking(true);
         if ioTimeout > 0 {
-            let ioTimeoutSeconds = (long) ioTimeout;
-            let ioTimeoutMicroSeconds = (long) ((ioTimeout - ioTimeoutSeconds) * 1000000.0);
-
-            if unlikely ! stream_set_timeout(handler, ioTimeoutSeconds, ioTimeoutMicroSeconds) {
-                throw new SocketException("Cannot set io timeout");
-            }
+            socket->setIoTimeout(ioTimeout);
         }
 
-        let this->handler = handler;
+        let this->socket = socket;
     }
 
-    public function getInternalHandler()
+    public function getSocket()
     {
-        return this->handler;
+        return this->socket;
     }
 
     public function __call(string method, array args)
@@ -93,36 +73,21 @@ class Connection
         return results;
     }
 
-    public function __destruct() -> void
-    {
-        if this->handler {
-            fclose(this->handler);
-        }
-    }
-
     protected function write(var data) -> void
     {
-        var d, s;
+        var d;
 
-        if typeof data == "array" {
-            let s = sprintf("*%d\r\n", count(data));
-
-            if unlikely fwrite(this->handler, s) === false {
-                throw new SocketException("Cannot write to socket");
-            }
-
-            for d in data {
-                this->write(d);
-            }
+        if typeof data != "array" {
+            let d = (string) data;
+            this->socket->write(sprintf("$%d\r\n%s\r\n", strlen(d), d));
 
             return;
         }
 
-        let d = (string) data;
-        let s = sprintf("$%d\r\n%s\r\n", strlen(d), d);
+        this->socket->write(sprintf("*%d\r\n", count(data)));
 
-        if unlikely fwrite(this->handler, s) === false {
-            throw new SocketException("Cannot write to socket");
+        for d in data {
+            this->write(d);
         }
     }
 
@@ -133,8 +98,11 @@ class Connection
         long l;
         var a;
 
-        let line = (string) this->readBlock();
-
+        let line = (string) this->socket->readLine();
+        let l = line->length();
+        if unlikely l < 2 || line[l - 2] != '\r' || line[l - 1] != '\n' {
+            throw new Exception("Invalid line end: " . json_encode(line));
+        }
         let c = line[0];
         let line = (string) substr(line, 1, -2);
 
@@ -156,7 +124,11 @@ class Connection
                 if l < 0 {
                     return;
                 }
-                let line = (string) this->readBlock(l + 2);
+                let line = (string) this->socket->readLength(l + 2);
+                let l = line->length();
+                if unlikely l < 2 || line[l - 2] != '\r' || line[l - 1] != '\n' {
+                    throw new Exception("Invalid line end: " . json_encode(line));
+                }
                 return substr(line, 0, -2);
 
             case '*':
@@ -177,31 +149,6 @@ class Connection
             default:
                 throw new Exception("Invalid line type: " . json_encode(line));
         }
-    }
-
-    protected function readBlock(long len = 0) -> string
-    {
-        var line;
-        string s;
-
-        if len > 0 {
-            let line = stream_get_contents(this->handler, len);
-        } else {
-            let line = fgets(this->handler);
-        }
-
-        if line === false {
-            throw new SocketException("Cannot read from socket");
-        }
-
-        let s = (string) line;
-        let len = s->length();
-
-        if unlikely s[len - 2] != '\r' || s[len - 1] != '\n' {
-            throw new Exception("Invalid line end: " . json_encode(line));
-        }
-
-        return s;
     }
 
     protected function newError(string error) -> <Error>

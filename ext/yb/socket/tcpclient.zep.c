@@ -77,7 +77,7 @@ PHP_METHOD(Yb_Socket_TcpClient, __construct) {
 	ZEPHIR_INIT_VAR(_5);
 	ZVAL_LONG(_5, flags);
 	ZEPHIR_MAKE_REF(errNo);
-	ZEPHIR_CALL_FUNCTION(&handler, "stream_socket_client", NULL, 82, address, errNo, errStr, _4, _5);
+	ZEPHIR_CALL_FUNCTION(&handler, "stream_socket_client", NULL, 106, address, errNo, errStr, _4, _5);
 	ZEPHIR_UNREF(errNo);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(handler))) {
@@ -93,6 +93,19 @@ PHP_METHOD(Yb_Socket_TcpClient, __construct) {
 	}
 	zephir_update_property_this(this_ptr, SL("handler"), handler TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Socket_TcpClient, __destruct) {
+
+	zval *_0, *_1$$3;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	if (zephir_is_true(_0)) {
+		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+		zephir_fclose(_1$$3 TSRMLS_CC);
+	}
 
 }
 
@@ -117,14 +130,14 @@ PHP_METHOD(Yb_Socket_TcpClient, setTcpNodelay) {
 
 
 	if (unlikely(!((zephir_function_exists_ex(SS("socket_import_stream") TSRMLS_CC) == SUCCESS)))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Not supported: socket_import_stream", "yb/socket/tcpclient.zep", 37);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Not supported: socket_import_stream", "yb/socket/tcpclient.zep", 44);
 		return;
 	}
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&socket, "socket_import_stream", NULL, 83, _0);
+	ZEPHIR_CALL_FUNCTION(&socket, "socket_import_stream", NULL, 107, _0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(socket))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: socket_import_stream", "yb/socket/tcpclient.zep", 42);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: socket_import_stream", "yb/socket/tcpclient.zep", 49);
 		return;
 	}
 	ZEPHIR_INIT_VAR(_1);
@@ -139,10 +152,10 @@ PHP_METHOD(Yb_Socket_TcpClient, setTcpNodelay) {
 	ZVAL_LONG(&_2, 6);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_LONG(&_3, 1);
-	ZEPHIR_CALL_FUNCTION(&_4, "socket_set_option", NULL, 84, socket, &_2, &_3, _1);
+	ZEPHIR_CALL_FUNCTION(&_4, "socket_set_option", NULL, 108, socket, &_2, &_3, _1);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_4))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set SOL_TCP TCP_NODELAY", "yb/socket/tcpclient.zep", 46);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set SOL_TCP TCP_NODELAY", "yb/socket/tcpclient.zep", 53);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -170,10 +183,10 @@ PHP_METHOD(Yb_Socket_TcpClient, setBlocking) {
 		ZEPHIR_INIT_NVAR(_1);
 		ZVAL_LONG(_1, 0);
 	}
-	ZEPHIR_CALL_FUNCTION(&_2, "stream_set_blocking", NULL, 85, _0, _1);
+	ZEPHIR_CALL_FUNCTION(&_2, "stream_set_blocking", NULL, 109, _0, _1);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_2))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set blocking", "yb/socket/tcpclient.zep", 53);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set blocking", "yb/socket/tcpclient.zep", 60);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -194,7 +207,7 @@ PHP_METHOD(Yb_Socket_TcpClient, setIoTimeout) {
 
 
 	if (unlikely(ioTimeout < 0)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set io timeout to negative value", "yb/socket/tcpclient.zep", 62);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set io timeout to negative value", "yb/socket/tcpclient.zep", 69);
 		return;
 	}
 	ioTimeoutSeconds = (long) (ioTimeout);
@@ -204,10 +217,10 @@ PHP_METHOD(Yb_Socket_TcpClient, setIoTimeout) {
 	ZVAL_LONG(&_1, ioTimeoutSeconds);
 	ZEPHIR_SINIT_VAR(_2);
 	ZVAL_LONG(&_2, ioTimeoutMicroSeconds);
-	ZEPHIR_CALL_FUNCTION(&_3, "stream_set_timeout", NULL, 86, _0, &_1, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "stream_set_timeout", NULL, 110, _0, &_1, &_2);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_3))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_set_timeout", "yb/socket/tcpclient.zep", 69);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_set_timeout", "yb/socket/tcpclient.zep", 76);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -225,10 +238,10 @@ PHP_METHOD(Yb_Socket_TcpClient, enableCrypto) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "stream_socket_enable_crypto", NULL, 88, _0, ZEPHIR_GLOBAL(global_true), cryptoType);
+	ZEPHIR_CALL_FUNCTION(&_1, "stream_socket_enable_crypto", NULL, 111, _0, ZEPHIR_GLOBAL(global_true), cryptoType);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_socket_enable_crypto", "yb/socket/tcpclient.zep", 76);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_socket_enable_crypto", "yb/socket/tcpclient.zep", 83);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -243,20 +256,38 @@ PHP_METHOD(Yb_Socket_TcpClient, readLine) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 105, _0);
+	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 112, _0);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read line", "yb/socket/tcpclient.zep", 86);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read line", "yb/socket/tcpclient.zep", 93);
 		return;
 	}
 	RETURN_CCTOR(line);
 
 }
 
-PHP_METHOD(Yb_Socket_TcpClient, readBlock) {
+PHP_METHOD(Yb_Socket_TcpClient, readAll) {
+
+	zval *line = NULL, *_0;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _0);
+	zephir_check_call_status();
+	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read all", "yb/socket/tcpclient.zep", 105);
+		return;
+	}
+	RETURN_CCTOR(line);
+
+}
+
+PHP_METHOD(Yb_Socket_TcpClient, readLength) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *len_param = NULL, *line = NULL, *_0, _1;
+	zval *len_param = NULL, *line = NULL, *_4, _5, *_0$$3, _1$$3, *_2$$3 = NULL, *_3$$3;
 	long len;
 
 	ZEPHIR_MM_GROW();
@@ -265,20 +296,35 @@ PHP_METHOD(Yb_Socket_TcpClient, readBlock) {
 	len = zephir_get_intval(len_param);
 
 
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_SINIT_VAR(_1);
-	ZVAL_LONG(&_1, len);
-	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 104, _0, &_1);
+	if (unlikely(len < 1)) {
+		ZEPHIR_INIT_VAR(_0$$3);
+		object_init_ex(_0$$3, yb_socket_exception_ce);
+		ZEPHIR_SINIT_VAR(_1$$3);
+		ZVAL_LONG(&_1$$3, len);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 114, &_1$$3);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(_3$$3);
+		ZEPHIR_CONCAT_SV(_3$$3, "Invalid read length: ", _2$$3);
+		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 2, _3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_0$$3, "yb/socket/tcpclient.zep", 116 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
+	_4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
+	ZEPHIR_SINIT_VAR(_5);
+	ZVAL_LONG(&_5, len);
+	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _4, &_5);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read block", "yb/socket/tcpclient.zep", 98);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read length", "yb/socket/tcpclient.zep", 121);
 		return;
 	}
 	RETURN_CCTOR(line);
 
 }
 
-PHP_METHOD(Yb_Socket_TcpClient, writeBlock) {
+PHP_METHOD(Yb_Socket_TcpClient, write) {
 
 	zval *data_param = NULL, *_0, *_1;
 	zval *data = NULL;
@@ -293,7 +339,7 @@ PHP_METHOD(Yb_Socket_TcpClient, writeBlock) {
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	zephir_fwrite(_0, _1, data TSRMLS_CC);
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot write block", "yb/socket/tcpclient.zep", 107);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot write", "yb/socket/tcpclient.zep", 130);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();

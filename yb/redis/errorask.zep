@@ -1,4 +1,4 @@
-namespace Yb\RedisCluster;
+namespace Yb\Redis;
 
 class ErrorAsk extends Error
 {

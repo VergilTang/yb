@@ -1,4 +1,4 @@
-namespace Yb\RedisCluster;
+namespace Yb\Redis;
 
 class ErrorMoved extends Error
 {

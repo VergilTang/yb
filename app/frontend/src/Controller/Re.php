@@ -11,15 +11,15 @@ class Re extends ControllerBase
 
         $app('redisCluster', function($app) {
             try {
-                $slotsCacher = new \Yb\Datacacher\Apc('redis-cluster');
+                $slotsCacher = new \Yb\DataCacher\Apc('redis-cluster');
             } catch (\Exception $ex) {
-                $slotsCacher = new \Yb\Datacacher\File(__DIR__.'/../../data/redis-cluster.php');
+                $slotsCacher = new \Yb\DataCacher\File(__DIR__.'/../../data/redis-cluster.php');
             }
-            return new \Yb\RedisCluster\Client($slotsCacher, (array) $app->config('redis'));
+            return new \Yb\Redis\Cluster($slotsCacher, (array) $app->config('redis'));
         });
 
         $app('redisConnection', function($app) {
-            return new \Yb\RedisCluster\Connection((array) $app->config('redis'));
+            return new \Yb\Redis\Connection((array) $app->config('redis'));
         });
 
         $app('redis', function($app) {

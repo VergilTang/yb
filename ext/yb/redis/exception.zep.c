@@ -14,9 +14,9 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_RedisCluster_SocketException) {
+ZEPHIR_INIT_CLASS(Yb_Redis_Exception) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\RedisCluster, SocketException, yb, rediscluster_socketexception, yb_rediscluster_exception_ce, NULL, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Redis, Exception, yb, redis_exception, yb_exception_ce, NULL, 0);
 
 	return SUCCESS;
 

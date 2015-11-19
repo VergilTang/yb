@@ -1,6 +1,7 @@
 namespace Yb\Mailer;
 
 use Yb\Std;
+use Yb\Socket\TcpClient;
 
 class Smtp implements MailerInterface
 {
@@ -12,10 +13,10 @@ class Smtp implements MailerInterface
     public function __construct(array options) -> void
     {
         string host, user, passwd, from, name;
-        long timeout, port, ioTimeoutSeconds, ioTimeoutMicroSeconds;
+        long port, timeout;
         double ioTimeout;
         boolean secure;
-        var socket, errStr = null;
+        var socket;
 
         let host = (string) Std::valueAt(options, "host");
         let user = (string) Std::valueAt(options, "user");
@@ -24,7 +25,7 @@ class Smtp implements MailerInterface
         let from = (string) Std::valueAt(options, "from", user);
         let name = (string) Std::valueAt(options, "name", "");
         let timeout = (long) Std::valueAt(options, "timeout", 10);
-        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", timeout);
+        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", 5);
         let secure = (boolean) Std::valueAt(options, "secure", false);
 
         if secure {
@@ -33,32 +34,15 @@ class Smtp implements MailerInterface
             let port = (long) Std::valueAt(options, "port", 25);
         }
 
-        let socket = stream_socket_client(sprintf("tcp://%s:%d", host, port), null, errStr, timeout);
-        if unlikely ! socket {
-            throw new Exception("Cannot connect to mail server: " . errStr);
-        }
+        let socket = new TcpClient(host, port, timeout);
 
-        if unlikely function_exists("socket_import_stream")
-            && ! socket_set_option(socket_import_stream(socket), SOL_TCP, TCP_NODELAY, 1) {
-            throw new Exception("Cannot set tcp_nodelay");
-        }
-
-        if unlikely ! stream_set_blocking(socket, 1) {
-            throw new Exception("Cannot set blocking socket");
-        }
-
+        socket->setTcpNodelay(true);
+        socket->setBlocking(true);
         if ioTimeout > 0 {
-            let ioTimeoutSeconds = (long) ioTimeout;
-            let ioTimeoutMicroSeconds = (long) ((ioTimeout - ioTimeoutSeconds) * 1000000.0);
-
-            if unlikely ! stream_set_timeout(socket, ioTimeoutSeconds, ioTimeoutMicroSeconds) {
-                throw new Exception("Cannot set io timeout");
-            }
+            socket->setIoTimeout(ioTimeout);
         }
-
-        if unlikely secure
-            && ! stream_socket_enable_crypto(socket, true, constant("STREAM_CRYPTO_METHOD_SSLv23_CLIENT")) {
-            throw new Exception("Cannot enable crypto socket");
+        if secure {
+            socket->enableCrypto(constant("STREAM_CRYPTO_METHOD_SSLv23_CLIENT"));
         }
 
         let this->socket = socket;
@@ -174,19 +158,17 @@ class Smtp implements MailerInterface
         try {
             this->cmd("QUIT", "QUIT", 221);
         }
-
-        fclose(this->socket);
     }
 
     protected function cmd(string step, string cmd, string expected) -> void
     {
         string output;
 
-        if unlikely cmd && ! fputs(this->socket, cmd . self::CRLF) {
-            throw new Exception("Cannot fputs to socket on step: " . step);
+        if cmd {
+            this->socket->write(cmd . self::CRLF);
         }
 
-        let output = rtrim(fread(this->socket, 1024));
+        let output = (string) rtrim(this->socket->read());
 
         if expected && strpos(output, expected) !== 0 {
             throw new Exception("Unexpected response on step: " . step . ", with output: " . output);

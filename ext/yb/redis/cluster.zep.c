@@ -22,23 +22,24 @@
 #include "utils.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_RedisCluster_Client) {
+ZEPHIR_INIT_CLASS(Yb_Redis_Cluster) {
 
-	ZEPHIR_REGISTER_CLASS(Yb\\RedisCluster, Client, yb, rediscluster_client, yb_rediscluster_client_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS(Yb\\Redis, Cluster, yb, redis_cluster, yb_redis_cluster_method_entry, 0);
 
-	zend_declare_property_null(yb_rediscluster_client_ce, SL("slotsCacher"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_redis_cluster_ce, SL("slotsCacher"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_rediscluster_client_ce, SL("options"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_redis_cluster_ce, SL("options"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_rediscluster_client_ce, SL("slots"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_redis_cluster_ce, SL("slots"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(yb_rediscluster_client_ce, SL("connections"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_redis_cluster_ce, SL("connections"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	zend_class_implements(yb_redis_cluster_ce TSRMLS_CC, 1, yb_redis_redisclientinterface_ce);
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, __construct) {
+PHP_METHOD(Yb_Redis_Cluster, __construct) {
 
 	long port = 0;
 	zval *host = NULL, *_4$$5 = NULL;
@@ -64,7 +65,7 @@ PHP_METHOD(Yb_RedisCluster_Client, __construct) {
 	zephir_check_call_status();
 	if (zephir_is_true(slots)) {
 		if (unlikely(Z_TYPE_P(slots) != IS_ARRAY)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_exception_ce, "Invalid slots from cacher", "yb/rediscluster/client.zep", 25);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Invalid slots from cacher", "yb/redis/cluster.zep", 25);
 			return;
 		}
 		zephir_update_property_this(this_ptr, SL("slots"), slots TSRMLS_CC);
@@ -96,7 +97,7 @@ PHP_METHOD(Yb_RedisCluster_Client, __construct) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, runCommandByKey) {
+PHP_METHOD(Yb_Redis_Cluster, runCommandByKey) {
 
 	zend_bool _2;
 	int ZEPHIR_LAST_CALL_STATUS, slot = 0;
@@ -120,34 +121,34 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandByKey) {
 	zephir_check_call_status();
 	_2 = Z_TYPE_P(result) != IS_OBJECT;
 	if (!(_2)) {
-		_2 = !((zephir_instance_of_ev(result, yb_rediscluster_error_ce TSRMLS_CC)));
+		_2 = !((zephir_instance_of_ev(result, yb_redis_error_ce TSRMLS_CC)));
 	}
 	if (_2) {
 		RETURN_CCTOR(result);
 	}
-	if (zephir_instance_of_ev(result, yb_rediscluster_errormoved_ce TSRMLS_CC)) {
+	if (zephir_instance_of_ev(result, yb_redis_errormoved_ce TSRMLS_CC)) {
 		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "onmoved", NULL, 0, result, cmd);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	if (zephir_instance_of_ev(result, yb_rediscluster_errorask_ce TSRMLS_CC)) {
+	if (zephir_instance_of_ev(result, yb_redis_errorask_ce TSRMLS_CC)) {
 		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "onask", NULL, 0, result, cmd);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
 	ZEPHIR_INIT_NVAR(_1);
-	object_init_ex(_1, yb_rediscluster_exception_ce);
+	object_init_ex(_1, yb_redis_exception_ce);
 	ZEPHIR_OBS_VAR(_3);
 	zephir_read_property(&_3, result, SL("error"), PH_NOISY_CC);
 	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 2, _3);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_1, "yb/rediscluster/client.zep", 55 TSRMLS_CC);
+	zephir_throw_exception_debug(_1, "yb/redis/cluster.zep", 55 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKey) {
+PHP_METHOD(Yb_Redis_Cluster, runCommandsByKey) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *cmds = NULL;
@@ -172,7 +173,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKey) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
+PHP_METHOD(Yb_Redis_Cluster, runCommandsByKeyInternally) {
 
 	HashTable *_3;
 	HashPosition _2;
@@ -195,7 +196,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 	found = 0;
 	if (zephir_is_true(resultProcessor)) {
 		if (unlikely(!(zephir_is_callable(resultProcessor TSRMLS_CC)))) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_exception_ce, "Invalid result processor", "yb/rediscluster/client.zep", 71);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Invalid result processor", "yb/redis/cluster.zep", 71);
 			return;
 		}
 		hasResultProcessor = 1;
@@ -207,7 +208,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&results, _0, "runcommands", NULL, 0, cmds);
 	zephir_check_call_status();
-	zephir_is_iterable(results, &_3, &_2, 0, 0, "yb/rediscluster/client.zep", 111);
+	zephir_is_iterable(results, &_3, &_2, 0, 0, "yb/redis/cluster.zep", 111);
 	for (
 	  ; zephir_hash_get_current_data_ex(_3, (void**) &_4, &_2) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_3, &_2)
@@ -216,7 +217,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 		ZEPHIR_GET_HVALUE(result, _4);
 		_5$$5 = Z_TYPE_P(result) != IS_OBJECT;
 		if (!(_5$$5)) {
-			_5$$5 = !((zephir_instance_of_ev(result, yb_rediscluster_error_ce TSRMLS_CC)));
+			_5$$5 = !((zephir_instance_of_ev(result, yb_redis_error_ce TSRMLS_CC)));
 		}
 		if (_5$$5) {
 			if (hasResultProcessor) {
@@ -226,19 +227,19 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 			found = 1;
 			continue;
 		}
-		if (zephir_instance_of_ev(result, yb_rediscluster_errormoved_ce TSRMLS_CC)) {
+		if (zephir_instance_of_ev(result, yb_redis_errormoved_ce TSRMLS_CC)) {
 			if (unlikely(found)) {
-				ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_exception_ce, "Commands are not in one slot", "yb/rediscluster/client.zep", 90);
+				ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Commands are not in one slot", "yb/redis/cluster.zep", 90);
 				return;
 			}
 			if (unlikely(twice)) {
 				ZEPHIR_INIT_NVAR(_6$$10);
-				object_init_ex(_6$$10, yb_rediscluster_exception_ce);
+				object_init_ex(_6$$10, yb_redis_exception_ce);
 				ZEPHIR_OBS_NVAR(_7$$10);
 				zephir_read_property(&_7$$10, result, SL("error"), PH_NOISY_CC);
 				ZEPHIR_CALL_METHOD(NULL, _6$$10, "__construct", &_8, 2, _7$$10);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(_6$$10, "yb/rediscluster/client.zep", 93 TSRMLS_CC);
+				zephir_throw_exception_debug(_6$$10, "yb/redis/cluster.zep", 93 TSRMLS_CC);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
@@ -250,12 +251,12 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 			zephir_check_call_status();
 			ZEPHIR_INIT_NVAR(_12$$8);
 			ZVAL_BOOL(_12$$8, 1);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runcommandsbykeyinternally", &_13, 99, key, cmds, resultProcessor, _12$$8);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runcommandsbykeyinternally", &_13, 96, key, cmds, resultProcessor, _12$$8);
 			zephir_check_call_status();
 			RETURN_MM_NULL();
 		}
-		if (zephir_instance_of_ev(result, yb_rediscluster_errorask_ce TSRMLS_CC)) {
-			zephir_array_fetch(&_15$$11, cmds, index, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 101 TSRMLS_CC);
+		if (zephir_instance_of_ev(result, yb_redis_errorask_ce TSRMLS_CC)) {
+			zephir_array_fetch(&_15$$11, cmds, index, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 101 TSRMLS_CC);
 			ZEPHIR_CALL_METHOD(&_14$$11, this_ptr, "onask", &_16, 0, result, _15$$11);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(result, _14$$11);
@@ -267,12 +268,12 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 			continue;
 		}
 		ZEPHIR_INIT_NVAR(_17$$5);
-		object_init_ex(_17$$5, yb_rediscluster_exception_ce);
+		object_init_ex(_17$$5, yb_redis_exception_ce);
 		ZEPHIR_OBS_NVAR(_18$$5);
 		zephir_read_property(&_18$$5, result, SL("error"), PH_NOISY_CC);
 		ZEPHIR_CALL_METHOD(NULL, _17$$5, "__construct", &_8, 2, _18$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_17$$5, "yb/rediscluster/client.zep", 109 TSRMLS_CC);
+		zephir_throw_exception_debug(_17$$5, "yb/redis/cluster.zep", 109 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -280,7 +281,7 @@ PHP_METHOD(Yb_RedisCluster_Client, runCommandsByKeyInternally) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, getConnectionBySlot) {
+PHP_METHOD(Yb_Redis_Cluster, getConnectionBySlot) {
 
 	zend_bool _6$$4;
 	HashTable *_3$$3;
@@ -300,23 +301,23 @@ PHP_METHOD(Yb_RedisCluster_Client, getConnectionBySlot) {
 	zephir_read_property_this(&_0, this_ptr, SL("slots"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_ARRAY) {
 		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("slots"), PH_NOISY_CC);
-		zephir_is_iterable(_1$$3, &_3$$3, &_2$$3, 0, 0, "yb/rediscluster/client.zep", 123);
+		zephir_is_iterable(_1$$3, &_3$$3, &_2$$3, 0, 0, "yb/redis/cluster.zep", 123);
 		for (
 		  ; zephir_hash_get_current_data_ex(_3$$3, (void**) &_4$$3, &_2$$3) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_3$$3, &_2$$3)
 		) {
 			ZEPHIR_GET_HVALUE(s, _4$$3);
-			zephir_array_fetch_long(&_5$$4, s, 0, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 119 TSRMLS_CC);
+			zephir_array_fetch_long(&_5$$4, s, 0, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 119 TSRMLS_CC);
 			_6$$4 = ZEPHIR_LE_LONG(_5$$4, slot);
 			if (_6$$4) {
-				zephir_array_fetch_long(&_7$$4, s, 1, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 119 TSRMLS_CC);
+				zephir_array_fetch_long(&_7$$4, s, 1, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 119 TSRMLS_CC);
 				_6$$4 = ZEPHIR_GE_LONG(_7$$4, slot);
 			}
 			if (_6$$4) {
-				zephir_array_fetch_long(&_8$$5, s, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 120 TSRMLS_CC);
-				zephir_array_fetch_long(&_9$$5, _8$$5, 0, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 120 TSRMLS_CC);
-				zephir_array_fetch_long(&_10$$5, s, 2, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 120 TSRMLS_CC);
-				zephir_array_fetch_long(&_11$$5, _10$$5, 1, PH_NOISY | PH_READONLY, "yb/rediscluster/client.zep", 120 TSRMLS_CC);
+				zephir_array_fetch_long(&_8$$5, s, 2, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 120 TSRMLS_CC);
+				zephir_array_fetch_long(&_9$$5, _8$$5, 0, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 120 TSRMLS_CC);
+				zephir_array_fetch_long(&_10$$5, s, 2, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 120 TSRMLS_CC);
+				zephir_array_fetch_long(&_11$$5, _10$$5, 1, PH_NOISY | PH_READONLY, "yb/redis/cluster.zep", 120 TSRMLS_CC);
 				ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getconnection", &_12, 0, _9$$5, _11$$5);
 				zephir_check_call_status();
 				RETURN_MM();
@@ -324,7 +325,7 @@ PHP_METHOD(Yb_RedisCluster_Client, getConnectionBySlot) {
 		}
 	}
 	ZEPHIR_INIT_VAR(_13);
-	object_init_ex(_13, yb_rediscluster_exception_ce);
+	object_init_ex(_13, yb_redis_exception_ce);
 	ZEPHIR_SINIT_VAR(_14);
 	ZVAL_STRING(&_14, "Cannot find connection for slot: %d", 0);
 	ZEPHIR_SINIT_VAR(_15);
@@ -333,13 +334,13 @@ PHP_METHOD(Yb_RedisCluster_Client, getConnectionBySlot) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, _13, "__construct", NULL, 2, _16);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_13, "yb/rediscluster/client.zep", 125 TSRMLS_CC);
+	zephir_throw_exception_debug(_13, "yb/redis/cluster.zep", 125 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, getConnection) {
+PHP_METHOD(Yb_Redis_Cluster, getConnection) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	long port;
@@ -375,7 +376,7 @@ PHP_METHOD(Yb_RedisCluster_Client, getConnection) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, newConnection) {
+PHP_METHOD(Yb_Redis_Cluster, newConnection) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	long port;
@@ -395,14 +396,14 @@ PHP_METHOD(Yb_RedisCluster_Client, newConnection) {
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_LONG(_1, port);
 	zephir_array_update_string(&options, SL("port"), &_1, PH_COPY | PH_SEPARATE);
-	object_init_ex(return_value, yb_rediscluster_connection_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 100, options);
+	object_init_ex(return_value, yb_redis_connection_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 97, options);
 	zephir_check_call_status();
 	RETURN_MM();
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, refleshSlots) {
+PHP_METHOD(Yb_Redis_Cluster, refleshSlots) {
 
 	zval *_2;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -439,7 +440,7 @@ PHP_METHOD(Yb_RedisCluster_Client, refleshSlots) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, onMoved) {
+PHP_METHOD(Yb_Redis_Cluster, onMoved) {
 
 	zend_bool _5;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -468,16 +469,16 @@ PHP_METHOD(Yb_RedisCluster_Client, onMoved) {
 	zephir_check_call_status();
 	_5 = Z_TYPE_P(result) == IS_OBJECT;
 	if (_5) {
-		_5 = (zephir_instance_of_ev(result, yb_rediscluster_error_ce TSRMLS_CC));
+		_5 = (zephir_instance_of_ev(result, yb_redis_error_ce TSRMLS_CC));
 	}
 	if (unlikely(_5)) {
 		ZEPHIR_INIT_VAR(_6$$3);
-		object_init_ex(_6$$3, yb_rediscluster_exception_ce);
+		object_init_ex(_6$$3, yb_redis_exception_ce);
 		ZEPHIR_OBS_VAR(_7$$3);
 		zephir_read_property(&_7$$3, result, SL("error"), PH_NOISY_CC);
 		ZEPHIR_CALL_METHOD(NULL, _6$$3, "__construct", NULL, 2, _7$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_6$$3, "yb/rediscluster/client.zep", 172 TSRMLS_CC);
+		zephir_throw_exception_debug(_6$$3, "yb/redis/cluster.zep", 172 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -485,7 +486,7 @@ PHP_METHOD(Yb_RedisCluster_Client, onMoved) {
 
 }
 
-PHP_METHOD(Yb_RedisCluster_Client, onAsk) {
+PHP_METHOD(Yb_Redis_Cluster, onAsk) {
 
 	zend_bool _6;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -517,21 +518,21 @@ PHP_METHOD(Yb_RedisCluster_Client, onAsk) {
 	zephir_check_call_status();
 	ZEPHIR_OBS_VAR(result);
 	if (unlikely(!(zephir_array_isset_long_fetch(&result, results, 1, 0 TSRMLS_CC)))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_rediscluster_exception_ce, "Invalid result when asking", "yb/rediscluster/client.zep", 190);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_redis_exception_ce, "Invalid result when asking", "yb/redis/cluster.zep", 190);
 		return;
 	}
 	_6 = Z_TYPE_P(result) == IS_OBJECT;
 	if (_6) {
-		_6 = (zephir_instance_of_ev(result, yb_rediscluster_error_ce TSRMLS_CC));
+		_6 = (zephir_instance_of_ev(result, yb_redis_error_ce TSRMLS_CC));
 	}
 	if (unlikely(_6)) {
 		ZEPHIR_INIT_VAR(_7$$4);
-		object_init_ex(_7$$4, yb_rediscluster_exception_ce);
+		object_init_ex(_7$$4, yb_redis_exception_ce);
 		ZEPHIR_OBS_VAR(_8$$4);
 		zephir_read_property(&_8$$4, result, SL("error"), PH_NOISY_CC);
 		ZEPHIR_CALL_METHOD(NULL, _7$$4, "__construct", NULL, 2, _8$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$4, "yb/rediscluster/client.zep", 194 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$4, "yb/redis/cluster.zep", 194 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

@@ -24,6 +24,13 @@ class TcpClient
         let this->handler = handler;
     }
 
+    public function __destruct() -> void
+    {
+        if this->handler {
+            fclose(this->handler);
+        }
+    }
+
     public function getInternalHandler()
     {
         return this->handler;
@@ -89,22 +96,38 @@ class TcpClient
         return line;
     }
 
-    public function readBlock(long len) -> string
+    public function readAll() -> string
     {
         var line;
 
-        let line = stream_get_contents(this->handler, len);
+        let line = stream_get_contents(this->handler);
         if unlikely line === false {
-            throw new Exception("Cannot read block");
+            throw new Exception("Cannot read all");
         }
 
         return line;
     }
 
-    public function writeBlock(string data) -> void
+    public function readLength(long len) -> string
+    {
+        var line;
+
+        if unlikely len < 1 {
+            throw new Exception("Invalid read length: " . strval(len));
+        }
+
+        let line = stream_get_contents(this->handler, len);
+        if unlikely line === false {
+            throw new Exception("Cannot read length");
+        }
+
+        return line;
+    }
+
+    public function write(string data) -> void
     {
         if unlikely fwrite(this->handler, data) === false {
-            throw new Exception("Cannot write block");
+            throw new Exception("Cannot write");
         }
     }
 

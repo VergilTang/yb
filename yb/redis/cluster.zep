@@ -1,9 +1,9 @@
-namespace Yb\RedisCluster;
+namespace Yb\Redis;
 
 use Yb\Std;
 use Yb\DataCacher\DataCacherInterface;
 
-class Client
+class Cluster implements RedisClientInterface
 {
     protected slotsCacher;
     protected options;
