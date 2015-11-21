@@ -56,6 +56,7 @@
 #include "yb/logger/nulllogger.zep.h"
 #include "yb/mailer/exception.zep.h"
 #include "yb/mailer/smtp.zep.h"
+#include "yb/mongo/exception.zep.h"
 #include "yb/ratelimiter/exception.zep.h"
 #include "yb/ratelimiter/redis.zep.h"
 #include "yb/redis/cluster.zep.h"

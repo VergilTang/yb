@@ -102,7 +102,7 @@ PHP_METHOD(Yb_Upload_Ftp, __construct) {
 		ZVAL_LONG(&_8$$3, port);
 		ZEPHIR_SINIT_VAR(_9$$3);
 		ZVAL_LONG(&_9$$3, timeout);
-		ZEPHIR_CALL_FUNCTION(&ftp, "ftp_ssl_connect", NULL, 125, host, &_8$$3, &_9$$3);
+		ZEPHIR_CALL_FUNCTION(&ftp, "ftp_ssl_connect", NULL, 122, host, &_8$$3, &_9$$3);
 		zephir_check_call_status();
 	} else {
 		if (unlikely(!((zephir_function_exists_ex(SS("ftp_connect") TSRMLS_CC) == SUCCESS)))) {
@@ -113,7 +113,7 @@ PHP_METHOD(Yb_Upload_Ftp, __construct) {
 		ZVAL_LONG(&_10$$5, port);
 		ZEPHIR_SINIT_VAR(_11$$5);
 		ZVAL_LONG(&_11$$5, timeout);
-		ZEPHIR_CALL_FUNCTION(&ftp, "ftp_connect", NULL, 126, host, &_10$$5, &_11$$5);
+		ZEPHIR_CALL_FUNCTION(&ftp, "ftp_connect", NULL, 123, host, &_10$$5, &_11$$5);
 		zephir_check_call_status();
 	}
 	if (unlikely(!zephir_is_true(ftp))) {
@@ -129,7 +129,7 @@ PHP_METHOD(Yb_Upload_Ftp, __construct) {
 	}
 	_14 = zephir_is_true(user);
 	if (_14) {
-		ZEPHIR_CALL_FUNCTION(&_7, "ftp_login", NULL, 127, ftp, user, passwd);
+		ZEPHIR_CALL_FUNCTION(&_7, "ftp_login", NULL, 124, ftp, user, passwd);
 		zephir_check_call_status();
 		_14 = !zephir_is_true(_7);
 	}
@@ -144,7 +144,7 @@ PHP_METHOD(Yb_Upload_Ftp, __construct) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&_17, "ftp_pasv", NULL, 128, ftp, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&_17, "ftp_pasv", NULL, 125, ftp, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_17))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Cannot set PASV mode", "yb/upload/ftp.zep", 45);
@@ -202,14 +202,14 @@ PHP_METHOD(Yb_Upload_Ftp, store) {
 	ZEPHIR_INIT_VAR(_3);
 	ZEPHIR_CONCAT_VV(_3, _2, destUri);
 	zephir_get_strval(destPath, _3);
-	ZEPHIR_CALL_FUNCTION(&_4, "dirname", NULL, 119, destPath);
+	ZEPHIR_CALL_FUNCTION(&_4, "dirname", NULL, 116, destPath);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "mkdirifnotexists", NULL, 0, _4);
 	zephir_check_call_status();
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("ftp"), PH_NOISY_CC);
 	ZEPHIR_SINIT_VAR(_6);
 	ZVAL_LONG(&_6, 2);
-	ZEPHIR_CALL_FUNCTION(&_7, "ftp_put", NULL, 129, _5, destPath, source, &_6);
+	ZEPHIR_CALL_FUNCTION(&_7, "ftp_put", NULL, 126, _5, destPath, source, &_6);
 	zephir_check_call_status();
 	if (zephir_is_true(_7)) {
 		do {
@@ -239,7 +239,7 @@ PHP_METHOD(Yb_Upload_Ftp, remove) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("ftp"), PH_NOISY_CC);
-	ZEPHIR_RETURN_CALL_FUNCTION("ftp_delete", NULL, 130, _0, uri);
+	ZEPHIR_RETURN_CALL_FUNCTION("ftp_delete", NULL, 127, _0, uri);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -253,7 +253,7 @@ PHP_METHOD(Yb_Upload_Ftp, __destruct) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("ftp"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(NULL, "ftp_close", NULL, 131, _0);
+	ZEPHIR_CALL_FUNCTION(NULL, "ftp_close", NULL, 128, _0);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -288,7 +288,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_1);
 	ZVAL_STRING(&_1, "Yb\\Std::ignoreError", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 132, &_1);
+	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 129, &_1);
 	zephir_check_call_status();
 	while (1) {
 		if (!(zephir_is_true(parts))) {
@@ -298,7 +298,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 		zephir_fast_join_str(_4$$3, SL("/"), parts TSRMLS_CC);
 		ZEPHIR_INIT_NVAR(cur);
 		ZEPHIR_CONCAT_SV(cur, "/", _4$$3);
-		ZEPHIR_CALL_FUNCTION(&_5$$3, "ftp_chdir", &_6, 133, ftp, cur);
+		ZEPHIR_CALL_FUNCTION(&_5$$3, "ftp_chdir", &_6, 130, ftp, cur);
 		zephir_check_call_status();
 		if (!(zephir_is_true(_5$$3))) {
 			zephir_array_append(&stack, cur, PH_SEPARATE, "yb/upload/ftp.zep", 102);
@@ -308,7 +308,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 		ZEPHIR_UNREF(parts);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_FUNCTION(NULL, "restore_error_handler", NULL, 134);
+	ZEPHIR_CALL_FUNCTION(NULL, "restore_error_handler", NULL, 131);
 	zephir_check_call_status();
 	zephir_is_iterable(stack, &_9, &_8, 0, 1, "yb/upload/ftp.zep", 112);
 	for (
@@ -316,7 +316,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 	  ; zephir_hash_move_backwards_ex(_9, &_8)
 	) {
 		ZEPHIR_GET_HVALUE(cur, _10);
-		ZEPHIR_CALL_FUNCTION(NULL, "ftp_mkdir", &_11, 135, ftp, cur);
+		ZEPHIR_CALL_FUNCTION(NULL, "ftp_mkdir", &_11, 132, ftp, cur);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();

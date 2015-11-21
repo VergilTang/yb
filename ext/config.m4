@@ -61,6 +61,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/logger/nulllogger.zep.c
 	yb/mailer/exception.zep.c
 	yb/mailer/smtp.zep.c
+	yb/mongo/exception.zep.c
 	yb/ratelimiter/exception.zep.c
 	yb/ratelimiter/redis.zep.c
 	yb/redis/cluster.zep.c

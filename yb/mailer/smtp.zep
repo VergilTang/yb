@@ -13,8 +13,8 @@ class Smtp implements MailerInterface
     public function __construct(array options) -> void
     {
         string host, user, passwd, from, name;
-        long port, timeout;
-        double ioTimeout;
+        long port, connectTimeout;
+        double timeout;
         boolean secure;
         var socket;
 
@@ -24,8 +24,8 @@ class Smtp implements MailerInterface
 
         let from = (string) Std::valueAt(options, "from", user);
         let name = (string) Std::valueAt(options, "name", "");
-        let timeout = (long) Std::valueAt(options, "timeout", 10);
-        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", 5);
+        let connectTimeout = (long) Std::valueAt(options, "connectTimeout", 10);
+        let timeout = (double) Std::valueAt(options, "timeout", 5);
         let secure = (boolean) Std::valueAt(options, "secure", false);
 
         if secure {
@@ -34,13 +34,13 @@ class Smtp implements MailerInterface
             let port = (long) Std::valueAt(options, "port", 25);
         }
 
-        let socket = new TcpClient(host, port, timeout, false);
+        let socket = new TcpClient(host, port, connectTimeout, false);
 
         socket->setTcpNodelay(true);
         socket->setBlocking(true);
 
-        if ioTimeout > 0 {
-            socket->setIoTimeout(ioTimeout);
+        if timeout > 0 {
+            socket->setTimeout(timeout);
         }
         if secure {
             socket->enableCrypto(constant("STREAM_CRYPTO_METHOD_SSLv23_CLIENT"));
@@ -58,62 +58,57 @@ class Smtp implements MailerInterface
 
     public function sendMessageTo(array message, array to, array cc = [], array bcc = []) -> void
     {
-        var data = [], temp, addr, name, attachments, path, mine, type, subject, plain;
+        var data = [], recievers, addr, name, subject, plain, body, attachments, path;
         string boundary;
 
         this->cmd("MAIL FROM", "MAIL FROM: " . this->from, 250);
         let data[] = "FROM: " . this->from;
 
         if count(to) < 1 {
-            throw new Exception("No one to send");
+            throw new Exception("No recievers to send to");
         }
 
-        let temp = [];
+        let recievers = [];
         for addr, name in to {
             let name = this->pack(name, addr);
-            let temp[] = name;
             this->cmd("RCPT TO", "RCPT TO: " . name, 250);
+            let recievers[] = name;
         }
-        let data[] = "TO: " . join(",", temp);
+        let data[] = "TO: " . join(",", recievers);
 
         if count(cc) > 0 {
-            let temp = [];
+            let recievers = [];
             for addr, name in cc {
                 let name = this->pack(name, addr);
-                let temp[] = name;
                 this->cmd("RCPT TO", "RCPT TO: " . name, 250);
+                let recievers[] = name;
             }
-            let data[] = "CC: " . join(",", temp);
+            let data[] = "CC: " . join(",", recievers);
         }
         if count(bcc) > 0 {
-            let temp = [];
+            let recievers = [];
             for addr, name in bcc {
                 let name = this->pack(name, addr);
-                let temp[] = name;
                 this->cmd("RCPT TO", "RCPT TO: " . name, 250);
+                let recievers[] = name;
             }
-            let data[] = "BCC: " . join(",", temp);
+            let data[] = "BCC: " . join(",", recievers);
         }
+
+        let boundary = "----Boundary-" . Std::uuid();
 
         if fetch subject, message["subject"] {
             let data[] = "Subject: " . this->pack(subject);
         }
-
+        let data[] = "Mime-Version: 1.0";
+        let data[] = "Content-Type: multipart/mixed; boundary=\"" . boundary . "\"";
+        let data[] = "Content-Transfer-Encoding: 8Bit";
         let data[] = "Date: " . gmdate("r");
-
-        if fetch attachments, message["attachments"] && typeof attachments == "array" && count(attachments) > 0 {
-            let data[] = "Content-Type: multipart/mixed;";
-        } else {
-            let attachments = [];
-            let data[] = "Content-Type: multipart/alternative;";
-        }
-
-        let boundary = "Boundary-" . (string) md5(uniqid(mt_rand(), true));
-        let data[] = "\tboundary=\"" . boundary . "\"";
-        let boundary = "--" . boundary;
-
-        let data[] = "MIME-Version: 1.0";
         let data[] = "";
+        let data[] = "This is a multi-part message in MIME format!";
+        let data[] = "";
+
+        let boundary = "--" . boundary;
 
         let data[] = boundary;
         if fetch plain, message["plain"] && plain {
@@ -123,31 +118,32 @@ class Smtp implements MailerInterface
         }
         let data[] = "Content-Transfer-Encoding: base64";
         let data[] = "";
-        let data[] = chunk_split(base64_encode(message["body"])) . boundary;
+        if fetch body, message["body"] {
+            let body = (string) body;
+        } else {
+            let body = "";
+        }
+        let data[] = chunk_split(base64_encode(body));
+        let data[] = "";
 
-        if attachments {
-            let mine = finfo_open(FILEINFO_MIME_TYPE);
+        if fetch attachments, message["attachments"] && typeof attachments == "array" && count(attachments) > 0 {
             for path in attachments {
                 if unlikely ! file_exists(path) {
                     throw new Exception("Cannot find attachment: " . path);
                 }
-
-                let type = finfo_file(mine, path);
-                if type {
-                    let data[] = "Content-Type: " . type;
-                } else {
-                    let data[] = "Content-Type: application/octet-stream";
-                }
-
-                let data[] = "Content-Transfer-Encoding: base64";
+                let data[] = boundary;
+                let data[] = "Content-Type: application/octet-stream";
                 let data[] = "Content-Disposition: attachment; filename=\"" . this->pack(basename(path)) . "\"";
+                let data[] = "Content-Transfer-Encoding: base64";
                 let data[] = "";
-                let data[] = chunk_split(base64_encode(file_get_contents(path))) . boundary;
+                let data[] = chunk_split(base64_encode(file_get_contents(path)));
+                let data[] = "";
             }
-
-            finfo_close(mine);
         }
 
+        let boundary .= "--";
+
+        let data[] = boundary;
         let data[] = ".";
 
         this->cmd("DATA", "DATA", 354);

@@ -4,7 +4,7 @@ class TcpClient
 {
     protected handler;
 
-    public function __construct(string host, long port, long timeout = 5, boolean persistent = false) -> void
+    public function __construct(string host, long port, long connectTimeout = 5, boolean persistent = false) -> void
     {
         string address;
         long flags;
@@ -16,7 +16,7 @@ class TcpClient
             let flags = flags | (long) STREAM_CLIENT_PERSISTENT;
         }
 
-        let handler = stream_socket_client(address, errNo, errStr, timeout, flags);
+        let handler = stream_socket_client(address, errNo, errStr, connectTimeout, flags);
         if unlikely ! handler {
             throw new Exception("Cannot connect to " . address . " [" . errNo . "]" . errStr);
         }
@@ -61,18 +61,18 @@ class TcpClient
         }
     }
 
-    public function setIoTimeout(double ioTimeout) -> void
+    public function setTimeout(double timeout) -> void
     {
-        long ioTimeoutSeconds, ioTimeoutMicroSeconds;
+        long seconds, microSeconds;
 
-        if unlikely ioTimeout < 0 {
-            throw new Exception("Cannot set io timeout to negative value");
+        if unlikely timeout < 0 {
+            throw new Exception("Cannot set timeout to negative value");
         }
 
-        let ioTimeoutSeconds = (long) ioTimeout;
-        let ioTimeoutMicroSeconds = (long) ((ioTimeout - ioTimeoutSeconds) * 1000000.0);
+        let seconds = (long) timeout;
+        let microSeconds = (long) ((timeout - seconds) * 1000000.0);
 
-        if unlikely ! stream_set_timeout(this->handler, ioTimeoutSeconds, ioTimeoutMicroSeconds) {
+        if unlikely ! stream_set_timeout(this->handler, seconds, microSeconds) {
             throw new Exception("Failed: stream_set_timeout");
         }
     }

@@ -35,19 +35,19 @@ PHP_METHOD(Yb_Socket_TcpClient, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zend_bool persistent;
-	long port, timeout, flags = 0;
-	zval *host_param = NULL, *port_param = NULL, *timeout_param = NULL, *persistent_param = NULL, *handler = NULL, *errNo = NULL, *errStr = NULL, _0, _1, *_2 = NULL, *_4, *_5, *_6$$4, *_7$$4;
+	long port, connectTimeout, flags = 0;
+	zval *host_param = NULL, *port_param = NULL, *connectTimeout_param = NULL, *persistent_param = NULL, *handler = NULL, *errNo = NULL, *errStr = NULL, _0, _1, *_2 = NULL, *_4, *_5, *_6$$4, *_7$$4;
 	zval *host = NULL, *address = NULL, *_3 = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 2, &host_param, &port_param, &timeout_param, &persistent_param);
+	zephir_fetch_params(1, 2, 2, &host_param, &port_param, &connectTimeout_param, &persistent_param);
 
 	zephir_get_strval(host, host_param);
 	port = zephir_get_intval(port_param);
-	if (!timeout_param) {
-		timeout = 5;
+	if (!connectTimeout_param) {
+		connectTimeout = 5;
 	} else {
-		timeout = zephir_get_intval(timeout_param);
+		connectTimeout = zephir_get_intval(connectTimeout_param);
 	}
 	if (!persistent_param) {
 		persistent = 0;
@@ -73,11 +73,11 @@ PHP_METHOD(Yb_Socket_TcpClient, __construct) {
 		flags = (flags | 1);
 	}
 	ZEPHIR_INIT_VAR(_4);
-	ZVAL_LONG(_4, timeout);
+	ZVAL_LONG(_4, connectTimeout);
 	ZEPHIR_INIT_VAR(_5);
 	ZVAL_LONG(_5, flags);
 	ZEPHIR_MAKE_REF(errNo);
-	ZEPHIR_CALL_FUNCTION(&handler, "stream_socket_client", NULL, 106, address, errNo, errStr, _4, _5);
+	ZEPHIR_CALL_FUNCTION(&handler, "stream_socket_client", NULL, 101, address, errNo, errStr, _4, _5);
 	ZEPHIR_UNREF(errNo);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(handler))) {
@@ -134,7 +134,7 @@ PHP_METHOD(Yb_Socket_TcpClient, setTcpNodelay) {
 		return;
 	}
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&socket, "socket_import_stream", NULL, 107, _0);
+	ZEPHIR_CALL_FUNCTION(&socket, "socket_import_stream", NULL, 102, _0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(socket))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: socket_import_stream", "yb/socket/tcpclient.zep", 49);
@@ -152,7 +152,7 @@ PHP_METHOD(Yb_Socket_TcpClient, setTcpNodelay) {
 	ZVAL_LONG(&_2, 6);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_LONG(&_3, 1);
-	ZEPHIR_CALL_FUNCTION(&_4, "socket_set_option", NULL, 108, socket, &_2, &_3, _1);
+	ZEPHIR_CALL_FUNCTION(&_4, "socket_set_option", NULL, 103, socket, &_2, &_3, _1);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_4))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set SOL_TCP TCP_NODELAY", "yb/socket/tcpclient.zep", 53);
@@ -183,7 +183,7 @@ PHP_METHOD(Yb_Socket_TcpClient, setBlocking) {
 		ZEPHIR_INIT_NVAR(_1);
 		ZVAL_LONG(_1, 0);
 	}
-	ZEPHIR_CALL_FUNCTION(&_2, "stream_set_blocking", NULL, 109, _0, _1);
+	ZEPHIR_CALL_FUNCTION(&_2, "stream_set_blocking", NULL, 104, _0, _1);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_2))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set blocking", "yb/socket/tcpclient.zep", 60);
@@ -193,31 +193,31 @@ PHP_METHOD(Yb_Socket_TcpClient, setBlocking) {
 
 }
 
-PHP_METHOD(Yb_Socket_TcpClient, setIoTimeout) {
+PHP_METHOD(Yb_Socket_TcpClient, setTimeout) {
 
-	long ioTimeoutSeconds = 0, ioTimeoutMicroSeconds = 0;
+	long seconds = 0, microSeconds = 0;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *ioTimeout_param = NULL, *_0, _1, _2, *_3 = NULL;
-	double ioTimeout;
+	zval *timeout_param = NULL, *_0, _1, _2, *_3 = NULL;
+	double timeout;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &ioTimeout_param);
+	zephir_fetch_params(1, 1, 0, &timeout_param);
 
-	ioTimeout = zephir_get_doubleval(ioTimeout_param);
+	timeout = zephir_get_doubleval(timeout_param);
 
 
-	if (unlikely(ioTimeout < 0)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set io timeout to negative value", "yb/socket/tcpclient.zep", 69);
+	if (unlikely(timeout < 0)) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot set timeout to negative value", "yb/socket/tcpclient.zep", 69);
 		return;
 	}
-	ioTimeoutSeconds = (long) (ioTimeout);
-	ioTimeoutMicroSeconds = (long) ((((ioTimeout -  (double) ioTimeoutSeconds)) * 1000000.0));
+	seconds = (long) (timeout);
+	microSeconds = (long) ((((timeout -  (double) seconds)) * 1000000.0));
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	ZEPHIR_SINIT_VAR(_1);
-	ZVAL_LONG(&_1, ioTimeoutSeconds);
+	ZVAL_LONG(&_1, seconds);
 	ZEPHIR_SINIT_VAR(_2);
-	ZVAL_LONG(&_2, ioTimeoutMicroSeconds);
-	ZEPHIR_CALL_FUNCTION(&_3, "stream_set_timeout", NULL, 110, _0, &_1, &_2);
+	ZVAL_LONG(&_2, microSeconds);
+	ZEPHIR_CALL_FUNCTION(&_3, "stream_set_timeout", NULL, 105, _0, &_1, &_2);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_3))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_set_timeout", "yb/socket/tcpclient.zep", 76);
@@ -238,7 +238,7 @@ PHP_METHOD(Yb_Socket_TcpClient, enableCrypto) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "stream_socket_enable_crypto", NULL, 111, _0, ZEPHIR_GLOBAL(global_true), cryptoType);
+	ZEPHIR_CALL_FUNCTION(&_1, "stream_socket_enable_crypto", NULL, 106, _0, ZEPHIR_GLOBAL(global_true), cryptoType);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Failed: stream_socket_enable_crypto", "yb/socket/tcpclient.zep", 83);
@@ -278,7 +278,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readLine) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 112, _0);
+	ZEPHIR_CALL_FUNCTION(&line, "fgets", NULL, 107, _0);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read line", "yb/socket/tcpclient.zep", 100);
@@ -296,7 +296,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readAll) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _0);
+	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 108, _0);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read all", "yb/socket/tcpclient.zep", 112);
@@ -323,7 +323,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readLength) {
 		object_init_ex(_0$$3, yb_socket_exception_ce);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_LONG(&_1$$3, len);
-		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 114, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 109, &_1$$3);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_3$$3);
 		ZEPHIR_CONCAT_SV(_3$$3, "Invalid read length: ", _2$$3);
@@ -336,7 +336,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readLength) {
 	_4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	ZEPHIR_SINIT_VAR(_5);
 	ZVAL_LONG(&_5, len);
-	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 113, _4, &_5);
+	ZEPHIR_CALL_FUNCTION(&line, "stream_get_contents", NULL, 108, _4, &_5);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read length", "yb/socket/tcpclient.zep", 128);
@@ -363,7 +363,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readMaxLength) {
 		object_init_ex(_0$$3, yb_socket_exception_ce);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_LONG(&_1$$3, len);
-		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 114, &_1$$3);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 109, &_1$$3);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_3$$3);
 		ZEPHIR_CONCAT_SV(_3$$3, "Invalid read max length: ", _2$$3);
@@ -376,7 +376,7 @@ PHP_METHOD(Yb_Socket_TcpClient, readMaxLength) {
 	_4 = zephir_fetch_nproperty_this(this_ptr, SL("handler"), PH_NOISY_CC);
 	ZEPHIR_SINIT_VAR(_5);
 	ZVAL_LONG(&_5, len);
-	ZEPHIR_CALL_FUNCTION(&line, "fread", NULL, 115, _4, &_5);
+	ZEPHIR_CALL_FUNCTION(&line, "fread", NULL, 110, _4, &_5);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(line))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_socket_exception_ce, "Cannot read max length", "yb/socket/tcpclient.zep", 144);

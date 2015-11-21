@@ -88,7 +88,7 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 		} while(0);
 
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 116, size);
+	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 111, size);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -188,7 +188,7 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 	}
 	ZEPHIR_SINIT_VAR(_17);
 	ZVAL_LONG(&_17, 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 114, &_17);
+	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 109, &_17);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -401,9 +401,9 @@ PHP_METHOD(Yb_Std, uuid) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 90);
+	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 112);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 91, _0, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 113, _0, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VV(_2, _1, salt);
@@ -504,7 +504,7 @@ PHP_METHOD(Yb_Std, tr) {
 		ZEPHIR_CONCAT_SVS(_4$$3, "{", k, "}");
 		zephir_array_update_zval(&r, _4$$3, &_3$$3, PH_COPY | PH_SEPARATE);
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 103, message, r);
+	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 98, message, r);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -1081,7 +1081,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 104, args);
+	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 99, args);
 	zephir_check_call_status();
 	do {
 		if (c == 1) {
@@ -1220,7 +1220,7 @@ PHP_METHOD(Yb_Std, throwError) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, n);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 117, _2, _3);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 114, _2, _3);
 	zephir_check_call_status();
 	zephir_throw_exception_debug(_0, "yb/std.zep", 413 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -1258,7 +1258,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 118, data, _2, _3);
+	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 115, data, _2, _3);
 	zephir_check_temp_parameter(_3);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();

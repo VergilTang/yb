@@ -5,33 +5,33 @@ use Yb\Socket\TcpClient;
 
 class Connection
 {
-    const DEFAULT_HOST          = "127.0.0.1";
-    const DEFAULT_PORT          = 6379;
-    const DEFAULT_TIMEOUT       = 5;
-    const DEFAULT_IO_TIMEOUT    = 2.0;
-    const DEFAULT_PERSISTENT    = false;
+    const DEFAULT_HOST              = "127.0.0.1";
+    const DEFAULT_PORT              = 6379;
+    const DEFAULT_CONNECT_TIMEOUT   = 5;
+    const DEFAULT_TIMEOUT           = 2.0;
+    const DEFAULT_PERSISTENT        = false;
 
     protected socket;
 
     public function __construct(array options = []) -> void
     {
         string host;
-        long port, timeout;
+        long port, connectTimeout;
         boolean persistent;
-        double ioTimeout;
+        double timeout;
         var socket;
 
         let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
         let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
-        let timeout = (long) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
+        let connectTimeout = (long) Std::valueAt(options, "connectTimeout", self::DEFAULT_CONNECT_TIMEOUT);
         let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
-        let ioTimeout = (double) Std::valueAt(options, "ioTimeout", self::DEFAULT_IO_TIMEOUT);
+        let timeout = (double) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
 
-        let socket = new TcpClient(host, port, timeout, persistent);
+        let socket = new TcpClient(host, port, connectTimeout, persistent);
         socket->setTcpNodelay(true);
         socket->setBlocking(true);
-        if ioTimeout > 0 {
-            socket->setIoTimeout(ioTimeout);
+        if timeout > 0 {
+            socket->setTimeout(timeout);
         }
 
         let this->socket = socket;

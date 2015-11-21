@@ -79,6 +79,7 @@ zend_class_entry *yb_logger_filelogger_ce;
 zend_class_entry *yb_logger_nulllogger_ce;
 zend_class_entry *yb_mailer_exception_ce;
 zend_class_entry *yb_mailer_smtp_ce;
+zend_class_entry *yb_mongo_exception_ce;
 zend_class_entry *yb_ratelimiter_exception_ce;
 zend_class_entry *yb_ratelimiter_redis_ce;
 zend_class_entry *yb_redis_cluster_ce;
@@ -179,6 +180,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Logger_NullLogger);
 	ZEPHIR_INIT(Yb_Mailer_Exception);
 	ZEPHIR_INIT(Yb_Mailer_Smtp);
+	ZEPHIR_INIT(Yb_Mongo_Exception);
 	ZEPHIR_INIT(Yb_RateLimiter_Exception);
 	ZEPHIR_INIT(Yb_RateLimiter_Redis);
 	ZEPHIR_INIT(Yb_Redis_Cluster);
