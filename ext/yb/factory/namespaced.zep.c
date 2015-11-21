@@ -21,7 +21,7 @@
 
 ZEPHIR_INIT_CLASS(Yb_Factory_Namespaced) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Factory, Namespaced, yb, factory_namespaced, yb_factory_classname_ce, yb_factory_namespaced_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Factory, Namespaced, yb, factory_namespaced, yb_factory_classnameabstract_ce, yb_factory_namespaced_method_entry, 0);
 
 	zend_declare_property_null(yb_factory_namespaced_ce, SL("ns"), ZEND_ACC_PROTECTED TSRMLS_CC);
 

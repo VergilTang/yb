@@ -56,7 +56,7 @@
     "name": "Yb Framework",
     "description": "~",
     "author": "Hylent",
-    "version": "0.1.151118",
+    "version": "0.1.151122",
     "verbose": false,
     "requires": {
         "extensions": []

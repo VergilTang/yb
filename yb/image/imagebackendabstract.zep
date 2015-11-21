@@ -22,6 +22,25 @@ abstract class ImageBackendAbstract
 
     protected defaultOptions;
 
+    public function __construct(array defaultOptions = []) -> void
+    {
+        let this->defaultOptions = defaultOptions;
+    }
+
+    public function setDefaultOptions(array options) -> void
+    {
+        var k, v;
+
+        for k, v in options {
+            let this->defaultOptions[k] = v;
+        }
+    }
+
+    public function getDefaultOptions() -> array
+    {
+        return this->defaultOptions;
+    }
+
     abstract public function text(string text, array options = []) -> <Text>;
     abstract public function fromImage(<Image> im) -> <Image>;
     abstract public function fromSize(long width, long height = 0, string extension = "") -> <Image>;
@@ -36,24 +55,6 @@ abstract class ImageBackendAbstract
 
     abstract public function save(<Image> im, string destPath) -> void;
     abstract public function destroy(<ImageAbstract> im) -> void;
-
-    public function setDefaultOptions(array options) -> void
-    {
-        var k, v;
-
-        for k, v in options {
-            let this->defaultOptions[k] = v;
-        }
-    }
-
-    public function getDefaultOptions() -> array
-    {
-        if this->defaultOptions {
-            return this->defaultOptions;
-        }
-
-        return [];
-    }
 
     public function newText() -> <Text>
     {

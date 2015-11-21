@@ -2,11 +2,13 @@ namespace Yb\Image;
 
 class Imagick extends ImageBackendAbstract
 {
-    public function __construct() -> void
+    public function __construct(array defaultOptions = []) -> void
     {
         if unlikely ! extension_loaded("imagick") {
             throw new Exception("Missing extension: imagick");
         }
+
+        parent::__construct(defaultOptions);
     }
 
     public function text(string text, array options = []) -> <Text>

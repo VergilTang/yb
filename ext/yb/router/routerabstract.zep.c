@@ -107,7 +107,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 
 
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("controller"), PH_NOISY_CC);
-	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "camelcase", &_1, 19, _2);
+	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "camelcase", &_1, 18, _2);
 	zephir_check_call_status();
 	zephir_get_strval(_3, _0);
 	ZEPHIR_CPY_WRT(controllerClass, _3);
@@ -131,7 +131,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 	zephir_check_call_status();
 	zephir_array_append(&actionMethod, _8, PH_SEPARATE, "yb/router/routerabstract.zep", 47);
 	_10 = zephir_fetch_nproperty_this(this_ptr, SL("action"), PH_NOISY_CC);
-	ZEPHIR_CALL_CE_STATIC(&_9, yb_std_ce, "camelcase", &_1, 19, _10);
+	ZEPHIR_CALL_CE_STATIC(&_9, yb_std_ce, "camelcase", &_1, 18, _10);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_11);
 	ZEPHIR_CONCAT_VV(_11, _9, actionSuffix);

@@ -64,7 +64,7 @@ PHP_METHOD(Yb_Loader_NamePath, __construct) {
 	} else {
 		ZVAL_BOOL(_1, 0);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 78, _1);
+	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 80, _1);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("namePaths"), namePaths TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -73,8 +73,9 @@ PHP_METHOD(Yb_Loader_NamePath, __construct) {
 
 PHP_METHOD(Yb_Loader_NamePath, __invoke) {
 
+	zephir_fcall_cache_entry *_6 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *path = NULL, *_0, *_1 = NULL, *_2, *_5 = NULL, *_3$$4, *_6$$6, *_7$$6;
+	zval *name_param = NULL, *path = NULL, *_0, *_1 = NULL, *_2, *_5 = NULL, *_3$$4, *_7$$6, *_8$$6;
 	zval *name = NULL, *_4$$4;
 
 	ZEPHIR_MM_GROW();
@@ -107,16 +108,16 @@ PHP_METHOD(Yb_Loader_NamePath, __invoke) {
 	if (zephir_require_zval(path TSRMLS_CC) == FAILURE) {
 		RETURN_MM_NULL();
 	}
-	ZEPHIR_CALL_SELF(&_5, "isloaded", NULL, 0, name);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_loader_loaderabstract_ce, "isloaded", &_6, 81, name);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_5))) {
-		ZEPHIR_INIT_VAR(_6$$6);
-		object_init_ex(_6$$6, yb_loader_exception_ce);
 		ZEPHIR_INIT_VAR(_7$$6);
-		ZEPHIR_CONCAT_SVSV(_7$$6, "Cannot load: ", name, ", in path: ", path);
-		ZEPHIR_CALL_METHOD(NULL, _6$$6, "__construct", NULL, 2, _7$$6);
+		object_init_ex(_7$$6, yb_loader_exception_ce);
+		ZEPHIR_INIT_VAR(_8$$6);
+		ZEPHIR_CONCAT_SVSV(_8$$6, "Cannot load: ", name, ", in path: ", path);
+		ZEPHIR_CALL_METHOD(NULL, _7$$6, "__construct", NULL, 2, _8$$6);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_6$$6, "yb/loader/namepath.zep", 33 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$6, "yb/loader/namepath.zep", 33 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

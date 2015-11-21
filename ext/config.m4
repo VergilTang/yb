@@ -10,22 +10,23 @@ if test "$PHP_YB" = "yes"; then
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/data/dataabstract.zep.c
 	yb/collection/collectioninterface.zep.c
 	yb/db/dbabstract.zep.c
 	yb/sequence/sequenceinterface.zep.c
-	yb/factory/factoryinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/upload/storageabstract.zep.c
 	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
-	yb/factory/classname.zep.c
+	yb/factory/factoryinterface.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
 	yb/redis/error.zep.c
 	yb/router/routerabstract.zep.c
 	yb/collection/redishash.zep.c
+	yb/factory/classnameabstract.zep.c
 	yb/image/image.zep.c
 	yb/mailer/mailerinterface.zep.c
 	yb/ratelimiter/ratelimiterinterface.zep.c
@@ -37,6 +38,11 @@ if test "$PHP_YB" = "yes"; then
 	yb/collection/mongocollection.zep.c
 	yb/collection/proxy.zep.c
 	yb/collection/redishashserialized.zep.c
+	yb/data/grouped.zep.c
+	yb/data/pivot.zep.c
+	yb/data/ratelimiter.zep.c
+	yb/data/sequence.zep.c
+	yb/data/singlevalue.zep.c
 	yb/datacacher/apc.zep.c
 	yb/datacacher/exception.zep.c
 	yb/datacacher/file.zep.c
@@ -46,7 +52,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/db/queryexception.zep.c
 	yb/db/transactionexception.zep.c
 	yb/factory/exception.zep.c
-	yb/factory/generated.zep.c
 	yb/factory/namespaced.zep.c
 	yb/image/captcha.zep.c
 	yb/image/exception.zep.c

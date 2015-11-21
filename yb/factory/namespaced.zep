@@ -1,6 +1,6 @@
 namespace Yb\Factory;
 
-class Namespaced extends ClassName
+class Namespaced extends ClassNameAbstract
 {
     protected ns;
 

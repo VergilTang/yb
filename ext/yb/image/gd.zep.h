@@ -21,6 +21,10 @@ PHP_METHOD(Yb_Image_Gd, drawText);
 PHP_METHOD(Yb_Image_Gd, copy);
 PHP_METHOD(Yb_Image_Gd, copyResampled);
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd___construct, 0, 0, 0)
+	ZEND_ARG_ARRAY_INFO(0, defaultOptions, 1)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_text, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
 	ZEND_ARG_ARRAY_INFO(0, options, 1)
@@ -123,7 +127,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_gd_copyresampled, 0, 0, 10)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_image_gd_method_entry) {
-	PHP_ME(Yb_Image_Gd, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Yb_Image_Gd, __construct, arginfo_yb_image_gd___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Yb_Image_Gd, text, arginfo_yb_image_gd_text, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Gd, fromImage, arginfo_yb_image_gd_fromimage, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Gd, fromSize, arginfo_yb_image_gd_fromsize, ZEND_ACC_PUBLIC)

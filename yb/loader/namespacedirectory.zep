@@ -47,7 +47,7 @@ class NamespaceDirectory extends LoaderAbstract
 
         require path;
 
-        if unlikely ! self::isLoaded(name) {
+        if unlikely ! LoaderAbstract::isLoaded(name) {
             throw new Exception("Cannot load: " . name . ", in path: " . path);
         }
 

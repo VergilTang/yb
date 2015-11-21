@@ -56,6 +56,11 @@ class Smtp implements MailerInterface
         this->cmd("AUTH PASSWD", base64_encode(passwd), 235);
     }
 
+    public function getSocket()
+    {
+        return this->socket;
+    }
+
     public function sendMessageTo(array message, array to, array cc = [], array bcc = []) -> void
     {
         var data = [], recievers, addr, name, subject, plain, body, attachments, path;
@@ -121,7 +126,7 @@ class Smtp implements MailerInterface
         if fetch body, message["body"] {
             let body = (string) body;
         } else {
-            let body = "";
+            let body = " ";
         }
         let data[] = chunk_split(base64_encode(body));
         let data[] = "";

@@ -2,7 +2,7 @@ namespace Yb\Factory;
 
 use Yb\Std;
 
-abstract class ClassName implements FactoryInterface
+abstract class ClassNameAbstract implements FactoryInterface
 {
     protected args;
 
@@ -20,34 +20,17 @@ abstract class ClassName implements FactoryInterface
             throw new Exception("Invalid product: " . name);
         }
 
-        if count(this->args) < 1 {
-            return new {className}();
-        }
-
         return Std::newInstanceOf(className, this->args);
     }
 
-    public function args() -> void
+    public function setArgs() -> void
     {
         let this->args = func_get_args();
     }
 
-    public function arg(var arg, long index = -1) -> void
+    public function setArgArray(array args) -> void
     {
-        long c;
-
-        if index > -1 {
-            let c = count(this->args);
-            loop {
-                if c >= index {
-                    break;
-                }
-                let c++;
-                let this->args[] = null;
-            }
-        }
-
-        let this->args[] = arg;
+        let this->args = array_values(args);
     }
 
     public function getArgArray() -> array

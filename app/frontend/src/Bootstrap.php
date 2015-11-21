@@ -39,7 +39,7 @@ class Bootstrap
 
         // action
         $controllerFactory = new \Yb\Factory\Namespaced(__NAMESPACE__.'\Controller');
-        $controllerFactory->args($this->app);
+        $controllerFactory->setArgs($this->app);
         $result = $router->dispatch($controllerFactory);
 
         // view
