@@ -15,7 +15,7 @@ class Image extends ImageAbstract
         return this->backend->crop(this, x, y, w, h);
     }
 
-    public function thumbnail(long width, long height = 0, boolean cropped = false) -> <Image>
+    public function thumbnail(long width, long height = 0, bool cropped = false) -> <Image>
     {
         return this->backend->thumbnail(this, width, height, cropped);
     }

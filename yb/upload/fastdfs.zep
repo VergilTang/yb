@@ -40,7 +40,7 @@ class Fastdfs extends StorageAbstract
         return "/" . destUri;
     }
 
-    public function remove(string uri) -> boolean
+    public function remove(string uri) -> bool
     {
         string fun = "fastdfs_storage_delete_file1";
         return {fun}(ltrim(uri, "/"));

@@ -36,7 +36,7 @@ class Uploader
         return new UploadedFile(this);
     }
 
-    public function saveUploadedFile(<UploadedFile> uploadedFile, string group, boolean keep) -> string
+    public function saveUploadedFile(<UploadedFile> uploadedFile, string group, bool keep) -> string
     {
         long flag;
 

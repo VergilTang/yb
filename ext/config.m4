@@ -39,10 +39,15 @@ if test "$PHP_YB" = "yes"; then
 	yb/collection/proxy.zep.c
 	yb/collection/redishashserialized.zep.c
 	yb/data/grouped.zep.c
+	yb/data/groupedbackendinterface.zep.c
 	yb/data/pivot.zep.c
+	yb/data/pivotbackendinterface.zep.c
 	yb/data/ratelimiter.zep.c
+	yb/data/ratelimiterbackendinterface.zep.c
 	yb/data/sequence.zep.c
+	yb/data/sequencebackendinterface.zep.c
 	yb/data/singlevalue.zep.c
+	yb/data/singlevaluebackendinterface.zep.c
 	yb/datacacher/apc.zep.c
 	yb/datacacher/exception.zep.c
 	yb/datacacher/file.zep.c

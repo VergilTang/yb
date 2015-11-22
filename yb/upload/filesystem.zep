@@ -43,7 +43,7 @@ class FileSystem extends StorageAbstract
         return "";
     }
 
-    public function remove(string uri) -> boolean
+    public function remove(string uri) -> bool
     {
         var path;
 

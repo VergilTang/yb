@@ -53,7 +53,7 @@ class Application implements \ArrayAccess
         let this->data[key] = value;
     }
 
-    public function offsetExists(string key) -> boolean
+    public function offsetExists(string key) -> bool
     {
         return isset this->data[key];
     }
@@ -104,7 +104,7 @@ class Application implements \ArrayAccess
         let this->services[name] = obj;
     }
 
-    public function __isset(string name) -> boolean
+    public function __isset(string name) -> bool
     {
         return isset this->services[name] || isset this->serviceInitializers[name];
     }

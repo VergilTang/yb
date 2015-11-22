@@ -17,14 +17,14 @@ class Connection
     {
         string host;
         long port, connectTimeout;
-        boolean persistent;
+        bool persistent;
         double timeout;
         var socket;
 
         let host = (string) Std::valueAt(options, "host", self::DEFAULT_HOST);
         let port = (long) Std::valueAt(options, "port", self::DEFAULT_PORT);
         let connectTimeout = (long) Std::valueAt(options, "connectTimeout", self::DEFAULT_CONNECT_TIMEOUT);
-        let persistent = (boolean) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
+        let persistent = (bool) Std::valueAt(options, "persistent", self::DEFAULT_PERSISTENT);
         let timeout = (double) Std::valueAt(options, "timeout", self::DEFAULT_TIMEOUT);
 
         let socket = new TcpClient(host, port, connectTimeout, persistent);

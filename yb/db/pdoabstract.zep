@@ -28,7 +28,7 @@ abstract class PdoAbstract extends DbAbstract
     {
         var s, k, v, e;
         double t;
-        boolean r;
+        bool r;
 
         let t = (double) microtime(true);
 
@@ -45,7 +45,7 @@ abstract class PdoAbstract extends DbAbstract
             }
         }
 
-        let r = (boolean) s->execute();
+        let r = (bool) s->execute();
         this->addQuery(sql, params, (double) microtime(true) - t);
 
         if unlikely ! r {
@@ -95,17 +95,17 @@ abstract class PdoAbstract extends DbAbstract
         return d;
     }
 
-    protected function tryToBegin() -> boolean
+    protected function tryToBegin() -> bool
     {
         return this->pdo->beginTransaction();
     }
 
-    protected function tryToCommit() -> boolean
+    protected function tryToCommit() -> bool
     {
         return this->pdo->commit();
     }
 
-    protected function tryToRollback() -> boolean
+    protected function tryToRollback() -> bool
     {
         return this->pdo->rollback();
     }

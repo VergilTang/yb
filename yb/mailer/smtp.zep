@@ -15,7 +15,7 @@ class Smtp implements MailerInterface
         string host, user, passwd, from, name;
         long port, connectTimeout;
         double timeout;
-        boolean secure;
+        bool secure;
         var socket;
 
         let host = (string) Std::valueAt(options, "host");
@@ -26,7 +26,7 @@ class Smtp implements MailerInterface
         let name = (string) Std::valueAt(options, "name", "");
         let connectTimeout = (long) Std::valueAt(options, "connectTimeout", 10);
         let timeout = (double) Std::valueAt(options, "timeout", 5);
-        let secure = (boolean) Std::valueAt(options, "secure", false);
+        let secure = (bool) Std::valueAt(options, "secure", false);
 
         if secure {
             let port = (long) Std::valueAt(options, "port", 465);

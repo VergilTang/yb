@@ -4,14 +4,14 @@ class NamePath extends LoaderAbstract
 {
     protected namePaths;
 
-    public function __construct(boolean registerSelf = false, array namePaths = []) -> void
+    public function __construct(bool registerSelf = false, array namePaths = []) -> void
     {
         parent::__construct(registerSelf);
 
         let this->namePaths = namePaths;
     }
 
-    public function __invoke(string name) -> boolean
+    public function __invoke(string name) -> bool
     {
         var path;
 

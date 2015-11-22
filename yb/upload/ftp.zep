@@ -11,13 +11,13 @@ class Ftp extends StorageAbstract
     {
         string baseDirectory;
         long port, timeout;
-        boolean ssl;
+        bool ssl;
         var ftp;
 
         let baseDirectory = (string) Std::valueAt(options, "baseDirectory", "");
         let port = (long) Std::valueAt(options, "port", 21);
         let timeout = (long) Std::valueAt(options, "timeout", 10);
-        let ssl = (boolean) Std::valueAt(options, "ssl", false);
+        let ssl = (bool) Std::valueAt(options, "ssl", false);
 
         if ssl {
             if unlikely ! function_exists("ftp_ssl_connect") {
@@ -77,7 +77,7 @@ class Ftp extends StorageAbstract
         return "";
     }
 
-    public function remove(string uri) -> boolean
+    public function remove(string uri) -> bool
     {
         return ftp_delete(this->ftp, uri);
     }

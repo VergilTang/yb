@@ -60,11 +60,11 @@ class Cluster implements RedisClientInterface
         this->runCommandsByKeyInternally(key, cmds, resultProcessor, false);
     }
 
-    protected function runCommandsByKeyInternally(string key, array cmds, var resultProcessor, boolean twice) -> void
+    protected function runCommandsByKeyInternally(string key, array cmds, var resultProcessor, bool twice) -> void
     {
         int slot;
         var results, index, result;
-        boolean hasResultProcessor = false, found = false;
+        bool hasResultProcessor = false, found = false;
 
         if resultProcessor {
             if unlikely ! is_callable(resultProcessor) {

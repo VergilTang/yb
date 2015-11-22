@@ -4,7 +4,7 @@ class TcpClient
 {
     protected handler;
 
-    public function __construct(string host, long port, long connectTimeout = 5, boolean persistent = false) -> void
+    public function __construct(string host, long port, long connectTimeout = 5, bool persistent = false) -> void
     {
         string address;
         long flags;
@@ -36,7 +36,7 @@ class TcpClient
         return this->handler;
     }
 
-    public function setTcpNodelay(boolean on) -> void
+    public function setTcpNodelay(bool on) -> void
     {
         var socket;
 
@@ -54,7 +54,7 @@ class TcpClient
         }
     }
 
-    public function setBlocking(boolean on) -> void
+    public function setBlocking(bool on) -> void
     {
         if unlikely ! stream_set_blocking(this->handler, on ? 1 : 0) {
             throw new Exception("Cannot set blocking");

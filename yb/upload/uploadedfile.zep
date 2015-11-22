@@ -15,12 +15,12 @@ class UploadedFile
         let this->uploader = uploader;
     }
 
-    public function isValid() -> boolean
+    public function isValid() -> bool
     {
         return this->error === 0;
     }
 
-    public function save(string group = "", boolean keep = false) -> string
+    public function save(string group = "", bool keep = false) -> string
     {
         if unlikely this->error !== 0 {
             throw new Exception("Invalid uploaded file cannot be saved");

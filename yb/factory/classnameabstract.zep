@@ -6,7 +6,7 @@ abstract class ClassNameAbstract implements FactoryInterface
 {
     protected args;
 
-    public function has(string name) -> boolean
+    public function has(string name) -> bool
     {
         return class_exists(this->getClassName(name));
     }

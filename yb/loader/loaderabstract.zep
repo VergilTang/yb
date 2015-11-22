@@ -2,9 +2,9 @@ namespace Yb\Loader;
 
 abstract class LoaderAbstract
 {
-    public static function isLoaded(string name) -> boolean
+    public static function isLoaded(string name) -> bool
     {
-        boolean x = false;
+        bool x = false;
 
         if class_exists(name, x) {
             return true;
@@ -21,23 +21,23 @@ abstract class LoaderAbstract
         return x;
     }
 
-    public function __construct(boolean registerSelf = false) -> void
+    public function __construct(bool registerSelf = false) -> void
     {
         if unlikely registerSelf && ! this->register() {
             throw new Exception("Cannot register loader");
         }
     }
 
-    public function register() -> boolean
+    public function register() -> bool
     {
         return spl_autoload_register(this);
     }
 
-    public function unregister() -> boolean
+    public function unregister() -> bool
     {
         return spl_autoload_unregister(this);
     }
 
-    abstract public function __invoke(string name) -> boolean;
+    abstract public function __invoke(string name) -> bool;
 
 }

@@ -273,7 +273,7 @@ class Gd extends ImageBackendAbstract
         return destIm;
     }
 
-    public function thumbnail(<Image> im, long width, long height, boolean cropped) -> <Image>
+    public function thumbnail(<Image> im, long width, long height, bool cropped) -> <Image>
     {
         var destIm;
         long srcW, srcH, w, h, x, y;

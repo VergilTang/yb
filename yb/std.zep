@@ -57,8 +57,8 @@ class Std
     {
         string to = "";
         char c;
-        boolean found = false;
-        boolean upper = true;
+        bool found = false;
+        bool upper = true;
 
         for c in from {
             if c >= '0' && c <= '9' {
@@ -98,8 +98,8 @@ class Std
     {
         string to = "";
         char c;
-        boolean found = false;
-        boolean upper = false;
+        bool found = false;
+        bool upper = false;
 
         for c in from {
             if c >= '0' && c <= '9' {
@@ -139,7 +139,7 @@ class Std
     {
         string to = "";
         char c;
-        boolean found = false;
+        bool found = false;
 
         for c in from {
             if (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') {

@@ -2,7 +2,7 @@ namespace Yb\Db;
 
 class PdoMysql extends PdoAbstract
 {
-    public function insert(string table, array data, string returningId = "", boolean upsert = false)
+    public function insert(string table, array data, string returningId = "", bool upsert = false)
     {
         var k, v, ks = [], vs = [];
         string s;

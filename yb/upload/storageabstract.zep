@@ -9,7 +9,7 @@ abstract class StorageAbstract
     const MOVE_UPLOADED_FILE    = 2;
 
     abstract public function store(string source, string group = "", string extension = "", long flag = 0) -> string;
-    abstract public function remove(string uri) -> boolean;
+    abstract public function remove(string uri) -> bool;
 
     public function generateUri(string source, string group, string extension) -> string
     {

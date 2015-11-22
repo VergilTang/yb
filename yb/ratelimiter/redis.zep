@@ -13,7 +13,7 @@ class Redis implements RateLimiterInterface
         let this->keyPrefix = keyPrefix;
     }
 
-    public function passRateLimiter(string item, long seconds, long times) -> boolean
+    public function passRateLimiter(string item, long seconds, long times) -> bool
     {
         string key;
         var value, result;

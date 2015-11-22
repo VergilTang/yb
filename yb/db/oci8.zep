@@ -35,7 +35,7 @@ class Oci8 extends DbAbstract
     {
         var s, k, v, m, e, eMessage;
         double t;
-        boolean r;
+        bool r;
 
         let t = (double) microtime(true);
 
@@ -54,7 +54,7 @@ class Oci8 extends DbAbstract
             let m = OCI_COMMIT_ON_SUCCESS;
         }
 
-        let r = (boolean) oci_execute(s, m);
+        let r = (bool) oci_execute(s, m);
         this->addQuery(sql, params, (double) microtime(true) - t);
 
         if unlikely ! r {
@@ -128,17 +128,17 @@ class Oci8 extends DbAbstract
         return d;
     }
 
-    protected function tryToBegin() -> boolean
+    protected function tryToBegin() -> bool
     {
         return true;
     }
 
-    protected function tryToCommit() -> boolean
+    protected function tryToCommit() -> bool
     {
         return oci_commit(this->oci);
     }
 
-    protected function tryToRollback() -> boolean
+    protected function tryToRollback() -> bool
     {
         return oci_rollback(this->oci);
     }

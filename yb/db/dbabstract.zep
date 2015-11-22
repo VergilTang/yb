@@ -30,7 +30,7 @@ abstract class DbAbstract
     abstract public function queryCell(string sql, array params = null) -> string;
     abstract public function queryColumns(string sql, array params = null) -> array;
 
-    public function inTransaction() -> boolean
+    public function inTransaction() -> bool
     {
         return this->inTransaction;
     }
@@ -268,7 +268,7 @@ abstract class DbAbstract
         string field, where;
         var orderBy;
         long limit, offset;
-        boolean forUpdate;
+        bool forUpdate;
 
         string s = "SELECT ";
 
@@ -277,7 +277,7 @@ abstract class DbAbstract
         let orderBy = Std::valueAt(options, "orderBy", "");
         let limit = (long) Std::valueAt(options, "limit", 0);
         let offset = (long) Std::valueAt(options, "offset", 0);
-        let forUpdate = (boolean) Std::valueAt(options, "forUpdate", false);
+        let forUpdate = (bool) Std::valueAt(options, "forUpdate", false);
 
         if field {
             let s .= field;
@@ -540,9 +540,9 @@ abstract class DbAbstract
         return this->queryAll(s);
     }
 
-    abstract protected function tryToBegin() -> boolean;
-    abstract protected function tryToCommit() -> boolean;
-    abstract protected function tryToRollback() -> boolean;
+    abstract protected function tryToBegin() -> bool;
+    abstract protected function tryToCommit() -> bool;
+    abstract protected function tryToRollback() -> bool;
 
     abstract protected function paginateQuery(string query, long limit, long offset) -> string;
     abstract protected function randomOrder() -> string;

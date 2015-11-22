@@ -4,7 +4,7 @@ class NamespaceDirectory extends LoaderAbstract
 {
     protected namespaceDirectories;
 
-    public function __construct(boolean registerSelf = false, array namespaceDirectories = []) -> void
+    public function __construct(bool registerSelf = false, array namespaceDirectories = []) -> void
     {
         var n, d;
 
@@ -15,10 +15,10 @@ class NamespaceDirectory extends LoaderAbstract
         }
     }
 
-    public function __invoke(string name) -> boolean
+    public function __invoke(string name) -> bool
     {
         var match, pos, dir;
-        boolean found = false;
+        bool found = false;
         string path;
 
         let match = name->lower();
