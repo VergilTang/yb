@@ -29,6 +29,18 @@ class Re extends ControllerBase
         });
     }
 
+    public function rlAction()
+    {
+        $redisCluster = $this->app->redisCluster;
+        $rlBackend = new \YbApp\Core\Lib\Data\RedisCluster($redisCluster);
+        $rl = new \Yb\Data\RateLimiter($rlBackend, '{rl}');
+
+        $r = $rl->pass('test', 5, 2);
+        var_dump($r);
+
+        return false;
+    }
+
     public function indexAction($type = 0)
     {
         $client = $this->app->redisCluster;
