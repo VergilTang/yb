@@ -54,11 +54,11 @@ class Ftp extends StorageAbstract
         return this->ftp;
     }
 
-    public function store(string source, string group = "", string extension = "", long flag = 0) -> string
+    public function store(string source, string prefix = "", string extension = "", long flag = 0) -> string
     {
         string destUri, destPath;
 
-        let destUri = (string) this->generateUri(source, group, extension);
+        let destUri = (string) this->generateUri(source, prefix, extension);
         let destPath = this->baseDirectory . destUri;
 
         this->mkDirIfNotExists(dirname(destPath));
@@ -80,6 +80,11 @@ class Ftp extends StorageAbstract
     public function remove(string uri) -> bool
     {
         return ftp_delete(this->ftp, uri);
+    }
+
+    public function exists(string uri) -> bool
+    {
+        return ftp_mdtm(this->ftp, uri) !== -1;
     }
 
     public function __destruct() -> void

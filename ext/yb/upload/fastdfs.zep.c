@@ -26,7 +26,7 @@ ZEPHIR_INIT_CLASS(Yb_Upload_Fastdfs) {
 
 	ZEPHIR_REGISTER_CLASS_EX(Yb\\Upload, Fastdfs, yb, upload_fastdfs, yb_upload_storageabstract_ce, yb_upload_fastdfs_method_entry, 0);
 
-	zend_declare_property_null(yb_upload_fastdfs_ce, SL("groupStorages"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_upload_fastdfs_ce, SL("prefixGroups"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	return SUCCESS;
 
@@ -35,17 +35,17 @@ ZEPHIR_INIT_CLASS(Yb_Upload_Fastdfs) {
 PHP_METHOD(Yb_Upload_Fastdfs, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *groupStorages_param = NULL, _0, *_1 = NULL;
-	zval *groupStorages = NULL;
+	zval *prefixGroups_param = NULL, _0, *_1 = NULL;
+	zval *prefixGroups = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &groupStorages_param);
+	zephir_fetch_params(1, 0, 1, &prefixGroups_param);
 
-	if (!groupStorages_param) {
-		ZEPHIR_INIT_VAR(groupStorages);
-		array_init(groupStorages);
+	if (!prefixGroups_param) {
+		ZEPHIR_INIT_VAR(prefixGroups);
+		array_init(prefixGroups);
 	} else {
-		zephir_get_arrval(groupStorages, groupStorages_param);
+		zephir_get_arrval(prefixGroups, prefixGroups_param);
 	}
 
 
@@ -57,7 +57,7 @@ PHP_METHOD(Yb_Upload_Fastdfs, __construct) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Missing extension: fastdfs_client", "yb/upload/fastdfs.zep", 10);
 		return;
 	}
-	zephir_update_property_this(this_ptr, SL("groupStorages"), groupStorages TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("prefixGroups"), prefixGroups TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -66,18 +66,18 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	long flag;
-	zval *source_param = NULL, *group_param = NULL, *extension_param = NULL, *flag_param = NULL, *extensionArg = NULL, *groupArg = NULL, *destUri = NULL, *_0, *_1;
-	zval *source = NULL, *group = NULL, *extension = NULL, *fun;
+	zval *source_param = NULL, *prefix_param = NULL, *extension_param = NULL, *flag_param = NULL, *extensionArg = NULL, *groupArg = NULL, *destUri = NULL, *_0, *_1;
+	zval *source = NULL, *prefix = NULL, *extension = NULL, *fun;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 3, &source_param, &group_param, &extension_param, &flag_param);
+	zephir_fetch_params(1, 1, 3, &source_param, &prefix_param, &extension_param, &flag_param);
 
 	zephir_get_strval(source, source_param);
-	if (!group_param) {
-		ZEPHIR_INIT_VAR(group);
-		ZVAL_STRING(group, "", 1);
+	if (!prefix_param) {
+		ZEPHIR_INIT_VAR(prefix);
+		ZVAL_STRING(prefix, "", 1);
 	} else {
-		zephir_get_strval(group, group_param);
+		zephir_get_strval(prefix, prefix_param);
 	}
 	if (!extension_param) {
 		ZEPHIR_INIT_VAR(extension);
@@ -100,8 +100,8 @@ PHP_METHOD(Yb_Upload_Fastdfs, store) {
 		ZEPHIR_CPY_WRT(extensionArg, extension);
 	}
 	ZEPHIR_OBS_VAR(groupArg);
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("groupStorages"), PH_NOISY_CC);
-	if (!(zephir_array_isset_fetch(&groupArg, _0, group, 0 TSRMLS_CC))) {
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("prefixGroups"), PH_NOISY_CC);
+	if (!(zephir_array_isset_fetch(&groupArg, _0, prefix, 0 TSRMLS_CC))) {
 		ZEPHIR_INIT_NVAR(groupArg);
 		ZVAL_NULL(groupArg);
 	}
@@ -139,6 +139,30 @@ PHP_METHOD(Yb_Upload_Fastdfs, remove) {
 
 	ZEPHIR_INIT_VAR(fun);
 	ZVAL_STRING(fun, "fastdfs_storage_delete_file1", 1);
+	ZEPHIR_INIT_VAR(_0);
+	ZEPHIR_SINIT_VAR(_1);
+	ZVAL_STRING(&_1, "/", 0);
+	zephir_fast_trim(_0, uri, &_1, ZEPHIR_TRIM_LEFT TSRMLS_CC);
+	ZEPHIR_RETURN_CALL_ZVAL_FUNCTION(fun, NULL, 0, _0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+PHP_METHOD(Yb_Upload_Fastdfs, exists) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *uri_param = NULL, *_0, _1;
+	zval *uri = NULL, *fun;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &uri_param);
+
+	zephir_get_strval(uri, uri_param);
+
+
+	ZEPHIR_INIT_VAR(fun);
+	ZVAL_STRING(fun, "fastdfs_storage_file_exist1", 1);
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "/", 0);

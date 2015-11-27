@@ -45,7 +45,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 	ZVAL_NULL(m);
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_SINIT_VAR(_1);
-	ZVAL_STRING(&_1, "/^([^\\.\\?]+)/", 0);
+	ZVAL_STRING(&_1, "#^([^\\?]+)#", 0);
 	zephir_preg_match(_0, &_1, uri, m, 0, 0 , 0  TSRMLS_CC);
 	if (zephir_is_true(_0)) {
 		ZEPHIR_OBS_VAR(_2$$3);

@@ -36,7 +36,7 @@ class Uploader
         return new UploadedFile(this);
     }
 
-    public function saveUploadedFile(<UploadedFile> uploadedFile, string group, bool keep) -> string
+    public function saveUploadedFile(<UploadedFile> uploadedFile, string prefix, bool keep) -> string
     {
         long flag;
 
@@ -46,7 +46,7 @@ class Uploader
             let flag = StorageAbstract::MOVE_UPLOADED_FILE;
         }
 
-        return this->storage->store(uploadedFile->tmpName, group, uploadedFile->extension, flag);
+        return this->storage->store(uploadedFile->tmpName, prefix, uploadedFile->extension, flag);
     }
 
     public function pick(string index) -> <UploadedFile>

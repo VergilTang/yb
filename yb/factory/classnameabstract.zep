@@ -6,12 +6,12 @@ abstract class ClassNameAbstract implements FactoryInterface
 {
     protected args;
 
-    public function has(string name) -> bool
+    public function __isset(string name) -> bool
     {
         return class_exists(this->getClassName(name));
     }
 
-    public function get(string name)
+    public function __get(string name)
     {
         string className;
 

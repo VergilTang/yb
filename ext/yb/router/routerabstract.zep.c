@@ -111,7 +111,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 	zephir_check_call_status();
 	zephir_get_strval(_3, _0);
 	ZEPHIR_CPY_WRT(controllerClass, _3);
-	ZEPHIR_CALL_METHOD(&_4, factory, "has", NULL, 0, controllerClass);
+	ZEPHIR_CALL_METHOD(&_4, factory, "__isset", NULL, 0, controllerClass);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_4))) {
 		ZEPHIR_INIT_VAR(_5$$3);
@@ -127,7 +127,7 @@ PHP_METHOD(Yb_Router_RouterAbstract, dispatch) {
 	}
 	ZEPHIR_INIT_VAR(actionMethod);
 	array_init(actionMethod);
-	ZEPHIR_CALL_METHOD(&_8, factory, "get", NULL, 0, controllerClass);
+	ZEPHIR_CALL_METHOD(&_8, factory, "__get", NULL, 0, controllerClass);
 	zephir_check_call_status();
 	zephir_array_append(&actionMethod, _8, PH_SEPARATE, "yb/router/routerabstract.zep", 47);
 	_10 = zephir_fetch_nproperty_this(this_ptr, SL("action"), PH_NOISY_CC);

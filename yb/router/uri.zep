@@ -6,7 +6,7 @@ class Uri extends RouterAbstract
     {
         var m = null, params;
 
-        if preg_match("/^([^\\.\\?]+)/", uri, m) {
+        if preg_match("#^([^\\?]+)#", uri, m) {
             let params = preg_split("#/+#", (string) m[1], null, PREG_SPLIT_NO_EMPTY);
         } else {
             let params = [];

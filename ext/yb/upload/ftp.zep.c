@@ -168,18 +168,18 @@ PHP_METHOD(Yb_Upload_Ftp, store) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	long flag;
-	zval *source_param = NULL, *group_param = NULL, *extension_param = NULL, *flag_param = NULL, *_0 = NULL, *_2, *_3, *_4 = NULL, *_5, _6, *_7 = NULL;
-	zval *source = NULL, *group = NULL, *extension = NULL, *destUri = NULL, *destPath = NULL, *_1 = NULL;
+	zval *source_param = NULL, *prefix_param = NULL, *extension_param = NULL, *flag_param = NULL, *_0 = NULL, *_2, *_3, *_4 = NULL, *_5, _6, *_7 = NULL;
+	zval *source = NULL, *prefix = NULL, *extension = NULL, *destUri = NULL, *destPath = NULL, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 3, &source_param, &group_param, &extension_param, &flag_param);
+	zephir_fetch_params(1, 1, 3, &source_param, &prefix_param, &extension_param, &flag_param);
 
 	zephir_get_strval(source, source_param);
-	if (!group_param) {
-		ZEPHIR_INIT_VAR(group);
-		ZVAL_STRING(group, "", 1);
+	if (!prefix_param) {
+		ZEPHIR_INIT_VAR(prefix);
+		ZVAL_STRING(prefix, "", 1);
 	} else {
-		zephir_get_strval(group, group_param);
+		zephir_get_strval(prefix, prefix_param);
 	}
 	if (!extension_param) {
 		ZEPHIR_INIT_VAR(extension);
@@ -194,7 +194,7 @@ PHP_METHOD(Yb_Upload_Ftp, store) {
 	}
 
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "generateuri", NULL, 0, source, group, extension);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "generateuri", NULL, 0, source, prefix, extension);
 	zephir_check_call_status();
 	zephir_get_strval(_1, _0);
 	ZEPHIR_CPY_WRT(destUri, _1);
@@ -245,6 +245,25 @@ PHP_METHOD(Yb_Upload_Ftp, remove) {
 
 }
 
+PHP_METHOD(Yb_Upload_Ftp, exists) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *uri_param = NULL, *_0, *_1 = NULL;
+	zval *uri = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &uri_param);
+
+	zephir_get_strval(uri, uri_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("ftp"), PH_NOISY_CC);
+	ZEPHIR_CALL_FUNCTION(&_1, "ftp_mdtm", NULL, 130, _0, uri);
+	zephir_check_call_status();
+	RETURN_MM_BOOL(!ZEPHIR_IS_LONG_IDENTICAL(_1, -1));
+
+}
+
 PHP_METHOD(Yb_Upload_Ftp, __destruct) {
 
 	zval *_0;
@@ -253,7 +272,7 @@ PHP_METHOD(Yb_Upload_Ftp, __destruct) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("ftp"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(NULL, "ftp_close", NULL, 130, _0);
+	ZEPHIR_CALL_FUNCTION(NULL, "ftp_close", NULL, 131, _0);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -288,7 +307,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_1);
 	ZVAL_STRING(&_1, "Yb\\Std::ignoreError", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 131, &_1);
+	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 132, &_1);
 	zephir_check_call_status();
 	while (1) {
 		if (!(zephir_is_true(parts))) {
@@ -298,25 +317,25 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 		zephir_fast_join_str(_4$$3, SL("/"), parts TSRMLS_CC);
 		ZEPHIR_INIT_NVAR(cur);
 		ZEPHIR_CONCAT_SV(cur, "/", _4$$3);
-		ZEPHIR_CALL_FUNCTION(&_5$$3, "ftp_chdir", &_6, 132, ftp, cur);
+		ZEPHIR_CALL_FUNCTION(&_5$$3, "ftp_chdir", &_6, 133, ftp, cur);
 		zephir_check_call_status();
 		if (!(zephir_is_true(_5$$3))) {
-			zephir_array_append(&stack, cur, PH_SEPARATE, "yb/upload/ftp.zep", 102);
+			zephir_array_append(&stack, cur, PH_SEPARATE, "yb/upload/ftp.zep", 107);
 		}
 		ZEPHIR_MAKE_REF(parts);
 		ZEPHIR_CALL_FUNCTION(NULL, "array_pop", &_7, 4, parts);
 		ZEPHIR_UNREF(parts);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_FUNCTION(NULL, "restore_error_handler", NULL, 133);
+	ZEPHIR_CALL_FUNCTION(NULL, "restore_error_handler", NULL, 134);
 	zephir_check_call_status();
-	zephir_is_iterable(stack, &_9, &_8, 0, 1, "yb/upload/ftp.zep", 112);
+	zephir_is_iterable(stack, &_9, &_8, 0, 1, "yb/upload/ftp.zep", 117);
 	for (
 	  ; zephir_hash_get_current_data_ex(_9, (void**) &_10, &_8) == SUCCESS
 	  ; zephir_hash_move_backwards_ex(_9, &_8)
 	) {
 		ZEPHIR_GET_HVALUE(cur, _10);
-		ZEPHIR_CALL_FUNCTION(NULL, "ftp_mkdir", &_11, 134, ftp, cur);
+		ZEPHIR_CALL_FUNCTION(NULL, "ftp_mkdir", &_11, 135, ftp, cur);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();

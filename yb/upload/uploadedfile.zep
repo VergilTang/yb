@@ -20,13 +20,13 @@ class UploadedFile
         return this->error === 0;
     }
 
-    public function save(string group = "", bool keep = false) -> string
+    public function save(string prefix = "", bool keep = false) -> string
     {
         if unlikely this->error !== 0 {
             throw new Exception("Invalid uploaded file cannot be saved");
         }
 
-        return this->uploader->saveUploadedFile(this, group, keep);
+        return this->uploader->saveUploadedFile(this, prefix, keep);
     }
 
 }

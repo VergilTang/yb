@@ -31,7 +31,7 @@ ZEPHIR_INIT_CLASS(Yb_Factory_ClassNameAbstract) {
 
 }
 
-PHP_METHOD(Yb_Factory_ClassNameAbstract, has) {
+PHP_METHOD(Yb_Factory_ClassNameAbstract, __isset) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *name_param = NULL, *_0 = NULL;
@@ -49,7 +49,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, has) {
 
 }
 
-PHP_METHOD(Yb_Factory_ClassNameAbstract, get) {
+PHP_METHOD(Yb_Factory_ClassNameAbstract, __get) {
 
 	zephir_fcall_cache_entry *_4 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
