@@ -2,7 +2,7 @@ namespace Yb\View;
 
 use Yb\Factory\Namespaced;
 
-class Strategy implements \ArrayAccess
+class Facade implements \ArrayAccess
 {
     protected options;
     protected data;
@@ -13,6 +13,50 @@ class Strategy implements \ArrayAccess
         let this->options = options;
         let this->data = data;
         let this->view = view;
+    }
+
+    public function content(string content, string contentType = "") -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["content"] = content;
+        let this->options["contentType"] = contentType;
+    }
+
+    public function httpResponse(long httpResponseCode, string httpResponseOutput = "") -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["httpResponseCode"] = httpResponseCode;
+        let this->options["httpResponseOutput"] = httpResponseOutput;
+    }
+
+    public function json(string jsonCallback = "", bool jsonCors = false) -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["jsonCallback"] = jsonCallback;
+    }
+
+    public function nil() -> void
+    {
+        let this->view = __FUNCTION__;
+    }
+
+    public function readFile(string readFile) -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["readFile"] = readFile;
+    }
+
+    public function redirect(string redirectUrl, bool redirectDataAsQueries = false) -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["redirectUrl"] = redirectUrl;
+        let this->options["redirectDataAsQueries"] = redirectDataAsQueries;
+    }
+
+    public function tpl(string tplId) -> void
+    {
+        let this->view = __FUNCTION__;
+        let this->options["tplId"] = tplId;
     }
 
     public function setView(var view) -> void
@@ -29,10 +73,25 @@ class Strategy implements \ArrayAccess
     {
         var view;
 
-        let view = this->view;
+        loop {
+            let view = this->view;
 
-        if typeof view != "object" {
-            let view = (new Namespaced(__NAMESPACE__))->__get((string) view);
+            if typeof view == "object" {
+                if (view instanceof \Closure) {
+                    let view = {view}();
+                }
+                break;
+            }
+
+            let view = (string) view;
+
+            if strpos(view, "\\") === false {
+                let view = (new Namespaced(__NAMESPACE__))->__get(view);
+                break;
+            }
+
+            let view = (new Namespaced(""))->__get(view);
+            break;
         }
 
         if unlikely typeof view != "object" || ! (view instanceof ViewInterface) {

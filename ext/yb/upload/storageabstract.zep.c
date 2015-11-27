@@ -68,7 +68,7 @@ PHP_METHOD(Yb_Upload_StorageAbstract, generateUri) {
 		ZEPHIR_INIT_VAR(_2);
 		ZEPHIR_INIT_VAR(_3);
 		ZEPHIR_SINIT_VAR(_4);
-		ZVAL_STRING(&_4, "#^\\w[/\\w]+*$#", 0);
+		ZVAL_STRING(&_4, "#^\\w[/\\w]*$#", 0);
 		zephir_preg_match(_3, &_4, prefix, _2, 0, 0 , 0  TSRMLS_CC);
 		_1 = zephir_is_true(_3);
 	}

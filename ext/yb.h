@@ -92,13 +92,14 @@
 #include "yb/upload/ftp.zep.h"
 #include "yb/upload/uploadedfile.zep.h"
 #include "yb/upload/uploader.zep.h"
+#include "yb/view/content.zep.h"
 #include "yb/view/exception.zep.h"
+#include "yb/view/facade.zep.h"
 #include "yb/view/httpresponse.zep.h"
 #include "yb/view/json.zep.h"
 #include "yb/view/nil.zep.h"
 #include "yb/view/readfile.zep.h"
 #include "yb/view/redirect.zep.h"
-#include "yb/view/strategy.zep.h"
 #include "yb/view/tpl.zep.h"
 
 #endif

@@ -31,11 +31,11 @@ ZEPHIR_INIT_CLASS(Yb_View_Redirect) {
 
 PHP_METHOD(Yb_View_Redirect, run) {
 
-	zend_bool dataQuery = 0;
-	zval *redirectUrl = NULL, *query = NULL, *_4 = NULL, *_12, *_8$$4 = NULL;
+	zend_bool redirectDataAsQueries = 0, _7;
+	zval *redirectUrl = NULL, *_4 = NULL, *_11;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL;
-	zval *data_param = NULL, *options_param = NULL, *_0 = NULL, *_2 = NULL, *_3 = NULL, *_5 = NULL, *_6 = NULL, *_7$$4 = NULL, *_9$$4 = NULL, _10$$5, *_11$$5;
+	zval *data_param = NULL, *options_param = NULL, *_0 = NULL, *_2 = NULL, *_3 = NULL, *_5 = NULL, *_6 = NULL, _8$$4, *_9$$4, *_10$$4 = NULL;
 	zval *data = NULL, *options = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -60,34 +60,34 @@ PHP_METHOD(Yb_View_Redirect, run) {
 		return;
 	}
 	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "dataQuery", ZEPHIR_TEMP_PARAM_COPY);
+	ZVAL_STRING(_2, "redirectDataAsQueries", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_BOOL(_3, 0);
 	ZEPHIR_CALL_CE_STATIC(&_6, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	dataQuery = zephir_get_boolval(_6);
-	if (dataQuery) {
-		ZEPHIR_CALL_FUNCTION(&_7$$4, "http_build_query", NULL, 142, data);
-		zephir_check_call_status();
-		zephir_get_strval(_8$$4, _7$$4);
-		ZEPHIR_CPY_WRT(query, _8$$4);
-		if (zephir_fast_strlen_ev(query) > 0) {
-			ZEPHIR_SINIT_VAR(_10$$5);
-			ZVAL_STRING(&_10$$5, "?", 0);
-			ZEPHIR_INIT_VAR(_11$$5);
-			zephir_fast_strpos(_11$$5, redirectUrl, &_10$$5, 0 );
-			if (ZEPHIR_IS_FALSE_IDENTICAL(_11$$5)) {
-				zephir_concat_self_str(&redirectUrl, "?", sizeof("?")-1 TSRMLS_CC);
-			} else {
-				zephir_concat_self_str(&redirectUrl, "&", sizeof("&")-1 TSRMLS_CC);
-			}
-			zephir_concat_self(&redirectUrl, query TSRMLS_CC);
-		}
+	redirectDataAsQueries = zephir_get_boolval(_6);
+	_7 = redirectDataAsQueries;
+	if (_7) {
+		_7 = zephir_fast_count_int(data TSRMLS_CC) > 0;
 	}
-	ZEPHIR_INIT_VAR(_12);
-	ZEPHIR_CONCAT_SV(_12, "Location: ", redirectUrl);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", NULL, 140, _12);
+	if (_7) {
+		ZEPHIR_SINIT_VAR(_8$$4);
+		ZVAL_STRING(&_8$$4, "?", 0);
+		ZEPHIR_INIT_VAR(_9$$4);
+		zephir_fast_strpos(_9$$4, redirectUrl, &_8$$4, 0 );
+		if (ZEPHIR_IS_FALSE_IDENTICAL(_9$$4)) {
+			zephir_concat_self_str(&redirectUrl, "?", sizeof("?")-1 TSRMLS_CC);
+		} else {
+			zephir_concat_self_str(&redirectUrl, "&", sizeof("&")-1 TSRMLS_CC);
+		}
+		ZEPHIR_CALL_FUNCTION(&_10$$4, "http_build_query", NULL, 144, data);
+		zephir_check_call_status();
+		zephir_concat_self(&redirectUrl, _10$$4 TSRMLS_CC);
+	}
+	ZEPHIR_INIT_VAR(_11);
+	ZEPHIR_CONCAT_SV(_11, "Location: ", redirectUrl);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", NULL, 139, _11);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

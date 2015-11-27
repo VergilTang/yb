@@ -16,7 +16,7 @@ abstract class StorageAbstract
     {
         string uri = "/";
 
-        if prefix->length() > 0 && preg_match("#^\\w[/\\w]+*$#", prefix) {
+        if prefix->length() > 0 && preg_match("#^\\w[/\\w]*$#", prefix) {
             let uri .= prefix;
         }
 

@@ -115,13 +115,14 @@ zend_class_entry *yb_upload_filesystem_ce;
 zend_class_entry *yb_upload_ftp_ce;
 zend_class_entry *yb_upload_uploadedfile_ce;
 zend_class_entry *yb_upload_uploader_ce;
+zend_class_entry *yb_view_content_ce;
 zend_class_entry *yb_view_exception_ce;
+zend_class_entry *yb_view_facade_ce;
 zend_class_entry *yb_view_httpresponse_ce;
 zend_class_entry *yb_view_json_ce;
 zend_class_entry *yb_view_nil_ce;
 zend_class_entry *yb_view_readfile_ce;
 zend_class_entry *yb_view_redirect_ce;
-zend_class_entry *yb_view_strategy_ce;
 zend_class_entry *yb_view_tpl_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
@@ -236,13 +237,14 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Upload_Ftp);
 	ZEPHIR_INIT(Yb_Upload_UploadedFile);
 	ZEPHIR_INIT(Yb_Upload_Uploader);
+	ZEPHIR_INIT(Yb_View_Content);
 	ZEPHIR_INIT(Yb_View_Exception);
+	ZEPHIR_INIT(Yb_View_Facade);
 	ZEPHIR_INIT(Yb_View_HttpResponse);
 	ZEPHIR_INIT(Yb_View_Json);
 	ZEPHIR_INIT(Yb_View_Nil);
 	ZEPHIR_INIT(Yb_View_ReadFile);
 	ZEPHIR_INIT(Yb_View_Redirect);
-	ZEPHIR_INIT(Yb_View_Strategy);
 	ZEPHIR_INIT(Yb_View_Tpl);
 
 #if PHP_VERSION_ID < 50500

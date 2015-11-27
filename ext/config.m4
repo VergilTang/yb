@@ -97,13 +97,14 @@ if test "$PHP_YB" = "yes"; then
 	yb/upload/ftp.zep.c
 	yb/upload/uploadedfile.zep.c
 	yb/upload/uploader.zep.c
+	yb/view/content.zep.c
 	yb/view/exception.zep.c
+	yb/view/facade.zep.c
 	yb/view/httpresponse.zep.c
 	yb/view/json.zep.c
 	yb/view/nil.zep.c
 	yb/view/readfile.zep.c
 	yb/view/redirect.zep.c
-	yb/view/strategy.zep.c
 	yb/view/tpl.zep.c utils.c"
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
