@@ -2,12 +2,17 @@ namespace Yb\Factory;
 
 class Shared implements FactoryInterface
 {
-    protected realFactory;
+    protected factory;
     protected productions;
 
-    public function __construct(<FactoryInterface> realFactory) -> void
+    public function __construct(<FactoryInterface> factory) -> void
     {
-        let this->realFactory = realFactory;
+        let this->factory = factory;
+    }
+
+    public function getFactory() -> <FactoryInterface>
+    {
+        return this->factory;
     }
 
     public function __isset(string name) -> bool
@@ -16,7 +21,7 @@ class Shared implements FactoryInterface
             return true;
         }
 
-        return this->realFactory->__isset(name);
+        return this->factory->__isset(name);
     }
 
     public function __get(string name)
@@ -27,7 +32,7 @@ class Shared implements FactoryInterface
             return production;
         }
 
-        let production = this->realFactory->__get(name);
+        let production = this->factory->__get(name);
         let this->productions[name] = production;
 
         return production;

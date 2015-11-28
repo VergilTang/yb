@@ -70,9 +70,9 @@ PHP_METHOD(Yb_Logger_FileLogger, log) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "c", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "date", NULL, 83, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "date", NULL, 84, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_CE_STATIC(&_2, yb_std_ce, "tr", &_3, 84, message, context);
+	ZEPHIR_CALL_CE_STATIC(&_2, yb_std_ce, "tr", &_3, 85, message, context);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_STRING(&_0, "[%s] [%s] %s\n", 0);

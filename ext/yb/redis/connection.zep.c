@@ -119,20 +119,20 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	} else {
 		ZVAL_BOOL(_8, 0);
 	}
-	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 85, host, _2, _3, _8);
+	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 86, host, _2, _3, _8);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 1);
-	ZEPHIR_CALL_METHOD(NULL, socket, "settcpnodelay", NULL, 86, _2);
+	ZEPHIR_CALL_METHOD(NULL, socket, "settcpnodelay", NULL, 87, _2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 1);
-	ZEPHIR_CALL_METHOD(NULL, socket, "setblocking", NULL, 87, _2);
+	ZEPHIR_CALL_METHOD(NULL, socket, "setblocking", NULL, 88, _2);
 	zephir_check_call_status();
 	if (timeout > 0) {
 		ZEPHIR_INIT_VAR(_9$$3);
 		ZVAL_DOUBLE(_9$$3, timeout);
-		ZEPHIR_CALL_METHOD(NULL, socket, "settimeout", NULL, 88, _9$$3);
+		ZEPHIR_CALL_METHOD(NULL, socket, "settimeout", NULL, 89, _9$$3);
 		zephir_check_call_status();
 	}
 	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
@@ -164,7 +164,7 @@ PHP_METHOD(Yb_Redis_Connection, __call) {
 
 	ZEPHIR_CPY_WRT(cmd, args);
 	ZEPHIR_MAKE_REF(cmd);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 96, cmd, method);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 97, cmd, method);
 	ZEPHIR_UNREF(cmd);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "runcommand", NULL, 0, cmd);
@@ -278,7 +278,7 @@ PHP_METHOD(Yb_Redis_Connection, write) {
 	  ; zephir_hash_move_forward_ex(_11, &_10)
 	) {
 		ZEPHIR_GET_HVALUE(d, _12);
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_13, 97, d);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_13, 98, d);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();
@@ -409,7 +409,7 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 					break;
 				}
 				l--;
-				ZEPHIR_CALL_METHOD(&_28$$13, this_ptr, "read", &_29, 98);
+				ZEPHIR_CALL_METHOD(&_28$$13, this_ptr, "read", &_29, 99);
 				zephir_check_call_status();
 				zephir_array_append(&a, _28$$13, PH_SEPARATE, "yb/redis/connection.zep", 145);
 			}

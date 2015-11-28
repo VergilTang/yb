@@ -14,9 +14,10 @@ if test "$PHP_YB" = "yes"; then
 	yb/data/dataabstract.zep.c
 	yb/collection/collectioninterface.zep.c
 	yb/db/dbabstract.zep.c
-	yb/sequence/sequenceinterface.zep.c
 	yb/factory/factoryinterface.zep.c
+	yb/sequence/sequenceinterface.zep.c
 	yb/image/imageabstract.zep.c
+	yb/task/taskmanagerinterface.zep.c
 	yb/upload/storageabstract.zep.c
 	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
@@ -26,6 +27,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/logger/loggerabstract.zep.c
 	yb/redis/error.zep.c
 	yb/router/routerabstract.zep.c
+	yb/task/taskmanagerabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/factory/classnameabstract.zep.c
 	yb/image/image.zep.c
@@ -34,6 +36,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/redis/redisclientinterface.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c
+	yb/task/taskinterface.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
@@ -58,6 +61,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/db/queryexception.zep.c
 	yb/db/transactionexception.zep.c
 	yb/factory/exception.zep.c
+	yb/factory/factories.zep.c
 	yb/factory/namespaced.zep.c
 	yb/factory/shared.zep.c
 	yb/image/captcha.zep.c
@@ -91,6 +95,11 @@ if test "$PHP_YB" = "yes"; then
 	yb/socket/exception.zep.c
 	yb/socket/tcpclient.zep.c
 	yb/std.zep.c
+	yb/task/exception.zep.c
+	yb/task/queueredis.zep.c
+	yb/task/rundirectly.zep.c
+	yb/task/taskabstract.zep.c
+	yb/task/taskrunner.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/fastdfs.zep.c
 	yb/upload/filesystem.zep.c

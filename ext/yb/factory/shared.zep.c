@@ -23,7 +23,7 @@ ZEPHIR_INIT_CLASS(Yb_Factory_Shared) {
 
 	ZEPHIR_REGISTER_CLASS(Yb\\Factory, Shared, yb, factory_shared, yb_factory_shared_method_entry, 0);
 
-	zend_declare_property_null(yb_factory_shared_ce, SL("realFactory"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(yb_factory_shared_ce, SL("factory"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	zend_declare_property_null(yb_factory_shared_ce, SL("productions"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
@@ -34,13 +34,21 @@ ZEPHIR_INIT_CLASS(Yb_Factory_Shared) {
 
 PHP_METHOD(Yb_Factory_Shared, __construct) {
 
-	zval *realFactory;
+	zval *factory;
 
-	zephir_fetch_params(0, 1, 0, &realFactory);
+	zephir_fetch_params(0, 1, 0, &factory);
 
 
 
-	zephir_update_property_this(this_ptr, SL("realFactory"), realFactory TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("factory"), factory TSRMLS_CC);
+
+}
+
+PHP_METHOD(Yb_Factory_Shared, getFactory) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "factory");
 
 }
 
@@ -60,7 +68,7 @@ PHP_METHOD(Yb_Factory_Shared, __isset) {
 	if (zephir_array_isset(_0, name)) {
 		RETURN_MM_BOOL(1);
 	}
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("realFactory"), PH_NOISY_CC);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("factory"), PH_NOISY_CC);
 	ZEPHIR_RETURN_CALL_METHOD(_1, "__isset", NULL, 0, name);
 	zephir_check_call_status();
 	RETURN_MM();
@@ -84,7 +92,7 @@ PHP_METHOD(Yb_Factory_Shared, __get) {
 	if (zephir_array_isset_fetch(&production, _0, name, 0 TSRMLS_CC)) {
 		RETURN_CCTOR(production);
 	}
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("realFactory"), PH_NOISY_CC);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("factory"), PH_NOISY_CC);
 	ZEPHIR_CALL_METHOD(&production, _1, "__get", NULL, 0, name);
 	zephir_check_call_status();
 	zephir_update_property_array(this_ptr, SL("productions"), name, production TSRMLS_CC);

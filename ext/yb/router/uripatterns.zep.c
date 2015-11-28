@@ -97,7 +97,7 @@ PHP_METHOD(Yb_Router_UriPatterns, __construct) {
 		if (zephir_fast_strlen_ev(prefix) > 0) {
 			ZEPHIR_SINIT_NVAR(_8$$5);
 			ZVAL_STRING(&_8$$5, "#", 0);
-			ZEPHIR_CALL_FUNCTION(&_9$$5, "preg_quote", &_10, 99, prefix, &_8$$5);
+			ZEPHIR_CALL_FUNCTION(&_9$$5, "preg_quote", &_10, 100, prefix, &_8$$5);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(prefix, _9$$5);
 		}
@@ -114,7 +114,7 @@ PHP_METHOD(Yb_Router_UriPatterns, __construct) {
 			zephir_get_strval(_15$$6, from);
 			ZEPHIR_INIT_NVAR(_16$$6);
 			ZVAL_STRING(_16$$6, "#/\\{(\\w+)(\\:\\w+)?\\}#", ZEPHIR_TEMP_PARAM_COPY);
-			ZEPHIR_CALL_FUNCTION(&_17$$6, "preg_replace_callback", &_18, 100, _16$$6, callback, _15$$6);
+			ZEPHIR_CALL_FUNCTION(&_17$$6, "preg_replace_callback", &_18, 101, _16$$6, callback, _15$$6);
 			zephir_check_temp_parameter(_16$$6);
 			zephir_check_call_status();
 			ZEPHIR_SINIT_NVAR(_19$$6);
@@ -123,7 +123,7 @@ PHP_METHOD(Yb_Router_UriPatterns, __construct) {
 			zephir_check_call_status();
 			zephir_get_strval(_21$$6, to);
 			_22$$6 = zephir_fetch_nproperty_this(this_ptr, SL("replacements"), PH_NOISY_CC);
-			ZEPHIR_CALL_FUNCTION(&_23$$6, "strtr", &_24, 101, _21$$6, _22$$6);
+			ZEPHIR_CALL_FUNCTION(&_23$$6, "strtr", &_24, 102, _21$$6, _22$$6);
 			zephir_check_call_status();
 			_25$$6 = zephir_fetch_nproperty_this(this_ptr, SL("replacements"), PH_NOISY_CC);
 			ZEPHIR_SINIT_NVAR(_19$$6);
@@ -145,7 +145,7 @@ PHP_METHOD(Yb_Router_UriPatterns, __construct) {
 		zephir_get_strval(_30$$7, _29$$7);
 		ZEPHIR_CPY_WRT(uri, _30$$7);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_router_uripatterns_ce, this_ptr, "__construct", &_31, 102, uri);
+	ZEPHIR_CALL_PARENT(NULL, yb_router_uripatterns_ce, this_ptr, "__construct", &_31, 103, uri);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
