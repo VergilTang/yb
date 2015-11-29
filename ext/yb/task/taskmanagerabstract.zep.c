@@ -214,6 +214,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
 		if (Z_TYPE_P(taskData) != IS_NULL) {
 			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", &_1, 0, taskData);
 			zephir_check_call_status();
+			continue;
 		}
 		_2$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
 		if (ZEPHIR_LT_LONG(_2$$3, 0)) {

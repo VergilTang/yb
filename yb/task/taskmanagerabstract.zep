@@ -71,6 +71,7 @@ abstract class TaskManagerAbstract implements TaskManagerInterface
             let taskData = this->consume();
             if taskData !== null {
                 this->runTask(taskData);
+                continue;
             }
 
             if this->sleep < 0 {
