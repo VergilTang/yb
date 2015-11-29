@@ -214,7 +214,7 @@ PHP_METHOD(Yb_Upload_Ftp, store) {
 	if (zephir_is_true(_7)) {
 		do {
 			if (flag == 2 || flag == 1) {
-				ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 41, source);
+				ZEPHIR_CALL_FUNCTION(NULL, "unlink", NULL, 42, source);
 				zephir_check_call_status();
 				break;
 			}
@@ -303,7 +303,7 @@ PHP_METHOD(Yb_Upload_Ftp, mkDirIfNotExists) {
 	ZVAL_LONG(&_2, -1);
 	ZEPHIR_SINIT_VAR(_3);
 	ZVAL_LONG(&_3, 1);
-	ZEPHIR_CALL_FUNCTION(&parts, "preg_split", NULL, 25, &_1, dir, &_2, &_3);
+	ZEPHIR_CALL_FUNCTION(&parts, "preg_split", NULL, 26, &_1, dir, &_2, &_3);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_1);
 	ZVAL_STRING(&_1, "Yb\\Std::ignoreError", 0);

@@ -68,7 +68,7 @@ PHP_METHOD(Yb_Upload_Uploader, __construct) {
 	ZVAL_LONG(&_3, -1);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, 1);
-	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 25, &_2, _1, &_3, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 26, &_2, _1, &_3, &_4);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 138, _5);
 	zephir_check_call_status();
@@ -233,7 +233,7 @@ PHP_METHOD(Yb_Upload_Uploader, pick) {
 		ZEPHIR_INIT_NVAR(_13$$3);
 		ZEPHIR_SINIT_NVAR(_14$$3);
 		ZVAL_LONG(&_14$$3, 4);
-		ZEPHIR_CALL_FUNCTION(&_15$$3, "pathinfo", &_16, 55, name, &_14$$3);
+		ZEPHIR_CALL_FUNCTION(&_15$$3, "pathinfo", &_16, 56, name, &_14$$3);
 		zephir_check_call_status();
 		zephir_fast_strtolower(_13$$3, _15$$3);
 		zephir_get_strval(_17$$3, _13$$3);
@@ -358,7 +358,7 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 			ZEPHIR_INIT_NVAR(_17$$6);
 			ZEPHIR_SINIT_NVAR(_18$$6);
 			ZVAL_LONG(&_18$$6, 4);
-			ZEPHIR_CALL_FUNCTION(&_19$$6, "pathinfo", &_20, 55, name, &_18$$6);
+			ZEPHIR_CALL_FUNCTION(&_19$$6, "pathinfo", &_20, 56, name, &_18$$6);
 			zephir_check_call_status();
 			zephir_fast_strtolower(_17$$6, _19$$6);
 			zephir_get_strval(_21$$6, _17$$6);

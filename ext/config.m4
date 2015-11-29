@@ -36,7 +36,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/redis/redisclientinterface.zep.c
 	yb/router/exception.zep.c
 	yb/router/uri.zep.c
-	yb/task/taskinterface.zep.c
 	yb/application.zep.c
 	yb/collection/exception.zep.c
 	yb/collection/mongocollection.zep.c
@@ -98,8 +97,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/task/exception.zep.c
 	yb/task/queueredis.zep.c
 	yb/task/rundirectly.zep.c
-	yb/task/taskabstract.zep.c
-	yb/task/taskrunner.zep.c
+	yb/task/taskinterface.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/fastdfs.zep.c
 	yb/upload/filesystem.zep.c

@@ -2,10 +2,15 @@ namespace Yb\Task;
 
 interface TaskManagerInterface
 {
-    public function produce(<TaskInterface> task) -> void;
-    public function consume() -> null|<TaskInterface>;
+    public function produce(array taskData) -> void;
+    public function consume() -> null|array;
 
-    public function onReturn(<TaskInterface> task, var r) -> void;
-    public function onException(<TaskInterface> task, <\Exception> e) -> void;
+    public function hasTask(string name) -> bool;
+    public function getTask(string name) -> <TaskInterface>;
+    public function runTask(array taskData) -> void;
+    public function __invoke() -> void;
+
+    public function serializeTaskData(array taskData) -> string;
+    public function unserializeTaskData(string taskData) -> array;
 
 }

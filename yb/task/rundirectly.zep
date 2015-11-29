@@ -2,19 +2,12 @@ namespace Yb\Task;
 
 class RunDirectly extends TaskManagerAbstract
 {
-    public function produce(<TaskInterface> task) -> void
+    public function produce(array taskData) -> void
     {
-        var r, e;
-
-        try {
-            let r = task->__invoke();
-            this->onReturn(task, r);
-        } catch \Exception, e {
-            this->onException(task, e);
-        }
+        this->runTask(taskData);
     }
 
-    public function consume() -> null|<TaskInterface>
+    public function consume() -> null|array
     {
         return;
     }

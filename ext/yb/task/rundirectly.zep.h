@@ -7,7 +7,7 @@ PHP_METHOD(Yb_Task_RunDirectly, produce);
 PHP_METHOD(Yb_Task_RunDirectly, consume);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_rundirectly_produce, 0, 0, 1)
-	ZEND_ARG_OBJ_INFO(0, task, Yb\\Task\\TaskInterface, 0)
+	ZEND_ARG_ARRAY_INFO(0, taskData, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_task_rundirectly_method_entry) {

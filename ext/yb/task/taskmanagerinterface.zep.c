@@ -24,7 +24,15 @@ ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, produce);
 
 ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, consume);
 
-ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, onReturn);
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, hasTask);
 
-ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, onException);
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, getTask);
+
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, runTask);
+
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, __invoke);
+
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, serializeTaskData);
+
+ZEPHIR_DOC_METHOD(Yb_Task_TaskManagerInterface, unserializeTaskData);
 
