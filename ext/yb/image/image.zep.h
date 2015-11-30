@@ -3,6 +3,7 @@ extern zend_class_entry *yb_image_image_ce;
 
 ZEPHIR_INIT_CLASS(Yb_Image_Image);
 
+PHP_METHOD(Yb_Image_Image, contentType);
 PHP_METHOD(Yb_Image_Image, resize);
 PHP_METHOD(Yb_Image_Image, crop);
 PHP_METHOD(Yb_Image_Image, thumbnail);
@@ -45,6 +46,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_image_image_save, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_image_image_method_entry) {
+	PHP_ME(Yb_Image_Image, contentType, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Image, resize, arginfo_yb_image_image_resize, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Image, crop, arginfo_yb_image_image_crop, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Image_Image, thumbnail, arginfo_yb_image_image_thumbnail, ZEND_ACC_PUBLIC)

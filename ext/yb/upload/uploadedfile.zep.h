@@ -12,7 +12,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_uploadedfile___construct, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_uploadedfile_save, 0, 0, 0)
-	ZEND_ARG_INFO(0, group)
+	ZEND_ARG_INFO(0, prefix)
 	ZEND_ARG_INFO(0, keep)
 ZEND_END_ARG_INFO()
 

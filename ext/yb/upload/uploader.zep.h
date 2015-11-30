@@ -22,7 +22,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_uploader_saveuploadedfile, 0, 0, 3)
 	ZEND_ARG_OBJ_INFO(0, uploadedFile, Yb\\Upload\\UploadedFile, 0)
-	ZEND_ARG_INFO(0, group)
+	ZEND_ARG_INFO(0, prefix)
 	ZEND_ARG_INFO(0, keep)
 ZEND_END_ARG_INFO()
 

@@ -60,7 +60,7 @@ class Application implements \ArrayAccess
 
     public function offsetUnset(string key) -> void
     {
-        unset(this->data[key]);
+        unset this->data[key];
     }
 
     public function __invoke(string name, var initializer = null) -> void

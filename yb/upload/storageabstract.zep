@@ -8,15 +8,16 @@ abstract class StorageAbstract
     const MOVE                  = 1;
     const MOVE_UPLOADED_FILE    = 2;
 
-    abstract public function store(string source, string group = "", string extension = "", long flag = 0) -> string;
+    abstract public function store(string source, string prefix = "", string extension = "", long flag = 0) -> string;
     abstract public function remove(string uri) -> bool;
+    abstract public function exists(string uri) -> bool;
 
-    public function generateUri(string source, string group, string extension) -> string
+    public function generateUri(string source, string prefix, string extension) -> string
     {
         string uri = "/";
 
-        if group && preg_match("#^\\w+(/\\w+)*$#", group) {
-            let uri .= group . "/";
+        if prefix->length() > 0 && preg_match("#^\\w[/\\w]*$#", prefix) {
+            let uri .= prefix;
         }
 
         let uri .= Std::uuid();

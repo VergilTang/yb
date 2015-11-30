@@ -10,21 +10,24 @@ if test "$PHP_YB" = "yes"; then
 
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
+	yb/view/viewinterface.zep.c
 	yb/data/dataabstract.zep.c
 	yb/collection/collectioninterface.zep.c
 	yb/db/dbabstract.zep.c
+	yb/factory/factoryinterface.zep.c
 	yb/sequence/sequenceinterface.zep.c
 	yb/image/imageabstract.zep.c
+	yb/task/taskmanagerinterface.zep.c
 	yb/upload/storageabstract.zep.c
 	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
-	yb/factory/factoryinterface.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
 	yb/redis/error.zep.c
 	yb/router/routerabstract.zep.c
+	yb/task/taskmanagerabstract.zep.c
 	yb/collection/redishash.zep.c
 	yb/factory/classnameabstract.zep.c
 	yb/image/image.zep.c
@@ -57,7 +60,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/db/queryexception.zep.c
 	yb/db/transactionexception.zep.c
 	yb/factory/exception.zep.c
+	yb/factory/factories.zep.c
 	yb/factory/namespaced.zep.c
+	yb/factory/shared.zep.c
 	yb/image/captcha.zep.c
 	yb/image/exception.zep.c
 	yb/image/gd.zep.c
@@ -89,12 +94,25 @@ if test "$PHP_YB" = "yes"; then
 	yb/socket/exception.zep.c
 	yb/socket/tcpclient.zep.c
 	yb/std.zep.c
+	yb/task/exception.zep.c
+	yb/task/queueredis.zep.c
+	yb/task/rundirectly.zep.c
+	yb/task/taskinterface.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/fastdfs.zep.c
 	yb/upload/filesystem.zep.c
 	yb/upload/ftp.zep.c
 	yb/upload/uploadedfile.zep.c
-	yb/upload/uploader.zep.c utils.c"
+	yb/upload/uploader.zep.c
+	yb/view/content.zep.c
+	yb/view/exception.zep.c
+	yb/view/facade.zep.c
+	yb/view/httpresponse.zep.c
+	yb/view/json.zep.c
+	yb/view/nil.zep.c
+	yb/view/readfile.zep.c
+	yb/view/redirect.zep.c
+	yb/view/tpl.zep.c utils.c"
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

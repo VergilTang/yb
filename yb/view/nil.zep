@@ -1,0 +1,10 @@
+namespace Yb\View;
+
+class Nil implements ViewInterface
+{
+    public function run(array data, array options) -> void
+    {
+        return;
+    }
+
+}

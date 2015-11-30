@@ -39,12 +39,12 @@ abstract class RouterAbstract
         var actionMethod;
 
         let controllerClass = (string) Std::camelCase(this->controller);
-        if unlikely ! factory->has(controllerClass) {
+        if unlikely ! factory->__isset(controllerClass) {
             throw new NotFoundException("Invalid controller: " . this->controller);
         }
 
         let actionMethod = [];
-        let actionMethod[] = factory->get(controllerClass);
+        let actionMethod[] = factory->__get(controllerClass);
         let actionMethod[] = Std::camelCase(this->action) . actionSuffix;
 
         if unlikely ! is_callable(actionMethod) {

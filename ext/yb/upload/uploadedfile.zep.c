@@ -65,17 +65,17 @@ PHP_METHOD(Yb_Upload_UploadedFile, save) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zend_bool keep;
-	zval *group_param = NULL, *keep_param = NULL, *_0, *_1, *_2;
-	zval *group = NULL;
+	zval *prefix_param = NULL, *keep_param = NULL, *_0, *_1, *_2;
+	zval *prefix = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 2, &group_param, &keep_param);
+	zephir_fetch_params(1, 0, 2, &prefix_param, &keep_param);
 
-	if (!group_param) {
-		ZEPHIR_INIT_VAR(group);
-		ZVAL_STRING(group, "", 1);
+	if (!prefix_param) {
+		ZEPHIR_INIT_VAR(prefix);
+		ZVAL_STRING(prefix, "", 1);
 	} else {
-		zephir_get_strval(group, group_param);
+		zephir_get_strval(prefix, prefix_param);
 	}
 	if (!keep_param) {
 		keep = 0;
@@ -96,7 +96,7 @@ PHP_METHOD(Yb_Upload_UploadedFile, save) {
 	} else {
 		ZVAL_BOOL(_2, 0);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(_1, "saveuploadedfile", NULL, 0, this_ptr, group, _2);
+	ZEPHIR_RETURN_CALL_METHOD(_1, "saveuploadedfile", NULL, 0, this_ptr, prefix, _2);
 	zephir_check_call_status();
 	RETURN_MM();
 

@@ -20,7 +20,7 @@ ZEPHIR_INIT_CLASS(Yb_Factory_FactoryInterface) {
 
 }
 
-ZEPHIR_DOC_METHOD(Yb_Factory_FactoryInterface, has);
+ZEPHIR_DOC_METHOD(Yb_Factory_FactoryInterface, __isset);
 
-ZEPHIR_DOC_METHOD(Yb_Factory_FactoryInterface, get);
+ZEPHIR_DOC_METHOD(Yb_Factory_FactoryInterface, __get);
 

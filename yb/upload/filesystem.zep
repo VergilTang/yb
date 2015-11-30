@@ -9,12 +9,12 @@ class FileSystem extends StorageAbstract
         let this->baseDirectory = baseDirectory;
     }
 
-    public function store(string source, string group = "", string extension = "", long flag = 0) -> string
+    public function store(string source, string prefix = "", string extension = "", long flag = 0) -> string
     {
         var temp, success;
         string destUri, destPath;
 
-        let destUri = (string) this->generateUri(source, group, extension);
+        let destUri = (string) this->generateUri(source, prefix, extension);
         let destPath = this->baseDirectory . destUri;
 
         let temp = dirname(destPath);
@@ -53,6 +53,11 @@ class FileSystem extends StorageAbstract
         }
 
         return false;
+    }
+
+    public function exists(string uri) -> bool
+    {
+        return file_exists(this->baseDirectory . uri);
     }
 
 }

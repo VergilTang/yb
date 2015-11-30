@@ -13,9 +13,9 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
+#include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/memory.h"
-#include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
 
@@ -29,6 +29,28 @@ ZEPHIR_INIT_CLASS(Yb_Image_Image) {
 	zend_declare_property_string(yb_image_image_ce, SL("extension"), "png", ZEND_ACC_PUBLIC TSRMLS_CC);
 
 	return SUCCESS;
+
+}
+
+PHP_METHOD(Yb_Image_Image, contentType) {
+
+	zval *_0;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("extension"), PH_NOISY_CC);
+	do {
+		if (ZEPHIR_IS_STRING(_0, "png")) {
+			RETURN_STRING("image/png", 1);
+		}
+		if (ZEPHIR_IS_STRING(_0, "gif")) {
+			RETURN_STRING("image/gif", 1);
+		}
+		if (ZEPHIR_IS_STRING(_0, "jpg") || ZEPHIR_IS_STRING(_0, "jpeg")) {
+			RETURN_STRING("image/jpeg", 1);
+		}
+	} while(0);
+
+	RETURN_STRING("application/octet-stream", 1);
 
 }
 
@@ -245,7 +267,7 @@ PHP_METHOD(Yb_Image_Image, drawTo) {
 		ZEPHIR_CONCAT_SV(_6$$12, "Invalid position: ", &_5$$12);
 		ZEPHIR_CALL_METHOD(NULL, _4$$12, "__construct", NULL, 2, _6$$12);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_4$$12, "yb/image/image.zep", 76 TSRMLS_CC);
+		zephir_throw_exception_debug(_4$$12, "yb/image/image.zep", 91 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	} while(0);
@@ -287,9 +309,9 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 21);
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 22);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 22, ZEPHIR_GLOBAL(global_false));
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 23, ZEPHIR_GLOBAL(global_false));
 	zephir_check_call_status();
 
 	/* try_start_1: */
@@ -300,7 +322,7 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "save", NULL, 0, this_ptr, _1$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 23);
+		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 24);
 		zephir_check_call_status_or_jump(try_end_1);
 		RETURN_MM();
 
@@ -311,7 +333,7 @@ PHP_METHOD(Yb_Image_Image, __toString) {
 		ZEPHIR_CPY_WRT(_2, EG(exception));
 		if (zephir_instance_of_ev(_2, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
 			zend_clear_exception(TSRMLS_C);
-			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 24);
+			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 25);
 			zephir_check_call_status();
 		}
 	}

@@ -31,7 +31,7 @@ ZEPHIR_INIT_CLASS(Yb_Factory_ClassNameAbstract) {
 
 }
 
-PHP_METHOD(Yb_Factory_ClassNameAbstract, has) {
+PHP_METHOD(Yb_Factory_ClassNameAbstract, __isset) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *name_param = NULL, *_0 = NULL;
@@ -49,7 +49,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, has) {
 
 }
 
-PHP_METHOD(Yb_Factory_ClassNameAbstract, get) {
+PHP_METHOD(Yb_Factory_ClassNameAbstract, __get) {
 
 	zephir_fcall_cache_entry *_4 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -78,7 +78,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, get) {
 		return;
 	}
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
-	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "newinstanceof", &_4, 19, className, _5);
+	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "newinstanceof", &_4, 20, className, _5);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -110,7 +110,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, setArgArray) {
 	zephir_get_arrval(args, args_param);
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "array_values", NULL, 20, args);
+	ZEPHIR_CALL_FUNCTION(&_0, "array_values", NULL, 21, args);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("args"), _0 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

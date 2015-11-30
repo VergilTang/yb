@@ -2,18 +2,18 @@ namespace Yb\Upload;
 
 class Fastdfs extends StorageAbstract
 {
-    protected groupStorages;
+    protected prefixGroups;
 
-    public function __construct(array groupStorages = []) -> void
+    public function __construct(array prefixGroups = []) -> void
     {
         if unlikely ! extension_loaded("fastdfs_client") {
             throw new Exception("Missing extension: fastdfs_client");
         }
 
-        let this->groupStorages = groupStorages;
+        let this->prefixGroups = prefixGroups;
     }
 
-    public function store(string source, string group = "", string extension = "", long flag = 0) -> string
+    public function store(string source, string prefix = "", string extension = "", long flag = 0) -> string
     {
         var extensionArg = null, groupArg, destUri;
         string fun = "fastdfs_storage_upload_by_filename1";
@@ -21,7 +21,7 @@ class Fastdfs extends StorageAbstract
         if extension {
             let extensionArg = extension;
         }
-        if ! fetch groupArg, this->groupStorages[group] {
+        if ! fetch groupArg, this->prefixGroups[prefix] {
             let groupArg = null;
         }
 
@@ -43,6 +43,12 @@ class Fastdfs extends StorageAbstract
     public function remove(string uri) -> bool
     {
         string fun = "fastdfs_storage_delete_file1";
+        return {fun}(ltrim(uri, "/"));
+    }
+
+    public function exists(string uri) -> bool
+    {
+        string fun = "fastdfs_storage_file_exist1";
         return {fun}(ltrim(uri, "/"));
     }
 

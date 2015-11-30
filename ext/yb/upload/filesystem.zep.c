@@ -52,18 +52,18 @@ PHP_METHOD(Yb_Upload_FileSystem, store) {
 	zend_bool _5;
 	int ZEPHIR_LAST_CALL_STATUS;
 	long flag;
-	zval *source_param = NULL, *group_param = NULL, *extension_param = NULL, *flag_param = NULL, *temp = NULL, *success = NULL, *_0 = NULL, *_2, *_3, *_4 = NULL, _6, *_7 = NULL, *_8$$3, *_9$$3;
-	zval *source = NULL, *group = NULL, *extension = NULL, *destUri = NULL, *destPath = NULL, *_1 = NULL;
+	zval *source_param = NULL, *prefix_param = NULL, *extension_param = NULL, *flag_param = NULL, *temp = NULL, *success = NULL, *_0 = NULL, *_2, *_3, *_4 = NULL, _6, *_7 = NULL, *_8$$3, *_9$$3;
+	zval *source = NULL, *prefix = NULL, *extension = NULL, *destUri = NULL, *destPath = NULL, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 3, &source_param, &group_param, &extension_param, &flag_param);
+	zephir_fetch_params(1, 1, 3, &source_param, &prefix_param, &extension_param, &flag_param);
 
 	zephir_get_strval(source, source_param);
-	if (!group_param) {
-		ZEPHIR_INIT_VAR(group);
-		ZVAL_STRING(group, "", 1);
+	if (!prefix_param) {
+		ZEPHIR_INIT_VAR(prefix);
+		ZVAL_STRING(prefix, "", 1);
 	} else {
-		zephir_get_strval(group, group_param);
+		zephir_get_strval(prefix, prefix_param);
 	}
 	if (!extension_param) {
 		ZEPHIR_INIT_VAR(extension);
@@ -78,7 +78,7 @@ PHP_METHOD(Yb_Upload_FileSystem, store) {
 	}
 
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "generateuri", NULL, 0, source, group, extension);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "generateuri", NULL, 0, source, prefix, extension);
 	zephir_check_call_status();
 	zephir_get_strval(_1, _0);
 	ZEPHIR_CPY_WRT(destUri, _1);
@@ -86,15 +86,15 @@ PHP_METHOD(Yb_Upload_FileSystem, store) {
 	ZEPHIR_INIT_VAR(_3);
 	ZEPHIR_CONCAT_VV(_3, _2, destUri);
 	zephir_get_strval(destPath, _3);
-	ZEPHIR_CALL_FUNCTION(&temp, "dirname", NULL, 118, destPath);
+	ZEPHIR_CALL_FUNCTION(&temp, "dirname", NULL, 120, destPath);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_4, "is_dir", NULL, 119, temp);
+	ZEPHIR_CALL_FUNCTION(&_4, "is_dir", NULL, 121, temp);
 	zephir_check_call_status();
 	_5 = !zephir_is_true(_4);
 	if (_5) {
 		ZEPHIR_SINIT_VAR(_6);
 		ZVAL_LONG(&_6, 0755);
-		ZEPHIR_CALL_FUNCTION(&_7, "mkdir", NULL, 120, temp, &_6, ZEPHIR_GLOBAL(global_true));
+		ZEPHIR_CALL_FUNCTION(&_7, "mkdir", NULL, 122, temp, &_6, ZEPHIR_GLOBAL(global_true));
 		zephir_check_call_status();
 		_5 = !zephir_is_true(_7);
 	}
@@ -111,16 +111,16 @@ PHP_METHOD(Yb_Upload_FileSystem, store) {
 	}
 	do {
 		if (flag == 2) {
-			ZEPHIR_CALL_FUNCTION(&success, "move_uploaded_file", NULL, 121, source, destPath);
+			ZEPHIR_CALL_FUNCTION(&success, "move_uploaded_file", NULL, 123, source, destPath);
 			zephir_check_call_status();
 			break;
 		}
 		if (flag == 1) {
-			ZEPHIR_CALL_FUNCTION(&success, "rename", NULL, 122, source, destPath);
+			ZEPHIR_CALL_FUNCTION(&success, "rename", NULL, 124, source, destPath);
 			zephir_check_call_status();
 			break;
 		}
-		ZEPHIR_CALL_FUNCTION(&success, "copy", NULL, 123, source, destPath);
+		ZEPHIR_CALL_FUNCTION(&success, "copy", NULL, 125, source, destPath);
 		zephir_check_call_status();
 		break;
 	} while(0);
@@ -148,11 +148,29 @@ PHP_METHOD(Yb_Upload_FileSystem, remove) {
 	ZEPHIR_INIT_VAR(path);
 	ZEPHIR_CONCAT_VV(path, _0, uri);
 	if ((zephir_file_exists(path TSRMLS_CC) == SUCCESS)) {
-		ZEPHIR_RETURN_CALL_FUNCTION("unlink", NULL, 41, path);
+		ZEPHIR_RETURN_CALL_FUNCTION("unlink", NULL, 42, path);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
 	RETURN_MM_BOOL(0);
+
+}
+
+PHP_METHOD(Yb_Upload_FileSystem, exists) {
+
+	zval *uri_param = NULL, *_0, *_1;
+	zval *uri = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &uri_param);
+
+	zephir_get_strval(uri, uri_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("baseDirectory"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	ZEPHIR_CONCAT_VV(_1, _0, uri);
+	RETURN_MM_BOOL((zephir_file_exists(_1 TSRMLS_CC) == SUCCESS));
 
 }
 

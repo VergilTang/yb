@@ -5,6 +5,21 @@ class Image extends ImageAbstract
     public handler;
     public extension = "png";
 
+    public function contentType() -> string
+    {
+        switch this->extension {
+            case "png":
+                return "image/png";
+            case "gif":
+                return "image/gif";
+            case "jpg":
+            case "jpeg":
+                return "image/jpeg";
+        }
+
+        return "application/octet-stream";
+    }
+
     public function resize(long width, long height = 0) -> <Image>
     {
         return this->backend->resize(this, width, height);

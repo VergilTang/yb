@@ -45,7 +45,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 	ZVAL_NULL(m);
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_SINIT_VAR(_1);
-	ZVAL_STRING(&_1, "/^([^\\.\\?]+)/", 0);
+	ZVAL_STRING(&_1, "#^([^\\?]+)#", 0);
 	zephir_preg_match(_0, &_1, uri, m, 0, 0 , 0  TSRMLS_CC);
 	if (zephir_is_true(_0)) {
 		ZEPHIR_OBS_VAR(_2$$3);
@@ -55,7 +55,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 		ZVAL_STRING(&_4$$3, "#/+#", 0);
 		ZEPHIR_SINIT_VAR(_5$$3);
 		ZVAL_LONG(&_5$$3, 1);
-		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 25, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
+		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 26, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_NVAR(params);

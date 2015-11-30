@@ -68,12 +68,12 @@ PHP_METHOD(Yb_Upload_Uploader, __construct) {
 	ZVAL_LONG(&_3, -1);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, 1);
-	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 25, &_2, _1, &_3, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 26, &_2, _1, &_3, &_4);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 135, _5);
+	ZEPHIR_CALL_FUNCTION(&_6, "array_flip", NULL, 138, _5);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("validExtensions"), _6 TSRMLS_CC);
-	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "sizetobytes", &_8, 136, maxSize);
+	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "sizetobytes", &_8, 139, maxSize);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("maxSize"), _7 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -107,7 +107,7 @@ PHP_METHOD(Yb_Upload_Uploader, newUploadedFile) {
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, yb_upload_uploadedfile_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 137, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 140, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -118,13 +118,13 @@ PHP_METHOD(Yb_Upload_Uploader, saveUploadedFile) {
 	long flag = 0;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zend_bool keep;
-	zval *group = NULL;
-	zval *uploadedFile, *group_param = NULL, *keep_param = NULL, *_0, *_1, *_2, *_3;
+	zval *prefix = NULL;
+	zval *uploadedFile, *prefix_param = NULL, *keep_param = NULL, *_0, *_1, *_2, *_3;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 3, 0, &uploadedFile, &group_param, &keep_param);
+	zephir_fetch_params(1, 3, 0, &uploadedFile, &prefix_param, &keep_param);
 
-	zephir_get_strval(group, group_param);
+	zephir_get_strval(prefix, prefix_param);
 	keep = zephir_get_boolval(keep_param);
 
 
@@ -140,7 +140,7 @@ PHP_METHOD(Yb_Upload_Uploader, saveUploadedFile) {
 	zephir_read_property(&_2, uploadedFile, SL("extension"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, flag);
-	ZEPHIR_RETURN_CALL_METHOD(_0, "store", NULL, 0, _1, group, _2, _3);
+	ZEPHIR_RETURN_CALL_METHOD(_0, "store", NULL, 0, _1, prefix, _2, _3);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -233,7 +233,7 @@ PHP_METHOD(Yb_Upload_Uploader, pick) {
 		ZEPHIR_INIT_NVAR(_13$$3);
 		ZEPHIR_SINIT_NVAR(_14$$3);
 		ZVAL_LONG(&_14$$3, 4);
-		ZEPHIR_CALL_FUNCTION(&_15$$3, "pathinfo", &_16, 54, name, &_14$$3);
+		ZEPHIR_CALL_FUNCTION(&_15$$3, "pathinfo", &_16, 56, name, &_14$$3);
 		zephir_check_call_status();
 		zephir_fast_strtolower(_13$$3, _15$$3);
 		zephir_get_strval(_17$$3, _13$$3);
@@ -358,7 +358,7 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 			ZEPHIR_INIT_NVAR(_17$$6);
 			ZEPHIR_SINIT_NVAR(_18$$6);
 			ZVAL_LONG(&_18$$6, 4);
-			ZEPHIR_CALL_FUNCTION(&_19$$6, "pathinfo", &_20, 54, name, &_18$$6);
+			ZEPHIR_CALL_FUNCTION(&_19$$6, "pathinfo", &_20, 56, name, &_18$$6);
 			zephir_check_call_status();
 			zephir_fast_strtolower(_17$$6, _19$$6);
 			zephir_get_strval(_21$$6, _17$$6);

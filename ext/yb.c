@@ -27,10 +27,12 @@
 
 
 
+zend_class_entry *yb_view_viewinterface_ce;
 zend_class_entry *yb_collection_collectioninterface_ce;
-zend_class_entry *yb_sequence_sequenceinterface_ce;
-zend_class_entry *yb_datacacher_datacacherinterface_ce;
 zend_class_entry *yb_factory_factoryinterface_ce;
+zend_class_entry *yb_sequence_sequenceinterface_ce;
+zend_class_entry *yb_task_taskmanagerinterface_ce;
+zend_class_entry *yb_datacacher_datacacherinterface_ce;
 zend_class_entry *yb_mailer_mailerinterface_ce;
 zend_class_entry *yb_ratelimiter_ratelimiterinterface_ce;
 zend_class_entry *yb_redis_redisclientinterface_ce;
@@ -39,6 +41,7 @@ zend_class_entry *yb_data_pivotbackendinterface_ce;
 zend_class_entry *yb_data_ratelimiterbackendinterface_ce;
 zend_class_entry *yb_data_sequencebackendinterface_ce;
 zend_class_entry *yb_data_singlevaluebackendinterface_ce;
+zend_class_entry *yb_task_taskinterface_ce;
 zend_class_entry *yb_exception_ce;
 zend_class_entry *yb_data_dataabstract_ce;
 zend_class_entry *yb_db_dbabstract_ce;
@@ -51,6 +54,7 @@ zend_class_entry *yb_loader_loaderabstract_ce;
 zend_class_entry *yb_logger_loggerabstract_ce;
 zend_class_entry *yb_redis_error_ce;
 zend_class_entry *yb_router_routerabstract_ce;
+zend_class_entry *yb_task_taskmanagerabstract_ce;
 zend_class_entry *yb_collection_redishash_ce;
 zend_class_entry *yb_factory_classnameabstract_ce;
 zend_class_entry *yb_image_image_ce;
@@ -75,7 +79,9 @@ zend_class_entry *yb_db_pdopgsql_ce;
 zend_class_entry *yb_db_queryexception_ce;
 zend_class_entry *yb_db_transactionexception_ce;
 zend_class_entry *yb_factory_exception_ce;
+zend_class_entry *yb_factory_factories_ce;
 zend_class_entry *yb_factory_namespaced_ce;
+zend_class_entry *yb_factory_shared_ce;
 zend_class_entry *yb_image_captcha_ce;
 zend_class_entry *yb_image_exception_ce;
 zend_class_entry *yb_image_gd_ce;
@@ -107,12 +113,24 @@ zend_class_entry *yb_sequence_redishash_ce;
 zend_class_entry *yb_socket_exception_ce;
 zend_class_entry *yb_socket_tcpclient_ce;
 zend_class_entry *yb_std_ce;
+zend_class_entry *yb_task_exception_ce;
+zend_class_entry *yb_task_queueredis_ce;
+zend_class_entry *yb_task_rundirectly_ce;
 zend_class_entry *yb_upload_exception_ce;
 zend_class_entry *yb_upload_fastdfs_ce;
 zend_class_entry *yb_upload_filesystem_ce;
 zend_class_entry *yb_upload_ftp_ce;
 zend_class_entry *yb_upload_uploadedfile_ce;
 zend_class_entry *yb_upload_uploader_ce;
+zend_class_entry *yb_view_content_ce;
+zend_class_entry *yb_view_exception_ce;
+zend_class_entry *yb_view_facade_ce;
+zend_class_entry *yb_view_httpresponse_ce;
+zend_class_entry *yb_view_json_ce;
+zend_class_entry *yb_view_nil_ce;
+zend_class_entry *yb_view_readfile_ce;
+zend_class_entry *yb_view_redirect_ce;
+zend_class_entry *yb_view_tpl_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(yb)
 
@@ -138,10 +156,12 @@ static PHP_MINIT_FUNCTION(yb)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
+	ZEPHIR_INIT(Yb_View_ViewInterface);
 	ZEPHIR_INIT(Yb_Collection_CollectionInterface);
-	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
-	ZEPHIR_INIT(Yb_DataCacher_DataCacherInterface);
 	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
+	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
+	ZEPHIR_INIT(Yb_Task_TaskManagerInterface);
+	ZEPHIR_INIT(Yb_DataCacher_DataCacherInterface);
 	ZEPHIR_INIT(Yb_Mailer_MailerInterface);
 	ZEPHIR_INIT(Yb_RateLimiter_RateLimiterInterface);
 	ZEPHIR_INIT(Yb_Redis_RedisClientInterface);
@@ -150,6 +170,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Data_RateLimiterBackendInterface);
 	ZEPHIR_INIT(Yb_Data_SequenceBackendInterface);
 	ZEPHIR_INIT(Yb_Data_SingleValueBackendInterface);
+	ZEPHIR_INIT(Yb_Task_TaskInterface);
 	ZEPHIR_INIT(Yb_Exception);
 	ZEPHIR_INIT(Yb_Data_DataAbstract);
 	ZEPHIR_INIT(Yb_Db_DbAbstract);
@@ -162,6 +183,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Logger_LoggerAbstract);
 	ZEPHIR_INIT(Yb_Redis_Error);
 	ZEPHIR_INIT(Yb_Router_RouterAbstract);
+	ZEPHIR_INIT(Yb_Task_TaskManagerAbstract);
 	ZEPHIR_INIT(Yb_Collection_RedisHash);
 	ZEPHIR_INIT(Yb_Factory_ClassNameAbstract);
 	ZEPHIR_INIT(Yb_Image_Image);
@@ -186,7 +208,9 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Db_QueryException);
 	ZEPHIR_INIT(Yb_Db_TransactionException);
 	ZEPHIR_INIT(Yb_Factory_Exception);
+	ZEPHIR_INIT(Yb_Factory_Factories);
 	ZEPHIR_INIT(Yb_Factory_Namespaced);
+	ZEPHIR_INIT(Yb_Factory_Shared);
 	ZEPHIR_INIT(Yb_Image_Captcha);
 	ZEPHIR_INIT(Yb_Image_Exception);
 	ZEPHIR_INIT(Yb_Image_Gd);
@@ -218,12 +242,24 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Socket_Exception);
 	ZEPHIR_INIT(Yb_Socket_TcpClient);
 	ZEPHIR_INIT(Yb_Std);
+	ZEPHIR_INIT(Yb_Task_Exception);
+	ZEPHIR_INIT(Yb_Task_QueueRedis);
+	ZEPHIR_INIT(Yb_Task_RunDirectly);
 	ZEPHIR_INIT(Yb_Upload_Exception);
 	ZEPHIR_INIT(Yb_Upload_Fastdfs);
 	ZEPHIR_INIT(Yb_Upload_FileSystem);
 	ZEPHIR_INIT(Yb_Upload_Ftp);
 	ZEPHIR_INIT(Yb_Upload_UploadedFile);
 	ZEPHIR_INIT(Yb_Upload_Uploader);
+	ZEPHIR_INIT(Yb_View_Content);
+	ZEPHIR_INIT(Yb_View_Exception);
+	ZEPHIR_INIT(Yb_View_Facade);
+	ZEPHIR_INIT(Yb_View_HttpResponse);
+	ZEPHIR_INIT(Yb_View_Json);
+	ZEPHIR_INIT(Yb_View_Nil);
+	ZEPHIR_INIT(Yb_View_ReadFile);
+	ZEPHIR_INIT(Yb_View_Redirect);
+	ZEPHIR_INIT(Yb_View_Tpl);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);
