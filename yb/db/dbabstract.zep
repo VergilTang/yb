@@ -163,21 +163,6 @@ abstract class DbAbstract
         this->query("ROLLBACK TO SAVEPOINT " . savepoint);
     }
 
-    public function expression() -> string
-    {
-        var a;
-        string f;
-
-        let a = func_get_args();
-        let f = (string) str_replace(["%", "?"], ["%%", "%s"], (string) array_shift(a));
-
-        if unlikely f->length() < 1 {
-            return "";
-        }
-
-        return vsprintf(f, array_map([this, "quote"], a));
-    }
-
     public function getQueries() -> array
     {
         if this->queries {
@@ -199,7 +184,7 @@ abstract class DbAbstract
 
         let sql = "INSERT INTO " . table . " (" . join(", ", ks) . ") VALUES (" . join(", ", vs) . ")";
 
-        if returningId {
+        if returningId->length() > 0 {
             let sql .= " RETURNING " . returningId;
             return this->queryCell(sql, data);
         }
@@ -207,22 +192,23 @@ abstract class DbAbstract
         this->query(sql, data);
     }
 
-    public function delete(string table, string where = "") -> void
+    public function delete(string table, array where = []) -> void
     {
-        string s;
+        string s, w;
 
         let s = "DELETE FROM " . table;
-        if where {
-            let s .= " WHERE " . (string) where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         this->query(s);
     }
 
-    public function update(string table, array data, string where = "") -> void
+    public function update(string table, array data, array where = []) -> void
     {
         var k, v, kvs = [], params = [];
-        string s;
+        string s, w;
 
         for k, v in data {
             let kvs[k] = k . " = :" . k;
@@ -230,8 +216,9 @@ abstract class DbAbstract
         }
 
         let s = "UPDATE " . table . " SET " . join(", ", kvs);
-        if where {
-            let s .= " WHERE " . (string) where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         this->query(s, params);
@@ -246,7 +233,7 @@ abstract class DbAbstract
                 if unlikely ! fetch v, data[k] {
                     throw new Exception("Cannot find primary key value in data: " . k);
                 }
-                let where[k] = k . " = " . this->quote(v);
+                let where[k] = v;
             }
             if unlikely ! where {
                 throw new Exception("Cannot upsert with empty where");
@@ -256,24 +243,24 @@ abstract class DbAbstract
             if unlikely ! fetch v, data[k] {
                 throw new Exception("Cannot find primary key value in data: " . k);
             }
-            let where[k] = k . " = " . this->quote(v);
+            let where[k] = v;
         }
 
-        this->delete(table, implode(" AND ", where));
+        this->delete(table, where);
         this->insert(table, data);
     }
 
     public function parseSelect(string table, array options = []) -> string
     {
-        string field, where;
-        var orderBy;
+        string field, w;
+        var where, orderBy;
         long limit, offset;
         bool forUpdate;
 
         string s = "SELECT ";
 
         let field = (string) Std::valueAt(options, "field", "*");
-        let where = (string) Std::valueAt(options, "where", "");
+        let where = (array) Std::valueAt(options, "where", []);
         let orderBy = Std::valueAt(options, "orderBy", "");
         let limit = (long) Std::valueAt(options, "limit", 0);
         let offset = (long) Std::valueAt(options, "offset", 0);
@@ -287,8 +274,9 @@ abstract class DbAbstract
 
         let s .= " FROM " . table;
 
-        if where {
-            let s .= " WHERE " . where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         if orderBy {
@@ -345,15 +333,16 @@ abstract class DbAbstract
 
     public function countAndSelect(string table, array options = []) -> array
     {
-        string where;
+        var where;
         long c;
-        string s;
+        string s, w;
 
-        let where = (string) Std::valueAt(options, "where", "");
+        let where = (array) Std::valueAt(options, "where", []);
 
         let s = "SELECT COUNT(*) FROM " . table;
-        if where {
-            let s .= " WHERE " . where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         let c = (long) this->queryCell(s);
@@ -433,10 +422,10 @@ abstract class DbAbstract
         ];
     }
 
-    public function parseAggregation(string table, array aggregations, string where = "") -> string
+    public function parseAggregation(string table, array aggregations, array where = []) -> string
     {
         var k, v, a = [];
-        string s;
+        string s, w;
 
         for k, v in aggregations {
             let a[] = v . " AS " . k;
@@ -444,14 +433,15 @@ abstract class DbAbstract
 
         let s = "SELECT " . join(", ", a) . " FROM " .table;
 
-        if where {
-            let s .= " WHERE " . where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         return s;
     }
 
-    public function queryAggregation(string table, array aggregations, string where = "") -> array
+    public function queryAggregation(string table, array aggregations, array where = []) -> array
     {
         string s;
 
@@ -459,48 +449,49 @@ abstract class DbAbstract
         return this->queryRow(s);
     }
 
-    public function aggregate(string table, string column, string aggregation, string where = "")
+    public function aggregate(string table, string column, string aggregation, array where = [])
     {
-        string s;
+        string s, w;
 
         let s = "SELECT " . aggregation . "(" . column . ") FROM " .  table;
 
-        if where {
-            let s .= " WHERE " . where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         return this->queryCell(s);
     }
 
-    public function count(string table, string column = "*", string where = "") -> long
+    public function count(string table, string column = "*", array where = []) -> long
     {
         return (long) this->aggregate(table, column, "COUNT", where);
     }
 
-    public function max(string table, string column, string where = "")
+    public function max(string table, string column, array where = [])
     {
         return this->aggregate(table, column, "MAX", where);
     }
 
-    public function min(string table, string column, string where = "")
+    public function min(string table, string column, array where = [])
     {
         return this->aggregate(table, column, "MIN", where);
     }
 
-    public function sum(string table, string column, string where = "")
+    public function sum(string table, string column, array where = [])
     {
         return this->aggregate(table, column, "SUM", where);
     }
 
     public function parseGroupedAggregation(string table, string groupBy, array aggrs, array options = []) -> string
     {
-        string where, having;
+        var where, having;
         var orderBy;
         var k, v, a = [];
-        string s;
+        string s, w;
 
-        let where = (string) Std::valueAt(options, "where", "");
-        let having = (string) Std::valueAt(options, "having", "");
+        let where = (array) Std::valueAt(options, "where", []);
+        let having = (array) Std::valueAt(options, "having", []);
         let orderBy = Std::valueAt(options, "orderBy", "");
 
         let a[] = groupBy;
@@ -511,14 +502,16 @@ abstract class DbAbstract
 
         let s = "SELECT " . join(", ", a) . " FROM " .table;
 
-        if where {
-            let s .= " WHERE " . where;
+        let w = (string) this->parseWhere(where);
+        if w->length() > 0 {
+            let s .= " WHERE " . w;
         }
 
         let s .= " GROUP BY " . groupBy;
 
-        if having {
-            let s .= " HAVING " . having;
+        let w = (string) this->parseWhere(having);
+        if w->length() > 0 {
+            let s .= " HAVING " . w;
         }
 
         if orderBy {
@@ -540,9 +533,118 @@ abstract class DbAbstract
         return this->queryAll(s);
     }
 
-    abstract protected function tryToBegin() -> bool;
-    abstract protected function tryToCommit() -> bool;
-    abstract protected function tryToRollback() -> bool;
+    public function parseWhere(array where, string sep = " AND ") -> string
+    {
+        var k, v, ks, ws = [];
+        string k1, k2, tmp;
+
+        for k, v in where {
+            let ks = explode("$", k);
+            let k1 = (string) array_shift(ks);
+            let k2 = (string) array_shift(ks);
+            let tmp = "";
+
+            switch k2 {
+                case "":
+                    if v === null {
+                        let ws[] = k1 . " IS NULL";
+                    } else {
+                        let ws[] = k1 . " = " . this->quote(v);
+                    }
+                    break;
+                case "neq":
+                    if v === null {
+                        let ws[] = k1 . "IS NOT NULL";
+                    } else {
+                        let ws[] = k1 . " <> " . this->quote(v);
+                    }
+                    break;
+                case "lt":
+                    let ws[] = k1 . " < " . this->quote(v);
+                    break;
+                case "lte":
+                    let ws[] = k1 . " <= " . this->quote(v);
+                    break;
+                case "gt":
+                    let ws[] = k1 . " > " . this->quote(v);
+                    break;
+                case "gte":
+                    let ws[] = k1 . " >= " . this->quote(v);
+                    break;
+                case "notBetween":
+                    let tmp = " NOT";
+                case "between":
+                    if unlikely typeof v != "array" || ! isset v[0] || ! isset v[1] {
+                        throw new Exception("Invalid between");
+                    }
+                    let ws[] = k1 . tmp . " BETWEEN " . this->quote(v[0]) . " AND " . this->quote(v[1]);
+                    break;
+                case "notLike":
+                    let tmp = " NOT";
+                case "like":
+                    let ws[] = k1 . tmp . " LIKE " . this->quote(v);
+                    break;
+                case "notIn":
+                    let tmp = " NOT";
+                case "in":
+                    if unlikely typeof v != "array" || count(v) < 1 {
+                        throw new Exception("Invalid in");
+                    }
+                    let ws[] = k1 . tmp . " IN (" . implode(", ", array_map([this, "quote"], v)) . ")";
+                    break;
+                case "notInSelect":
+                    let tmp = " NOT";
+                case "inSelect":
+                    if strpos(k1, ",") !== false {
+                        let k1 = "(" . k1 . ")";
+                    }
+                    let ws[] = k1 . tmp . " IN (" . v . ")";
+                    break;
+
+                case "raw":
+                    let ws[] = "(" . v . ")";
+                    break;
+                case "expression":
+                    if unlikely typeof v != "array" || count(v) < 1 {
+                        throw new Exception("Invalid expression");
+                    }
+
+                    let tmp = (string) str_replace(["%", "?"], ["%%", "%s"], (string) array_shift(v));
+                    if unlikely tmp->length() > 0 {
+                        let ws[] = "(" . vsprintf(tmp, array_map([this, "quote"], v)) . ")";
+                    }
+                    break;
+
+                case "and":
+                    if unlikely typeof v != "array" || count(v) < 1 {
+                        throw new Exception("Invalid and");
+                    }
+                    let ws[] = "(" . this->parseWhere(v, " AND ") . ")";
+                    break;
+                case "or":
+                    if unlikely typeof v != "array" || count(v) < 1 {
+                        throw new Exception("Invalid or");
+                    }
+                    let ws[] = "(" . this->parseWhere(v, " OR ") . ")";
+                    break;
+                case "xor":
+                    if unlikely typeof v != "array" || count(v) < 1 {
+                        throw new Exception("Invalid xor");
+                    }
+                    let ws[] = "(" . this->parseWhere(v, " XOR ") . ")";
+                    break;
+
+                default:
+                    throw new Exception("Invalid k2: " . k2);
+            }
+        }
+
+        return implode(sep, ws);
+    }
+
+    abstract protected function tryToBegin() -> boolean;
+    abstract protected function tryToCommit() -> boolean;
+    abstract protected function tryToRollback() -> boolean;
 
     abstract protected function paginateQuery(string query, long limit, long offset) -> string;
     abstract protected function randomOrder() -> string;

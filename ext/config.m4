@@ -54,6 +54,9 @@ if test "$PHP_YB" = "yes"; then
 	yb/datacacher/apc.zep.c
 	yb/datacacher/exception.zep.c
 	yb/datacacher/file.zep.c
+	yb/db/collection.zep.c
+	yb/db/entity.zep.c
+	yb/db/model.zep.c
 	yb/db/oci8.zep.c
 	yb/db/pdomysql.zep.c
 	yb/db/pdopgsql.zep.c

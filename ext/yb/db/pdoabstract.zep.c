@@ -58,9 +58,9 @@ PHP_METHOD(Yb_Db_PdoAbstract, __construct) {
 	ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL, 12, _3);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_5, "func_get_args", NULL, 5);
+	ZEPHIR_CALL_FUNCTION(&_5, "func_get_args", NULL, 13);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_4, _2, "newinstanceargs", NULL, 13, _5);
+	ZEPHIR_CALL_METHOD(&_4, _2, "newinstanceargs", NULL, 14, _5);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("pdo"), _4 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

@@ -20,7 +20,6 @@ PHP_METHOD(Yb_Db_DbAbstract, releaseSavepoint);
 PHP_METHOD(Yb_Db_DbAbstract, releaseLastSavepoint);
 PHP_METHOD(Yb_Db_DbAbstract, rollbackToSavepoint);
 PHP_METHOD(Yb_Db_DbAbstract, rollbackToLastSavepoint);
-PHP_METHOD(Yb_Db_DbAbstract, expression);
 PHP_METHOD(Yb_Db_DbAbstract, getQueries);
 PHP_METHOD(Yb_Db_DbAbstract, insert);
 PHP_METHOD(Yb_Db_DbAbstract, delete);
@@ -44,6 +43,7 @@ PHP_METHOD(Yb_Db_DbAbstract, min);
 PHP_METHOD(Yb_Db_DbAbstract, sum);
 PHP_METHOD(Yb_Db_DbAbstract, parseGroupedAggregation);
 PHP_METHOD(Yb_Db_DbAbstract, queryGroupedAggregation);
+PHP_METHOD(Yb_Db_DbAbstract, parseWhere);
 PHP_METHOD(Yb_Db_DbAbstract, tryToBegin);
 PHP_METHOD(Yb_Db_DbAbstract, tryToCommit);
 PHP_METHOD(Yb_Db_DbAbstract, tryToRollback);
@@ -104,13 +104,13 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_delete, 0, 0, 1)
 	ZEND_ARG_INFO(0, table)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_update, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_ARRAY_INFO(0, data, 0)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_upsert, 0, 0, 3)
@@ -173,44 +173,44 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parseaggregation, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_ARRAY_INFO(0, aggregations, 0)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_queryaggregation, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_ARRAY_INFO(0, aggregations, 0)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_aggregate, 0, 0, 3)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_INFO(0, column)
 	ZEND_ARG_INFO(0, aggregation)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_count, 0, 0, 1)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_INFO(0, column)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_max, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_INFO(0, column)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_min, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_INFO(0, column)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_sum, 0, 0, 2)
 	ZEND_ARG_INFO(0, table)
 	ZEND_ARG_INFO(0, column)
-	ZEND_ARG_INFO(0, where)
+	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parsegroupedaggregation, 0, 0, 3)
@@ -225,6 +225,11 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_querygroupedaggregation, 0, 0, 3
 	ZEND_ARG_INFO(0, groupBy)
 	ZEND_ARG_ARRAY_INFO(0, aggrs, 0)
 	ZEND_ARG_ARRAY_INFO(0, options, 1)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parsewhere, 0, 0, 1)
+	ZEND_ARG_ARRAY_INFO(0, where, 0)
+	ZEND_ARG_INFO(0, sep)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_paginatequery, 0, 0, 3)
@@ -257,7 +262,6 @@ ZEPHIR_INIT_FUNCS(yb_db_dbabstract_method_entry) {
 	PHP_ME(Yb_Db_DbAbstract, releaseLastSavepoint, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, rollbackToSavepoint, arginfo_yb_db_dbabstract_rollbacktosavepoint, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, rollbackToLastSavepoint, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Yb_Db_DbAbstract, expression, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, getQueries, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, insert, arginfo_yb_db_dbabstract_insert, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, delete, arginfo_yb_db_dbabstract_delete, ZEND_ACC_PUBLIC)
@@ -281,6 +285,7 @@ ZEPHIR_INIT_FUNCS(yb_db_dbabstract_method_entry) {
 	PHP_ME(Yb_Db_DbAbstract, sum, arginfo_yb_db_dbabstract_sum, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, parseGroupedAggregation, arginfo_yb_db_dbabstract_parsegroupedaggregation, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, queryGroupedAggregation, arginfo_yb_db_dbabstract_querygroupedaggregation, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Db_DbAbstract, parseWhere, arginfo_yb_db_dbabstract_parsewhere, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, tryToBegin, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_Db_DbAbstract, tryToCommit, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_Db_DbAbstract, tryToRollback, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)

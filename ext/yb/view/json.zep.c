@@ -47,14 +47,14 @@ PHP_METHOD(Yb_View_Json, run) {
 	ZVAL_STRING(_1, "jsonFlag", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, 0);
-	ZEPHIR_CALL_CE_STATIC(&jsonFlag, yb_std_ce, "valueat", &_0, 9, options, _1, _2);
+	ZEPHIR_CALL_CE_STATIC(&jsonFlag, yb_std_ce, "valueat", &_0, 5, options, _1, _2);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_1);
 	ZVAL_STRING(_1, "jsonCallback", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_3, yb_std_ce, "valueat", &_0, 9, options, _1, _2);
+	ZEPHIR_CALL_CE_STATIC(&_3, yb_std_ce, "valueat", &_0, 5, options, _1, _2);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -64,7 +64,7 @@ PHP_METHOD(Yb_View_Json, run) {
 	ZVAL_STRING(_1, "jsonCors", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 0);
-	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_0, 9, options, _1, _2);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_0, 5, options, _1, _2);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	jsonCors = zephir_get_boolval(_5);
@@ -72,20 +72,20 @@ PHP_METHOD(Yb_View_Json, run) {
 	ZVAL_STRING(_1, "jsonTextPlain", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 0);
-	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_0, 9, options, _1, _2);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_0, 5, options, _1, _2);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	jsonTextPlain = zephir_get_boolval(_5);
 	if (jsonCors) {
 		ZEPHIR_SINIT_VAR(_6$$3);
 		ZVAL_STRING(&_6$$3, "Access-Control-Allow-Origin: *", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 141, &_6$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 147, &_6$$3);
 		zephir_check_call_status();
 	}
 	if (jsonTextPlain) {
 		ZEPHIR_SINIT_VAR(_8$$4);
 		ZVAL_STRING(&_8$$4, "Content-type: text/plain; charset=UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 141, &_8$$4);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 147, &_8$$4);
 		zephir_check_call_status();
 	}
 	if (zephir_fast_strlen_ev(jsonCallback) > 0) {

@@ -57,7 +57,7 @@ PHP_METHOD(Yb_Image_Imagick, __construct) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_image_exception_ce, "Missing extension: imagick", "yb/image/imagick.zep", 8);
 		return;
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_image_imagick_ce, this_ptr, "__construct", &_2, 54, defaultOptions);
+	ZEPHIR_CALL_PARENT(NULL, yb_image_imagick_ce, this_ptr, "__construct", &_2, 60, defaultOptions);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -247,7 +247,7 @@ PHP_METHOD(Yb_Image_Imagick, fromPath) {
 	object_init_ex(imagick, zephir_get_internal_ce(SS("imagick") TSRMLS_CC));
 	ZEPHIR_CALL_METHOD(NULL, imagick, "__construct", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_0, "realpath", NULL, 81, path);
+	ZEPHIR_CALL_FUNCTION(&_0, "realpath", NULL, 87, path);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, imagick, "readimage", NULL, 0, _0);
 	zephir_check_call_status();
@@ -268,7 +268,7 @@ PHP_METHOD(Yb_Image_Imagick, fromPath) {
 		ZEPHIR_INIT_VAR(_5$$4);
 		ZEPHIR_SINIT_VAR(_6$$4);
 		ZVAL_LONG(&_6$$4, 4);
-		ZEPHIR_CALL_FUNCTION(&_7$$4, "pathinfo", NULL, 56, path, &_6$$4);
+		ZEPHIR_CALL_FUNCTION(&_7$$4, "pathinfo", NULL, 62, path, &_6$$4);
 		zephir_check_call_status();
 		zephir_fast_strtolower(_5$$4, _7$$4);
 		zephir_get_strval(_8$$4, _5$$4);
@@ -394,7 +394,7 @@ PHP_METHOD(Yb_Image_Imagick, captcha) {
 	rOverlap = zephir_get_doubleval(_8);
 	ZEPHIR_SINIT_VAR(_9);
 	ZVAL_STRING(&_9, "utf-8", 0);
-	ZEPHIR_CALL_FUNCTION(&_10, "mb_strlen", NULL, 65, text, &_9);
+	ZEPHIR_CALL_FUNCTION(&_10, "mb_strlen", NULL, 71, text, &_9);
 	zephir_check_call_status();
 	textLen = zephir_get_intval(_10);
 	fontSize = (long) (zephir_safe_div_double_long((1.0 * width), (((rPadding * (double) 2) + textLen)) TSRMLS_CC));
@@ -517,7 +517,7 @@ PHP_METHOD(Yb_Image_Imagick, captcha) {
 		ZVAL_LONG(&_40$$7, 1);
 		ZEPHIR_SINIT_NVAR(_41$$7);
 		ZVAL_STRING(&_41$$7, "utf-8", 0);
-		ZEPHIR_CALL_FUNCTION(&_42$$7, "mb_substr", &_43, 68, text, &_39$$7, &_40$$7, &_41$$7);
+		ZEPHIR_CALL_FUNCTION(&_42$$7, "mb_substr", &_43, 74, text, &_39$$7, &_40$$7, &_41$$7);
 		zephir_check_call_status();
 		zephir_get_strval(_44$$7, _42$$7);
 		ZEPHIR_CPY_WRT(ch, _44$$7);

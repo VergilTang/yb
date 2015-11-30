@@ -69,7 +69,7 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	ZVAL_STRING(_2, "host", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "127.0.0.1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
@@ -79,7 +79,7 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	ZVAL_STRING(_2, "port", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_LONG(_3, 6379);
-	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	port = zephir_get_intval(_5);
@@ -87,7 +87,7 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	ZVAL_STRING(_2, "connectTimeout", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_LONG(_3, 5);
-	ZEPHIR_CALL_CE_STATIC(&_6, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_6, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	connectTimeout = zephir_get_intval(_6);
@@ -95,7 +95,7 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	ZVAL_STRING(_2, "persistent", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_BOOL(_3, 0);
-	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	persistent = zephir_get_boolval(_7);
@@ -103,7 +103,7 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	ZVAL_STRING(_2, "timeout", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_DOUBLE(_3, 2.0);
-	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_7, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	timeout = zephir_get_doubleval(_7);
@@ -119,20 +119,20 @@ PHP_METHOD(Yb_Redis_Connection, __construct) {
 	} else {
 		ZVAL_BOOL(_8, 0);
 	}
-	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 87, host, _2, _3, _8);
+	ZEPHIR_CALL_METHOD(NULL, socket, "__construct", NULL, 93, host, _2, _3, _8);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 1);
-	ZEPHIR_CALL_METHOD(NULL, socket, "settcpnodelay", NULL, 88, _2);
+	ZEPHIR_CALL_METHOD(NULL, socket, "settcpnodelay", NULL, 94, _2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 1);
-	ZEPHIR_CALL_METHOD(NULL, socket, "setblocking", NULL, 89, _2);
+	ZEPHIR_CALL_METHOD(NULL, socket, "setblocking", NULL, 95, _2);
 	zephir_check_call_status();
 	if (timeout > 0) {
 		ZEPHIR_INIT_VAR(_9$$3);
 		ZVAL_DOUBLE(_9$$3, timeout);
-		ZEPHIR_CALL_METHOD(NULL, socket, "settimeout", NULL, 90, _9$$3);
+		ZEPHIR_CALL_METHOD(NULL, socket, "settimeout", NULL, 96, _9$$3);
 		zephir_check_call_status();
 	}
 	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
@@ -164,7 +164,7 @@ PHP_METHOD(Yb_Redis_Connection, __call) {
 
 	ZEPHIR_CPY_WRT(cmd, args);
 	ZEPHIR_MAKE_REF(cmd);
-	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 98, cmd, method);
+	ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 104, cmd, method);
 	ZEPHIR_UNREF(cmd);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "runcommand", NULL, 0, cmd);
@@ -278,7 +278,7 @@ PHP_METHOD(Yb_Redis_Connection, write) {
 	  ; zephir_hash_move_forward_ex(_11, &_10)
 	) {
 		ZEPHIR_GET_HVALUE(d, _12);
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_13, 99, d);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", &_13, 105, d);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();
@@ -409,7 +409,7 @@ PHP_METHOD(Yb_Redis_Connection, read) {
 					break;
 				}
 				l--;
-				ZEPHIR_CALL_METHOD(&_28$$13, this_ptr, "read", &_29, 100);
+				ZEPHIR_CALL_METHOD(&_28$$13, this_ptr, "read", &_29, 106);
 				zephir_check_call_status();
 				zephir_array_append(&a, _28$$13, PH_SEPARATE, "yb/redis/connection.zep", 145);
 			}

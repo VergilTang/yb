@@ -138,7 +138,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 		ZVAL_STRING(_2$$3, "name", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_3$$3);
 		ZVAL_STRING(_3$$3, "defaultTask", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_CE_STATIC(&_0$$3, yb_std_ce, "valueat", &_1, 9, taskData, _2$$3, _3$$3);
+		ZEPHIR_CALL_CE_STATIC(&_0$$3, yb_std_ce, "valueat", &_1, 5, taskData, _2$$3, _3$$3);
 		zephir_check_temp_parameter(_2$$3);
 		zephir_check_temp_parameter(_3$$3);
 		zephir_check_call_status_or_jump(try_end_1);
@@ -178,7 +178,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 		array_init(_2$$3);
 		ZEPHIR_INIT_NVAR(_3$$3);
 		ZVAL_STRING(_3$$3, "input", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_CE_STATIC(&input, yb_std_ce, "valueat", &_1, 9, taskData, _3$$3, _2$$3);
+		ZEPHIR_CALL_CE_STATIC(&input, yb_std_ce, "valueat", &_1, 5, taskData, _3$$3, _2$$3);
 		zephir_check_temp_parameter(_3$$3);
 		zephir_check_call_status_or_jump(try_end_1);
 		ZEPHIR_CALL_METHOD(&re, task, "__invoke", NULL, 0, input);
@@ -221,7 +221,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
 			RETURN_MM_NULL();
 		}
 		_3$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_4, 19, _3$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_4, 20, _3$$3);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();

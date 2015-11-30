@@ -49,7 +49,7 @@ PHP_METHOD(Yb_View_ReadFile, run) {
 	ZVAL_STRING(_2, "readFile", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 9, options, _2, _3);
+	ZEPHIR_CALL_CE_STATIC(&_0, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
@@ -72,29 +72,29 @@ PHP_METHOD(Yb_View_ReadFile, run) {
 	}
 	ZEPHIR_SINIT_VAR(_8);
 	ZVAL_STRING(&_8, "Content-Description: File Transfer", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_8);
 	ZVAL_STRING(&_8, "Content-Type: application/octet-stream", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_8);
 	ZVAL_STRING(&_8, "Content-Transfer-Encoding: binary", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_8);
 	ZVAL_STRING(&_8, "Expires: 0", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_8);
 	ZVAL_STRING(&_8, "Cache-Control: must-revalidate", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
 	ZEPHIR_SINIT_NVAR(_8);
 	ZVAL_STRING(&_8, "Pragma: public", 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 141, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_9, 147, &_8);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_10, "readfile", NULL, 145, readFile);
+	ZEPHIR_CALL_FUNCTION(&_10, "readfile", NULL, 151, readFile);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_10))) {
 		ZEPHIR_INIT_VAR(_11$$5);

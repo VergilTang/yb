@@ -15,7 +15,7 @@ if (PHP_YB != "no") {
 	ADD_SOURCES(configure_module_dirname + "/yb/view", "viewinterface.zep.c content.zep.c exception.zep.c facade.zep.c httpresponse.zep.c json.zep.c nil.zep.c readfile.zep.c redirect.zep.c tpl.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/data", "dataabstract.zep.c grouped.zep.c groupedbackendinterface.zep.c pivot.zep.c pivotbackendinterface.zep.c ratelimiter.zep.c ratelimiterbackendinterface.zep.c sequence.zep.c sequencebackendinterface.zep.c singlevalue.zep.c singlevaluebackendinterface.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/collection", "collectioninterface.zep.c redishash.zep.c exception.zep.c mongocollection.zep.c proxy.zep.c redishashserialized.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/db", "dbabstract.zep.c exception.zep.c pdoabstract.zep.c oci8.zep.c pdomysql.zep.c pdopgsql.zep.c queryexception.zep.c transactionexception.zep.c", "yb");
+	ADD_SOURCES(configure_module_dirname + "/yb/db", "dbabstract.zep.c exception.zep.c pdoabstract.zep.c collection.zep.c entity.zep.c model.zep.c oci8.zep.c pdomysql.zep.c pdopgsql.zep.c queryexception.zep.c transactionexception.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/factory", "factoryinterface.zep.c classnameabstract.zep.c exception.zep.c factories.zep.c namespaced.zep.c shared.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/sequence", "sequenceinterface.zep.c dbpdomysql.zep.c exception.zep.c mongocollection.zep.c redis.zep.c redishash.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c text.zep.c", "yb");
