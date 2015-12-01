@@ -64,7 +64,7 @@ PHP_METHOD(Yb_Loader_NamePath, __construct) {
 	} else {
 		ZVAL_BOOL(_1, 0);
 	}
-	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 88, _1);
+	ZEPHIR_CALL_PARENT(NULL, yb_loader_namepath_ce, this_ptr, "__construct", &_0, 89, _1);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("namePaths"), namePaths TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -108,7 +108,7 @@ PHP_METHOD(Yb_Loader_NamePath, __invoke) {
 	if (zephir_require_zval(path TSRMLS_CC) == FAILURE) {
 		RETURN_MM_NULL();
 	}
-	ZEPHIR_CALL_CE_STATIC(&_5, yb_loader_loaderabstract_ce, "isloaded", &_6, 89, name);
+	ZEPHIR_CALL_CE_STATIC(&_5, yb_loader_loaderabstract_ce, "isloaded", &_6, 90, name);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_5))) {
 		ZEPHIR_INIT_VAR(_7$$6);

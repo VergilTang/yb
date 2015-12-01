@@ -163,7 +163,7 @@ class Std
 
     public static function uuid(string salt = "") -> string
     {
-        return md5(uniqid(mt_rand(), true) . salt);
+        return sha1(uniqid(mt_rand(), true) . salt);
     }
 
     public static function randString(long len, string charList = "") -> string

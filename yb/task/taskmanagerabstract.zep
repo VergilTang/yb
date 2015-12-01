@@ -43,17 +43,17 @@ abstract class TaskManagerAbstract implements TaskManagerInterface
         string name;
         var task, input, re, ex;
 
+        let name = (string) Std::valueAt(taskData, "name", "defaultTask");
+        if unlikely ! this->hasTask(name) {
+            throw new Exception("Cannot find task: " . name);
+        }
+
+        let task = this->getTask(name);
+        if unlikely typeof task != "object" || ! (task instanceof TaskInterface) {
+            throw new Exception("Invalid task: " . name);
+        }
+
         try {
-            let name = (string) Std::valueAt(taskData, "name", "defaultTask");
-            if unlikely ! this->hasTask(name) {
-                throw new Exception("Cannot find task: " . name);
-            }
-
-            let task = this->getTask(name);
-            if unlikely typeof task != "object" || ! (task instanceof TaskInterface) {
-                throw new Exception("Invalid task: " . name);
-            }
-
             let input = Std::valueAt(taskData, "input", []);
             let re = task->__invoke(input);
 

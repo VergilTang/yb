@@ -55,7 +55,7 @@ PHP_METHOD(Yb_Router_Uri, __construct) {
 		ZVAL_STRING(&_4$$3, "#/+#", 0);
 		ZEPHIR_SINIT_VAR(_5$$3);
 		ZVAL_LONG(&_5$$3, 1);
-		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 27, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
+		ZEPHIR_CALL_FUNCTION(&params, "preg_split", NULL, 28, &_4$$3, _3$$3, ZEPHIR_GLOBAL(global_null), &_5$$3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_INIT_NVAR(params);

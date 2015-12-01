@@ -590,7 +590,11 @@ abstract class DbAbstract
                     if unlikely typeof v != "array" || count(v) < 1 {
                         throw new Exception("Invalid in");
                     }
-                    let ws[] = k1 . tmp . " IN (" . implode(", ", array_map([this, "quote"], v)) . ")";
+                    if strpos(k1, ",") === false {
+                        let ws[] = k1 . tmp . " IN (" . implode(", ", array_map([this, "quote"], v)) . ")";
+                    } else {
+                        let ws[] = this->parseWhereMultipleIn(k1, v, tmp);
+                    }
                     break;
                 case "notInSelect":
                     let tmp = " NOT";
@@ -642,9 +646,31 @@ abstract class DbAbstract
         return implode(sep, ws);
     }
 
-    abstract protected function tryToBegin() -> boolean;
-    abstract protected function tryToCommit() -> boolean;
-    abstract protected function tryToRollback() -> boolean;
+    public function parseWhereMultipleIn(string columns, array values, string isNot = "") -> array
+    {
+        long c;
+        var k, v, vs = [], quoter;
+
+        let c = 1 + (long) substr_count(columns, ",");
+        if unlikely c < 2 {
+            throw new Exception("Invalid multiple in columns: " . columns);
+        }
+
+        let quoter = [this, "quote"];
+
+        for k, v in values {
+            if unlikely typeof v != "array" || count(v) != 2 {
+                throw new Exception("Invalid multiple in value at: " . k);
+            }
+            let vs[] = "(" . implode(", ", array_map(quoter, v)) . ")";
+        }
+
+        return "(" . columns . ")" . isNot . " in (" . implode(", ", vs) . ")";
+    }
+
+    abstract protected function tryToBegin() -> bool;
+    abstract protected function tryToCommit() -> bool;
+    abstract protected function tryToRollback() -> bool;
 
     abstract protected function paginateQuery(string query, long limit, long offset) -> string;
     abstract protected function randomOrder() -> string;

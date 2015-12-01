@@ -19,7 +19,7 @@ class Collection implements \Countable, \Iterator
         return this->model;
     }
 
-    public function at(long index, boolean asArray = false)
+    public function at(long index, bool asArray = false)
     {
         var row;
 
@@ -35,7 +35,7 @@ class Collection implements \Countable, \Iterator
         }
     }
 
-    public function id(var id, boolean asArray = false)
+    public function id(var id, bool asArray = false)
     {
         var k, v, indexes;
 
@@ -65,12 +65,12 @@ class Collection implements \Countable, \Iterator
         let this->internalIndex = 0;
     }
 
-    public function valid() -> boolean
+    public function valid() -> bool
     {
         return isset this->data[this->internalIndex];
     }
 
-    public function current(boolean asArray = false)
+    public function current(bool asArray = false)
     {
         return this->at(this->internalIndex, asArray);
     }

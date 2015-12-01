@@ -44,6 +44,7 @@ PHP_METHOD(Yb_Db_DbAbstract, sum);
 PHP_METHOD(Yb_Db_DbAbstract, parseGroupedAggregation);
 PHP_METHOD(Yb_Db_DbAbstract, queryGroupedAggregation);
 PHP_METHOD(Yb_Db_DbAbstract, parseWhere);
+PHP_METHOD(Yb_Db_DbAbstract, parseWhereMultipleIn);
 PHP_METHOD(Yb_Db_DbAbstract, tryToBegin);
 PHP_METHOD(Yb_Db_DbAbstract, tryToCommit);
 PHP_METHOD(Yb_Db_DbAbstract, tryToRollback);
@@ -232,6 +233,12 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parsewhere, 0, 0, 1)
 	ZEND_ARG_INFO(0, sep)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_parsewheremultiplein, 0, 0, 2)
+	ZEND_ARG_INFO(0, columns)
+	ZEND_ARG_ARRAY_INFO(0, values, 0)
+	ZEND_ARG_INFO(0, isNot)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_dbabstract_paginatequery, 0, 0, 3)
 	ZEND_ARG_INFO(0, query)
 	ZEND_ARG_INFO(0, limit)
@@ -286,6 +293,7 @@ ZEPHIR_INIT_FUNCS(yb_db_dbabstract_method_entry) {
 	PHP_ME(Yb_Db_DbAbstract, parseGroupedAggregation, arginfo_yb_db_dbabstract_parsegroupedaggregation, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, queryGroupedAggregation, arginfo_yb_db_dbabstract_querygroupedaggregation, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, parseWhere, arginfo_yb_db_dbabstract_parsewhere, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Db_DbAbstract, parseWhereMultipleIn, arginfo_yb_db_dbabstract_parsewheremultiplein, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_DbAbstract, tryToBegin, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_Db_DbAbstract, tryToCommit, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)
 	PHP_ME(Yb_Db_DbAbstract, tryToRollback, NULL, ZEND_ACC_ABSTRACT|ZEND_ACC_PROTECTED)

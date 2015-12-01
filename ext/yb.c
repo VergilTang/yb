@@ -31,6 +31,7 @@ zend_class_entry *yb_view_viewinterface_ce;
 zend_class_entry *yb_collection_collectioninterface_ce;
 zend_class_entry *yb_factory_factoryinterface_ce;
 zend_class_entry *yb_sequence_sequenceinterface_ce;
+zend_class_entry *yb_upload_urigeneratorinterface_ce;
 zend_class_entry *yb_task_taskmanagerinterface_ce;
 zend_class_entry *yb_datacacher_datacacherinterface_ce;
 zend_class_entry *yb_mailer_mailerinterface_ce;
@@ -163,6 +164,7 @@ static PHP_MINIT_FUNCTION(yb)
 	ZEPHIR_INIT(Yb_Collection_CollectionInterface);
 	ZEPHIR_INIT(Yb_Factory_FactoryInterface);
 	ZEPHIR_INIT(Yb_Sequence_SequenceInterface);
+	ZEPHIR_INIT(Yb_Upload_UriGeneratorInterface);
 	ZEPHIR_INIT(Yb_Task_TaskManagerInterface);
 	ZEPHIR_INIT(Yb_DataCacher_DataCacherInterface);
 	ZEPHIR_INIT(Yb_Mailer_MailerInterface);

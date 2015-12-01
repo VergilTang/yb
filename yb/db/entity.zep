@@ -8,7 +8,7 @@ class Entity
     protected updates;
     protected collection;
 
-    public function __construct(<Model> model, array row, boolean isNew) -> void
+    public function __construct(<Model> model, array row, bool isNew) -> void
     {
         let this->model = model;
         let this->row = row;
@@ -25,12 +25,12 @@ class Entity
         return this->row;
     }
 
-    public function isNew() -> boolean
+    public function isNew() -> bool
     {
         return this->isNew;
     }
 
-    public function isDirty() -> boolean
+    public function isDirty() -> bool
     {
         return count(this->updates) > 0;
     }
@@ -40,7 +40,7 @@ class Entity
         let this->collection = collection;
     }
 
-    public function hasCollection() -> boolean
+    public function hasCollection() -> bool
     {
         return this->collection !== null;
     }

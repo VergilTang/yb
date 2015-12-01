@@ -11,6 +11,7 @@
 #include "yb/db/dbabstract.zep.h"
 #include "yb/factory/factoryinterface.zep.h"
 #include "yb/sequence/sequenceinterface.zep.h"
+#include "yb/upload/urigeneratorinterface.zep.h"
 #include "yb/image/imageabstract.zep.h"
 #include "yb/task/taskmanagerinterface.zep.h"
 #include "yb/upload/storageabstract.zep.h"

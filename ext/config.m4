@@ -16,6 +16,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/db/dbabstract.zep.c
 	yb/factory/factoryinterface.zep.c
 	yb/sequence/sequenceinterface.zep.c
+	yb/upload/urigeneratorinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/task/taskmanagerinterface.zep.c
 	yb/upload/storageabstract.zep.c

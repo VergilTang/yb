@@ -28,14 +28,14 @@ class Model
     public function insert(array row) -> array
     {
         var r;
-        string autoIncrement, autoIncrementValue;
+        string ai, aiValue;
 
         let r = this->onStore(row);
-        let autoIncrement = (string) this->autoIncrement;
+        let ai = (string) this->autoIncrement;
 
-        if autoIncrement->length() > 0 && ! isset r[autoIncrement] {
-            let autoIncrementValue = (string) this->db->insert(this->table, r, autoIncrement);
-            let r[autoIncrement] = autoIncrementValue;
+        if ai->length() > 0 && ! isset r[ai] {
+            let aiValue = (string) this->db->insert(this->table, r, ai);
+            let r[ai] = aiValue;
         } else {
             this->db->insert(this->table, r);
         }
@@ -66,7 +66,7 @@ class Model
         this->db->delete(this->table, where);
     }
 
-    public function newEntity(array row = [], boolean isNew = true, <Collection> collection = null) -> <Entity>
+    public function newEntity(array row = [], bool isNew = true, <Collection> collection = null) -> <Entity>
     {
         var entity;
 
@@ -122,9 +122,16 @@ class Model
 
     public function ids(array ids) -> <Collection>
     {
-        return this->all(
-            this->db->$in(this->primaryKey, ids)
-        );
+        string k;
+
+        if typeof this->primaryKey == "array" {
+            let k = (string) implode(", ", this->primaryKey);
+        } else {
+            let k = (string) this->primaryKey;
+        }
+        let k .= "$in";
+
+        return this->all([k: ids]);
     }
 
     public function chunkByDynamicWhere(var processAndReturnNextWhere, var orderBy, long limit = 5000) -> void
@@ -145,7 +152,7 @@ class Model
             }
 
             let where = {processAndReturnNextWhere}(collection);
-            if typeof where != "array" || c < limit {
+            if typeof where != "array" || count(where) < 1 || c < limit {
                 break;
             }
         }
@@ -202,7 +209,7 @@ class Model
         return this->db->sum(this->table, column, where);
     }
 
-    public function onStore(array row, boolean isUpdate = false, array where = []) -> array
+    public function onStore(array row, bool isUpdate = false, array where = []) -> array
     {
         return row;
     }

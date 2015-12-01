@@ -44,7 +44,7 @@ PHP_METHOD(Yb_DataCacher_Apc, __construct) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_STRING(&_0, "apc", 0);
-	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 11, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "extension_loaded", NULL, 12, &_0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_datacacher_exception_ce, "Missing extension: apc", "yb/datacacher/apc.zep", 10);
@@ -66,7 +66,7 @@ PHP_METHOD(Yb_DataCacher_Apc, storeData) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("cacheKey"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "apc_store", NULL, 39, _0, data);
+	ZEPHIR_CALL_FUNCTION(&_1, "apc_store", NULL, 40, _0, data);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_datacacher_exception_ce, "Cannot store data: apc_store", "yb/datacacher/apc.zep", 19);
@@ -87,7 +87,7 @@ PHP_METHOD(Yb_DataCacher_Apc, fetchData) {
 	ZVAL_NULL(success);
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("cacheKey"), PH_NOISY_CC);
 	ZEPHIR_MAKE_REF(success);
-	ZEPHIR_CALL_FUNCTION(&data, "apc_fetch", NULL, 40, _0, success);
+	ZEPHIR_CALL_FUNCTION(&data, "apc_fetch", NULL, 41, _0, success);
 	ZEPHIR_UNREF(success);
 	zephir_check_call_status();
 	if (zephir_is_true(success)) {
@@ -105,7 +105,7 @@ PHP_METHOD(Yb_DataCacher_Apc, forgetData) {
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("cacheKey"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "apc_delete", NULL, 41, _0);
+	ZEPHIR_CALL_FUNCTION(&_1, "apc_delete", NULL, 42, _0);
 	zephir_check_call_status();
 	if (unlikely(!zephir_is_true(_1))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_datacacher_exception_ce, "Cannot forget data: apc_delete", "yb/datacacher/apc.zep", 36);
