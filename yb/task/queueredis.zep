@@ -11,28 +11,28 @@ class QueueRedis extends TaskManagerAbstract
         let this->queueKey = queueKey;
     }
 
-    public function produce(array taskData) -> void
+    public function produce(array task) -> void
     {
-        if unlikely ! this->redis->lpush(this->queueKey, this->serializeTaskData(taskData)) {
+        if unlikely ! this->redis->lpush(this->queueKey, this->serializeTask(task)) {
             throw new Exception("Fail when redis lpush");
         }
     }
 
     public function consume() -> null|array
     {
-        var taskData;
+        var task;
 
-        let taskData = this->redis->rpop(this->queueKey);
-        if ! taskData {
+        let task = this->redis->rpop(this->queueKey);
+        if ! task {
             return;
         }
 
-        let taskData = this->unserializeTaskData(taskData);
-        if unlikely typeof taskData != "array" {
+        let task = this->unserializeTask(task);
+        if unlikely typeof task != "array" {
             throw new Exception("Invalid task from redis");
         }
 
-        return taskData;
+        return task;
     }
 
 }

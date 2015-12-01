@@ -28,16 +28,16 @@ ZEPHIR_INIT_CLASS(Yb_Task_RunDirectly) {
 PHP_METHOD(Yb_Task_RunDirectly, produce) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *taskData_param = NULL;
-	zval *taskData = NULL;
+	zval *task_param = NULL;
+	zval *task = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &taskData_param);
+	zephir_fetch_params(1, 1, 0, &task_param);
 
-	zephir_get_arrval(taskData, taskData_param);
+	zephir_get_arrval(task, task_param);
 
 
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", NULL, 0, taskData);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", NULL, 0, task);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 

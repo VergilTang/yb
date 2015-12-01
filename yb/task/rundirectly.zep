@@ -2,9 +2,9 @@ namespace Yb\Task;
 
 class RunDirectly extends TaskManagerAbstract
 {
-    public function produce(array taskData) -> void
+    public function produce(array task) -> void
     {
-        this->runTask(taskData);
+        this->runTask(task);
     }
 
     public function consume() -> null|array

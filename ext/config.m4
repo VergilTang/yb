@@ -18,7 +18,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/sequence/sequenceinterface.zep.c
 	yb/upload/urigeneratorinterface.zep.c
 	yb/image/imageabstract.zep.c
-	yb/task/taskmanagerinterface.zep.c
 	yb/upload/storageabstract.zep.c
 	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
@@ -101,7 +100,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/task/exception.zep.c
 	yb/task/queueredis.zep.c
 	yb/task/rundirectly.zep.c
-	yb/task/taskinterface.zep.c
+	yb/task/taskexecutorinterface.zep.c
 	yb/upload/exception.zep.c
 	yb/upload/fastdfs.zep.c
 	yb/upload/filesystem.zep.c

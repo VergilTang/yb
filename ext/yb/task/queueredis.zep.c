@@ -51,18 +51,18 @@ PHP_METHOD(Yb_Task_QueueRedis, __construct) {
 PHP_METHOD(Yb_Task_QueueRedis, produce) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *taskData_param = NULL, *_0, *_1 = NULL, *_2, *_3 = NULL;
-	zval *taskData = NULL;
+	zval *task_param = NULL, *_0, *_1 = NULL, *_2, *_3 = NULL;
+	zval *task = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &taskData_param);
+	zephir_fetch_params(1, 1, 0, &task_param);
 
-	zephir_get_arrval(taskData, taskData_param);
+	zephir_get_arrval(task, task_param);
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("redis"), PH_NOISY_CC);
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("queueKey"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(&_3, this_ptr, "serializetaskdata", NULL, 0, taskData);
+	ZEPHIR_CALL_METHOD(&_3, this_ptr, "serializetask", NULL, 0, task);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, _0, "lpush", NULL, 0, _2, _3);
 	zephir_check_call_status();
@@ -76,26 +76,26 @@ PHP_METHOD(Yb_Task_QueueRedis, produce) {
 
 PHP_METHOD(Yb_Task_QueueRedis, consume) {
 
-	zval *taskData = NULL, *_0, *_1, *_2 = NULL;
+	zval *task = NULL, *_0, *_1, *_2 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("redis"), PH_NOISY_CC);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("queueKey"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(&taskData, _0, "rpop", NULL, 0, _1);
+	ZEPHIR_CALL_METHOD(&task, _0, "rpop", NULL, 0, _1);
 	zephir_check_call_status();
-	if (!(zephir_is_true(taskData))) {
+	if (!(zephir_is_true(task))) {
 		RETURN_MM_NULL();
 	}
-	ZEPHIR_CALL_METHOD(&_2, this_ptr, "unserializetaskdata", NULL, 0, taskData);
+	ZEPHIR_CALL_METHOD(&_2, this_ptr, "unserializetask", NULL, 0, task);
 	zephir_check_call_status();
-	ZEPHIR_CPY_WRT(taskData, _2);
-	if (unlikely(Z_TYPE_P(taskData) != IS_ARRAY)) {
+	ZEPHIR_CPY_WRT(task, _2);
+	if (unlikely(Z_TYPE_P(task) != IS_ARRAY)) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Invalid task from redis", "yb/task/queueredis.zep", 32);
 		return;
 	}
-	RETURN_CCTOR(taskData);
+	RETURN_CCTOR(task);
 
 }
 

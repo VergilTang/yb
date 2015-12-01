@@ -1,12 +1,17 @@
 namespace Yb\Task;
 
-use Yb\Factory\FactoryInterface;
-use Yb\Std;
-
-abstract class TaskManagerAbstract implements TaskManagerInterface
+abstract class TaskManagerAbstract
 {
+    protected taskExecutor;
     protected sleep = -1;
-    protected taskFactory;
+
+    abstract public function produce(array task) -> void;
+    abstract public function consume() -> null|array;
+
+    public function setTaskExecutor(<TaskExecutorInterface> taskExecutor) -> void
+    {
+        let this->taskExecutor = taskExecutor;
+    }
 
     public function setSleep(long sleep) -> void
     {
@@ -18,59 +23,30 @@ abstract class TaskManagerAbstract implements TaskManagerInterface
         return this->sleep;
     }
 
-    public function setTaskFactory(<FactoryInterface> taskFactory) -> void
+    public function runTask(array task) -> void
     {
-        let this->taskFactory = taskFactory;
-    }
+        var re, ex;
 
-    public function getTaskFactory() -> <FactoryInterface>
-    {
-        return this->taskFactory;
-    }
-
-    public function hasTask(string name) -> bool
-    {
-        return this->taskFactory->__isset(name);
-    }
-
-    public function getTask(string name) -> <TaskInterface>
-    {
-        return this->taskFactory->__get(name);
-    }
-
-    public function runTask(array taskData) -> void
-    {
-        string name;
-        var task, input, re, ex;
-
-        let name = (string) Std::valueAt(taskData, "name", "defaultTask");
-        if unlikely ! this->hasTask(name) {
-            throw new Exception("Cannot find task: " . name);
-        }
-
-        let task = this->getTask(name);
-        if unlikely typeof task != "object" || ! (task instanceof TaskInterface) {
-            throw new Exception("Invalid task: " . name);
+        if unlikely ! this->taskExecutor {
+            throw new Exception("Missing task executor");
         }
 
         try {
-            let input = Std::valueAt(taskData, "input", []);
-            let re = task->__invoke(input);
-
-            task->onReturn(this, re);
+            let re = this->taskExecutor->executeTask(task);
+            this->taskExecutor->onTaskReturn(this, task, re);
         } catch \Exception, ex {
-            task->onException(this, ex);
+            this->taskExecutor->onTaskException(this, task, ex);
         }
     }
 
     public function __invoke() -> void
     {
-        var taskData;
+        var task;
 
         loop {
-            let taskData = this->consume();
-            if taskData !== null {
-                this->runTask(taskData);
+            let task = this->consume();
+            if task !== null {
+                this->runTask(task);
                 continue;
             }
 
@@ -82,14 +58,14 @@ abstract class TaskManagerAbstract implements TaskManagerInterface
         }
     }
 
-    public function serializeTaskData(array taskData) -> string
+    public function serializeTask(array task) -> string
     {
-        return json_encode(taskData);
+        return json_encode(task);
     }
 
-    public function unserializeTaskData(string taskData) -> array
+    public function unserializeTask(string task) -> array
     {
-        return json_decode(taskData, true);
+        return json_decode(task, true);
     }
 
 }
