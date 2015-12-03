@@ -4,17 +4,11 @@ extern zend_class_entry *yb_upload_filesystem_ce;
 ZEPHIR_INIT_CLASS(Yb_Upload_FileSystem);
 
 PHP_METHOD(Yb_Upload_FileSystem, __construct);
-PHP_METHOD(Yb_Upload_FileSystem, setBaseDirectory);
-PHP_METHOD(Yb_Upload_FileSystem, getBaseDirectory);
 PHP_METHOD(Yb_Upload_FileSystem, store);
 PHP_METHOD(Yb_Upload_FileSystem, remove);
 PHP_METHOD(Yb_Upload_FileSystem, exists);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_filesystem___construct, 0, 0, 1)
-	ZEND_ARG_INFO(0, baseDirectory)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_upload_filesystem_setbasedirectory, 0, 0, 1)
 	ZEND_ARG_INFO(0, baseDirectory)
 ZEND_END_ARG_INFO()
 
@@ -35,8 +29,6 @@ ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(yb_upload_filesystem_method_entry) {
 	PHP_ME(Yb_Upload_FileSystem, __construct, arginfo_yb_upload_filesystem___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-	PHP_ME(Yb_Upload_FileSystem, setBaseDirectory, arginfo_yb_upload_filesystem_setbasedirectory, ZEND_ACC_PUBLIC)
-	PHP_ME(Yb_Upload_FileSystem, getBaseDirectory, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_FileSystem, store, arginfo_yb_upload_filesystem_store, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_FileSystem, remove, arginfo_yb_upload_filesystem_remove, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Upload_FileSystem, exists, arginfo_yb_upload_filesystem_exists, ZEND_ACC_PUBLIC)

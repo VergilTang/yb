@@ -47,30 +47,6 @@ PHP_METHOD(Yb_Upload_FileSystem, __construct) {
 
 }
 
-PHP_METHOD(Yb_Upload_FileSystem, setBaseDirectory) {
-
-	zval *baseDirectory_param = NULL;
-	zval *baseDirectory = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &baseDirectory_param);
-
-	zephir_get_strval(baseDirectory, baseDirectory_param);
-
-
-	zephir_update_property_this(this_ptr, SL("baseDirectory"), baseDirectory TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Upload_FileSystem, getBaseDirectory) {
-
-	
-
-	RETURN_MEMBER(this_ptr, "baseDirectory");
-
-}
-
 PHP_METHOD(Yb_Upload_FileSystem, store) {
 
 	zend_bool _5;
@@ -129,7 +105,7 @@ PHP_METHOD(Yb_Upload_FileSystem, store) {
 		ZEPHIR_CONCAT_SV(_9$$3, "Cannot mkdir: ", temp);
 		ZEPHIR_CALL_METHOD(NULL, _8$$3, "__construct", NULL, 2, _9$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_8$$3, "yb/upload/filesystem.zep", 32 TSRMLS_CC);
+		zephir_throw_exception_debug(_8$$3, "yb/upload/filesystem.zep", 22 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
