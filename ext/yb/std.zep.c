@@ -18,6 +18,7 @@
 #include "kernel/array.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
+#include "kernel/time.h"
 #include "kernel/math.h"
 #include "kernel/hash.h"
 #include "kernel/exception.h"
@@ -387,7 +388,7 @@ PHP_METHOD(Yb_Std, normalCase) {
 PHP_METHOD(Yb_Std, uuid) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *salt_param = NULL, *_0 = NULL, *_1 = NULL, *_2;
+	zval *salt_param = NULL, *_0 = NULL, *_1 = NULL, *_2, *_3 = NULL, *_4, _5, _6, *_7 = NULL;
 	zval *salt = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -407,8 +408,17 @@ PHP_METHOD(Yb_Std, uuid) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VV(_2, _1, salt);
-	ZEPHIR_RETURN_CALL_FUNCTION("sha1", NULL, 125, _2);
+	ZEPHIR_CALL_FUNCTION(&_3, "sha1", NULL, 125, _2);
 	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(_4);
+	zephir_time(_4);
+	ZEPHIR_SINIT_VAR(_5);
+	ZVAL_STRING(&_5, "%04x", 0);
+	ZEPHIR_SINIT_VAR(_6);
+	ZVAL_LONG(&_6, (zephir_get_intval(_4) & 0xffff));
+	ZEPHIR_CALL_FUNCTION(&_7, "sprintf", NULL, 1, &_5, &_6);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VV(return_value, _3, _7);
 	RETURN_MM();
 
 }
@@ -514,17 +524,23 @@ PHP_METHOD(Yb_Std, tr) {
 PHP_METHOD(Yb_Std, valueAt) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *key = NULL, *_1$$4;
-	zval *arr_param = NULL, *key_param = NULL, *defaultValue = NULL, *value = NULL, *_0$$4;
+	zend_bool noException, _0;
+	zval *key = NULL, *_2$$4;
+	zval *arr_param = NULL, *key_param = NULL, *defaultValue = NULL, *noException_param = NULL, *value = NULL, *_1$$4;
 	zval *arr = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 1, &arr_param, &key_param, &defaultValue);
+	zephir_fetch_params(1, 2, 2, &arr_param, &key_param, &defaultValue, &noException_param);
 
 	zephir_get_arrval(arr, arr_param);
 	zephir_get_strval(key, key_param);
 	if (!defaultValue) {
 		defaultValue = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!noException_param) {
+		noException = 0;
+	} else {
+		noException = zephir_get_boolval(noException_param);
 	}
 
 
@@ -532,14 +548,18 @@ PHP_METHOD(Yb_Std, valueAt) {
 	if (zephir_array_isset_fetch(&value, arr, key, 0 TSRMLS_CC)) {
 		RETURN_CCTOR(value);
 	}
-	if (unlikely(Z_TYPE_P(defaultValue) == IS_NULL)) {
-		ZEPHIR_INIT_VAR(_0$$4);
-		object_init_ex(_0$$4, yb_exception_ce);
+	_0 = Z_TYPE_P(defaultValue) == IS_NULL;
+	if (_0) {
+		_0 = !noException;
+	}
+	if (unlikely(_0)) {
 		ZEPHIR_INIT_VAR(_1$$4);
-		ZEPHIR_CONCAT_SV(_1$$4, "Missing value at: ", key);
-		ZEPHIR_CALL_METHOD(NULL, _0$$4, "__construct", NULL, 2, _1$$4);
+		object_init_ex(_1$$4, yb_exception_ce);
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZEPHIR_CONCAT_SV(_2$$4, "Missing value at: ", key);
+		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 2, _2$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$4, "yb/std.zep", 212 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "yb/std.zep", 212 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

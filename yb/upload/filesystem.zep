@@ -9,6 +9,16 @@ class FileSystem extends StorageAbstract
         let this->baseDirectory = baseDirectory;
     }
 
+    public function setBaseDirectory(string baseDirectory) -> void
+    {
+        let this->baseDirectory = baseDirectory;
+    }
+
+    public function getBaseDirectory() -> string
+    {
+        return this->baseDirectory;
+    }
+
     public function store(string source, string prefix = "", string extension = "", long flag = 0) -> string
     {
         var temp, success;

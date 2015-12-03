@@ -15,11 +15,13 @@ PHP_METHOD(Yb_View_Facade, setView);
 PHP_METHOD(Yb_View_Facade, getView);
 PHP_METHOD(Yb_View_Facade, __invoke);
 PHP_METHOD(Yb_View_Facade, setOptions);
+PHP_METHOD(Yb_View_Facade, getOptions);
 PHP_METHOD(Yb_View_Facade, __set);
 PHP_METHOD(Yb_View_Facade, __get);
 PHP_METHOD(Yb_View_Facade, __isset);
 PHP_METHOD(Yb_View_Facade, __unset);
 PHP_METHOD(Yb_View_Facade, setData);
+PHP_METHOD(Yb_View_Facade, getData);
 PHP_METHOD(Yb_View_Facade, offsetSet);
 PHP_METHOD(Yb_View_Facade, offsetGet);
 PHP_METHOD(Yb_View_Facade, offsetExists);
@@ -118,11 +120,13 @@ ZEPHIR_INIT_FUNCS(yb_view_facade_method_entry) {
 	PHP_ME(Yb_View_Facade, getView, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, __invoke, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, setOptions, arginfo_yb_view_facade_setoptions, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_View_Facade, getOptions, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, __set, arginfo_yb_view_facade___set, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, __get, arginfo_yb_view_facade___get, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, __isset, arginfo_yb_view_facade___isset, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, __unset, arginfo_yb_view_facade___unset, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, setData, arginfo_yb_view_facade_setdata, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_View_Facade, getData, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, offsetSet, arginfo_yb_view_facade_offsetset, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, offsetGet, arginfo_yb_view_facade_offsetget, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_View_Facade, offsetExists, arginfo_yb_view_facade_offsetexists, ZEND_ACC_PUBLIC)

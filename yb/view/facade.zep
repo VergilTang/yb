@@ -110,6 +110,11 @@ class Facade implements \ArrayAccess
         }
     }
 
+    public function getOptions() -> array
+    {
+        return this->options;
+    }
+
     public function __set(string key, var value) -> void
     {
         let this->options[key] = value;
@@ -141,6 +146,11 @@ class Facade implements \ArrayAccess
         for k, v in data {
             let this->data[k] = v;
         }
+    }
+
+    public function getData() -> array
+    {
+        return this->data;
     }
 
     public function offsetSet(string key, var value) -> void

@@ -32,7 +32,14 @@ abstract class StorageAbstract implements UriGeneratorInterface
             return this->uriGenerator->generateUri(source, prefix, extension);
         }
 
-        let uuid = (string) Std::uuid(source . prefix . extension);
+        if prefix->length() > 0 {
+            if unlikely ! preg_match("#^(\\w+/)*\\w*$#", prefix) {
+                throw new Exception("Invalid prefix: " . prefix);
+            }
+            let uri .= prefix;
+        }
+
+        let uuid = (string) Std::uuid(source . extension);
 
         let uri .= uuid[0];
         let uri .= uuid[1];

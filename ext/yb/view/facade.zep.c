@@ -363,6 +363,14 @@ PHP_METHOD(Yb_View_Facade, setOptions) {
 
 }
 
+PHP_METHOD(Yb_View_Facade, getOptions) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "options");
+
+}
+
 PHP_METHOD(Yb_View_Facade, __set) {
 
 	zval *key_param = NULL, *value;
@@ -444,7 +452,7 @@ PHP_METHOD(Yb_View_Facade, setData) {
 	zephir_get_arrval(data, data_param);
 
 
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 144);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 149);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -454,6 +462,14 @@ PHP_METHOD(Yb_View_Facade, setData) {
 		zephir_update_property_array(this_ptr, SL("data"), k, v TSRMLS_CC);
 	}
 	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_View_Facade, getData) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "data");
 
 }
 

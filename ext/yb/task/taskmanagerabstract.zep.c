@@ -100,7 +100,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 		ZEPHIR_CALL_METHOD(&re, _1$$4, "executetask", NULL, 0, task);
 		zephir_check_call_status_or_jump(try_end_1);
 		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(NULL, _2$$4, "ontaskreturn", NULL, 0, this_ptr, task, re);
+		ZEPHIR_CALL_METHOD(NULL, _2$$4, "ontaskreturn", NULL, 0, task, re);
 		zephir_check_call_status_or_jump(try_end_1);
 
 	try_end_1:
@@ -110,7 +110,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 		if (zephir_instance_of_ev(ex, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
 			zend_clear_exception(TSRMLS_C);
 			_3$$5 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-			ZEPHIR_CALL_METHOD(NULL, _3$$5, "ontaskexception", NULL, 0, this_ptr, task, ex);
+			ZEPHIR_CALL_METHOD(NULL, _3$$5, "ontaskexception", NULL, 0, task, ex);
 			zephir_check_call_status();
 		}
 	}

@@ -33,9 +33,9 @@ abstract class TaskManagerAbstract
 
         try {
             let re = this->taskExecutor->executeTask(task);
-            this->taskExecutor->onTaskReturn(this, task, re);
+            this->taskExecutor->onTaskReturn(task, re);
         } catch \Exception, ex {
-            this->taskExecutor->onTaskException(this, task, ex);
+            this->taskExecutor->onTaskException(task, ex);
         }
     }
 

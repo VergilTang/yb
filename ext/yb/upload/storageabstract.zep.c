@@ -16,6 +16,8 @@
 #include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
+#include "kernel/string.h"
+#include "kernel/exception.h"
 #include "kernel/concat.h"
 
 
@@ -70,11 +72,11 @@ PHP_METHOD(Yb_Upload_StorageAbstract, exists) {
 
 PHP_METHOD(Yb_Upload_StorageAbstract, generateUri) {
 
-	unsigned char _6, _7, _8, _9;
-	zephir_fcall_cache_entry *_3 = NULL;
+	unsigned char _12, _13, _14, _15;
+	zephir_fcall_cache_entry *_9 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *source_param = NULL, *prefix_param = NULL, *extension_param = NULL, *_0, *_2 = NULL, *_1$$3;
-	zval *source = NULL, *prefix = NULL, *extension = NULL, *uri, *uuid = NULL, *_4, *_5 = NULL, *_10$$4;
+	zval *source_param = NULL, *prefix_param = NULL, *extension_param = NULL, *_0, *_2 = NULL, *_8 = NULL, *_1$$3, *_3$$4, *_4$$4, _5$$4, *_6$$5;
+	zval *source = NULL, *prefix = NULL, *extension = NULL, *uri, *uuid = NULL, *_10, *_11 = NULL, *_7$$5, *_16$$6;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 3, 0, &source_param, &prefix_param, &extension_param);
@@ -93,27 +95,46 @@ PHP_METHOD(Yb_Upload_StorageAbstract, generateUri) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_INIT_VAR(_4);
-	ZEPHIR_CONCAT_VVV(_4, source, prefix, extension);
-	ZEPHIR_CALL_CE_STATIC(&_2, yb_std_ce, "uuid", &_3, 11, _4);
+	if (zephir_fast_strlen_ev(prefix) > 0) {
+		ZEPHIR_INIT_VAR(_3$$4);
+		ZEPHIR_INIT_VAR(_4$$4);
+		ZEPHIR_SINIT_VAR(_5$$4);
+		ZVAL_STRING(&_5$$4, "#^(\\w+/)*\\w*$#", 0);
+		zephir_preg_match(_4$$4, &_5$$4, prefix, _3$$4, 0, 0 , 0  TSRMLS_CC);
+		if (unlikely(!zephir_is_true(_4$$4))) {
+			ZEPHIR_INIT_VAR(_6$$5);
+			object_init_ex(_6$$5, yb_upload_exception_ce);
+			ZEPHIR_INIT_VAR(_7$$5);
+			ZEPHIR_CONCAT_SV(_7$$5, "Invalid prefix: ", prefix);
+			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", NULL, 2, _7$$5);
+			zephir_check_call_status();
+			zephir_throw_exception_debug(_6$$5, "yb/upload/storageabstract.zep", 37 TSRMLS_CC);
+			ZEPHIR_MM_RESTORE();
+			return;
+		}
+		zephir_concat_self(&uri, prefix TSRMLS_CC);
+	}
+	ZEPHIR_INIT_VAR(_10);
+	ZEPHIR_CONCAT_VV(_10, source, extension);
+	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "uuid", &_9, 11, _10);
 	zephir_check_call_status();
-	zephir_get_strval(_5, _2);
-	ZEPHIR_CPY_WRT(uuid, _5);
-	_6 = ZEPHIR_STRING_OFFSET(uuid, 0);
-	zephir_concat_self_char(&uri, _6 TSRMLS_CC);
-	_7 = ZEPHIR_STRING_OFFSET(uuid, 1);
-	zephir_concat_self_char(&uri, _7 TSRMLS_CC);
+	zephir_get_strval(_11, _8);
+	ZEPHIR_CPY_WRT(uuid, _11);
+	_12 = ZEPHIR_STRING_OFFSET(uuid, 0);
+	zephir_concat_self_char(&uri, _12 TSRMLS_CC);
+	_13 = ZEPHIR_STRING_OFFSET(uuid, 1);
+	zephir_concat_self_char(&uri, _13 TSRMLS_CC);
 	zephir_concat_self_str(&uri, "/", sizeof("/")-1 TSRMLS_CC);
-	_8 = ZEPHIR_STRING_OFFSET(uuid, 2);
-	zephir_concat_self_char(&uri, _8 TSRMLS_CC);
-	_9 = ZEPHIR_STRING_OFFSET(uuid, 3);
-	zephir_concat_self_char(&uri, _9 TSRMLS_CC);
+	_14 = ZEPHIR_STRING_OFFSET(uuid, 2);
+	zephir_concat_self_char(&uri, _14 TSRMLS_CC);
+	_15 = ZEPHIR_STRING_OFFSET(uuid, 3);
+	zephir_concat_self_char(&uri, _15 TSRMLS_CC);
 	zephir_concat_self_str(&uri, "/", sizeof("/")-1 TSRMLS_CC);
 	zephir_concat_self(&uri, uuid TSRMLS_CC);
 	if (!(!extension) && Z_STRLEN_P(extension)) {
-		ZEPHIR_INIT_VAR(_10$$4);
-		ZEPHIR_CONCAT_SV(_10$$4, ".", extension);
-		zephir_concat_self(&uri, _10$$4 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_16$$6);
+		ZEPHIR_CONCAT_SV(_16$$6, ".", extension);
+		zephir_concat_self(&uri, _16$$6 TSRMLS_CC);
 	}
 	RETURN_CTOR(uri);
 

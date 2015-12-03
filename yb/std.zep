@@ -163,7 +163,7 @@ class Std
 
     public static function uuid(string salt = "") -> string
     {
-        return sha1(uniqid(mt_rand(), true) . salt);
+        return sha1(uniqid(mt_rand(), true) . salt) . sprintf("%04x", (long) time() & 0xffff);
     }
 
     public static function randString(long len, string charList = "") -> string
@@ -200,7 +200,7 @@ class Std
         return strtr(message, r);
     }
 
-    public static function valueAt(array arr, string key, var defaultValue = null)
+    public static function valueAt(array arr, string key, var defaultValue = null, bool noException = false)
     {
         var value;
 
@@ -208,7 +208,7 @@ class Std
             return value;
         }
 
-        if unlikely defaultValue === null {
+        if unlikely defaultValue === null && ! noException {
             throw new Exception("Missing value at: " . key);
         }
 

@@ -66,6 +66,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_valueat, 0, 0, 2)
 	ZEND_ARG_ARRAY_INFO(0, arr, 0)
 	ZEND_ARG_INFO(0, key)
 	ZEND_ARG_INFO(0, defaultValue)
+	ZEND_ARG_INFO(0, noException)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_std_valueof, 0, 0, 2)

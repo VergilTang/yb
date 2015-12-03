@@ -7,14 +7,12 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_taskexecutorinterface_executetask, 0, 0, 
 	ZEND_ARG_ARRAY_INFO(0, task, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_taskexecutorinterface_ontaskreturn, 0, 0, 3)
-	ZEND_ARG_OBJ_INFO(0, taskManager, Yb\\Task\\TaskManagerAbstract, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_taskexecutorinterface_ontaskreturn, 0, 0, 2)
 	ZEND_ARG_ARRAY_INFO(0, task, 0)
 	ZEND_ARG_INFO(0, re)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_taskexecutorinterface_ontaskexception, 0, 0, 3)
-	ZEND_ARG_OBJ_INFO(0, taskManager, Yb\\Task\\TaskManagerAbstract, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_task_taskexecutorinterface_ontaskexception, 0, 0, 2)
 	ZEND_ARG_ARRAY_INFO(0, task, 0)
 	ZEND_ARG_OBJ_INFO(0, ex, Exception, 0)
 ZEND_END_ARG_INFO()
