@@ -3,6 +3,7 @@ namespace Yb\Task;
 abstract class TaskManagerAbstract
 {
     protected taskExecutor;
+    protected loops = -1;
     protected sleep = -1;
 
     abstract public function produce(array task) -> void;
@@ -11,6 +12,16 @@ abstract class TaskManagerAbstract
     public function setTaskExecutor(<TaskExecutorInterface> taskExecutor) -> void
     {
         let this->taskExecutor = taskExecutor;
+    }
+
+    public function setLoops(long loops) -> void
+    {
+        let this->loops = loops;
+    }
+
+    public function getLoops() -> long
+    {
+        return this->loops;
     }
 
     public function setSleep(long sleep) -> void
@@ -41,9 +52,18 @@ abstract class TaskManagerAbstract
 
     public function __invoke() -> void
     {
+        long loops;
         var task;
 
         loop {
+            let loops = (long) this->loops;
+            if loops == 0 {
+                break;
+            }
+            if loops > 0 {
+                let this->loops = loops - 1;
+            }
+
             let task = this->consume();
             if task !== null {
                 this->runTask(task);

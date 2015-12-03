@@ -56,15 +56,9 @@
     "name": "Yb Framework",
     "description": "~",
     "author": "Hylent",
-    "version": "1.0.151127",
+    "version": "1.0.151203",
     "verbose": false,
     "requires": {
         "extensions": []
-    },
-    "optimizer-dirs": [
-        "optimizers"
-    ],
-    "extra-sources": [
-        "utils.c"
-    ]
+    }
 }

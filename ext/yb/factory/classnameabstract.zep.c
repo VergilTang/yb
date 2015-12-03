@@ -78,7 +78,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, __get) {
 		return;
 	}
 	_5 = zephir_fetch_nproperty_this(this_ptr, SL("args"), PH_NOISY_CC);
-	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "newinstanceof", &_4, 22, className, _5);
+	ZEPHIR_RETURN_CALL_CE_STATIC(yb_std_ce, "newinstanceof", &_4, 21, className, _5);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -110,7 +110,7 @@ PHP_METHOD(Yb_Factory_ClassNameAbstract, setArgArray) {
 	zephir_get_arrval(args, args_param);
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "array_values", NULL, 23, args);
+	ZEPHIR_CALL_FUNCTION(&_0, "array_values", NULL, 22, args);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("args"), _0 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

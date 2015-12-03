@@ -10,25 +10,15 @@ if (PHP_YB != "no") {
     ADD_EXTENSION_DEP("yb", "json");
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
-  ADD_SOURCES(configure_module_dirname + "/.", "utils.c", "yb");
-  ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c application.zep.c std.zep.c", "yb");
+  
+  ADD_SOURCES(configure_module_dirname + "/yb", "exception.zep.c di.zep.c application.zep.c std.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/view", "viewinterface.zep.c content.zep.c exception.zep.c facade.zep.c httpresponse.zep.c json.zep.c nil.zep.c readfile.zep.c redirect.zep.c tpl.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/data", "dataabstract.zep.c grouped.zep.c groupedbackendinterface.zep.c pivot.zep.c pivotbackendinterface.zep.c ratelimiter.zep.c ratelimiterbackendinterface.zep.c sequence.zep.c sequencebackendinterface.zep.c singlevalue.zep.c singlevaluebackendinterface.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/collection", "collectioninterface.zep.c redishash.zep.c exception.zep.c mongocollection.zep.c proxy.zep.c redishashserialized.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/db", "dbabstract.zep.c exception.zep.c pdoabstract.zep.c collection.zep.c entity.zep.c model.zep.c oci8.zep.c pdomysql.zep.c pdopgsql.zep.c queryexception.zep.c transactionexception.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/factory", "factoryinterface.zep.c classnameabstract.zep.c exception.zep.c factories.zep.c namespaced.zep.c shared.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/sequence", "sequenceinterface.zep.c dbpdomysql.zep.c exception.zep.c mongocollection.zep.c redis.zep.c redishash.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/upload", "urigeneratorinterface.zep.c storageabstract.zep.c exception.zep.c fastdfs.zep.c filesystem.zep.c ftp.zep.c uploadedfile.zep.c uploader.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/image", "imageabstract.zep.c imagebackendabstract.zep.c image.zep.c captcha.zep.c exception.zep.c gd.zep.c imagick.zep.c text.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/datacacher", "datacacherinterface.zep.c apc.zep.c exception.zep.c file.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/loader", "loaderabstract.zep.c exception.zep.c namepath.zep.c namespacedirectory.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/logger", "loggerabstract.zep.c exception.zep.c filelogger.zep.c nulllogger.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/redis", "error.zep.c redisclientinterface.zep.c cluster.zep.c connection.zep.c errorask.zep.c errormoved.zep.c exception.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/router", "routerabstract.zep.c exception.zep.c uri.zep.c notfoundexception.zep.c uripatterns.zep.c", "yb");
 	ADD_SOURCES(configure_module_dirname + "/yb/task", "taskmanagerabstract.zep.c exception.zep.c queueredis.zep.c rundirectly.zep.c taskexecutorinterface.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/mailer", "mailerinterface.zep.c exception.zep.c smtp.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/ratelimiter", "ratelimiterinterface.zep.c exception.zep.c redis.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/mongo", "exception.zep.c", "yb");
-	ADD_SOURCES(configure_module_dirname + "/yb/socket", "exception.zep.c tcpclient.zep.c", "yb");
   ADD_FLAG("CFLAGS_YB", "/D ZEPHIR_RELEASE");
 }

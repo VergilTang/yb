@@ -11,49 +11,21 @@ if test "$PHP_YB" = "yes"; then
 	AC_DEFINE(HAVE_YB, 1, [Whether you have Yb])
 	yb_sources="yb.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c yb/exception.zep.c
 	yb/view/viewinterface.zep.c
-	yb/data/dataabstract.zep.c
-	yb/collection/collectioninterface.zep.c
 	yb/db/dbabstract.zep.c
 	yb/factory/factoryinterface.zep.c
-	yb/sequence/sequenceinterface.zep.c
 	yb/upload/urigeneratorinterface.zep.c
 	yb/image/imageabstract.zep.c
 	yb/upload/storageabstract.zep.c
-	yb/datacacher/datacacherinterface.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
 	yb/logger/loggerabstract.zep.c
-	yb/redis/error.zep.c
-	yb/router/routerabstract.zep.c
 	yb/task/taskmanagerabstract.zep.c
-	yb/collection/redishash.zep.c
+	yb/di.zep.c
 	yb/factory/classnameabstract.zep.c
 	yb/image/image.zep.c
-	yb/mailer/mailerinterface.zep.c
-	yb/ratelimiter/ratelimiterinterface.zep.c
-	yb/redis/redisclientinterface.zep.c
-	yb/router/exception.zep.c
-	yb/router/uri.zep.c
 	yb/application.zep.c
-	yb/collection/exception.zep.c
-	yb/collection/mongocollection.zep.c
-	yb/collection/proxy.zep.c
-	yb/collection/redishashserialized.zep.c
-	yb/data/grouped.zep.c
-	yb/data/groupedbackendinterface.zep.c
-	yb/data/pivot.zep.c
-	yb/data/pivotbackendinterface.zep.c
-	yb/data/ratelimiter.zep.c
-	yb/data/ratelimiterbackendinterface.zep.c
-	yb/data/sequence.zep.c
-	yb/data/sequencebackendinterface.zep.c
-	yb/data/singlevalue.zep.c
-	yb/data/singlevaluebackendinterface.zep.c
-	yb/datacacher/apc.zep.c
-	yb/datacacher/exception.zep.c
-	yb/datacacher/file.zep.c
 	yb/db/collection.zep.c
 	yb/db/entity.zep.c
 	yb/db/model.zep.c
@@ -77,25 +49,6 @@ if test "$PHP_YB" = "yes"; then
 	yb/logger/exception.zep.c
 	yb/logger/filelogger.zep.c
 	yb/logger/nulllogger.zep.c
-	yb/mailer/exception.zep.c
-	yb/mailer/smtp.zep.c
-	yb/mongo/exception.zep.c
-	yb/ratelimiter/exception.zep.c
-	yb/ratelimiter/redis.zep.c
-	yb/redis/cluster.zep.c
-	yb/redis/connection.zep.c
-	yb/redis/errorask.zep.c
-	yb/redis/errormoved.zep.c
-	yb/redis/exception.zep.c
-	yb/router/notfoundexception.zep.c
-	yb/router/uripatterns.zep.c
-	yb/sequence/dbpdomysql.zep.c
-	yb/sequence/exception.zep.c
-	yb/sequence/mongocollection.zep.c
-	yb/sequence/redis.zep.c
-	yb/sequence/redishash.zep.c
-	yb/socket/exception.zep.c
-	yb/socket/tcpclient.zep.c
 	yb/std.zep.c
 	yb/task/exception.zep.c
 	yb/task/queueredis.zep.c
@@ -115,7 +68,7 @@ if test "$PHP_YB" = "yes"; then
 	yb/view/nil.zep.c
 	yb/view/readfile.zep.c
 	yb/view/redirect.zep.c
-	yb/view/tpl.zep.c utils.c"
+	yb/view/tpl.zep.c "
 	PHP_NEW_EXTENSION(yb, $yb_sources, $ext_shared,, )
 	PHP_SUBST(YB_SHARED_LIBADD)
 

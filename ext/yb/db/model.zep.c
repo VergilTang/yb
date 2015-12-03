@@ -212,10 +212,10 @@ PHP_METHOD(Yb_Db_Model, newEntity) {
 	} else {
 		ZVAL_BOOL(_0, 0);
 	}
-	ZEPHIR_CALL_METHOD(NULL, entity, "__construct", NULL, 46, this_ptr, row, _0);
+	ZEPHIR_CALL_METHOD(NULL, entity, "__construct", NULL, 30, this_ptr, row, _0);
 	zephir_check_call_status();
 	if (zephir_is_true(collection)) {
-		ZEPHIR_CALL_METHOD(NULL, entity, "setcollection", NULL, 47, collection);
+		ZEPHIR_CALL_METHOD(NULL, entity, "setcollection", NULL, 31, collection);
 		zephir_check_call_status();
 	}
 	RETURN_CCTOR(entity);
@@ -317,7 +317,7 @@ PHP_METHOD(Yb_Db_Model, newCollection) {
 
 
 	object_init_ex(return_value, yb_db_collection_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 48, this_ptr, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, this_ptr, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -834,7 +834,7 @@ PHP_METHOD(Yb_Db_Model, packPrimaryKeyValue) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid id to pack", "yb/db/model.zep", 262);
 			return;
 		}
-		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 49, pk, id);
+		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 33, pk, id);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

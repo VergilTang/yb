@@ -26,6 +26,8 @@ ZEPHIR_INIT_CLASS(Yb_Task_TaskManagerAbstract) {
 
 	zend_declare_property_null(yb_task_taskmanagerabstract_ce, SL("taskExecutor"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	zend_declare_property_long(yb_task_taskmanagerabstract_ce, SL("loops"), -1, ZEND_ACC_PROTECTED TSRMLS_CC);
+
 	zend_declare_property_long(yb_task_taskmanagerabstract_ce, SL("sleep"), -1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	return SUCCESS;
@@ -49,6 +51,30 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, setTaskExecutor) {
 
 
 	zephir_update_property_this(this_ptr, SL("taskExecutor"), taskExecutor TSRMLS_CC);
+
+}
+
+PHP_METHOD(Yb_Task_TaskManagerAbstract, setLoops) {
+
+	zval *loops_param = NULL, *_0;
+	long loops;
+
+	zephir_fetch_params(0, 1, 0, &loops_param);
+
+	loops = zephir_get_intval(loops_param);
+
+
+	ZEPHIR_INIT_ZVAL_NREF(_0);
+	ZVAL_LONG(_0, loops);
+	zephir_update_property_this(this_ptr, SL("loops"), _0 TSRMLS_CC);
+
+}
+
+PHP_METHOD(Yb_Task_TaskManagerAbstract, getLoops) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "loops");
 
 }
 
@@ -90,7 +116,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
 	if (unlikely(!zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 31);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 42);
 		return;
 	}
 
@@ -120,26 +146,38 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 
 PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
 
-	zval *task = NULL, *_2$$3, *_3$$3;
-	zephir_fcall_cache_entry *_0 = NULL, *_1 = NULL, *_4 = NULL;
+	zval *task = NULL, *_0$$3 = NULL, *_4$$3, *_5$$3, *_1$$5;
+	long loops = 0;
+	zephir_fcall_cache_entry *_2 = NULL, *_3 = NULL, *_6 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
 	while (1) {
-		ZEPHIR_CALL_METHOD(&task, this_ptr, "consume", &_0, 0);
+		ZEPHIR_OBS_NVAR(_0$$3);
+		zephir_read_property_this(&_0$$3, this_ptr, SL("loops"), PH_NOISY_CC);
+		loops = zephir_get_intval(_0$$3);
+		if (loops == 0) {
+			break;
+		}
+		if (loops > 0) {
+			ZEPHIR_INIT_ZVAL_NREF(_1$$5);
+			ZVAL_LONG(_1$$5, (loops - 1));
+			zephir_update_property_this(this_ptr, SL("loops"), _1$$5 TSRMLS_CC);
+		}
+		ZEPHIR_CALL_METHOD(&task, this_ptr, "consume", &_2, 0);
 		zephir_check_call_status();
 		if (Z_TYPE_P(task) != IS_NULL) {
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", &_1, 0, task);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", &_3, 0, task);
 			zephir_check_call_status();
 			continue;
 		}
-		_2$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
-		if (ZEPHIR_LT_LONG(_2$$3, 0)) {
+		_4$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
+		if (ZEPHIR_LT_LONG(_4$$3, 0)) {
 			RETURN_MM_NULL();
 		}
-		_3$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_4, 21, _3$$3);
+		_5$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
+		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_6, 20, _5$$3);
 		zephir_check_call_status();
 	}
 	ZEPHIR_MM_RESTORE();

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-for i in 6380 6381 6382 6390 6391 6392
-do
-    kill `cat /home/redis/cluster/$i/redis.pid`
-done
