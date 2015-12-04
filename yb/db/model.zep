@@ -112,7 +112,7 @@ class Model
 
     public function all(array where = [], var orderBy = null, long limit = 0, long offset = 0) -> <Collection>
     {
-        return this->newCollection(array_map([this, "onFetch"], this->db->select(this->table, [
+        return this->newCollection(array_map([this, "onFetch"], this->db->selectAll(this->table, [
             "where": where,
             "orderBy": orderBy,
             "limit": limit,
@@ -134,34 +134,39 @@ class Model
         return this->all([k: ids]);
     }
 
-    public function chunkByDynamicWhere(var processAndReturnNextWhere, var orderBy, long limit = 5000) -> void
+    public function chunkByDynamicWhere(var delegate, array where = [], var orderBy = null, long limit = 5000) -> long
     {
-        var where = [], collection;
-        long c;
+        var collection, w;
+        long sum = 0, c;
 
         if unlikely limit < 1 {
             throw new Exception("Invalid limit");
         }
 
+        let w = where;
+
         loop {
-            let collection = this->all(where, orderBy, limit);
+            let collection = this->all(w, orderBy, limit);
 
             let c = (long) collection->count();
             if c < 1 {
                 break;
             }
 
-            let where = {processAndReturnNextWhere}(collection);
-            if typeof where != "array" || count(where) < 1 || c < limit {
+            let sum += c;
+            let w = call_user_func(delegate, collection, w);
+            if typeof w != "array" || count(w) < 1 || c < limit {
                 break;
             }
         }
+
+        return sum;
     }
 
-    public function chunkByFixedWhere(var delegate, array where = [], var orderBy = null, long limit = 5000) -> void
+    public function chunkByFixedWhere(var delegate, array where = [], var orderBy = null, long limit = 5000) -> long
     {
-        long offset = 0, c;
         var collection;
+        long sum = 0, c, offset = 0;
 
         if unlikely limit < 1 {
             throw new Exception("Invalid limit");
@@ -170,13 +175,19 @@ class Model
         loop {
             let collection = this->all(where, orderBy, limit, offset);
             let c = (long) collection->count();
+            if c < 1 {
+                break;
+            }
 
-            if c < 1 || {delegate}(collection) === false || c < limit {
+            let sum += c;
+            if call_user_func(delegate, collection) === false || c < limit {
                 break;
             }
 
             let offset += limit;
         }
+
+        return sum;
     }
 
     public function aggregation(array aggregations, array where = []) -> array

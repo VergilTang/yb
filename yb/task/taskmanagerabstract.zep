@@ -3,7 +3,7 @@ namespace Yb\Task;
 abstract class TaskManagerAbstract
 {
     protected taskExecutor;
-    protected loops = -1;
+    protected idles = -1;
     protected sleep = -1;
 
     abstract public function produce(array task) -> void;
@@ -14,14 +14,19 @@ abstract class TaskManagerAbstract
         let this->taskExecutor = taskExecutor;
     }
 
-    public function setLoops(long loops) -> void
+    public function getTaskExecutor() -> <TaskExecutorInterface>
     {
-        let this->loops = loops;
+        return this->taskExecutor;
     }
 
-    public function getLoops() -> long
+    public function setIdles(long idles) -> void
     {
-        return this->loops;
+        let this->idles = idles;
+    }
+
+    public function getIdles() -> long
+    {
+        return this->idles;
     }
 
     public function setSleep(long sleep) -> void
@@ -52,26 +57,27 @@ abstract class TaskManagerAbstract
 
     public function __invoke() -> void
     {
-        long loops;
+        long idles;
         var task;
 
         loop {
-            let loops = (long) this->loops;
-            if loops == 0 {
-                break;
-            }
-            if loops > 0 {
-                let this->loops = loops - 1;
-            }
-
             let task = this->consume();
             if task !== null {
                 this->runTask(task);
                 continue;
             }
 
+            let idles = (long) this->idles;
+            if idles == 0 {
+                break;
+            }
+
+            if idles > 0 {
+                let this->idles = idles - 1;
+            }
+
             if this->sleep < 0 {
-                return;
+                continue;
             }
 
             sleep(this->sleep);

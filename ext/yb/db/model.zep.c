@@ -372,7 +372,7 @@ PHP_METHOD(Yb_Db_Model, all) {
 	ZEPHIR_INIT_NVAR(_1);
 	ZVAL_LONG(_1, offset);
 	zephir_array_update_string(&_5, SL("offset"), &_1, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_METHOD(&_3, _2, "select", NULL, 0, _4, _5);
+	ZEPHIR_CALL_METHOD(&_3, _2, "selectall", NULL, 0, _4, _5);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_6, "array_map", NULL, 7, _0, _3);
 	zephir_check_call_status();
@@ -421,65 +421,12 @@ PHP_METHOD(Yb_Db_Model, ids) {
 
 PHP_METHOD(Yb_Db_Model, chunkByDynamicWhere) {
 
-	zend_bool _4$$4, _5$$4;
-	zephir_fcall_cache_entry *_1 = NULL, *_3 = NULL;
+	zend_bool _6$$4, _7$$4;
+	zephir_fcall_cache_entry *_1 = NULL, *_3 = NULL, *_5 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	long limit, c = 0;
-	zval *processAndReturnNextWhere, *orderBy, *limit_param = NULL, *where = NULL, *collection = NULL, *_0$$4 = NULL, *_2$$4 = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 1, &processAndReturnNextWhere, &orderBy, &limit_param);
-
-	if (!limit_param) {
-		limit = 5000;
-	} else {
-		limit = zephir_get_intval(limit_param);
-	}
-
-
-	ZEPHIR_INIT_VAR(where);
-	array_init(where);
-	if (unlikely(limit < 1)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid limit", "yb/db/model.zep", 143);
-		return;
-	}
-	while (1) {
-		ZEPHIR_INIT_NVAR(_0$$4);
-		ZVAL_LONG(_0$$4, limit);
-		ZEPHIR_CALL_METHOD(&collection, this_ptr, "all", &_1, 0, where, orderBy, _0$$4);
-		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_2$$4, collection, "count", &_3, 0);
-		zephir_check_call_status();
-		c = zephir_get_intval(_2$$4);
-		if (c < 1) {
-			break;
-		}
-		ZEPHIR_CALL_ZVAL_FUNCTION(&where, processAndReturnNextWhere, NULL, 0, collection);
-		zephir_check_call_status();
-		_4$$4 = Z_TYPE_P(where) != IS_ARRAY;
-		if (!(_4$$4)) {
-			_4$$4 = zephir_fast_count_int(where TSRMLS_CC) < 1;
-		}
-		_5$$4 = _4$$4;
-		if (!(_5$$4)) {
-			_5$$4 = c < limit;
-		}
-		if (_5$$4) {
-			break;
-		}
-	}
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
-
-	zend_bool _5$$4, _7$$4;
-	zephir_fcall_cache_entry *_2 = NULL, *_4 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
-	long limit, offset, c = 0;
+	long limit, sum, c = 0;
 	zval *where = NULL;
-	zval *delegate, *where_param = NULL, *orderBy = NULL, *limit_param = NULL, *collection = NULL, *_0$$4 = NULL, *_1$$4 = NULL, *_3$$4 = NULL, *_6$$4 = NULL;
+	zval *delegate, *where_param = NULL, *orderBy = NULL, *limit_param = NULL, *collection = NULL, *w = NULL, *_0$$4 = NULL, *_2$$4 = NULL, *_4$$4 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 3, &delegate, &where_param, &orderBy, &limit_param);
@@ -500,9 +447,75 @@ PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
 	}
 
 
+	sum = 0;
+	if (unlikely(limit < 1)) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid limit", "yb/db/model.zep", 143);
+		return;
+	}
+	ZEPHIR_CPY_WRT(w, where);
+	while (1) {
+		ZEPHIR_INIT_NVAR(_0$$4);
+		ZVAL_LONG(_0$$4, limit);
+		ZEPHIR_CALL_METHOD(&collection, this_ptr, "all", &_1, 0, w, orderBy, _0$$4);
+		zephir_check_call_status();
+		ZEPHIR_CALL_METHOD(&_2$$4, collection, "count", &_3, 0);
+		zephir_check_call_status();
+		c = zephir_get_intval(_2$$4);
+		if (c < 1) {
+			break;
+		}
+		sum += c;
+		ZEPHIR_CALL_FUNCTION(&_4$$4, "call_user_func", &_5, 33, delegate, collection, w);
+		zephir_check_call_status();
+		ZEPHIR_CPY_WRT(w, _4$$4);
+		_6$$4 = Z_TYPE_P(w) != IS_ARRAY;
+		if (!(_6$$4)) {
+			_6$$4 = zephir_fast_count_int(w TSRMLS_CC) < 1;
+		}
+		_7$$4 = _6$$4;
+		if (!(_7$$4)) {
+			_7$$4 = c < limit;
+		}
+		if (_7$$4) {
+			break;
+		}
+	}
+	RETURN_MM_LONG(sum);
+
+}
+
+PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
+
+	zend_bool _7$$4;
+	zephir_fcall_cache_entry *_2 = NULL, *_4 = NULL, *_6 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	long limit, sum, c = 0, offset;
+	zval *where = NULL;
+	zval *delegate, *where_param = NULL, *orderBy = NULL, *limit_param = NULL, *collection = NULL, *_0$$4 = NULL, *_1$$4 = NULL, *_3$$4 = NULL, *_5$$4 = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 3, &delegate, &where_param, &orderBy, &limit_param);
+
+	if (!where_param) {
+		ZEPHIR_INIT_VAR(where);
+		array_init(where);
+	} else {
+		zephir_get_arrval(where, where_param);
+	}
+	if (!orderBy) {
+		orderBy = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!limit_param) {
+		limit = 5000;
+	} else {
+		limit = zephir_get_intval(limit_param);
+	}
+
+
+	sum = 0;
 	offset = 0;
 	if (unlikely(limit < 1)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid limit", "yb/db/model.zep", 167);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid limit", "yb/db/model.zep", 172);
 		return;
 	}
 	while (1) {
@@ -515,13 +528,13 @@ PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
 		ZEPHIR_CALL_METHOD(&_3$$4, collection, "count", &_4, 0);
 		zephir_check_call_status();
 		c = zephir_get_intval(_3$$4);
-		_5$$4 = c < 1;
-		if (!(_5$$4)) {
-			ZEPHIR_CALL_ZVAL_FUNCTION(&_6$$4, delegate, NULL, 0, collection);
-			zephir_check_call_status();
-			_5$$4 = ZEPHIR_IS_FALSE_IDENTICAL(_6$$4);
+		if (c < 1) {
+			break;
 		}
-		_7$$4 = _5$$4;
+		sum += c;
+		ZEPHIR_CALL_FUNCTION(&_5$$4, "call_user_func", &_6, 33, delegate, collection);
+		zephir_check_call_status();
+		_7$$4 = ZEPHIR_IS_FALSE_IDENTICAL(_5$$4);
 		if (!(_7$$4)) {
 			_7$$4 = c < limit;
 		}
@@ -530,7 +543,7 @@ PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
 		}
 		offset += limit;
 	}
-	ZEPHIR_MM_RESTORE();
+	RETURN_MM_LONG(sum);
 
 }
 
@@ -762,11 +775,11 @@ PHP_METHOD(Yb_Db_Model, pickPrimaryKeyValue) {
 	ZEPHIR_OBS_VAR(pk);
 	zephir_read_property_this(&pk, this_ptr, SL("primaryKey"), PH_NOISY_CC);
 	if (unlikely(!zephir_is_true(pk))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Empty primary key", "yb/db/model.zep", 229);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Empty primary key", "yb/db/model.zep", 240);
 		return;
 	}
 	if (Z_TYPE_P(pk) == IS_ARRAY) {
-		zephir_is_iterable(pk, &_1$$4, &_0$$4, 0, 0, "yb/db/model.zep", 239);
+		zephir_is_iterable(pk, &_1$$4, &_0$$4, 0, 0, "yb/db/model.zep", 250);
 		for (
 		  ; zephir_hash_get_current_data_ex(_1$$4, (void**) &_2$$4, &_0$$4) == SUCCESS
 		  ; zephir_hash_move_forward_ex(_1$$4, &_0$$4)
@@ -780,7 +793,7 @@ PHP_METHOD(Yb_Db_Model, pickPrimaryKeyValue) {
 				ZEPHIR_CONCAT_SV(_4$$6, "Cannot pick primary key values: ", k);
 				ZEPHIR_CALL_METHOD(NULL, _3$$6, "__construct", &_5, 2, _4$$6);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(_3$$6, "yb/db/model.zep", 235 TSRMLS_CC);
+				zephir_throw_exception_debug(_3$$6, "yb/db/model.zep", 246 TSRMLS_CC);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
@@ -797,7 +810,7 @@ PHP_METHOD(Yb_Db_Model, pickPrimaryKeyValue) {
 			ZEPHIR_CONCAT_SV(_8$$8, "Cannot pick primary key value: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _7$$8, "__construct", &_5, 2, _8$$8);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_7$$8, "yb/db/model.zep", 242 TSRMLS_CC);
+			zephir_throw_exception_debug(_7$$8, "yb/db/model.zep", 253 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -822,7 +835,7 @@ PHP_METHOD(Yb_Db_Model, packPrimaryKeyValue) {
 	ZEPHIR_OBS_VAR(pk);
 	zephir_read_property_this(&pk, this_ptr, SL("primaryKey"), PH_NOISY_CC);
 	if (unlikely(!zephir_is_true(pk))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Empty primary key", "yb/db/model.zep", 257);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Empty primary key", "yb/db/model.zep", 268);
 		return;
 	}
 	if (Z_TYPE_P(pk) == IS_ARRAY) {
@@ -831,10 +844,10 @@ PHP_METHOD(Yb_Db_Model, packPrimaryKeyValue) {
 			_0$$4 = zephir_fast_count_int(id TSRMLS_CC) != zephir_fast_count_int(pk TSRMLS_CC);
 		}
 		if (unlikely(_0$$4)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid id to pack", "yb/db/model.zep", 262);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid id to pack", "yb/db/model.zep", 273);
 			return;
 		}
-		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 33, pk, id);
+		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 34, pk, id);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

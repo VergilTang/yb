@@ -26,7 +26,7 @@ ZEPHIR_INIT_CLASS(Yb_Task_TaskManagerAbstract) {
 
 	zend_declare_property_null(yb_task_taskmanagerabstract_ce, SL("taskExecutor"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_long(yb_task_taskmanagerabstract_ce, SL("loops"), -1, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_long(yb_task_taskmanagerabstract_ce, SL("idles"), -1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	zend_declare_property_long(yb_task_taskmanagerabstract_ce, SL("sleep"), -1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
@@ -54,27 +54,35 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, setTaskExecutor) {
 
 }
 
-PHP_METHOD(Yb_Task_TaskManagerAbstract, setLoops) {
-
-	zval *loops_param = NULL, *_0;
-	long loops;
-
-	zephir_fetch_params(0, 1, 0, &loops_param);
-
-	loops = zephir_get_intval(loops_param);
-
-
-	ZEPHIR_INIT_ZVAL_NREF(_0);
-	ZVAL_LONG(_0, loops);
-	zephir_update_property_this(this_ptr, SL("loops"), _0 TSRMLS_CC);
-
-}
-
-PHP_METHOD(Yb_Task_TaskManagerAbstract, getLoops) {
+PHP_METHOD(Yb_Task_TaskManagerAbstract, getTaskExecutor) {
 
 	
 
-	RETURN_MEMBER(this_ptr, "loops");
+	RETURN_MEMBER(this_ptr, "taskExecutor");
+
+}
+
+PHP_METHOD(Yb_Task_TaskManagerAbstract, setIdles) {
+
+	zval *idles_param = NULL, *_0;
+	long idles;
+
+	zephir_fetch_params(0, 1, 0, &idles_param);
+
+	idles = zephir_get_intval(idles_param);
+
+
+	ZEPHIR_INIT_ZVAL_NREF(_0);
+	ZVAL_LONG(_0, idles);
+	zephir_update_property_this(this_ptr, SL("idles"), _0 TSRMLS_CC);
+
+}
+
+PHP_METHOD(Yb_Task_TaskManagerAbstract, getIdles) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "idles");
 
 }
 
@@ -116,7 +124,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
 	if (unlikely(!zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 42);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 47);
 		return;
 	}
 
@@ -146,35 +154,35 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
 
 PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
 
-	zval *task = NULL, *_0$$3 = NULL, *_4$$3, *_5$$3, *_1$$5;
-	long loops = 0;
-	zephir_fcall_cache_entry *_2 = NULL, *_3 = NULL, *_6 = NULL;
+	zval *task = NULL, *_2$$3 = NULL, *_4$$3, *_5$$3, *_3$$6;
+	long idles = 0;
+	zephir_fcall_cache_entry *_0 = NULL, *_1 = NULL, *_6 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
 	while (1) {
-		ZEPHIR_OBS_NVAR(_0$$3);
-		zephir_read_property_this(&_0$$3, this_ptr, SL("loops"), PH_NOISY_CC);
-		loops = zephir_get_intval(_0$$3);
-		if (loops == 0) {
-			break;
-		}
-		if (loops > 0) {
-			ZEPHIR_INIT_ZVAL_NREF(_1$$5);
-			ZVAL_LONG(_1$$5, (loops - 1));
-			zephir_update_property_this(this_ptr, SL("loops"), _1$$5 TSRMLS_CC);
-		}
-		ZEPHIR_CALL_METHOD(&task, this_ptr, "consume", &_2, 0);
+		ZEPHIR_CALL_METHOD(&task, this_ptr, "consume", &_0, 0);
 		zephir_check_call_status();
 		if (Z_TYPE_P(task) != IS_NULL) {
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", &_3, 0, task);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "runtask", &_1, 0, task);
 			zephir_check_call_status();
 			continue;
 		}
+		ZEPHIR_OBS_NVAR(_2$$3);
+		zephir_read_property_this(&_2$$3, this_ptr, SL("idles"), PH_NOISY_CC);
+		idles = zephir_get_intval(_2$$3);
+		if (idles == 0) {
+			break;
+		}
+		if (idles > 0) {
+			ZEPHIR_INIT_ZVAL_NREF(_3$$6);
+			ZVAL_LONG(_3$$6, (idles - 1));
+			zephir_update_property_this(this_ptr, SL("idles"), _3$$6 TSRMLS_CC);
+		}
 		_4$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
 		if (ZEPHIR_LT_LONG(_4$$3, 0)) {
-			RETURN_MM_NULL();
+			continue;
 		}
 		_5$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
 		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_6, 20, _5$$3);
