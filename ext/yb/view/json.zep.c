@@ -29,7 +29,7 @@ ZEPHIR_INIT_CLASS(Yb_View_Json) {
 
 PHP_METHOD(Yb_View_Json, run) {
 
-	zend_bool jsonCors = 0, jsonTextPlain = 0;
+	zend_bool jsonCors = 0, jsonHeaderPlain = 0;
 	zval *jsonCallback = NULL, *_4 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_0 = NULL, *_7 = NULL;
@@ -69,23 +69,23 @@ PHP_METHOD(Yb_View_Json, run) {
 	zephir_check_call_status();
 	jsonCors = zephir_get_boolval(_5);
 	ZEPHIR_INIT_NVAR(_1);
-	ZVAL_STRING(_1, "jsonTextPlain", ZEPHIR_TEMP_PARAM_COPY);
+	ZVAL_STRING(_1, "jsonHeaderPlain", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_BOOL(_2, 0);
 	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_0, 5, options, _1, _2);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
-	jsonTextPlain = zephir_get_boolval(_5);
+	jsonHeaderPlain = zephir_get_boolval(_5);
 	if (jsonCors) {
 		ZEPHIR_SINIT_VAR(_6$$3);
 		ZVAL_STRING(&_6$$3, "Access-Control-Allow-Origin: *", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 111, &_6$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 113, &_6$$3);
 		zephir_check_call_status();
 	}
-	if (jsonTextPlain) {
+	if (jsonHeaderPlain) {
 		ZEPHIR_SINIT_VAR(_8$$4);
 		ZVAL_STRING(&_8$$4, "Content-type: text/plain; charset=UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 111, &_8$$4);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_7, 113, &_8$$4);
 		zephir_check_call_status();
 	}
 	if (zephir_fast_strlen_ev(jsonCallback) > 0) {

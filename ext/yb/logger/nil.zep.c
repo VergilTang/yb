@@ -16,15 +16,15 @@
 #include "kernel/memory.h"
 
 
-ZEPHIR_INIT_CLASS(Yb_Logger_NullLogger) {
+ZEPHIR_INIT_CLASS(Yb_Logger_Nil) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Yb\\Logger, NullLogger, yb, logger_nulllogger, yb_logger_loggerabstract_ce, yb_logger_nulllogger_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Yb\\Logger, Nil, yb, logger_nil, yb_logger_loggerabstract_ce, yb_logger_nil_method_entry, 0);
 
 	return SUCCESS;
 
 }
 
-PHP_METHOD(Yb_Logger_NullLogger, log) {
+PHP_METHOD(Yb_Logger_Nil, log) {
 
 	zval *context = NULL;
 	zval *level_param = NULL, *message_param = NULL, *context_param = NULL;

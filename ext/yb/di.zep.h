@@ -9,9 +9,9 @@ PHP_METHOD(Yb_Di, __set);
 PHP_METHOD(Yb_Di, __isset);
 PHP_METHOD(Yb_Di, __unset);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_di___invoke, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_di___invoke, 0, 0, 2)
 	ZEND_ARG_INFO(0, name)
-	ZEND_ARG_INFO(0, initializer)
+	ZEND_ARG_OBJ_INFO(0, initializer, Closure, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_di___get, 0, 0, 1)

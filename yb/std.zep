@@ -11,16 +11,18 @@ class Std
     public static function sizeToBytes(string size) -> double
     {
         var match = null;
+        string unit;
 
         if preg_match("/^([\\d\\.]+)([KMGT])B?$/", size->upper(), match) {
-            switch match[2] {
-                case "T":
+            let unit = (string) match[2];
+            switch unit[0] {
+                case 'T':
                     return 1099511627776.0 * (double) match[1];
-                case "G":
+                case 'G':
                     return 1073741824.0 * (double) match[1];
-                case "M":
+                case 'M':
                     return 1048576.0 * (double) match[1];
-                case "K":
+                case 'K':
                     return 1024.0 * (double) match[1];
             }
         }
@@ -30,6 +32,8 @@ class Std
 
     public static function bytesToSize(double bytes, long decimal = 3) -> string
     {
+        string size = "0";
+
         if decimal < 0 || decimal > 6 {
             let decimal = 3;
         }
@@ -50,7 +54,7 @@ class Std
             return sprintf(sprintf("%%0.%dfB", decimal), bytes);
         }
 
-        return strval(0);
+        return size;
     }
 
     public static function pascalCase(string from) -> string

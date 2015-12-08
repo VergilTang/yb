@@ -21,8 +21,6 @@ ZEPHIR_INIT_CLASS(Yb_Logger_LoggerAbstract) {
 
 	ZEPHIR_REGISTER_CLASS(Yb\\Logger, LoggerAbstract, yb, logger_loggerabstract, yb_logger_loggerabstract_method_entry, ZEND_ACC_EXPLICIT_ABSTRACT_CLASS);
 
-	zend_declare_property_null(yb_logger_loggerabstract_ce, SL("logs"), ZEND_ACC_PROTECTED TSRMLS_CC);
-
 	zend_declare_class_constant_string(yb_logger_loggerabstract_ce, SL("EMERGENCY"), "emergency" TSRMLS_CC);
 
 	zend_declare_class_constant_string(yb_logger_loggerabstract_ce, SL("ALERT"), "alert" TSRMLS_CC);
@@ -39,6 +37,7 @@ ZEPHIR_INIT_CLASS(Yb_Logger_LoggerAbstract) {
 
 	zend_declare_class_constant_string(yb_logger_loggerabstract_ce, SL("DEBUG"), "debug" TSRMLS_CC);
 
+	zend_class_implements(yb_logger_loggerabstract_ce TSRMLS_CC, 1, yb_logger_loggerbackendinterface_ce);
 	return SUCCESS;
 
 }
@@ -264,37 +263,6 @@ PHP_METHOD(Yb_Logger_LoggerAbstract, debug) {
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Logger_LoggerAbstract, log) {
-
-}
-
-PHP_METHOD(Yb_Logger_LoggerAbstract, flush) {
-
-	
-
-	RETURN_NULL();
-
-}
-
-PHP_METHOD(Yb_Logger_LoggerAbstract, __destruct) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-
-
-	/* try_start_1: */
-
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "flush", NULL, 0);
-		zephir_check_call_status_or_jump(try_end_1);
-
-	try_end_1:
-
-	zend_clear_exception(TSRMLS_C);
-	RETURN_MM_NULL();
 
 }
 

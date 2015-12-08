@@ -5,7 +5,7 @@ class Di
     protected services;
     protected serviceInitializers;
 
-    public function __invoke(string name, var initializer = null) -> void
+    public function __invoke(string name, <\Closure> initializer) -> void
     {
         let this->serviceInitializers[name] = initializer;
     }
@@ -22,20 +22,11 @@ class Di
             throw new Exception("Invalid service: " . name);
         }
 
-        loop {
-            if initializer === null {
-                let service = new {name}();
-                break;
-            }
-
-            if typeof initializer == "object" && (initializer instanceof \Closure) {
-                let service = {initializer}(this);
-                break;
-            }
-
+        if unlikely typeof initializer != "object" || ! (initializer instanceof \Closure) {
             throw new Exception("Invalid service initializer: " . name);
         }
 
+        let service = {initializer}(this);
         let this->services[name] = service;
 
         return service;

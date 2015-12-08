@@ -1,6 +1,6 @@
 namespace Yb\Logger;
 
-abstract class LoggerAbstract
+abstract class LoggerAbstract implements LoggerBackendInterface
 {
     const EMERGENCY = "emergency";
     const ALERT     = "alert";
@@ -10,8 +10,6 @@ abstract class LoggerAbstract
     const NOTICE    = "notice";
     const INFO      = "info";
     const DEBUG     = "debug";
-
-    protected logs;
 
     public function emergency(string message, array context = []) -> void
     {
@@ -51,22 +49,6 @@ abstract class LoggerAbstract
     public function debug(string message, array context = []) -> void
     {
         this->log(self::DEBUG, message, context);
-    }
-
-    abstract public function log(string level, string message, array context = null) -> void;
-
-    public function flush() -> void
-    {
-        return;
-    }
-
-    public function __destruct() -> void
-    {
-        try {
-            this->flush();
-        }
-
-        return;
     }
 
 }

@@ -39,23 +39,7 @@ abstract class TaskManagerAbstract
         return this->sleep;
     }
 
-    public function runTask(array task) -> void
-    {
-        var re, ex;
-
-        if unlikely ! this->taskExecutor {
-            throw new Exception("Missing task executor");
-        }
-
-        try {
-            let re = this->taskExecutor->executeTask(task);
-            this->taskExecutor->onTaskReturn(task, re);
-        } catch \Exception, ex {
-            this->taskExecutor->onTaskException(task, ex);
-        }
-    }
-
-    public function __invoke() -> void
+    public function run() -> void
     {
         long idles;
         var task;
@@ -81,6 +65,22 @@ abstract class TaskManagerAbstract
             }
 
             sleep(this->sleep);
+        }
+    }
+
+    public function runTask(array task) -> void
+    {
+        var re, ex;
+
+        if unlikely ! this->taskExecutor {
+            throw new Exception("Missing task executor");
+        }
+
+        try {
+            let re = this->taskExecutor->executeTask(task);
+            this->taskExecutor->onTaskReturn(task, re);
+        } catch \Exception, ex {
+            this->taskExecutor->onTaskException(task, ex);
         }
     }
 

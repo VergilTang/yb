@@ -11,8 +11,8 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, setIdles);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, getIdles);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, setSleep);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, getSleep);
+PHP_METHOD(Yb_Task_TaskManagerAbstract, run);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask);
-PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, serializeTask);
 PHP_METHOD(Yb_Task_TaskManagerAbstract, unserializeTask);
 
@@ -53,8 +53,8 @@ ZEPHIR_INIT_FUNCS(yb_task_taskmanagerabstract_method_entry) {
 	PHP_ME(Yb_Task_TaskManagerAbstract, getIdles, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Task_TaskManagerAbstract, setSleep, arginfo_yb_task_taskmanagerabstract_setsleep, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Task_TaskManagerAbstract, getSleep, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Task_TaskManagerAbstract, run, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Task_TaskManagerAbstract, runTask, arginfo_yb_task_taskmanagerabstract_runtask, ZEND_ACC_PUBLIC)
-	PHP_ME(Yb_Task_TaskManagerAbstract, __invoke, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Task_TaskManagerAbstract, serializeTask, arginfo_yb_task_taskmanagerabstract_serializetask, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Task_TaskManagerAbstract, unserializeTask, arginfo_yb_task_taskmanagerabstract_unserializetask, ZEND_ACC_PUBLIC)
 	PHP_FE_END

@@ -30,7 +30,7 @@ ZEPHIR_INIT_CLASS(Yb_View_HttpResponse) {
 
 PHP_METHOD(Yb_View_HttpResponse, run) {
 
-	zval *httpResponseOutput = NULL, *_6 = NULL;
+	zval *httpResponseContent = NULL, *_6 = NULL;
 	long httpResponseCode = 0;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_1 = NULL;
@@ -58,10 +58,10 @@ PHP_METHOD(Yb_View_HttpResponse, run) {
 	httpResponseCode = zephir_get_intval(_0);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, httpResponseCode);
-	ZEPHIR_CALL_FUNCTION(NULL, "http_response_code", NULL, 114, &_4);
+	ZEPHIR_CALL_FUNCTION(NULL, "http_response_code", NULL, 116, &_4);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "httpResponseOutput", ZEPHIR_TEMP_PARAM_COPY);
+	ZVAL_STRING(_2, "httpResponseContent", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_NVAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_CE_STATIC(&_5, yb_std_ce, "valueat", &_1, 5, options, _2, _3);
@@ -69,8 +69,8 @@ PHP_METHOD(Yb_View_HttpResponse, run) {
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
 	zephir_get_strval(_6, _5);
-	ZEPHIR_CPY_WRT(httpResponseOutput, _6);
-	zend_print_zval(httpResponseOutput, 0);
+	ZEPHIR_CPY_WRT(httpResponseContent, _6);
+	zend_print_zval(httpResponseContent, 0);
 	ZEPHIR_MM_RESTORE();
 
 }

@@ -15,8 +15,8 @@
 #include "kernel/object.h"
 #include "kernel/memory.h"
 #include "kernel/operators.h"
-#include "kernel/exception.h"
 #include "kernel/fcall.h"
+#include "kernel/exception.h"
 #include "kernel/string.h"
 
 
@@ -110,49 +110,7 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, getSleep) {
 
 }
 
-PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *task_param = NULL, *re = NULL, *ex = NULL, *_0, *_1$$4, *_2$$4, *_3$$5;
-	zval *task = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &task_param);
-
-	zephir_get_arrval(task, task_param);
-
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-	if (unlikely(!zephir_is_true(_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 47);
-		return;
-	}
-
-	/* try_start_1: */
-
-		_1$$4 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(&re, _1$$4, "executetask", NULL, 0, task);
-		zephir_check_call_status_or_jump(try_end_1);
-		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(NULL, _2$$4, "ontaskreturn", NULL, 0, task, re);
-		zephir_check_call_status_or_jump(try_end_1);
-
-	try_end_1:
-
-	if (EG(exception)) {
-		ZEPHIR_CPY_WRT(ex, EG(exception));
-		if (zephir_instance_of_ev(ex, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
-			zend_clear_exception(TSRMLS_C);
-			_3$$5 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
-			ZEPHIR_CALL_METHOD(NULL, _3$$5, "ontaskexception", NULL, 0, task, ex);
-			zephir_check_call_status();
-		}
-	}
-	ZEPHIR_MM_RESTORE();
-
-}
-
-PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
+PHP_METHOD(Yb_Task_TaskManagerAbstract, run) {
 
 	zval *task = NULL, *_2$$3 = NULL, *_4$$3, *_5$$3, *_3$$6;
 	long idles = 0;
@@ -185,8 +143,50 @@ PHP_METHOD(Yb_Task_TaskManagerAbstract, __invoke) {
 			continue;
 		}
 		_5$$3 = zephir_fetch_nproperty_this(this_ptr, SL("sleep"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_6, 20, _5$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "sleep", &_6, 22, _5$$3);
 		zephir_check_call_status();
+	}
+	ZEPHIR_MM_RESTORE();
+
+}
+
+PHP_METHOD(Yb_Task_TaskManagerAbstract, runTask) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *task_param = NULL, *re = NULL, *ex = NULL, *_0, *_1$$4, *_2$$4, *_3$$5;
+	zval *task = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &task_param);
+
+	zephir_get_arrval(task, task_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
+	if (unlikely(!zephir_is_true(_0))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_task_exception_ce, "Missing task executor", "yb/task/taskmanagerabstract.zep", 76);
+		return;
+	}
+
+	/* try_start_1: */
+
+		_1$$4 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
+		ZEPHIR_CALL_METHOD(&re, _1$$4, "executetask", NULL, 0, task);
+		zephir_check_call_status_or_jump(try_end_1);
+		_2$$4 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
+		ZEPHIR_CALL_METHOD(NULL, _2$$4, "ontaskreturn", NULL, 0, task, re);
+		zephir_check_call_status_or_jump(try_end_1);
+
+	try_end_1:
+
+	if (EG(exception)) {
+		ZEPHIR_CPY_WRT(ex, EG(exception));
+		if (zephir_instance_of_ev(ex, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
+			zend_clear_exception(TSRMLS_C);
+			_3$$5 = zephir_fetch_nproperty_this(this_ptr, SL("taskExecutor"), PH_NOISY_CC);
+			ZEPHIR_CALL_METHOD(NULL, _3$$5, "ontaskexception", NULL, 0, task, ex);
+			zephir_check_call_status();
+		}
 	}
 	ZEPHIR_MM_RESTORE();
 

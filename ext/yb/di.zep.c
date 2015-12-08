@@ -36,16 +36,13 @@ ZEPHIR_INIT_CLASS(Yb_Di) {
 
 PHP_METHOD(Yb_Di, __invoke) {
 
-	zval *name_param = NULL, *initializer = NULL;
+	zval *name_param = NULL, *initializer;
 	zval *name = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &name_param, &initializer);
+	zephir_fetch_params(1, 2, 0, &name_param, &initializer);
 
 	zephir_get_strval(name, name_param);
-	if (!initializer) {
-		initializer = ZEPHIR_GLOBAL(global_null);
-	}
 
 
 	zephir_update_property_array(this_ptr, SL("serviceInitializers"), name, initializer TSRMLS_CC);
@@ -55,11 +52,10 @@ PHP_METHOD(Yb_Di, __invoke) {
 
 PHP_METHOD(Yb_Di, __get) {
 
-	zend_bool _6$$5;
-	zend_class_entry *_5$$6;
+	zend_bool _4;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *service = NULL, *initializer = NULL, *_0, *_1, *_2$$4, *_4$$6 = NULL, *_7$$5 = NULL;
-	zval *name = NULL, *_3$$4, *_8$$5 = NULL;
+	zval *name_param = NULL, *service = NULL, *initializer = NULL, *_0, *_1, *_2$$4, *_5$$5;
+	zval *name = NULL, *_3$$4, *_6$$5;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &name_param);
@@ -85,37 +81,23 @@ PHP_METHOD(Yb_Di, __get) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	while (1) {
-		if (Z_TYPE_P(initializer) == IS_NULL) {
-			ZEPHIR_INIT_NVAR(service);
-			zephir_fetch_safe_class(_4$$6, name);
-				_5$$6 = zend_fetch_class(Z_STRVAL_P(_4$$6), Z_STRLEN_P(_4$$6), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-			object_init_ex(service, _5$$6);
-			if (zephir_has_constructor(service TSRMLS_CC)) {
-				ZEPHIR_CALL_METHOD(NULL, service, "__construct", NULL, 0);
-				zephir_check_call_status();
-			}
-			break;
-		}
-		_6$$5 = Z_TYPE_P(initializer) == IS_OBJECT;
-		if (_6$$5) {
-			_6$$5 = (zephir_instance_of_ev(initializer, zend_ce_closure TSRMLS_CC));
-		}
-		if (_6$$5) {
-			ZEPHIR_CALL_ZVAL_FUNCTION(&service, initializer, NULL, 0, this_ptr);
-			zephir_check_call_status();
-			break;
-		}
-		ZEPHIR_INIT_NVAR(_7$$5);
-		object_init_ex(_7$$5, yb_exception_ce);
-		ZEPHIR_INIT_LNVAR(_8$$5);
-		ZEPHIR_CONCAT_SV(_8$$5, "Invalid service initializer: ", name);
-		ZEPHIR_CALL_METHOD(NULL, _7$$5, "__construct", NULL, 2, _8$$5);
+	_4 = Z_TYPE_P(initializer) != IS_OBJECT;
+	if (!(_4)) {
+		_4 = !((zephir_instance_of_ev(initializer, zend_ce_closure TSRMLS_CC)));
+	}
+	if (unlikely(_4)) {
+		ZEPHIR_INIT_VAR(_5$$5);
+		object_init_ex(_5$$5, yb_exception_ce);
+		ZEPHIR_INIT_VAR(_6$$5);
+		ZEPHIR_CONCAT_SV(_6$$5, "Invalid service initializer: ", name);
+		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 2, _6$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$5, "yb/di.zep", 36 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "yb/di.zep", 26 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
+	ZEPHIR_CALL_ZVAL_FUNCTION(&service, initializer, NULL, 0, this_ptr);
+	zephir_check_call_status();
 	zephir_update_property_array(this_ptr, SL("services"), name, service TSRMLS_CC);
 	RETURN_CCTOR(service);
 

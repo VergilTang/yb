@@ -87,11 +87,11 @@ class Model
     {
         var row;
 
-        let row = this->db->selectRow(this->table, [
+        let row = this->db->select(this->table, [
             "where": where,
             "orderBy": orderBy,
             "limit": 1
-        ]);
+        ], DbAbstract::ROW);
 
         if ! row {
             return;
@@ -112,7 +112,7 @@ class Model
 
     public function all(array where = [], var orderBy = null, long limit = 0, long offset = 0) -> <Collection>
     {
-        return this->newCollection(array_map([this, "onFetch"], this->db->selectAll(this->table, [
+        return this->newCollection(array_map([this, "onFetch"], this->db->select(this->table, [
             "where": where,
             "orderBy": orderBy,
             "limit": limit,

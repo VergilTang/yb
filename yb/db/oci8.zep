@@ -3,7 +3,6 @@ namespace Yb\Db;
 class Oci8 extends DbAbstract
 {
     protected oci;
-    protected lastStatement;
 
     public function __construct(string dsn, string user, string passwd) -> void
     {
@@ -31,101 +30,118 @@ class Oci8 extends DbAbstract
         return "'" . str_replace("'", "''", value) . "'";
     }
 
-    public function query(string sql, array params = null) -> void
+    public function query(string sql, array params = [], long mode = DbAbstract::NONE)
     {
-        var s, k, v, m, e, eMessage;
-        double t;
-        bool r;
+        var statement, k, v, err, errMessage, queryMode;
+        double startMt;
+        string profiledQuery;
+        bool success;
+        var result, resultRow, resultCell;
 
-        let t = (double) microtime(true);
-
-        let s = oci_parse(this->oci, sql);
-        let this->lastStatement = s;
+        let startMt = (double) microtime(true);
+        let statement = oci_parse(this->oci, sql);
 
         if count(params) > 0 {
             for k, v in params {
-                oci_bind_by_name(s, ":" . k, v);
+                oci_bind_by_name(statement, ":" . k, v);
             }
         }
 
         if this->inTransaction {
-            let m = OCI_NO_AUTO_COMMIT;
+            let queryMode = OCI_NO_AUTO_COMMIT;
         } else {
-            let m = OCI_COMMIT_ON_SUCCESS;
+            let queryMode = OCI_COMMIT_ON_SUCCESS;
         }
 
-        let r = (bool) oci_execute(s, m);
-        this->addQuery(sql, params, (double) microtime(true) - t);
+        let success = (bool) oci_execute(statement, queryMode);
 
-        if unlikely ! r {
-            let e = oci_error(this->oci);
-            if typeof e != "array" || ! fetch eMessage, e["message"] {
-                let eMessage = "Unknown Error";
+        let profiledQuery = (string) DbAbstract::profiledQuery(sql, params, startMt);
+        let this->queries[] = profiledQuery;
+
+        if unlikely ! success {
+            let err = oci_error(this->oci);
+            if typeof err != "array" || ! fetch errMessage, err["message"] {
+                let errMessage = "Unknown Error";
             }
-            throw new QueryException(eMessage . " [SQL] " . sql);
+            throw new QueryException(errMessage . " [SQL] " . profiledQuery);
         }
+
+        switch mode {
+            case DbAbstract::NONE:
+                return;
+
+            case DbAbstract::ALL:
+                let result = [];
+                let queryMode = OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_ASSOC;
+                loop {
+                    let resultRow = oci_fetch_array(statement, queryMode);
+                    if ! resultRow {
+                        break;
+                    }
+                    let result[] = array_change_key_case(resultRow);
+                }
+                return result;
+
+            case DbAbstract::ROW:
+                let resultRow = oci_fetch_array(statement, OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_ASSOC);
+                if resultRow {
+                    return array_change_key_case(resultRow);
+                }
+                return null;
+
+            case DbAbstract::CELL:
+                let resultRow = oci_fetch_array(statement, OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_NUM);
+                if resultRow && typeof resultRow == "array" && fetch resultCell, resultRow[0] {
+                    return resultCell;
+                }
+                return "";
+
+            case DbAbstract::COLUMNS:
+                let result = [];
+                let queryMode = OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_NUM;
+                loop {
+                    let resultRow = oci_fetch_array(statement, queryMode);
+                    if ! resultRow || typeof resultRow != "array" || ! fetch resultCell, resultRow[0] {
+                        break;
+                    }
+                    let result[] = resultCell;
+                }
+                return result;
+        }
+
+        throw new Exception("Invalid fetch mode: " . strval(mode));
     }
 
-    public function queryAll(string sql, array params = null) -> array
+    public function paginationSql(string query, long limit, long skip) -> string
     {
-        var m, d = [], r;
+        string s, t1, t2, r3;
 
-        this->query(sql, params);
+        let t1 = (string) this->nextFlag("t");
+        let s = (string) sprintf("SELECT %s.* FROM (%s) %s WHERE rownum <= %d", t1, query, t1, limit);
 
-        let m = OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_ASSOC;
-        loop {
-            let r = oci_fetch_array(this->lastStatement, m);
-            if ! r {
-                break;
-            }
-            let d[] = array_change_key_case(r);
+        if skip == 0 {
+            return s;
         }
 
-        return d;
+        let t2 = (string) this->nextFlag("t");
+        let r3 = (string) this->nextFlag("r");
+
+        return sprintf(
+            "SELECT * FROM (SELECT %s.*, rownum %s FROM (%s) %s WHERE rownum <= %d) %s WHERE %s > %d",
+            t1,
+            r3,
+            query,
+            t1,
+            limit,
+            t2,
+            r3,
+            skip
+        );
     }
 
-    public function queryRow(string sql, array params = null)
+    public function randomOrderSql() -> string
     {
-        var r;
-
-        this->query(sql, params);
-
-        let r = oci_fetch_array(this->lastStatement, OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_ASSOC);
-        if r {
-            return array_change_key_case(r);
-        }
-    }
-
-    public function queryCell(string sql, array params = null) -> string
-    {
-        var r, i;
-
-        this->query(sql, params);
-
-        let r = oci_fetch_array(this->lastStatement, OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_NUM);
-        if r && typeof r == "array" && fetch i, r[0] {
-            return i;
-        }
-
-        return "";
-    }
-
-    public function queryColumns(string sql, array params = null) -> array
-    {
-        var m, d = [], r, i;
-
-        this->query(sql, params);
-
-        let m = OCI_RETURN_NULLS + OCI_RETURN_LOBS + OCI_NUM;
-        loop {
-            let r = oci_fetch_array(this->lastStatement, m);
-            if ! r || typeof r != "array" || ! fetch i, r[0] {
-                break;
-            }
-            let d[] = i;
-        }
-
-        return d;
+        return "dbms_random.value()";
     }
 
     protected function tryToBegin() -> bool
@@ -141,38 +157,6 @@ class Oci8 extends DbAbstract
     protected function tryToRollback() -> bool
     {
         return oci_rollback(this->oci);
-    }
-
-    protected function paginateQuery(string query, long limit, long offset) -> string
-    {
-        string s, t1, t2, r3;
-
-        let t1 = (string) self::nextFlag("t");
-        let s = (string) sprintf("SELECT %s.* FROM (%s) %s WHERE rownum <= %d", t1, query, t1, limit);
-
-        if offset == 0 {
-            return s;
-        }
-
-        let t2 = (string) self::nextFlag("t");
-        let r3 = (string) self::nextFlag("r");
-
-        return sprintf(
-            "SELECT * FROM (SELECT %s.*, rownum %s FROM (%s) %s WHERE rownum <= %d) %s WHERE %s > %d",
-            t1,
-            r3,
-            query,
-            t1,
-            limit,
-            t2,
-            r3,
-            offset
-        );
-    }
-
-    protected function randomOrder() -> string
-    {
-        return "dbms_random.value()";
     }
 
 }

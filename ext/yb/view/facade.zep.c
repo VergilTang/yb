@@ -72,95 +72,96 @@ PHP_METHOD(Yb_View_Facade, __construct) {
 
 PHP_METHOD(Yb_View_Facade, content) {
 
-	zval *content_param = NULL, *contentType_param = NULL, *_0, *_1, *_2;
-	zval *content = NULL, *contentType = NULL;
+	zval *content = NULL, *contentType = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &content_param, &contentType_param);
+	zephir_fetch_params(1, 0, 2, &content, &contentType);
 
-	zephir_get_strval(content, content_param);
-	if (!contentType_param) {
-		ZEPHIR_INIT_VAR(contentType);
-		ZVAL_STRING(contentType, "", 1);
-	} else {
-		zephir_get_strval(contentType, contentType_param);
+	if (!content) {
+		content = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!contentType) {
+		contentType = ZEPHIR_GLOBAL(global_null);
 	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "content", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "content", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _1, content TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_2);
-	ZVAL_STRING(_2, "contentType", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _2, contentType TSRMLS_CC);
+	if (Z_TYPE_P(content) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "content", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, content TSRMLS_CC);
+	}
+	if (Z_TYPE_P(contentType) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "contentType", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, contentType TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
 
 PHP_METHOD(Yb_View_Facade, httpResponse) {
 
-	zval *httpResponseOutput = NULL;
-	zval *httpResponseCode_param = NULL, *httpResponseOutput_param = NULL, *_0, *_1, *_2, *_3;
-	long httpResponseCode;
+	zval *httpResponseCode = NULL, *httpResponseContent = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &httpResponseCode_param, &httpResponseOutput_param);
+	zephir_fetch_params(1, 0, 2, &httpResponseCode, &httpResponseContent);
 
-	httpResponseCode = zephir_get_intval(httpResponseCode_param);
-	if (!httpResponseOutput_param) {
-		ZEPHIR_INIT_VAR(httpResponseOutput);
-		ZVAL_STRING(httpResponseOutput, "", 1);
-	} else {
-		zephir_get_strval(httpResponseOutput, httpResponseOutput_param);
+	if (!httpResponseCode) {
+		httpResponseCode = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!httpResponseContent) {
+		httpResponseContent = ZEPHIR_GLOBAL(global_null);
 	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "httpResponse", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "httpResponseCode", 1);
-	ZEPHIR_INIT_VAR(_2);
-	ZVAL_LONG(_2, httpResponseCode);
-	zephir_update_property_array(this_ptr, SL("options"), _1, _2 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_3);
-	ZVAL_STRING(_3, "httpResponseOutput", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _3, httpResponseOutput TSRMLS_CC);
+	if (Z_TYPE_P(httpResponseCode) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "httpResponseCode", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, httpResponseCode TSRMLS_CC);
+	}
+	if (Z_TYPE_P(httpResponseContent) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "httpResponseContent", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, httpResponseContent TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
 
 PHP_METHOD(Yb_View_Facade, json) {
 
-	zend_bool jsonCors;
-	zval *jsonCallback_param = NULL, *jsonCors_param = NULL, *_0, *_1;
-	zval *jsonCallback = NULL;
+	zval *jsonCallback = NULL, *jsonCors = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 2, &jsonCallback_param, &jsonCors_param);
+	zephir_fetch_params(1, 0, 2, &jsonCallback, &jsonCors);
 
-	if (!jsonCallback_param) {
-		ZEPHIR_INIT_VAR(jsonCallback);
-		ZVAL_STRING(jsonCallback, "", 1);
-	} else {
-		zephir_get_strval(jsonCallback, jsonCallback_param);
+	if (!jsonCallback) {
+		jsonCallback = ZEPHIR_GLOBAL(global_null);
 	}
-	if (!jsonCors_param) {
-		jsonCors = 0;
-	} else {
-		jsonCors = zephir_get_boolval(jsonCors_param);
+	if (!jsonCors) {
+		jsonCors = ZEPHIR_GLOBAL(global_null);
 	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "json", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "jsonCallback", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _1, jsonCallback TSRMLS_CC);
+	if (Z_TYPE_P(jsonCallback) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "jsonCallback", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, jsonCallback TSRMLS_CC);
+	}
+	if (Z_TYPE_P(jsonCors) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "jsonCors", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, jsonCors TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -178,74 +179,88 @@ PHP_METHOD(Yb_View_Facade, nil) {
 
 PHP_METHOD(Yb_View_Facade, readFile) {
 
-	zval *readFile_param = NULL, *_0, *_1;
-	zval *readFile = NULL;
+	zval *readFile = NULL, *_0, *_1$$3;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &readFile_param);
+	zephir_fetch_params(1, 0, 1, &readFile);
 
-	zephir_get_strval(readFile, readFile_param);
+	if (!readFile) {
+		readFile = ZEPHIR_GLOBAL(global_null);
+	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "readFile", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "readFile", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _1, readFile TSRMLS_CC);
+	if (Z_TYPE_P(readFile) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "readFile", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, readFile TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
 
 PHP_METHOD(Yb_View_Facade, redirect) {
 
-	zend_bool redirectDataAsQueries;
-	zval *redirectUrl_param = NULL, *redirectDataAsQueries_param = NULL, *_0, *_1, *_2, *_3;
-	zval *redirectUrl = NULL;
+	zval *redirectUrl = NULL, *redirectDataAsQueries = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &redirectUrl_param, &redirectDataAsQueries_param);
+	zephir_fetch_params(1, 0, 2, &redirectUrl, &redirectDataAsQueries);
 
-	zephir_get_strval(redirectUrl, redirectUrl_param);
-	if (!redirectDataAsQueries_param) {
-		redirectDataAsQueries = 0;
-	} else {
-		redirectDataAsQueries = zephir_get_boolval(redirectDataAsQueries_param);
+	if (!redirectUrl) {
+		redirectUrl = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!redirectDataAsQueries) {
+		redirectDataAsQueries = ZEPHIR_GLOBAL(global_null);
 	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "redirect", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "redirectUrl", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _1, redirectUrl TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_2);
-	ZVAL_STRING(_2, "redirectDataAsQueries", 1);
-	ZEPHIR_INIT_VAR(_3);
-	ZVAL_BOOL(_3, redirectDataAsQueries);
-	zephir_update_property_array(this_ptr, SL("options"), _2, _3 TSRMLS_CC);
+	if (Z_TYPE_P(redirectUrl) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "redirectUrl", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, redirectUrl TSRMLS_CC);
+	}
+	if (Z_TYPE_P(redirectDataAsQueries) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "redirectDataAsQueries", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, redirectDataAsQueries TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
 
 PHP_METHOD(Yb_View_Facade, tpl) {
 
-	zval *tplId_param = NULL, *_0, *_1;
-	zval *tplId = NULL;
+	zval *tplId = NULL, *layoutId = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &tplId_param);
+	zephir_fetch_params(1, 0, 2, &tplId, &layoutId);
 
-	zephir_get_strval(tplId, tplId_param);
+	if (!tplId) {
+		tplId = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!layoutId) {
+		layoutId = ZEPHIR_GLOBAL(global_null);
+	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_STRING(_0, "tpl", 1);
 	zephir_update_property_this(this_ptr, SL("view"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "tplId", 1);
-	zephir_update_property_array(this_ptr, SL("options"), _1, tplId TSRMLS_CC);
+	if (Z_TYPE_P(tplId) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "tplId", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _1$$3, tplId TSRMLS_CC);
+	}
+	if (Z_TYPE_P(layoutId) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "layoutId", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, layoutId TSRMLS_CC);
+	}
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -301,10 +316,10 @@ PHP_METHOD(Yb_View_Facade, __invoke) {
 			object_init_ex(_4$$6, yb_factory_namespaced_ce);
 			ZEPHIR_INIT_NVAR(_5$$6);
 			ZVAL_STRING(_5$$6, "Yb\\View", ZEPHIR_TEMP_PARAM_COPY);
-			ZEPHIR_CALL_METHOD(NULL, _4$$6, "__construct", &_6, 112, _5$$6);
+			ZEPHIR_CALL_METHOD(NULL, _4$$6, "__construct", &_6, 114, _5$$6);
 			zephir_check_temp_parameter(_5$$6);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(&_7$$6, _4$$6, "__get", &_8, 113, view);
+			ZEPHIR_CALL_METHOD(&_7$$6, _4$$6, "__get", &_8, 115, view);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(view, _7$$6);
 			break;
@@ -313,10 +328,10 @@ PHP_METHOD(Yb_View_Facade, __invoke) {
 		object_init_ex(_9$$3, yb_factory_namespaced_ce);
 		ZEPHIR_INIT_NVAR(_10$$3);
 		ZVAL_STRING(_10$$3, "", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(NULL, _9$$3, "__construct", &_6, 112, _10$$3);
+		ZEPHIR_CALL_METHOD(NULL, _9$$3, "__construct", &_6, 114, _10$$3);
 		zephir_check_temp_parameter(_10$$3);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_11$$3, _9$$3, "__get", &_8, 113, view);
+		ZEPHIR_CALL_METHOD(&_11$$3, _9$$3, "__get", &_8, 115, view);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(view, _11$$3);
 		break;
@@ -326,7 +341,7 @@ PHP_METHOD(Yb_View_Facade, __invoke) {
 		_12 = !((zephir_instance_of_ev(view, yb_view_viewinterface_ce TSRMLS_CC)));
 	}
 	if (unlikely(_12)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_view_exception_ce, "Invalid view", "yb/view/facade.zep", 98);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_view_exception_ce, "Invalid view", "yb/view/facade.zep", 128);
 		return;
 	}
 	_13 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
@@ -350,7 +365,7 @@ PHP_METHOD(Yb_View_Facade, setOptions) {
 	zephir_get_arrval(options, options_param);
 
 
-	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/view/facade.zep", 111);
+	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/view/facade.zep", 141);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -452,7 +467,7 @@ PHP_METHOD(Yb_View_Facade, setData) {
 	zephir_get_arrval(data, data_param);
 
 
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 149);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 179);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)

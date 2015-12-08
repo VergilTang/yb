@@ -13,14 +13,15 @@ if test "$PHP_YB" = "yes"; then
 	yb/view/viewinterface.zep.c
 	yb/db/dbabstract.zep.c
 	yb/factory/factoryinterface.zep.c
+	yb/logger/loggerbackendinterface.zep.c
 	yb/upload/urigeneratorinterface.zep.c
 	yb/image/imageabstract.zep.c
+	yb/logger/loggerabstract.zep.c
 	yb/upload/storageabstract.zep.c
 	yb/db/exception.zep.c
 	yb/db/pdoabstract.zep.c
 	yb/image/imagebackendabstract.zep.c
 	yb/loader/loaderabstract.zep.c
-	yb/logger/loggerabstract.zep.c
 	yb/task/taskmanagerabstract.zep.c
 	yb/di.zep.c
 	yb/factory/classnameabstract.zep.c
@@ -46,9 +47,10 @@ if test "$PHP_YB" = "yes"; then
 	yb/loader/exception.zep.c
 	yb/loader/namepath.zep.c
 	yb/loader/namespacedirectory.zep.c
+	yb/logger/backends.zep.c
 	yb/logger/exception.zep.c
-	yb/logger/filelogger.zep.c
-	yb/logger/nulllogger.zep.c
+	yb/logger/file.zep.c
+	yb/logger/nil.zep.c
 	yb/std.zep.c
 	yb/task/exception.zep.c
 	yb/task/queueredis.zep.c

@@ -15,24 +15,40 @@ class Facade implements \ArrayAccess
         let this->view = view;
     }
 
-    public function content(string content, string contentType = "") -> void
+    public function content(var content = null, var contentType = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["content"] = content;
-        let this->options["contentType"] = contentType;
+
+        if content !== null {
+            let this->options["content"] = content;
+        }
+        if contentType !== null {
+            let this->options["contentType"] = contentType;
+        }
     }
 
-    public function httpResponse(long httpResponseCode, string httpResponseOutput = "") -> void
+    public function httpResponse(var httpResponseCode = null, var httpResponseContent = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["httpResponseCode"] = httpResponseCode;
-        let this->options["httpResponseOutput"] = httpResponseOutput;
+
+        if httpResponseCode !== null {
+            let this->options["httpResponseCode"] = httpResponseCode;
+        }
+        if httpResponseContent !== null {
+            let this->options["httpResponseContent"] = httpResponseContent;
+        }
     }
 
-    public function json(string jsonCallback = "", bool jsonCors = false) -> void
+    public function json(var jsonCallback = null, var jsonCors = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["jsonCallback"] = jsonCallback;
+
+        if jsonCallback !== null {
+            let this->options["jsonCallback"] = jsonCallback;
+        }
+        if jsonCors !== null {
+            let this->options["jsonCors"] = jsonCors;
+        }
     }
 
     public function nil() -> void
@@ -40,23 +56,37 @@ class Facade implements \ArrayAccess
         let this->view = __FUNCTION__;
     }
 
-    public function readFile(string readFile) -> void
+    public function readFile(var readFile = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["readFile"] = readFile;
+
+        if readFile !== null {
+            let this->options["readFile"] = readFile;
+        }
     }
 
-    public function redirect(string redirectUrl, bool redirectDataAsQueries = false) -> void
+    public function redirect(var redirectUrl = null, var redirectDataAsQueries = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["redirectUrl"] = redirectUrl;
-        let this->options["redirectDataAsQueries"] = redirectDataAsQueries;
+
+        if redirectUrl !== null {
+            let this->options["redirectUrl"] = redirectUrl;
+        }
+        if redirectDataAsQueries !== null {
+            let this->options["redirectDataAsQueries"] = redirectDataAsQueries;
+        }
     }
 
-    public function tpl(string tplId) -> void
+    public function tpl(var tplId = null, var layoutId = null) -> void
     {
         let this->view = __FUNCTION__;
-        let this->options["tplId"] = tplId;
+
+        if tplId !== null {
+            let this->options["tplId"] = tplId;
+        }
+        if layoutId !== null {
+            let this->options["layoutId"] = layoutId;
+        }
     }
 
     public function setView(var view) -> void

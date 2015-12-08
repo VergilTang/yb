@@ -2,16 +2,16 @@ namespace Yb\Db;
 
 class PdoPgsql extends PdoAbstract
 {
-    protected function paginateQuery(string query, long limit, long offset) -> string
+    public function paginationSql(string query, long limit, long skip) -> string
     {
-        if offset == 0 {
+        if skip == 0 {
             return sprintf("%s LIMIT %d", query, limit);
         }
 
-        return sprintf("%s LIMIT %d OFFSET %d", query, limit, offset);
+        return sprintf("%s LIMIT %d OFFSET %d", query, limit, skip);
     }
 
-    protected function randomOrder() -> string
+    public function randomOrderSql() -> string
     {
         return "RANDOM()";
     }

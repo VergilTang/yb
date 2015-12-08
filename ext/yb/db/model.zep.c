@@ -212,10 +212,10 @@ PHP_METHOD(Yb_Db_Model, newEntity) {
 	} else {
 		ZVAL_BOOL(_0, 0);
 	}
-	ZEPHIR_CALL_METHOD(NULL, entity, "__construct", NULL, 30, this_ptr, row, _0);
+	ZEPHIR_CALL_METHOD(NULL, entity, "__construct", NULL, 32, this_ptr, row, _0);
 	zephir_check_call_status();
 	if (zephir_is_true(collection)) {
-		ZEPHIR_CALL_METHOD(NULL, entity, "setcollection", NULL, 31, collection);
+		ZEPHIR_CALL_METHOD(NULL, entity, "setcollection", NULL, 33, collection);
 		zephir_check_call_status();
 	}
 	RETURN_CCTOR(entity);
@@ -247,7 +247,7 @@ PHP_METHOD(Yb_Db_Model, create) {
 PHP_METHOD(Yb_Db_Model, first) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *where_param = NULL, *orderBy = NULL, *row = NULL, *_0, *_1, *_3 = NULL, *_4;
+	zval *where_param = NULL, *orderBy = NULL, *row = NULL, *_0, *_1, *_3 = NULL, *_4 = NULL;
 	zval *where = NULL, *_2;
 
 	ZEPHIR_MM_GROW();
@@ -271,16 +271,18 @@ PHP_METHOD(Yb_Db_Model, first) {
 	zephir_array_update_string(&_2, SL("where"), &where, PH_COPY | PH_SEPARATE);
 	zephir_array_update_string(&_2, SL("orderBy"), &orderBy, PH_COPY | PH_SEPARATE);
 	add_assoc_long_ex(_2, SS("limit"), 1);
-	ZEPHIR_CALL_METHOD(&row, _0, "selectrow", NULL, 0, _1, _2);
+	ZEPHIR_INIT_VAR(_3);
+	ZVAL_LONG(_3, 2);
+	ZEPHIR_CALL_METHOD(&row, _0, "select", NULL, 0, _1, _2, _3);
 	zephir_check_call_status();
 	if (!(zephir_is_true(row))) {
 		RETURN_MM_NULL();
 	}
-	ZEPHIR_CALL_METHOD(&_3, this_ptr, "onfetch", NULL, 0, row);
+	ZEPHIR_CALL_METHOD(&_4, this_ptr, "onfetch", NULL, 0, row);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_4);
-	ZVAL_BOOL(_4, 0);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "newentity", NULL, 0, _3, _4);
+	ZEPHIR_INIT_NVAR(_3);
+	ZVAL_BOOL(_3, 0);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "newentity", NULL, 0, _4, _3);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -317,7 +319,7 @@ PHP_METHOD(Yb_Db_Model, newCollection) {
 
 
 	object_init_ex(return_value, yb_db_collection_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, this_ptr, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, this_ptr, data);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -372,7 +374,7 @@ PHP_METHOD(Yb_Db_Model, all) {
 	ZEPHIR_INIT_NVAR(_1);
 	ZVAL_LONG(_1, offset);
 	zephir_array_update_string(&_5, SL("offset"), &_1, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_METHOD(&_3, _2, "selectall", NULL, 0, _4, _5);
+	ZEPHIR_CALL_METHOD(&_3, _2, "select", NULL, 0, _4, _5);
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&_6, "array_map", NULL, 7, _0, _3);
 	zephir_check_call_status();
@@ -465,7 +467,7 @@ PHP_METHOD(Yb_Db_Model, chunkByDynamicWhere) {
 			break;
 		}
 		sum += c;
-		ZEPHIR_CALL_FUNCTION(&_4$$4, "call_user_func", &_5, 33, delegate, collection, w);
+		ZEPHIR_CALL_FUNCTION(&_4$$4, "call_user_func", &_5, 35, delegate, collection, w);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(w, _4$$4);
 		_6$$4 = Z_TYPE_P(w) != IS_ARRAY;
@@ -532,7 +534,7 @@ PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
 			break;
 		}
 		sum += c;
-		ZEPHIR_CALL_FUNCTION(&_5$$4, "call_user_func", &_6, 33, delegate, collection);
+		ZEPHIR_CALL_FUNCTION(&_5$$4, "call_user_func", &_6, 35, delegate, collection);
 		zephir_check_call_status();
 		_7$$4 = ZEPHIR_IS_FALSE_IDENTICAL(_5$$4);
 		if (!(_7$$4)) {
@@ -847,7 +849,7 @@ PHP_METHOD(Yb_Db_Model, packPrimaryKeyValue) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_db_exception_ce, "Invalid id to pack", "yb/db/model.zep", 273);
 			return;
 		}
-		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 34, pk, id);
+		ZEPHIR_RETURN_CALL_FUNCTION("array_combine", NULL, 36, pk, id);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

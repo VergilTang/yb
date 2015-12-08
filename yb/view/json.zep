@@ -8,17 +8,17 @@ class Json implements ViewInterface
     {
         var jsonFlag;
         string jsonCallback;
-        bool jsonCors, jsonTextPlain;
+        bool jsonCors, jsonHeaderPlain;
 
         let jsonFlag = Std::valueAt(options, "jsonFlag", 0);
         let jsonCallback = (string) Std::valueAt(options, "jsonCallback", "");
         let jsonCors = (bool) Std::valueAt(options, "jsonCors", false);
-        let jsonTextPlain = (bool) Std::valueAt(options, "jsonTextPlain", false);
+        let jsonHeaderPlain = (bool) Std::valueAt(options, "jsonHeaderPlain", false);
 
         if jsonCors {
             header("Access-Control-Allow-Origin: *");
         }
-        if jsonTextPlain {
+        if jsonHeaderPlain {
             header("Content-type: text/plain; charset=UTF-8");
         }
 

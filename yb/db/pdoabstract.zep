@@ -3,7 +3,6 @@ namespace Yb\Db;
 abstract class PdoAbstract extends DbAbstract
 {
     protected pdo;
-    protected lastStatement;
 
     public function __construct() -> void
     {
@@ -11,7 +10,7 @@ abstract class PdoAbstract extends DbAbstract
             throw new Exception("Missing extension: pdo");
         }
 
-        let this->pdo = (new \ReflectionClass("PDO"))->newInstanceArgs(func_get_args());
+        let this->pdo = (new \ReflectionClass("Pdo"))->newInstanceArgs(func_get_args());
     }
 
     public function getInternalHandler()
@@ -24,75 +23,67 @@ abstract class PdoAbstract extends DbAbstract
         return this->pdo->quote(value);
     }
 
-    public function query(string sql, array params = null) -> void
+    public function query(string sql, array params = [], long mode = DbAbstract::NONE)
     {
-        var s, k, v, e;
-        double t;
-        bool r;
+        var statement, k, v, err;
+        double startMt;
+        string profiledQuery;
+        bool success;
+        var resultItem, result;
 
-        let t = (double) microtime(true);
-
-        let s = this->pdo->prepare(sql);
-        let this->lastStatement = s;
+        let startMt = (double) microtime(true);
+        let statement = this->pdo->prepare(sql);
 
         if count(params) > 0 {
             for k, v in params {
                 if typeof v == "string" {
-                    s->bindParam(":" . k, "" . v, \Pdo::PARAM_STR, strlen(v));
+                    statement->bindParam(":" . k, "" . v, \Pdo::PARAM_STR, strlen(v));
                 } else {
-                    s->bindValue(":" . k, v);
+                    statement->bindValue(":" . k, v);
                 }
             }
         }
 
-        let r = (bool) s->execute();
-        this->addQuery(sql, params, (double) microtime(true) - t);
+        let success = (bool) statement->execute();
 
-        if unlikely ! r {
-            let e = s->errorInfo();
-            throw new QueryException(e[2] . " [SQL] " . sql);
-        }
-    }
+        let profiledQuery = (string) DbAbstract::profiledQuery(sql, params, startMt);
+        let this->queries[] = profiledQuery;
 
-    public function queryAll(string sql, array params = null) -> array
-    {
-        this->query(sql, params);
-        return this->lastStatement->fetchAll(\Pdo::FETCH_ASSOC);
-    }
-
-    public function queryRow(string sql, array params = null)
-    {
-        var r;
-
-        this->query(sql, params);
-
-        let r = this->lastStatement->$fetch(\Pdo::FETCH_ASSOC);
-        if r {
-            return r;
-        }
-    }
-
-    public function queryCell(string sql, array params = null) -> string
-    {
-        this->query(sql, params);
-        return this->lastStatement->fetchColumn();
-    }
-
-    public function queryColumns(string sql, array params = null) -> array
-    {
-        var d = [], i;
-
-        this->query(sql, params);
-
-        loop {
-            let i = this->lastStatement->fetchColumn();
-            if i === false || typeof i != "string" {
-                break;
-            }
-            let d[] = i;
+        if unlikely ! success {
+            let err = statement->errorInfo();
+            throw new QueryException(err[2] . " [SQL] " . profiledQuery);
         }
 
-        return d;
+        switch mode {
+            case DbAbstract::NONE:
+                return;
+
+            case DbAbstract::ALL:
+                return statement->fetchAll(\Pdo::FETCH_ASSOC);
+
+            case DbAbstract::ROW:
+                let resultItem = statement->$fetch(\Pdo::FETCH_ASSOC);
+                if resultItem {
+                    return resultItem;
+                }
+                return null;
+
+            case DbAbstract::CELL:
+                return (string) statement->fetchColumn();
+
+            case DbAbstract::COLUMNS:
+                let result = [];
+                loop {
+                    let resultItem = statement->fetchColumn();
+                    if resultItem === false || typeof resultItem != "string" {
+                        break;
+                    }
+                    let result[] = resultItem;
+                }
+                return result;
+        }
+
+        throw new Exception("Invalid fetch mode: " . strval(mode));
     }
 
     protected function tryToBegin() -> bool

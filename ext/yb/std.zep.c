@@ -45,9 +45,10 @@ ZEPHIR_INIT_CLASS(Yb_Std) {
 
 PHP_METHOD(Yb_Std, sizeToBytes) {
 
+	unsigned char _6$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *size_param = NULL, *match = NULL, *_0, *_1 = NULL, *_2, _3, *_4$$3, *_5$$4, *_6$$5, *_7$$6, *_8$$7;
-	zval *size = NULL;
+	zval *size_param = NULL, *match = NULL, *_0, *_1 = NULL, *_2, _3, *_4$$3, *_7$$4, *_8$$5, *_9$$6, *_10$$7;
+	zval *size = NULL, *unit = NULL, *_5$$3 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &size_param);
@@ -64,32 +65,36 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 	ZVAL_STRING(&_3, "/^([\\d\\.]+)([KMGT])B?$/", 0);
 	zephir_preg_match(_0, &_3, _2, match, 0, 0 , 0  TSRMLS_CC);
 	if (zephir_is_true(_0)) {
-		zephir_array_fetch_long(&_4$$3, match, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 16 TSRMLS_CC);
+		ZEPHIR_OBS_VAR(_4$$3);
+		zephir_array_fetch_long(&_4$$3, match, 2, PH_NOISY, "yb/std.zep", 17 TSRMLS_CC);
+		zephir_get_strval(_5$$3, _4$$3);
+		ZEPHIR_CPY_WRT(unit, _5$$3);
+		_6$$3 = ZEPHIR_STRING_OFFSET(unit, 0);
 		do {
-			if (ZEPHIR_IS_STRING(_4$$3, "T")) {
-				ZEPHIR_OBS_VAR(_5$$4);
-				zephir_array_fetch_long(&_5$$4, match, 1, PH_NOISY, "yb/std.zep", 18 TSRMLS_CC);
-				RETURN_MM_DOUBLE((1099511627776.0 * zephir_get_doubleval(_5$$4)));
+			if (_6$$3 == 'T') {
+				ZEPHIR_OBS_VAR(_7$$4);
+				zephir_array_fetch_long(&_7$$4, match, 1, PH_NOISY, "yb/std.zep", 20 TSRMLS_CC);
+				RETURN_MM_DOUBLE((1099511627776.0 * zephir_get_doubleval(_7$$4)));
 			}
-			if (ZEPHIR_IS_STRING(_4$$3, "G")) {
-				ZEPHIR_OBS_VAR(_6$$5);
-				zephir_array_fetch_long(&_6$$5, match, 1, PH_NOISY, "yb/std.zep", 20 TSRMLS_CC);
-				RETURN_MM_DOUBLE((1073741824.0 * zephir_get_doubleval(_6$$5)));
+			if (_6$$3 == 'G') {
+				ZEPHIR_OBS_VAR(_8$$5);
+				zephir_array_fetch_long(&_8$$5, match, 1, PH_NOISY, "yb/std.zep", 22 TSRMLS_CC);
+				RETURN_MM_DOUBLE((1073741824.0 * zephir_get_doubleval(_8$$5)));
 			}
-			if (ZEPHIR_IS_STRING(_4$$3, "M")) {
-				ZEPHIR_OBS_VAR(_7$$6);
-				zephir_array_fetch_long(&_7$$6, match, 1, PH_NOISY, "yb/std.zep", 22 TSRMLS_CC);
-				RETURN_MM_DOUBLE((1048576.0 * zephir_get_doubleval(_7$$6)));
+			if (_6$$3 == 'M') {
+				ZEPHIR_OBS_VAR(_9$$6);
+				zephir_array_fetch_long(&_9$$6, match, 1, PH_NOISY, "yb/std.zep", 24 TSRMLS_CC);
+				RETURN_MM_DOUBLE((1048576.0 * zephir_get_doubleval(_9$$6)));
 			}
-			if (ZEPHIR_IS_STRING(_4$$3, "K")) {
-				ZEPHIR_OBS_VAR(_8$$7);
-				zephir_array_fetch_long(&_8$$7, match, 1, PH_NOISY, "yb/std.zep", 24 TSRMLS_CC);
-				RETURN_MM_DOUBLE((1024.0 * zephir_get_doubleval(_8$$7)));
+			if (_6$$3 == 'K') {
+				ZEPHIR_OBS_VAR(_10$$7);
+				zephir_array_fetch_long(&_10$$7, match, 1, PH_NOISY, "yb/std.zep", 26 TSRMLS_CC);
+				RETURN_MM_DOUBLE((1024.0 * zephir_get_doubleval(_10$$7)));
 			}
 		} while(0);
 
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 80, size);
+	ZEPHIR_RETURN_CALL_FUNCTION("floatval", NULL, 84, size);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -98,10 +103,11 @@ PHP_METHOD(Yb_Std, sizeToBytes) {
 PHP_METHOD(Yb_Std, bytesToSize) {
 
 	zend_bool _0;
+	zval *size;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_4 = NULL;
 	long decimal;
-	zval *bytes_param = NULL, *decimal_param = NULL, _17, _1$$4 = zval_used_for_init, _2$$4, *_3$$4 = NULL, _5$$5 = zval_used_for_init, _6$$5, *_7$$5 = NULL, _8$$6 = zval_used_for_init, _9$$6, *_10$$6 = NULL, _11$$7 = zval_used_for_init, _12$$7, *_13$$7 = NULL, _14$$8 = zval_used_for_init, _15$$8, *_16$$8 = NULL;
+	zval *bytes_param = NULL, *decimal_param = NULL, _1$$4 = zval_used_for_init, _2$$4, *_3$$4 = NULL, _5$$5 = zval_used_for_init, _6$$5, *_7$$5 = NULL, _8$$6 = zval_used_for_init, _9$$6, *_10$$6 = NULL, _11$$7 = zval_used_for_init, _12$$7, *_13$$7 = NULL, _14$$8 = zval_used_for_init, _15$$8, *_16$$8 = NULL;
 	double bytes;
 
 	ZEPHIR_MM_GROW();
@@ -115,6 +121,8 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 	}
 
 
+	ZEPHIR_INIT_VAR(size);
+	ZVAL_STRING(size, "0", 1);
 	_0 = decimal < 0;
 	if (!(_0)) {
 		_0 = decimal > 6;
@@ -187,11 +195,7 @@ PHP_METHOD(Yb_Std, bytesToSize) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_SINIT_VAR(_17);
-	ZVAL_LONG(&_17, 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("strval", NULL, 81, &_17);
-	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_CTOR(size);
 
 }
 
@@ -402,13 +406,13 @@ PHP_METHOD(Yb_Std, uuid) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 82);
+	ZEPHIR_CALL_FUNCTION(&_0, "mt_rand", NULL, 85);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 83, _0, ZEPHIR_GLOBAL(global_true));
+	ZEPHIR_CALL_FUNCTION(&_1, "uniqid", NULL, 86, _0, ZEPHIR_GLOBAL(global_true));
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VV(_2, _1, salt);
-	ZEPHIR_CALL_FUNCTION(&_3, "sha1", NULL, 84, _2);
+	ZEPHIR_CALL_FUNCTION(&_3, "sha1", NULL, 87, _2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_4);
 	zephir_time(_4);
@@ -454,7 +458,7 @@ PHP_METHOD(Yb_Std, randString) {
 	}
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_STRING(&_1, "UTF-8", 0);
-	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 57, charList, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "mb_strlen", NULL, 59, charList, &_1);
 	zephir_check_call_status();
 	maxIndex = (zephir_get_intval(_2) - 1);
 	while (1) {
@@ -472,7 +476,7 @@ PHP_METHOD(Yb_Std, randString) {
 		ZVAL_LONG(&_6$$5, 1);
 		ZEPHIR_SINIT_NVAR(_7$$5);
 		ZVAL_STRING(&_7$$5, "UTF-8", 0);
-		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 60, charList, &_5$$5, &_6$$5, &_7$$5);
+		ZEPHIR_CALL_FUNCTION(&_8$$5, "mb_substr", &_9, 62, charList, &_5$$5, &_6$$5, &_7$$5);
 		zephir_check_call_status();
 		zephir_concat_self(&result, _8$$5 TSRMLS_CC);
 	}
@@ -503,7 +507,7 @@ PHP_METHOD(Yb_Std, tr) {
 
 	ZEPHIR_INIT_VAR(r);
 	array_init(r);
-	zephir_is_iterable(context, &_1, &_0, 0, 0, "yb/std.zep", 200);
+	zephir_is_iterable(context, &_1, &_0, 0, 0, "yb/std.zep", 204);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -515,7 +519,7 @@ PHP_METHOD(Yb_Std, tr) {
 		ZEPHIR_CONCAT_SVS(_4$$3, "{", k, "}");
 		zephir_array_update_zval(&r, _4$$3, &_3$$3, PH_COPY | PH_SEPARATE);
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 85, message, r);
+	ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 88, message, r);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -559,7 +563,7 @@ PHP_METHOD(Yb_Std, valueAt) {
 		ZEPHIR_CONCAT_SV(_2$$4, "Missing value at: ", key);
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 2, _2$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "yb/std.zep", 212 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "yb/std.zep", 216 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -590,7 +594,7 @@ PHP_METHOD(Yb_Std, valueOf) {
 	ZEPHIR_INIT_VAR(parts);
 	zephir_fast_explode_str(parts, SL("."), key, LONG_MAX TSRMLS_CC);
 	ZEPHIR_CPY_WRT(returnValue, arr);
-	zephir_is_iterable(parts, &_1, &_0, 0, 0, "yb/std.zep", 232);
+	zephir_is_iterable(parts, &_1, &_0, 0, 0, "yb/std.zep", 236);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -629,7 +633,7 @@ PHP_METHOD(Yb_Std, indexedData) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 250);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 254);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -643,7 +647,7 @@ PHP_METHOD(Yb_Std, indexedData) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 241 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 245 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -655,7 +659,7 @@ PHP_METHOD(Yb_Std, indexedData) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of index at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 244 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 248 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -685,7 +689,7 @@ PHP_METHOD(Yb_Std, indexedValues) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 271);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 275);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -699,7 +703,7 @@ PHP_METHOD(Yb_Std, indexedValues) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 259 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 263 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -711,7 +715,7 @@ PHP_METHOD(Yb_Std, indexedValues) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of index at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 262 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 266 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -723,7 +727,7 @@ PHP_METHOD(Yb_Std, indexedValues) {
 			ZEPHIR_CONCAT_SV(_9$$6, "Cannot find value of value at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _8$$6, "__construct", &_5, 2, _9$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 265 TSRMLS_CC);
+			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 269 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -752,7 +756,7 @@ PHP_METHOD(Yb_Std, groupedData) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 289);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 293);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -766,7 +770,7 @@ PHP_METHOD(Yb_Std, groupedData) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 280 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 284 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -778,7 +782,7 @@ PHP_METHOD(Yb_Std, groupedData) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of group at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 283 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 287 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -808,7 +812,7 @@ PHP_METHOD(Yb_Std, groupedValues) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 310);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 314);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -822,7 +826,7 @@ PHP_METHOD(Yb_Std, groupedValues) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 298 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 302 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -834,7 +838,7 @@ PHP_METHOD(Yb_Std, groupedValues) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of group at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 301 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 305 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -846,7 +850,7 @@ PHP_METHOD(Yb_Std, groupedValues) {
 			ZEPHIR_CONCAT_SV(_9$$6, "Cannot find value of value at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _8$$6, "__construct", &_5, 2, _9$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 304 TSRMLS_CC);
+			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 308 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -876,7 +880,7 @@ PHP_METHOD(Yb_Std, groupIndexedData) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 331);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 335);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -890,7 +894,7 @@ PHP_METHOD(Yb_Std, groupIndexedData) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 319 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 323 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -902,7 +906,7 @@ PHP_METHOD(Yb_Std, groupIndexedData) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of group at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 322 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 326 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -914,7 +918,7 @@ PHP_METHOD(Yb_Std, groupIndexedData) {
 			ZEPHIR_CONCAT_SV(_9$$6, "Cannot find value of index at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _8$$6, "__construct", &_5, 2, _9$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 325 TSRMLS_CC);
+			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 329 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -945,7 +949,7 @@ PHP_METHOD(Yb_Std, groupIndexedValues) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 355);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 359);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -959,7 +963,7 @@ PHP_METHOD(Yb_Std, groupIndexedValues) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 340 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 344 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -971,7 +975,7 @@ PHP_METHOD(Yb_Std, groupIndexedValues) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of group at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 343 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 347 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -983,7 +987,7 @@ PHP_METHOD(Yb_Std, groupIndexedValues) {
 			ZEPHIR_CONCAT_SV(_9$$6, "Cannot find value of index at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _8$$6, "__construct", &_5, 2, _9$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 346 TSRMLS_CC);
+			zephir_throw_exception_debug(_8$$6, "yb/std.zep", 350 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -995,7 +999,7 @@ PHP_METHOD(Yb_Std, groupIndexedValues) {
 			ZEPHIR_CONCAT_SV(_11$$7, "Cannot find value of value at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _10$$7, "__construct", &_5, 2, _11$$7);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_10$$7, "yb/std.zep", 349 TSRMLS_CC);
+			zephir_throw_exception_debug(_10$$7, "yb/std.zep", 353 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -1024,7 +1028,7 @@ PHP_METHOD(Yb_Std, uniqueValues) {
 
 	ZEPHIR_INIT_VAR(arr);
 	array_init(arr);
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 373);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/std.zep", 377);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -1038,7 +1042,7 @@ PHP_METHOD(Yb_Std, uniqueValues) {
 			ZEPHIR_CONCAT_SV(_4$$4, "Invalid item type, array required at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 2, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 364 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "yb/std.zep", 368 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -1050,7 +1054,7 @@ PHP_METHOD(Yb_Std, uniqueValues) {
 			ZEPHIR_CONCAT_SV(_7$$5, "Cannot find value of unique at: ", k);
 			ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", &_5, 2, _7$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 367 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$5, "yb/std.zep", 371 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -1102,7 +1106,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 22, args);
+	ZEPHIR_CALL_FUNCTION(&a, "array_values", NULL, 24, args);
 	zephir_check_call_status();
 	do {
 		if (c == 1) {
@@ -1110,7 +1114,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_4$$5 = zend_fetch_class(Z_STRVAL_P(_3$$5), Z_STRLEN_P(_3$$5), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _4$$5);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_5$$5, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 392 TSRMLS_CC);
+				zephir_array_fetch_long(&_5$$5, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 396 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _5$$5);
 				zephir_check_call_status();
 			}
@@ -1121,8 +1125,8 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_7$$6 = zend_fetch_class(Z_STRVAL_P(_6$$6), Z_STRLEN_P(_6$$6), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _7$$6);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_8$$6, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 394 TSRMLS_CC);
-				zephir_array_fetch_long(&_9$$6, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 394 TSRMLS_CC);
+				zephir_array_fetch_long(&_8$$6, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
+				zephir_array_fetch_long(&_9$$6, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _8$$6, _9$$6);
 				zephir_check_call_status();
 			}
@@ -1133,9 +1137,9 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_11$$7 = zend_fetch_class(Z_STRVAL_P(_10$$7), Z_STRLEN_P(_10$$7), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _11$$7);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_12$$7, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 396 TSRMLS_CC);
-				zephir_array_fetch_long(&_13$$7, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 396 TSRMLS_CC);
-				zephir_array_fetch_long(&_14$$7, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 396 TSRMLS_CC);
+				zephir_array_fetch_long(&_12$$7, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
+				zephir_array_fetch_long(&_13$$7, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
+				zephir_array_fetch_long(&_14$$7, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _12$$7, _13$$7, _14$$7);
 				zephir_check_call_status();
 			}
@@ -1146,10 +1150,10 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_16$$8 = zend_fetch_class(Z_STRVAL_P(_15$$8), Z_STRLEN_P(_15$$8), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _16$$8);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_17$$8, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
-				zephir_array_fetch_long(&_18$$8, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
-				zephir_array_fetch_long(&_19$$8, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
-				zephir_array_fetch_long(&_20$$8, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 398 TSRMLS_CC);
+				zephir_array_fetch_long(&_17$$8, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 402 TSRMLS_CC);
+				zephir_array_fetch_long(&_18$$8, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 402 TSRMLS_CC);
+				zephir_array_fetch_long(&_19$$8, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 402 TSRMLS_CC);
+				zephir_array_fetch_long(&_20$$8, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 402 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _17$$8, _18$$8, _19$$8, _20$$8);
 				zephir_check_call_status();
 			}
@@ -1160,11 +1164,11 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 				_22$$9 = zend_fetch_class(Z_STRVAL_P(_21$$9), Z_STRLEN_P(_21$$9), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 			object_init_ex(return_value, _22$$9);
 			if (zephir_has_constructor(return_value TSRMLS_CC)) {
-				zephir_array_fetch_long(&_23$$9, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
-				zephir_array_fetch_long(&_24$$9, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
-				zephir_array_fetch_long(&_25$$9, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
-				zephir_array_fetch_long(&_26$$9, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
-				zephir_array_fetch_long(&_27$$9, a, 4, PH_NOISY | PH_READONLY, "yb/std.zep", 400 TSRMLS_CC);
+				zephir_array_fetch_long(&_23$$9, a, 0, PH_NOISY | PH_READONLY, "yb/std.zep", 404 TSRMLS_CC);
+				zephir_array_fetch_long(&_24$$9, a, 1, PH_NOISY | PH_READONLY, "yb/std.zep", 404 TSRMLS_CC);
+				zephir_array_fetch_long(&_25$$9, a, 2, PH_NOISY | PH_READONLY, "yb/std.zep", 404 TSRMLS_CC);
+				zephir_array_fetch_long(&_26$$9, a, 3, PH_NOISY | PH_READONLY, "yb/std.zep", 404 TSRMLS_CC);
+				zephir_array_fetch_long(&_27$$9, a, 4, PH_NOISY | PH_READONLY, "yb/std.zep", 404 TSRMLS_CC);
 				ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0, _23$$9, _24$$9, _25$$9, _26$$9, _27$$9);
 				zephir_check_call_status();
 			}
@@ -1178,7 +1182,7 @@ PHP_METHOD(Yb_Std, newInstanceOf) {
 	ZEPHIR_CONCAT_SV(_29, "Fail to fetch a new instance of class: ", className);
 	ZEPHIR_CALL_METHOD(NULL, _28, "__construct", NULL, 2, _29);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_28, "yb/std.zep", 403 TSRMLS_CC);
+	zephir_throw_exception_debug(_28, "yb/std.zep", 407 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -1241,9 +1245,9 @@ PHP_METHOD(Yb_Std, throwError) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, n);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 86, _2, _3);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 89, _2, _3);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "yb/std.zep", 413 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "yb/std.zep", 417 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -1270,7 +1274,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 		ZEPHIR_CONCAT_SV(_1$$3, "Cannot find script path: ", path);
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 2, _1$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "yb/std.zep", 419 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "yb/std.zep", 423 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -1279,7 +1283,7 @@ PHP_METHOD(Yb_Std, outputScript) {
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_MAKE_REF(data);
-	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 87, data, _2, _3);
+	ZEPHIR_CALL_FUNCTION(NULL, "extract", NULL, 90, data, _2, _3);
 	zephir_check_temp_parameter(_3);
 	ZEPHIR_UNREF(data);
 	zephir_check_call_status();
@@ -1304,16 +1308,16 @@ PHP_METHOD(Yb_Std, renderScript) {
 	zephir_get_arrval(data, data_param);
 
 
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 23);
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 25);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 24, ZEPHIR_GLOBAL(global_false));
+	ZEPHIR_CALL_FUNCTION(NULL, "ob_implicit_flush", NULL, 26, ZEPHIR_GLOBAL(global_false));
 	zephir_check_call_status();
 
 	/* try_start_1: */
 
 		ZEPHIR_CALL_SELF(NULL, "outputscript", NULL, 0, path, data);
 		zephir_check_call_status_or_jump(try_end_1);
-		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 25);
+		ZEPHIR_RETURN_CALL_FUNCTION("ob_get_clean", NULL, 27);
 		zephir_check_call_status_or_jump(try_end_1);
 		RETURN_MM();
 
@@ -1323,9 +1327,9 @@ PHP_METHOD(Yb_Std, renderScript) {
 		ZEPHIR_CPY_WRT(ex, EG(exception));
 		if (zephir_instance_of_ev(ex, zend_exception_get_default(TSRMLS_C) TSRMLS_CC)) {
 			zend_clear_exception(TSRMLS_C);
-			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 26);
+			ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 28);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(ex, "yb/std.zep", 438 TSRMLS_CC);
+			zephir_throw_exception_debug(ex, "yb/std.zep", 442 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
