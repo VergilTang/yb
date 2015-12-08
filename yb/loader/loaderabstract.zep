@@ -14,7 +14,7 @@ abstract class LoaderAbstract
             return true;
         }
 
-        if function_exists("trait_exists") && trait_exists(name, x) {
+        if trait_exists(name, x) {
             return true;
         }
 

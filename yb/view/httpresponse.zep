@@ -9,10 +9,6 @@ class HttpResponse implements ViewInterface
         long httpResponseCode;
         string httpResponseContent;
 
-        if unlikely ! function_exists("http_response_code") {
-            throw new Exception("Not supported: http_response_code");
-        }
-
         let httpResponseCode = (long) Std::valueAt(options, "httpResponseCode", 200);
         http_response_code(httpResponseCode);
 

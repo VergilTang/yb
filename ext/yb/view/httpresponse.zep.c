@@ -12,8 +12,6 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
-#include "kernel/exception.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
@@ -44,10 +42,6 @@ PHP_METHOD(Yb_View_HttpResponse, run) {
 	zephir_get_arrval(options, options_param);
 
 
-	if (unlikely(!((zephir_function_exists_ex(SS("http_response_code") TSRMLS_CC) == SUCCESS)))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_view_exception_ce, "Not supported: http_response_code", "yb/view/httpresponse.zep", 13);
-		return;
-	}
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "httpResponseCode", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_3);

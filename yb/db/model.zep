@@ -190,9 +190,9 @@ class Model
         return sum;
     }
 
-    public function aggregation(array aggregations, array where = []) -> array
+    public function aggregations(array aggregations, array where = []) -> array
     {
-        return this->db->queryAggregation(this->table, aggregations, where);
+        return this->db->aggregations(this->table, aggregations, where);
     }
 
     public function countAll(array where = []) -> long

@@ -18,7 +18,7 @@ PHP_METHOD(Yb_Db_Model, all);
 PHP_METHOD(Yb_Db_Model, ids);
 PHP_METHOD(Yb_Db_Model, chunkByDynamicWhere);
 PHP_METHOD(Yb_Db_Model, chunkByFixedWhere);
-PHP_METHOD(Yb_Db_Model, aggregation);
+PHP_METHOD(Yb_Db_Model, aggregations);
 PHP_METHOD(Yb_Db_Model, countAll);
 PHP_METHOD(Yb_Db_Model, count);
 PHP_METHOD(Yb_Db_Model, max);
@@ -101,7 +101,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_model_chunkbyfixedwhere, 0, 0, 1)
 	ZEND_ARG_INFO(0, limit)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_model_aggregation, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_yb_db_model_aggregations, 0, 0, 1)
 	ZEND_ARG_ARRAY_INFO(0, aggregations, 0)
 	ZEND_ARG_ARRAY_INFO(0, where, 1)
 ZEND_END_ARG_INFO()
@@ -164,7 +164,7 @@ ZEPHIR_INIT_FUNCS(yb_db_model_method_entry) {
 	PHP_ME(Yb_Db_Model, ids, arginfo_yb_db_model_ids, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_Model, chunkByDynamicWhere, arginfo_yb_db_model_chunkbydynamicwhere, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_Model, chunkByFixedWhere, arginfo_yb_db_model_chunkbyfixedwhere, ZEND_ACC_PUBLIC)
-	PHP_ME(Yb_Db_Model, aggregation, arginfo_yb_db_model_aggregation, ZEND_ACC_PUBLIC)
+	PHP_ME(Yb_Db_Model, aggregations, arginfo_yb_db_model_aggregations, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_Model, countAll, arginfo_yb_db_model_countall, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_Model, count, arginfo_yb_db_model_count, ZEND_ACC_PUBLIC)
 	PHP_ME(Yb_Db_Model, max, arginfo_yb_db_model_max, ZEND_ACC_PUBLIC)

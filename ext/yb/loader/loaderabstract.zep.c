@@ -29,9 +29,9 @@ ZEPHIR_INIT_CLASS(Yb_Loader_LoaderAbstract) {
 
 PHP_METHOD(Yb_Loader_LoaderAbstract, isLoaded) {
 
-	zend_bool x, _2;
+	zend_bool x;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, _0, _1, _3, *_4 = NULL;
+	zval *name_param = NULL, _0, _1, _2, *_3 = NULL;
 	zval *name = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -51,15 +51,11 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, isLoaded) {
 	if (zephir_interface_exists(name, zephir_is_true(&_1)  TSRMLS_CC)) {
 		RETURN_MM_BOOL(1);
 	}
-	_2 = (zephir_function_exists_ex(SS("trait_exists") TSRMLS_CC) == SUCCESS);
-	if (_2) {
-		ZEPHIR_SINIT_VAR(_3);
-		ZVAL_BOOL(&_3, (x ? 1 : 0));
-		ZEPHIR_CALL_FUNCTION(&_4, "trait_exists", NULL, 19, name, &_3);
-		zephir_check_call_status();
-		_2 = zephir_is_true(_4);
-	}
-	if (_2) {
+	ZEPHIR_SINIT_VAR(_2);
+	ZVAL_BOOL(&_2, (x ? 1 : 0));
+	ZEPHIR_CALL_FUNCTION(&_3, "trait_exists", NULL, 19, name, &_2);
+	zephir_check_call_status();
+	if (zephir_is_true(_3)) {
 		RETURN_MM_BOOL(1);
 	}
 	RETURN_MM_BOOL(x);

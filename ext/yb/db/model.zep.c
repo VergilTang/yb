@@ -549,7 +549,7 @@ PHP_METHOD(Yb_Db_Model, chunkByFixedWhere) {
 
 }
 
-PHP_METHOD(Yb_Db_Model, aggregation) {
+PHP_METHOD(Yb_Db_Model, aggregations) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *aggregations_param = NULL, *where_param = NULL, *_0, *_1;
@@ -569,7 +569,7 @@ PHP_METHOD(Yb_Db_Model, aggregation) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("db"), PH_NOISY_CC);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("table"), PH_NOISY_CC);
-	ZEPHIR_RETURN_CALL_METHOD(_0, "queryaggregation", NULL, 0, _1, aggregations, where);
+	ZEPHIR_RETURN_CALL_METHOD(_0, "aggregations", NULL, 0, _1, aggregations, where);
 	zephir_check_call_status();
 	RETURN_MM();
 
