@@ -65,7 +65,7 @@ PHP_METHOD(Yb_View_Content, run) {
 	ZEPHIR_CPY_WRT(contentType, _6);
 	if (zephir_fast_strlen_ev(contentType) > 0) {
 		ZEPHIR_INIT_VAR(_8$$3);
-		ZEPHIR_CONCAT_SV(_8$$3, "Content-type: ", contentType);
+		ZEPHIR_CONCAT_SV(_8$$3, "Content-Type: ", contentType);
 		ZEPHIR_CALL_FUNCTION(NULL, "header", NULL, 113, _8$$3);
 		zephir_check_call_status();
 	}

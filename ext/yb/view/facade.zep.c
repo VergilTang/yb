@@ -179,13 +179,16 @@ PHP_METHOD(Yb_View_Facade, nil) {
 
 PHP_METHOD(Yb_View_Facade, readFile) {
 
-	zval *readFile = NULL, *_0, *_1$$3;
+	zval *readFile = NULL, *readFileContentType = NULL, *_0, *_1$$3, *_2$$4;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &readFile);
+	zephir_fetch_params(1, 0, 2, &readFile, &readFileContentType);
 
 	if (!readFile) {
 		readFile = ZEPHIR_GLOBAL(global_null);
+	}
+	if (!readFileContentType) {
+		readFileContentType = ZEPHIR_GLOBAL(global_null);
 	}
 
 
@@ -196,6 +199,11 @@ PHP_METHOD(Yb_View_Facade, readFile) {
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZVAL_STRING(_1$$3, "readFile", 1);
 		zephir_update_property_array(this_ptr, SL("options"), _1$$3, readFile TSRMLS_CC);
+	}
+	if (Z_TYPE_P(readFileContentType) != IS_NULL) {
+		ZEPHIR_INIT_VAR(_2$$4);
+		ZVAL_STRING(_2$$4, "readFileContentType", 1);
+		zephir_update_property_array(this_ptr, SL("options"), _2$$4, readFileContentType TSRMLS_CC);
 	}
 	ZEPHIR_MM_RESTORE();
 
@@ -341,7 +349,7 @@ PHP_METHOD(Yb_View_Facade, __invoke) {
 		_12 = !((zephir_instance_of_ev(view, yb_view_viewinterface_ce TSRMLS_CC)));
 	}
 	if (unlikely(_12)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_view_exception_ce, "Invalid view", "yb/view/facade.zep", 128);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_view_exception_ce, "Invalid view", "yb/view/facade.zep", 131);
 		return;
 	}
 	_13 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
@@ -365,7 +373,7 @@ PHP_METHOD(Yb_View_Facade, setOptions) {
 	zephir_get_arrval(options, options_param);
 
 
-	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/view/facade.zep", 141);
+	zephir_is_iterable(options, &_1, &_0, 0, 0, "yb/view/facade.zep", 144);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -467,7 +475,7 @@ PHP_METHOD(Yb_View_Facade, setData) {
 	zephir_get_arrval(data, data_param);
 
 
-	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 179);
+	zephir_is_iterable(data, &_1, &_0, 0, 0, "yb/view/facade.zep", 182);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
