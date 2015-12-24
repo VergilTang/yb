@@ -161,7 +161,7 @@ PHP_METHOD(Yb_View_Tpl, run) {
 			return;
 		}
 	}
-	ZEPHIR_CALL_CE_STATIC(&_34, yb_std_ce, "renderscript", &_35, 119, path, data);
+	ZEPHIR_CALL_CE_STATIC(&_34, yb_std_ce, "renderscript", &_35, 120, path, data);
 	zephir_check_call_status();
 	zend_print_zval(_34, 0);
 	ZEPHIR_MM_RESTORE();

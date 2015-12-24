@@ -7,6 +7,7 @@ class ReadFile implements ViewInterface
     public function run(array data, array options) -> void
     {
         string readFile, readFileContentType;
+        var size;
 
         let readFile = (string) Std::valueAt(options, "readFile", "");
         if unlikely readFile->length() < 1 {
@@ -16,6 +17,12 @@ class ReadFile implements ViewInterface
         if unlikely ! file_exists(readFile) {
             throw new Exception("Cannot find file in path: " . readFile);
         }
+
+        let size = filesize(readFile);
+        if unlikely size === false {
+            throw new Exception("Cannot get file size: " . readFile);
+        }
+        header("Content-Length: " . size);
 
         let readFileContentType = (string) Std::valueAt(options, "readFileContentType", "");
         if readFileContentType->length() > 0 {

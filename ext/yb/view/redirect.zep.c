@@ -81,7 +81,7 @@ PHP_METHOD(Yb_View_Redirect, run) {
 		} else {
 			zephir_concat_self_str(&redirectUrl, "&", sizeof("&")-1 TSRMLS_CC);
 		}
-		ZEPHIR_CALL_FUNCTION(&_10$$4, "http_build_query", NULL, 118, data);
+		ZEPHIR_CALL_FUNCTION(&_10$$4, "http_build_query", NULL, 119, data);
 		zephir_check_call_status();
 		zephir_concat_self(&redirectUrl, _10$$4 TSRMLS_CC);
 	}
