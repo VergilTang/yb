@@ -70,7 +70,7 @@ PHP_METHOD(Yb_View_ReadFile, run) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&size, "filesize", NULL, 117, readFile);
+	ZEPHIR_CALL_FUNCTION(&size, "filesize", NULL, 119, readFile);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(size))) {
 		ZEPHIR_INIT_VAR(_8$$5);
@@ -85,7 +85,7 @@ PHP_METHOD(Yb_View_ReadFile, run) {
 	}
 	ZEPHIR_INIT_VAR(_10);
 	ZEPHIR_CONCAT_SV(_10, "Content-Length: ", size);
-	ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 113, _10);
+	ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 115, _10);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_2);
 	ZVAL_STRING(_2, "readFileContentType", ZEPHIR_TEMP_PARAM_COPY);
@@ -100,23 +100,23 @@ PHP_METHOD(Yb_View_ReadFile, run) {
 	if (zephir_fast_strlen_ev(readFileContentType) > 0) {
 		ZEPHIR_INIT_VAR(_15$$6);
 		ZEPHIR_CONCAT_SV(_15$$6, "Content-Type: ", readFileContentType);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 113, _15$$6);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 115, _15$$6);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_SINIT_VAR(_16$$7);
 		ZVAL_STRING(&_16$$7, "Content-Description: File Transfer", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 113, &_16$$7);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 115, &_16$$7);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_16$$7);
 		ZVAL_STRING(&_16$$7, "Content-Type: application/octet-stream", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 113, &_16$$7);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 115, &_16$$7);
 		zephir_check_call_status();
 		ZEPHIR_SINIT_NVAR(_16$$7);
 		ZVAL_STRING(&_16$$7, "Content-Transfer-Encoding: binary", 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 113, &_16$$7);
+		ZEPHIR_CALL_FUNCTION(NULL, "header", &_11, 115, &_16$$7);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_FUNCTION(&_17, "readfile", NULL, 118, readFile);
+	ZEPHIR_CALL_FUNCTION(&_17, "readfile", NULL, 120, readFile);
 	zephir_check_call_status();
 	if (unlikely(ZEPHIR_IS_FALSE_IDENTICAL(_17))) {
 		ZEPHIR_INIT_VAR(_18$$8);

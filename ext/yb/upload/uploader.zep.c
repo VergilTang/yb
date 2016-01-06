@@ -148,10 +148,10 @@ PHP_METHOD(Yb_Upload_Uploader, saveUploadedFile) {
 
 PHP_METHOD(Yb_Upload_Uploader, pick) {
 
-	zend_bool _0$$3, _2$$3, _4$$3, _5$$3, _8$$3, _11$$3, _21$$3;
+	zend_bool _0$$3, _2$$3, _4$$3, _5$$3, _8$$3, _11$$3, _13$$3;
 	zephir_fcall_cache_entry *_16 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *index_param = NULL, *_FILES, *f = NULL, *a = NULL, *error = NULL, *size = NULL, *name = NULL, *tmpName = NULL, *_7$$3, *_9$$3, *_13$$3 = NULL, _14$$3 = zval_used_for_init, *_15$$3 = NULL, *_18$$3, *_19$$3 = NULL, *_1$$4, *_3$$5, *_6$$7, *_10$$8, *_12$$9, *_20$$10, *_22$$11;
+	zval *index_param = NULL, *_FILES, *f = NULL, *a = NULL, *error = NULL, *size = NULL, *name = NULL, *tmpName = NULL, *_7$$3, *_9$$3, *_15$$3 = NULL, *_18$$3, *_19$$3 = NULL, *_1$$4, *_3$$5, *_6$$7, *_10$$8, *_12$$9, *_14$$10, *_20$$11;
 	zval *index = NULL, *_17$$3 = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -230,34 +230,31 @@ PHP_METHOD(Yb_Upload_Uploader, pick) {
 			break;
 		}
 		zephir_update_property_zval(f, SL("name"), name TSRMLS_CC);
-		ZEPHIR_INIT_NVAR(_13$$3);
-		ZEPHIR_SINIT_NVAR(_14$$3);
-		ZVAL_LONG(&_14$$3, 4);
-		ZEPHIR_CALL_FUNCTION(&_15$$3, "pathinfo", &_16, 50, name, &_14$$3);
+		ZEPHIR_OBS_NVAR(tmpName);
+		_13$$3 = !(zephir_array_isset_string_fetch(&tmpName, a, SS("tmp_name"), 0 TSRMLS_CC));
+		if (!(_13$$3)) {
+			_13$$3 = Z_TYPE_P(tmpName) != IS_STRING;
+		}
+		if (unlikely(_13$$3)) {
+			ZEPHIR_INIT_ZVAL_NREF(_14$$10);
+			ZVAL_LONG(_14$$10, -1);
+			zephir_update_property_zval(f, SL("error"), _14$$10 TSRMLS_CC);
+			break;
+		}
+		zephir_update_property_zval(f, SL("tmpName"), tmpName TSRMLS_CC);
+		ZEPHIR_CALL_METHOD(&_15$$3, this_ptr, "guessextension", &_16, 0, tmpName, name);
 		zephir_check_call_status();
-		zephir_fast_strtolower(_13$$3, _15$$3);
-		zephir_get_strval(_17$$3, _13$$3);
+		zephir_get_strval(_17$$3, _15$$3);
 		zephir_update_property_zval(f, SL("extension"), _17$$3 TSRMLS_CC);
 		_18$$3 = zephir_fetch_nproperty_this(this_ptr, SL("validExtensions"), PH_NOISY_CC);
 		ZEPHIR_OBS_NVAR(_19$$3);
 		zephir_read_property(&_19$$3, f, SL("extension"), PH_NOISY_CC);
 		if (unlikely(!(zephir_array_isset(_18$$3, _19$$3)))) {
-			ZEPHIR_INIT_ZVAL_NREF(_20$$10);
-			ZVAL_LONG(_20$$10, -3);
-			zephir_update_property_zval(f, SL("error"), _20$$10 TSRMLS_CC);
+			ZEPHIR_INIT_ZVAL_NREF(_20$$11);
+			ZVAL_LONG(_20$$11, -3);
+			zephir_update_property_zval(f, SL("error"), _20$$11 TSRMLS_CC);
 			break;
 		}
-		_21$$3 = !(zephir_array_isset_string_fetch(&tmpName, a, SS("tmp_name"), 1 TSRMLS_CC));
-		if (!(_21$$3)) {
-			_21$$3 = Z_TYPE_P(tmpName) != IS_STRING;
-		}
-		if (unlikely(_21$$3)) {
-			ZEPHIR_INIT_ZVAL_NREF(_22$$11);
-			ZVAL_LONG(_22$$11, -1);
-			zephir_update_property_zval(f, SL("error"), _22$$11 TSRMLS_CC);
-			break;
-		}
-		zephir_update_property_zval(f, SL("tmpName"), tmpName TSRMLS_CC);
 		break;
 	}
 	RETURN_CCTOR(f);
@@ -268,11 +265,11 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 
 	HashTable *_3;
 	HashPosition _2;
-	zend_bool _0, _1, _7$$6, _8$$6, _11$$6, _15$$6, _26$$6;
-	zephir_fcall_cache_entry *_5 = NULL, *_20 = NULL;
+	zend_bool _0, _1, _7$$6, _8$$6, _11$$6, _15$$6, _18$$6;
+	zephir_fcall_cache_entry *_5 = NULL, *_21 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *index_param = NULL, *_FILES, *files = NULL, *a = NULL, *errors = NULL, *i = NULL, *e = NULL, *f = NULL, *size = NULL, *name = NULL, *tmpName = NULL, **_4, *_6$$6, *_10$$6, *_12$$6, *_14$$6, *_17$$6 = NULL, _18$$6 = zval_used_for_init, *_19$$6 = NULL, *_22$$6, *_23$$6 = NULL, *_25$$6, *_9$$8, *_13$$9, *_16$$10, *_24$$11, *_27$$12;
-	zval *index = NULL, *_21$$6 = NULL;
+	zval *index_param = NULL, *_FILES, *files = NULL, *a = NULL, *errors = NULL, *i = NULL, *e = NULL, *f = NULL, *size = NULL, *name = NULL, *tmpName = NULL, **_4, *_6$$6, *_10$$6, *_12$$6, *_14$$6, *_17$$6, *_20$$6 = NULL, *_23$$6, *_24$$6 = NULL, *_9$$8, *_13$$9, *_16$$10, *_19$$11, *_25$$12;
+	zval *index = NULL, *_22$$6 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_get_global(&_FILES, SS("_FILES") TSRMLS_CC);
@@ -299,7 +296,7 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 	if (unlikely(_1)) {
 		RETURN_CCTOR(files);
 	}
-	zephir_is_iterable(errors, &_3, &_2, 0, 0, "yb/upload/uploader.zep", 160);
+	zephir_is_iterable(errors, &_3, &_2, 0, 0, "yb/upload/uploader.zep", 162);
 	for (
 	  ; zephir_hash_get_current_data_ex(_3, (void**) &_4, &_2) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_3, &_2)
@@ -314,7 +311,7 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 				break;
 			}
 			ZEPHIR_OBS_NVAR(size);
-			zephir_array_fetch_string(&_6$$6, a, SL("size"), PH_READONLY, "yb/upload/uploader.zep", 127 TSRMLS_CC);
+			zephir_array_fetch_string(&_6$$6, a, SL("size"), PH_READONLY, "yb/upload/uploader.zep", 128 TSRMLS_CC);
 			_7$$6 = !(zephir_array_isset_fetch(&size, _6$$6, i, 0 TSRMLS_CC));
 			if (!(_7$$6)) {
 				_7$$6 = Z_TYPE_P(size) != IS_LONG;
@@ -343,7 +340,7 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 				break;
 			}
 			ZEPHIR_OBS_NVAR(name);
-			zephir_array_fetch_string(&_14$$6, a, SL("name"), PH_READONLY, "yb/upload/uploader.zep", 137 TSRMLS_CC);
+			zephir_array_fetch_string(&_14$$6, a, SL("name"), PH_READONLY, "yb/upload/uploader.zep", 138 TSRMLS_CC);
 			_15$$6 = !(zephir_array_isset_fetch(&name, _14$$6, i, 0 TSRMLS_CC));
 			if (!(_15$$6)) {
 				_15$$6 = Z_TYPE_P(name) != IS_STRING;
@@ -355,40 +352,66 @@ PHP_METHOD(Yb_Upload_Uploader, pickArray) {
 				break;
 			}
 			zephir_update_property_zval(f, SL("name"), name TSRMLS_CC);
-			ZEPHIR_INIT_NVAR(_17$$6);
-			ZEPHIR_SINIT_NVAR(_18$$6);
-			ZVAL_LONG(&_18$$6, 4);
-			ZEPHIR_CALL_FUNCTION(&_19$$6, "pathinfo", &_20, 50, name, &_18$$6);
-			zephir_check_call_status();
-			zephir_fast_strtolower(_17$$6, _19$$6);
-			zephir_get_strval(_21$$6, _17$$6);
-			zephir_update_property_zval(f, SL("extension"), _21$$6 TSRMLS_CC);
-			_22$$6 = zephir_fetch_nproperty_this(this_ptr, SL("validExtensions"), PH_NOISY_CC);
-			ZEPHIR_OBS_NVAR(_23$$6);
-			zephir_read_property(&_23$$6, f, SL("extension"), PH_NOISY_CC);
-			if (unlikely(!(zephir_array_isset(_22$$6, _23$$6)))) {
-				ZEPHIR_INIT_ZVAL_NREF(_24$$11);
-				ZVAL_LONG(_24$$11, -3);
-				zephir_update_property_zval(f, SL("error"), _24$$11 TSRMLS_CC);
-				break;
+			ZEPHIR_OBS_NVAR(tmpName);
+			zephir_array_fetch_string(&_17$$6, a, SL("tmp_name"), PH_READONLY, "yb/upload/uploader.zep", 144 TSRMLS_CC);
+			_18$$6 = !(zephir_array_isset_fetch(&tmpName, _17$$6, i, 0 TSRMLS_CC));
+			if (!(_18$$6)) {
+				_18$$6 = Z_TYPE_P(tmpName) != IS_STRING;
 			}
-			zephir_array_fetch_string(&_25$$6, a, SL("tmp_name"), PH_READONLY, "yb/upload/uploader.zep", 148 TSRMLS_CC);
-			_26$$6 = !(zephir_array_isset_fetch(&tmpName, _25$$6, i, 1 TSRMLS_CC));
-			if (!(_26$$6)) {
-				_26$$6 = Z_TYPE_P(tmpName) != IS_STRING;
-			}
-			if (unlikely(_26$$6)) {
-				ZEPHIR_INIT_ZVAL_NREF(_27$$12);
-				ZVAL_LONG(_27$$12, -1);
-				zephir_update_property_zval(f, SL("error"), _27$$12 TSRMLS_CC);
+			if (unlikely(_18$$6)) {
+				ZEPHIR_INIT_ZVAL_NREF(_19$$11);
+				ZVAL_LONG(_19$$11, -1);
+				zephir_update_property_zval(f, SL("error"), _19$$11 TSRMLS_CC);
 				break;
 			}
 			zephir_update_property_zval(f, SL("tmpName"), tmpName TSRMLS_CC);
+			ZEPHIR_CALL_METHOD(&_20$$6, this_ptr, "guessextension", &_21, 0, tmpName, name);
+			zephir_check_call_status();
+			zephir_get_strval(_22$$6, _20$$6);
+			zephir_update_property_zval(f, SL("extension"), _22$$6 TSRMLS_CC);
+			_23$$6 = zephir_fetch_nproperty_this(this_ptr, SL("validExtensions"), PH_NOISY_CC);
+			ZEPHIR_OBS_NVAR(_24$$6);
+			zephir_read_property(&_24$$6, f, SL("extension"), PH_NOISY_CC);
+			if (unlikely(!(zephir_array_isset(_23$$6, _24$$6)))) {
+				ZEPHIR_INIT_ZVAL_NREF(_25$$12);
+				ZVAL_LONG(_25$$12, -3);
+				zephir_update_property_zval(f, SL("error"), _25$$12 TSRMLS_CC);
+				break;
+			}
 			break;
 		}
 		zephir_array_update_zval(&files, i, &f, PH_COPY | PH_SEPARATE);
 	}
 	RETURN_CCTOR(files);
+
+}
+
+PHP_METHOD(Yb_Upload_Uploader, guessExtension) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *tmpName_param = NULL, *name_param = NULL, *eit = NULL, _0, *_1 = NULL;
+	zval *tmpName = NULL, *name = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 0, &tmpName_param, &name_param);
+
+	zephir_get_strval(tmpName, tmpName_param);
+	zephir_get_strval(name, name_param);
+
+
+	ZEPHIR_CALL_FUNCTION(&eit, "exif_imagetype", NULL, 113, tmpName);
+	zephir_check_call_status();
+	if (!ZEPHIR_IS_FALSE_IDENTICAL(eit)) {
+		ZEPHIR_RETURN_CALL_FUNCTION("image_type_to_extension", NULL, 114, eit, ZEPHIR_GLOBAL(global_false));
+		zephir_check_call_status();
+		RETURN_MM();
+	}
+	ZEPHIR_SINIT_VAR(_0);
+	ZVAL_LONG(&_0, 4);
+	ZEPHIR_CALL_FUNCTION(&_1, "pathinfo", NULL, 50, name, &_0);
+	zephir_check_call_status();
+	zephir_fast_strtolower(return_value, _1);
+	RETURN_MM();
 
 }
 

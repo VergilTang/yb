@@ -85,17 +85,18 @@ class Uploader
                 break;
             }
             let f->name = name;
-            let f->extension = (string) strtolower(pathinfo(name, PATHINFO_EXTENSION));
-            if unlikely ! isset this->validExtensions[f->extension] {
-                let f->error = self::INVALID_EXTENSION;
-                break;
-            }
 
             if unlikely ! fetch tmpName, a["tmp_name"] || typeof tmpName != "string" {
                 let f->error = self::INVALID_UPLOAD;
                 break;
             }
             let f->tmpName = tmpName;
+
+            let f->extension = (string) this->guessExtension(tmpName, name);
+            if unlikely ! isset this->validExtensions[f->extension] {
+                let f->error = self::INVALID_EXTENSION;
+                break;
+            }
 
             break;
         }
@@ -139,17 +140,18 @@ class Uploader
                     break;
                 }
                 let f->name = name;
-                let f->extension = (string) strtolower(pathinfo(name, PATHINFO_EXTENSION));
-                if unlikely ! isset this->validExtensions[f->extension] {
-                    let f->error = self::INVALID_EXTENSION;
-                    break;
-                }
 
                 if unlikely ! fetch tmpName, a["tmp_name"][i] || typeof tmpName != "string" {
                     let f->error = self::INVALID_UPLOAD;
                     break;
                 }
                 let f->tmpName = tmpName;
+
+                let f->extension = (string) this->guessExtension(tmpName, name);
+                if unlikely ! isset this->validExtensions[f->extension] {
+                    let f->error = self::INVALID_EXTENSION;
+                    break;
+                }
 
                 break;
             }
@@ -158,6 +160,18 @@ class Uploader
         }
 
         return files;
+    }
+
+    protected function guessExtension(string tmpName, string name) -> string
+    {
+        var eit;
+
+        let eit = exif_imagetype(tmpName);
+        if eit !== false {
+            return image_type_to_extension(eit, false);
+        }
+
+        return strtolower(pathinfo(name, PATHINFO_EXTENSION));
     }
 
 }
