@@ -26,7 +26,7 @@ ZEPHIR_INIT_CLASS(Yb_Image_Image) {
 
 	zend_declare_property_null(yb_image_image_ce, SL("handler"), ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_string(yb_image_image_ce, SL("extension"), "png", ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_string(yb_image_image_ce, SL("extension"), "jpg", ZEND_ACC_PUBLIC TSRMLS_CC);
 
 	return SUCCESS;
 

@@ -29,9 +29,11 @@ ZEPHIR_INIT_CLASS(Yb_Upload_UploadedFile) {
 
 	zend_declare_property_null(yb_upload_uploadedfile_ce, SL("name"), ZEND_ACC_PUBLIC TSRMLS_CC);
 
+	zend_declare_property_null(yb_upload_uploadedfile_ce, SL("tmpName"), ZEND_ACC_PUBLIC TSRMLS_CC);
+
 	zend_declare_property_null(yb_upload_uploadedfile_ce, SL("extension"), ZEND_ACC_PUBLIC TSRMLS_CC);
 
-	zend_declare_property_null(yb_upload_uploadedfile_ce, SL("tmpName"), ZEND_ACC_PUBLIC TSRMLS_CC);
+	zend_declare_property_bool(yb_upload_uploadedfile_ce, SL("isImage"), 0, ZEND_ACC_PUBLIC TSRMLS_CC);
 
 	zend_declare_property_null(yb_upload_uploadedfile_ce, SL("uploader"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
@@ -86,7 +88,7 @@ PHP_METHOD(Yb_Upload_UploadedFile, save) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("error"), PH_NOISY_CC);
 	if (unlikely(!ZEPHIR_IS_LONG_IDENTICAL(_0, 0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Invalid uploaded file cannot be saved", "yb/upload/uploadedfile.zep", 26);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(yb_upload_exception_ce, "Invalid uploaded file cannot be saved", "yb/upload/uploadedfile.zep", 27);
 		return;
 	}
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("uploader"), PH_NOISY_CC);

@@ -414,7 +414,7 @@ PHP_METHOD(Yb_Db_Model, ids) {
 	zephir_concat_self_str(&k, "$in", sizeof("$in")-1 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_6);
 	zephir_create_array(_6, 1, 0 TSRMLS_CC);
-	zephir_array_update_string(&_6, Z_STRVAL_P(k), Z_STRLEN_P(k), &ids, PH_COPY);
+	zephir_array_update_zval(&_6, k, &ids, PH_COPY);
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "all", NULL, 0, _6);
 	zephir_check_call_status();
 	RETURN_MM();

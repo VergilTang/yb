@@ -52,7 +52,7 @@ PHP_METHOD(Yb_Logger_Backends, addBackend) {
 	}
 
 
-	ZEPHIR_CALL_FUNCTION(&_0, "spl_object_hash", NULL, 79, backend);
+	ZEPHIR_CALL_FUNCTION(&_0, "spl_object_hash", NULL, 81, backend);
 	zephir_check_call_status();
 	zephir_get_strval(_1, _0);
 	ZEPHIR_CPY_WRT(h, _1);
@@ -64,7 +64,7 @@ PHP_METHOD(Yb_Logger_Backends, addBackend) {
 	ZVAL_STRING(&_3, "@[,/\\|]+@", 0);
 	ZEPHIR_SINIT_VAR(_4);
 	ZVAL_LONG(&_4, 1);
-	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 80, &_3, level, &_4);
+	ZEPHIR_CALL_FUNCTION(&_5, "preg_split", NULL, 82, &_3, level, &_4);
 	zephir_check_call_status();
 	zephir_is_iterable(_5, &_7, &_6, 0, 0, "yb/logger/backends.zep", 23);
 	for (
