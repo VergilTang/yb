@@ -9,13 +9,18 @@ class Uploader
     const INVALID_EXTENSION = -3;
 
     protected validExtensions;
+    protected validImageExtensions;
     protected maxSize;
     protected storage;
 
-    public function __construct(string validExtensions, string maxSize = "2M") -> void
+    public function __construct(string validExtensions, string validImageExtensions, string maxSize = "2M") -> void
     {
         let this->validExtensions = array_flip(
             preg_split("#[,/\\s\\|\\.]+#", validExtensions->lower(), -1, PREG_SPLIT_NO_EMPTY)
+        );
+
+        let this->validImageExtensions = array_flip(
+            preg_split("#[,/\\s\\|\\.]+#", validImageExtensions->lower(), -1, PREG_SPLIT_NO_EMPTY)
         );
 
         let this->maxSize = Std::sizeToBytes(maxSize);
@@ -52,6 +57,7 @@ class Uploader
     public function pick(string index) -> <UploadedFile>
     {
         var f, a, error, size, name, tmpName;
+        string extension;
 
         let f = this->newUploadedFile();
 
@@ -92,11 +98,22 @@ class Uploader
             }
             let f->tmpName = tmpName;
 
-            let f->extension = (string) this->guessExtension(tmpName, name);
-            if unlikely ! isset this->validExtensions[f->extension] {
-                let f->error = self::INVALID_EXTENSION;
-                break;
+            let extension = (string) this->getImageExtension(tmpName);
+            if extension->length() > 0 {
+                let f->isImage = true;
+                if unlikely ! isset this->validImageExtensions[extension] {
+                    let f->error = self::INVALID_EXTENSION;
+                    break;
+                }
+            } else {
+                let f->isImage = false;
+                let extension = (string) strtolower(pathinfo(name, PATHINFO_EXTENSION));
+                if unlikely ! isset this->validExtensions[extension] {
+                    let f->error = self::INVALID_EXTENSION;
+                    break;
+                }
             }
+            let f->extension = extension;
 
             break;
         }
@@ -107,6 +124,7 @@ class Uploader
     public function pickArray(string index) -> array
     {
         var files = [], a, errors, i, e, f, size, name, tmpName;
+        string extension;
 
         if unlikely ! fetch a, _FILES[index] && typeof a != "array" {
             return files;
@@ -147,11 +165,22 @@ class Uploader
                 }
                 let f->tmpName = tmpName;
 
-                let f->extension = (string) this->guessExtension(tmpName, name);
-                if unlikely ! isset this->validExtensions[f->extension] {
-                    let f->error = self::INVALID_EXTENSION;
-                    break;
+                let extension = (string) this->getImageExtension(tmpName);
+                if extension->length() > 0 {
+                    let f->isImage = true;
+                    if unlikely ! isset this->validImageExtensions[extension] {
+                        let f->error = self::INVALID_EXTENSION;
+                        break;
+                    }
+                } else {
+                    let f->isImage = false;
+                    let extension = (string) strtolower(pathinfo(name, PATHINFO_EXTENSION));
+                    if unlikely ! isset this->validExtensions[extension] {
+                        let f->error = self::INVALID_EXTENSION;
+                        break;
+                    }
                 }
+                let f->extension = extension;
 
                 break;
             }
@@ -162,16 +191,20 @@ class Uploader
         return files;
     }
 
-    protected function guessExtension(string tmpName, string name) -> string
+    protected function getImageExtension(string path) -> string
     {
         var eit;
 
-        let eit = exif_imagetype(tmpName);
-        if eit !== false {
-            return image_type_to_extension(eit, false);
+        let eit = exif_imagetype(path);
+        if eit === false {
+            return "";
         }
 
-        return strtolower(pathinfo(name, PATHINFO_EXTENSION));
+        if eit == IMAGETYPE_JPEG {
+            return "jpg";
+        }
+
+        return image_type_to_extension(eit, false);
     }
 
 }

@@ -5,8 +5,9 @@ class UploadedFile
     public error;
     public size;
     public name;
-    public extension;
     public tmpName;
+    public extension;
+    public isImage = false;
 
     protected uploader;
 

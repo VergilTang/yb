@@ -3,7 +3,7 @@ namespace Yb\Image;
 class Image extends ImageAbstract
 {
     public handler;
-    public extension = "png";
+    public extension = "jpg";
 
     public function contentType() -> string
     {
