@@ -54,9 +54,9 @@
     },
     "namespace": "yb",
     "name": "Yb Framework",
-    "description": "~",
+    "description": "Framework for web development",
     "author": "Hylent",
-    "version": "1.2.160111",
+    "version": "1.2.160129",
     "verbose": false,
     "requires": {
         "extensions": []

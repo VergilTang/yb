@@ -53,7 +53,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, isLoaded) {
 	}
 	ZEPHIR_SINIT_VAR(_2);
 	ZVAL_BOOL(&_2, (x ? 1 : 0));
-	ZEPHIR_CALL_FUNCTION(&_3, "trait_exists", NULL, 19, name, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "trait_exists", NULL, 11, name, &_2);
 	zephir_check_call_status();
 	if (zephir_is_true(_3)) {
 		RETURN_MM_BOOL(1);
@@ -98,7 +98,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, register) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 20, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_register", NULL, 12, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -110,7 +110,7 @@ PHP_METHOD(Yb_Loader_LoaderAbstract, unregister) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 21, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("spl_autoload_unregister", NULL, 13, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 

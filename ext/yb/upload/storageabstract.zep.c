@@ -116,7 +116,7 @@ PHP_METHOD(Yb_Upload_StorageAbstract, generateUri) {
 	}
 	ZEPHIR_INIT_VAR(_10);
 	ZEPHIR_CONCAT_VV(_10, source, extension);
-	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "uuid", &_9, 11, _10);
+	ZEPHIR_CALL_CE_STATIC(&_8, yb_std_ce, "uuid", &_9, 28, _10);
 	zephir_check_call_status();
 	zephir_get_strval(_11, _8);
 	ZEPHIR_CPY_WRT(uuid, _11);
